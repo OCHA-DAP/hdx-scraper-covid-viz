@@ -1,25 +1,25 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
 
-from hdx.utilities.dateparse import parse_date
+from jsonpath_rw import parse
+
+from model import RowParser
 
 
 def get_who(configuration, countries, downloader):
     url = configuration['who_url']
-    headers, iterator = downloader.get_tabular_rows(url, headers=1, dict_form=True, format='csv')
+    response = downloader.download(url)
+    json = response.json()
+    expression = parse('features[*].attributes')
     cases = dict()
     deaths = dict()
-    max_date = parse_date('1900-01-01 00:00:00+00:00')
-    for row in iterator:
-        countryiso = row['ISO_3_CODE']
-        if countryiso not in countries:
-            continue
-        date = parse_date(row['date_epicrv'])
-        if date >= max_date:
-            max_date = date
+    rowparser = RowParser(countries, {'iso3_col': 'ISO_3_CODE', 'date_col': 'date_epicrv', 'date_type': 'int'})
+    for result in expression.find(json):
+        row = result.value
+        countryiso = rowparser.do_set_value(row)
+        if countryiso:
             cases[countryiso] = row['CumCase']
             deaths[countryiso] = row['CumDeath']
-    return cases, deaths
+    return [['NoCases', 'NoDeaths'], ['#affected+infected', '#affected+killed']], [cases, deaths]
 
 
 

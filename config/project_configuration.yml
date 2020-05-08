@@ -2,8 +2,33 @@
 prod_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1bbOp3N-pdW65HoxIYj1tVY4zLfTD4mbpaOZ5ZfrZE54/edit"
 # test
 test_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1bbOp3N-pdW65HoxIYj1tVY4zLfTD4mbpaOZ5ZfrZE54/edit"
+national_sheetname: "NationalData"
+subnational_sheetname: "SubnationalData"
 
-who_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSe-8lf6l_ShJHvd126J-jGti992SUbNLu-kmJfx1IRkvma_r4DHi0bwEW89opArs8ZkSY5G2-Bc1yT/pub?gid=0&single=true&output=csv"
+who_url: "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/COVID19_hist_cases_adm0_v5_view/FeatureServer/0/query?outFields=*&where=1%3D1&f=json"
+
+tabular_hdx:
+  inform:
+    dataset: "inform-covid-19-risk-index-version-0-1-2"
+    format: "xlsx"
+    sheetname: "INFORM COVID-19 RISK 2020 (a-z)"
+    headers: 1
+    iso3_col: "ISO3"
+    val_col: "COVID-19 RISK CLASS"
+    header: "RiskClass"
+    hxltag: "#severity+type"
+  needs:
+    dataset: "global-humanitarian-overview-2020-figures"
+    format: "xlsx"
+    sheetname: "Raw Data"
+    headers: 1
+    iso3_col: "Country Code"
+    date_col: "Year"
+    date_type: "int"
+    filter_col: "Metric=People in need"
+    val_col: "Value"
+    header: "PeopleInNeed"
+    hxltag: "#affected+inneed"
 
 countries:
   - "AFG"
