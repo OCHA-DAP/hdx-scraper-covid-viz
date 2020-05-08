@@ -5,6 +5,7 @@ test_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1bbOp3N-pdW65HoxIY
 national_sheetname: "NationalData"
 subnational_sheetname: "SubnationalData"
 
+# national
 who_url: "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/COVID19_hist_cases_adm0_v5_view/FeatureServer/0/query?outFields=*&where=1%3D1&f=json"
 
 tabular_hdx:
@@ -29,6 +30,13 @@ tabular_hdx:
     val_col: "Value"
     header: "PeopleInNeed"
     hxltag: "#affected+inneed"
+
+fts_url: "https://api.hpc.tools/v1/public/"
+
+hum_access_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8VFKSM9gMnP6rs6Xv_K5imWJuEXgtf-48_wrXPCpqACDl3u0GtQn6v4RQWhKzwwNtnc1Lvx5pK5Lo/pub?gid=0&single=true&output=csv"
+
+# subnational
+ipc_url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=1&limit=1&condition=A&country=%s"
 
 countries:
   - "AFG"
