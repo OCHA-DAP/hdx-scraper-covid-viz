@@ -1,0 +1,33 @@
+# prod
+prod_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1bbOp3N-pdW65HoxIYj1tVY4zLfTD4mbpaOZ5ZfrZE54/edit"
+# test
+test_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1bbOp3N-pdW65HoxIYj1tVY4zLfTD4mbpaOZ5ZfrZE54/edit"
+
+who_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSe-8lf6l_ShJHvd126J-jGti992SUbNLu-kmJfx1IRkvma_r4DHi0bwEW89opArs8ZkSY5G2-Bc1yT/pub?gid=0&single=true&output=csv"
+
+countries:
+  - "AFG"
+  - "BFA"
+  - "BDI"
+  - "CMR"
+  - "CAF"
+  - "TCD"
+  - "COL"
+  - "COD"
+  - "ETH"
+  - "HTI"
+  - "IRQ"
+  - "LBY"
+  - "MLI"
+  - "MMR"
+  - "NER"
+  - "NGA"
+  - "PSE"
+  - "SOM"
+  - "SSD"
+  - "SDN"
+  - "SYR"
+  - "UKR"
+  - "VEN"
+  - "YEM"
+  - "ZWE"

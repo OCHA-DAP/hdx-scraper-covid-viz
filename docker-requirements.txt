@@ -1,0 +1,2 @@
+# covid has no additional requirements to the base image
+pygsheets==2.0.3.1

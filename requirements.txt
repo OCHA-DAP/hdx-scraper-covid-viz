@@ -1,0 +1,2 @@
+hdx-python-api==4.5.8
+-r docker-requirements.txt

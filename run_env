@@ -1,0 +1,8 @@
+TEMP_DIR=/srv/tmp
+LOG_FILE_ONLY=false
+USER_AGENT=who-user-agent
+HDX_KEY=hdx-key-id
+PREPREFIX=preprefix-id
+#HDX_SITE=test
+HDX_URL=https://test-data.humdata.org
+EXTRA_PARAMS=
