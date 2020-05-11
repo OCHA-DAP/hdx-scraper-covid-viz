@@ -1,8 +1,7 @@
 import logging
-from difflib import get_close_matches
 
+from hdx.location.country import Country
 from hdx.utilities.dictandlist import dict_of_lists_add
-from unidecode import unidecode
 
 logger = logging.getLogger(__name__)
 
@@ -11,7 +10,8 @@ def get_ipc(configuration, admininfo, downloader):
     url = configuration['ipc_url']
     phases = [dict(), dict(), dict(), dict(), dict(), dict()]
     adm1phases = [dict(), dict(), dict(), dict(), dict(), dict()]
-    for countryiso2 in admininfo.countryiso2s:
+    for countryiso3 in admininfo.countryiso3s:
+        countryiso2 = Country.get_iso2_from_iso3(countryiso3)
         response = downloader.download(url % countryiso2)
         json = response.json()
         samedate = None
@@ -32,7 +32,7 @@ def get_ipc(configuration, admininfo, downloader):
                 samelevel = at_adm1
             elif samelevel != at_adm1:
                 raise ValueError('Group name not consistently filled!')
-            pcode = admininfo.get_pcode(adm1_name, countryiso2)
+            pcode = admininfo.get_pcode(countryiso3, adm1_name)
             if not pcode:
                 continue
             for phase, phasedict in enumerate(adm1phases):
@@ -48,7 +48,7 @@ def get_ipc(configuration, admininfo, downloader):
                 numerator += 100 * percentage * population
                 denominator += population
             if denominator == 0:
-                logger.error('No population for %s!' % pcode)
+                logger.error('No population for %s, phase %d!' % (pcode, phase))
             else:
                 phases[phase][pcode] = numerator // denominator
 

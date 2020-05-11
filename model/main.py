@@ -39,6 +39,8 @@ def get_indicators(configuration, downloader):
     #     for column in humaccess_columns:
     #         if countryiso3 in column:
     #             row.append(column[countryiso3])
+    #         else:
+    #             row.append(None)
     #     national.append(row)
 
     ipc_headers, ipc_columns = get_ipc(configuration, admininfo, downloader)
@@ -53,6 +55,8 @@ def get_indicators(configuration, downloader):
         for column in ipc_columns:
             if pcode in column:
                 row.append(column[pcode])
+            else:
+                row.append(None)
         subnational.append(row)
 
     return national, subnational
