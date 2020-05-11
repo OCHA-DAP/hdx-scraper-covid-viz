@@ -1,38 +1,58 @@
 # -*- coding: utf-8 -*-
 from hdx.location.country import Country
+from unidecode import unidecode
 
+from model.admininfo import AdminInfo
 from model.fts import get_fts
 from model.humaccess import get_humaccess
+from model.ipc import get_ipc
 from model.tabular_hdx import get_tabular_hdx
 from model.who import get_who
 
 
 def get_indicators(configuration, downloader):
     national = [['iso3', 'countryname'], ['#country+code', '#country+name']]
-    subnational = []
-    countries = configuration['countries']
-    who_headers, who_columns = get_who(configuration, countries, downloader)
-    tabular_headers, tabular_columns = get_tabular_hdx(configuration, countries, downloader)
-    fts_headers, fts_columns = get_fts(configuration, countries, downloader)
-    humaccess_headers, humaccess_columns = get_humaccess(configuration, countries, downloader)
-    for i, header in enumerate(national):
-        header.extend(who_headers[i])
-        header.extend(tabular_headers[i])
-        header.extend(fts_headers[i])
-        header.extend(humaccess_headers[i])
+    subnational = [['iso3', 'countryname', 'adm1_pcode', 'adm1_name'], ['#country+code', '#country+name', '#adm1+code', '#adm1+name']]
 
-    for i, countryiso in enumerate(countries):
-        row = [countryiso, Country.get_country_name_from_iso3(countryiso)]
-        for column in who_columns:
-            row.append(column[countryiso])
-        for column in tabular_columns:
-            val = column.get(countryiso)
-            row.append(val)
-        for column in fts_columns:
-            row.append(column[countryiso])
-        for column in humaccess_columns:
-            if countryiso in column:
-                row.append(column[countryiso])
-        national.append(row)
+    admininfo = AdminInfo(configuration)
+    countryiso3s = admininfo.countryiso3s
+    # who_headers, who_columns = get_who(configuration, countryiso3s, downloader)
+    # tabular_headers, tabular_columns = get_tabular_hdx(configuration, countryiso3s, downloader)
+    # fts_headers, fts_columns = get_fts(configuration, countryiso3s, downloader)
+    # humaccess_headers, humaccess_columns = get_humaccess(configuration, countryiso3s, downloader)
+    # for i, header in enumerate(national):
+    #     header.extend(who_headers[i])
+    #     header.extend(tabular_headers[i])
+    #     header.extend(fts_headers[i])
+    #     header.extend(humaccess_headers[i])
+    #
+    # for i, countryiso3 in enumerate(countryiso3s):
+    #     countryname = Country.get_country_name_from_iso3(countryiso3)
+    #     row = [countryiso3, countryname]
+    #     for column in who_columns:
+    #         row.append(column[countryiso3])
+    #     for column in tabular_columns:
+    #         val = column.get(countryiso3)
+    #         row.append(val)
+    #     for column in fts_columns:
+    #         row.append(column[countryiso3])
+    #     for column in humaccess_columns:
+    #         if countryiso3 in column:
+    #             row.append(column[countryiso3])
+    #     national.append(row)
+
+    ipc_headers, ipc_columns = get_ipc(configuration, admininfo, downloader)
+    for i, header in enumerate(subnational):
+        header.extend(ipc_headers[i])
+
+    for i, pcode in enumerate(admininfo.pcodes):
+        countryiso3 = admininfo.pcode_to_iso3[pcode]
+        countryname = Country.get_country_name_from_iso3(countryiso3)
+        adm1_name = admininfo.pcode_to_name[pcode]
+        row = [countryiso3, countryname, pcode, adm1_name]
+        for column in ipc_columns:
+            if pcode in column:
+                row.append(column[pcode])
+        subnational.append(row)
 
     return national, subnational

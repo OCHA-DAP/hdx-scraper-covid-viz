@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 from jsonpath_rw import parse
 
-from model import RowParser
+from model.rowparser import RowParser
 
 
-def get_fts(configuration, countries, downloader):
+def get_fts(configuration, countryiso3s, downloader):
     requirements = dict()
     funding = dict()
     global_max_year = 0
     global_plan_id = 0
-    for country in countries:
+    for country in countryiso3s:
         url = '%splan/country/%s' % (configuration['fts_url'], country)
         response = downloader.download(url)
         json = response.json()

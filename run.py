@@ -10,7 +10,6 @@ from google.oauth2 import service_account
 
 from hdx.facades.keyword_arguments import facade
 from hdx.hdx_configuration import Configuration
-from hdx.location.country import Country
 from hdx.utilities.downloader import Download
 from hdx.utilities.easy_logging import setup_logging
 
@@ -49,19 +48,12 @@ def main(gsheet_auth, test, **ignore):
         else:
             url = configuration['prod_spreadsheet_url']
         spreadsheet = gc.open_by_url(url)
-        sheet = spreadsheet.worksheet_by_title(configuration['national_sheetname'])
+#        sheet = spreadsheet.worksheet_by_title(configuration['national_sheetname'])
+#        sheet.clear()
+#        sheet.update_values('A1', national)
+        sheet = spreadsheet.worksheet_by_title(configuration['subnational_sheetname'])
         sheet.clear()
-        sheet.update_values('A1', national)
-        # dfout = df_indicators.fillna('')
-        # sheet.set_dataframe(dfout, (1, 1))
-        # sheet = spreadsheet.worksheet_by_title(configuration['subnational_sheetname'])
-        # sheet.clear()
-        # dfout = df_timeseries.fillna('')
-        # sheet.set_dataframe(dfout, (1, 1))
-        # sheet = spreadsheet.worksheet_by_title(configuration['cumulative_sheetname'])
-        # sheet.clear()
-        # dfout = df_cumulative.fillna('')
-        # sheet.set_dataframe(dfout, (1, 1))
+        sheet.update_values('A1', subnational)
 
 
 if __name__ == '__main__':

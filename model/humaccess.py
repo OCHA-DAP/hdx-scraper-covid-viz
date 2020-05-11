@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from model import RowParser
+from model.rowparser import RowParser
 
 hxl_lookup = {'Global Assessment': '#access+assessment+pct', 'Constraints': '#access+constraints', 'Impact': '#access+impact'}
 
 
-def get_humaccess(configuration, countries, downloader):
+def get_humaccess(configuration, countryiso3s, downloader):
     url = configuration['hum_access_url']
     headers, iterator = downloader.get_tabular_rows(url, headers=2, dict_form=True, format='csv')
     valuedicts = list()
@@ -14,7 +14,7 @@ def get_humaccess(configuration, countries, downloader):
         if header != iso3_col and header.lower() != 'country':
             val_cols.append(header)
             valuedicts.append(dict())
-    rowparser = RowParser(countries, {'iso3_col': 'ISO3'})
+    rowparser = RowParser(countryiso3s, {'iso3_col': 'ISO3'})
     for row in iterator:
         countryiso = rowparser.do_set_value(row)
         if countryiso:

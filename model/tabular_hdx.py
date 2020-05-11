@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from model import RowParser, get_tabular_from_hdx
+from model import get_tabular_from_hdx
+from model.rowparser import RowParser
 
 
-def get_tabular_hdx(configuration, countries, downloader):
+def get_tabular_hdx(configuration, countryiso3s, downloader):
     datasets = configuration['tabular_hdx']
     retheaders = [list(), list()]
     retval = list()
@@ -11,7 +12,7 @@ def get_tabular_hdx(configuration, countries, downloader):
         headers, iterator = get_tabular_from_hdx(downloader, datasetinfo)
         valuedict = dict()
         valcol = datasetinfo['val_col']
-        rowparser = RowParser(countries, datasetinfo)
+        rowparser = RowParser(countryiso3s, datasetinfo)
         for row in iterator:
             countryiso = rowparser.do_set_value(row)
             if countryiso:
