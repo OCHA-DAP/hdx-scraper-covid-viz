@@ -81,6 +81,19 @@ tabular_national:
       - "#affected+infected+cases+max+lshtm"
       - "#affected+deaths+min+lshtm"
       - "#affected+deaths+max+lshtm"
+  school:
+    dataset: "global-school-closures-covid19"
+    format: "csv"
+    headers: 1
+    adm_col: "ISO"
+    date_col: "Date"
+    date_type: "date"
+    val_cols:
+      - "Scale"
+    columns:
+      - "SchoolClosure"
+    hxltags:
+      - "#impact+type"
 
 fts_url: "https://api.hpc.tools/v1/public/"
 
