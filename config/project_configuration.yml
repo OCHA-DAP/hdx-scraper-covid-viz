@@ -23,7 +23,7 @@ tabular_json_national:
       - "#affected+infected"
       - "#affected+killed"
 
-tabular_national:
+tabular_hdx_national:
   inform:
     dataset: "inform-covid-19-risk-index-version-0-1-2"
     format: "xlsx"
@@ -47,13 +47,21 @@ tabular_national:
     adm_col: "Country Code"
     date_col: "Year"
     date_type: "int"
-    filter_col: "Metric=People in need"
-    val_cols:
-      - "Value"
-    columns:
-      - "PeopleInNeed"
-    hxltags:
-      - "#affected+inneed"
+    indicator_cols:
+      - filter_col: "Metric=People in need"
+        val_cols:
+          - "Value"
+        columns:
+          - "PeopleInNeed"
+        hxltags:
+          - "#affected+inneed"
+      - filter_col: "Metric=Funding requirements"
+        val_cols:
+          - "Value"
+        columns:
+          - "FundingRequirementsPreCovid"
+        hxltags:
+          - "#value+funding+required+usd+precovid"
   imperial:
     dataset: "imperial-college-covid-19-projections"
     format: "xlsx"
@@ -117,7 +125,7 @@ hum_access_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8VFKSM9gMnP6r
 # subnational
 ipc_url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=1&limit=1&condition=A&country=%s"
 
-tabular_subnational:
+tabular_hdx_subnational:
   ghrp:
     dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
     format: "csv"
