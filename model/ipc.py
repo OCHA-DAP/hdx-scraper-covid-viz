@@ -3,6 +3,8 @@ import logging
 from hdx.location.country import Country
 from hdx.utilities.dictandlist import dict_of_lists_add
 
+from model import get_percent
+
 logger = logging.getLogger(__name__)
 
 
@@ -45,12 +47,12 @@ def get_ipc(configuration, admininfo, downloader):
             numerator = 0
             denominator = 0
             for percentage, population in phasedict[pcode]:
-                numerator += 100 * percentage * population
+                numerator += percentage * population
                 denominator += population
             if denominator == 0:
                 logger.error('No population for %s, phase %d!' % (pcode, phase))
             else:
-                phases[phase][pcode] = numerator // denominator
+                phases[phase][pcode] = get_percent(numerator, denominator)
     logger.info('Processed IPC')
     return [['FoodInsecurityP1', 'FoodInsecurityP2', 'FoodInsecurityP3', 'FoodInsecurityP4', 'FoodInsecurityP5', 'FoodInsecurityP6'],
             ['#affected+food+p1+pct', '#affected+food+p2+pct', '#affected+food+p3+pct', '#affected+food+p4+pct', '#affected+food+p5+pct', '#affected+food+p6+pct']], phases

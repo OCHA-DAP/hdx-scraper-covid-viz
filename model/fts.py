@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import logging
 
+from model import get_percent
+
 logger = logging.getLogger(__name__)
 
 
@@ -57,7 +59,7 @@ def get_fts(configuration, countryiso3s, downloader):
             if fund == 0:
                 percentage[country] = 0
             else:
-                percentage[country] = int((fund / req * 100) + 0.5)
+                percentage[country] = get_percent(fund, req)
 
     if global_plan_id == 0:
         raise ValueError('No GHRP found!')

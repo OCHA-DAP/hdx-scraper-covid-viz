@@ -5,6 +5,10 @@ from hdx.data.dataset import Dataset
 logger = logging.getLogger(__name__)
 
 
+def get_percent(numerator, denominator):
+    return int((numerator / denominator * 100) + 0.5)
+
+
 def get_tabular_from_hdx(downloader, datasetinfo):
     dataset_name = datasetinfo['dataset']
     dataset = Dataset.read_from_hdx(dataset_name)
