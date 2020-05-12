@@ -59,9 +59,9 @@ tabular_hdx_national:
         val_cols:
           - "Value"
         columns:
-          - "FundingRequirementsPreCovid"
+          - "RequiredFundingPreCovid"
         hxltags:
-          - "#value+funding+required+usd+precovid"
+          - "#value+funding+required+precovid+usd"
   imperial:
     dataset: "imperial-college-covid-19-projections"
     format: "xlsx"

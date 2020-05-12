@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
+import logging
+
 from model.rowparser import RowParser
+
+logger = logging.getLogger(__name__)
 
 hxl_lookup = {'Constraints': '#access+constraints', 'Impact': '#access+impact'}
 
@@ -33,6 +37,7 @@ def get_humaccess(configuration, countryiso3s, downloader):
             counter += 1
         hxlheaders.append(hxltag)
     retheaders = [val_cols, hxlheaders]
+    logger.info('Processed Humanitarian Access')
     return retheaders, valuedicts
 
 

@@ -51,6 +51,6 @@ def get_ipc(configuration, admininfo, downloader):
                 logger.error('No population for %s, phase %d!' % (pcode, phase))
             else:
                 phases[phase][pcode] = numerator // denominator
-
+    logger.info('Processed IPC')
     return [['FoodInsecurityP1', 'FoodInsecurityP2', 'FoodInsecurityP3', 'FoodInsecurityP4', 'FoodInsecurityP5', 'FoodInsecurityP6'],
             ['#affected+food+p1+pct', '#affected+food+p2+pct', '#affected+food+p3+pct', '#affected+food+p4+pct', '#affected+food+p5+pct', '#affected+food+p6+pct']], phases

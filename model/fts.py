@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-from jsonpath_rw import parse
+import logging
 
-from model.rowparser import RowParser
+logger = logging.getLogger(__name__)
 
 
 def get_fts(configuration, countryiso3s, downloader):
     requirements = dict()
     funding = dict()
+    percentage = dict()
     global_max_year = 0
     global_plan_id = 0
     for country in countryiso3s:
@@ -36,20 +37,31 @@ def get_fts(configuration, countryiso3s, downloader):
         response = downloader.download(url)
         json = response.json()
         data = json['data']
-        requirements[country] = 0
+
+        req = 0
         for reqobj in data['requirements']['objects']:
             if 'COVID-19' in reqobj['tags']:
-                requirements[country] += reqobj['revisedRequirements']
-        funding[country] = 0
+                req += reqobj['revisedRequirements']
+        requirements[country] = req
+
+        fund = 0
         fundingobjects = data['report3']['fundingTotals']['objects']
         if len(fundingobjects) == 0:
             funding[country] = None  # Not Yet Tracked
+            percentage[country] = None
         else:
             for fundobj in fundingobjects[0]['objectsBreakdown']:
                 if 'COVID-19' in fundobj['name']:
-                    funding[country] += fundobj['totalFunding']
+                    fund += fundobj['totalFunding']
+            funding[country] = fund
+            if fund == 0:
+                percentage[country] = 0
+            else:
+                percentage[country] = int((fund / req * 100) + 0.5)
 
     if global_plan_id == 0:
         raise ValueError('No GHRP found!')
-    return [['Required', 'Funding'], ['#value+funding+required+usd', '#value+funding+funding+usd']], \
-           [requirements, funding]
+    logger.info('Processed FTS')
+    return [['RequiredCovidFunding', 'CovidFunding', 'CovidPercentFunded'],
+            ['#value+funding+required+covid+usd', '#value+funding+total+covid+usd', '#value+funding+covid+pct']], \
+           [requirements, funding, percentage]

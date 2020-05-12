@@ -49,10 +49,10 @@ def main(gsheet_auth, test, **ignore):
             url = configuration['prod_spreadsheet_url']
         spreadsheet = gc.open_by_url(url)
         sheet = spreadsheet.worksheet_by_title(configuration['national_sheetname'])
-        sheet.clear()
+        sheet.clear(fields='*')
         sheet.update_values('A1', national)
         sheet = spreadsheet.worksheet_by_title(configuration['subnational_sheetname'])
-        sheet.clear()
+        sheet.clear(fields='*')
         sheet.update_values('A1', subnational)
 
 
