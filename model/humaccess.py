@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.rowparser import RowParser
 
-hxl_lookup = {'Global Assessment': '#access+assessment+pct', 'Constraints': '#access+constraints', 'Impact': '#access+impact'}
+hxl_lookup = {'Constraints': '#access+constraints', 'Impact': '#access+impact'}
 
 
 def get_humaccess(configuration, countryiso3s, downloader):
@@ -20,7 +20,19 @@ def get_humaccess(configuration, countryiso3s, downloader):
         if countryiso:
             for i, val_col in enumerate(val_cols):
                 valuedicts[i][countryiso] = row[val_col]
-    retheaders = [val_cols, [hxl_lookup.get(x, '#access+label') for x in val_cols]]
+    hxlheaders = list()
+    curtype = None
+    counter = 1
+    for val_col in val_cols:
+        hxltag = hxl_lookup.get(val_col)
+        if hxltag:
+            curtype = val_col.lower()
+            counter = 1
+        else:
+            hxltag = '#access+%s_%d' % (curtype, counter)
+            counter += 1
+        hxlheaders.append(hxltag)
+    retheaders = [val_cols, hxlheaders]
     return retheaders, valuedicts
 
 

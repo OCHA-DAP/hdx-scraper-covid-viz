@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from hdx.location.country import Country
-from unidecode import unidecode
 
 from model.admininfo import AdminInfo
 from model.fts import get_fts
