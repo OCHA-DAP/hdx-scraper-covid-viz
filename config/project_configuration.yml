@@ -6,7 +6,22 @@ national_sheetname: "NationalData"
 subnational_sheetname: "SubnationalData"
 
 # national
-who_url: "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/COVID19_hist_cases_adm0_v5_view/FeatureServer/0/query?outFields=*&where=1%3D1&f=json"
+tabular_json_national:
+  who:
+    url: "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/COVID19_hist_cases_adm0_v5_view/FeatureServer/0/query?outFields=*&where=1%3D1&f=json"
+    jsonpath: "features[*].attributes"
+    adm_col: "ISO_3_CODE"
+    date_col: "date_epicrv"
+    date_type: "int"
+    val_cols:
+      - "CumCase"
+      - "CumDeath"
+    columns:
+      - "NoCases"
+      - "NoDeaths"
+    hxltags:
+      - "#affected+infected"
+      - "#affected+killed"
 
 tabular_national:
   inform:

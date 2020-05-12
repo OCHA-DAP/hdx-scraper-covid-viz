@@ -6,8 +6,7 @@ from model.admininfo import AdminInfo
 from model.fts import get_fts
 from model.humaccess import get_humaccess
 from model.ipc import get_ipc
-from model.tabularparser import get_tabular_hdx
-from model.who import get_who
+from model.tabularparser import get_tabular_hdx, get_tabular_json
 
 
 def get_indicators(configuration, downloader):
@@ -16,12 +15,12 @@ def get_indicators(configuration, downloader):
 
     admininfo = AdminInfo(configuration)
     countryiso3s = admininfo.countryiso3s
-    who_headers, who_columns = get_who(configuration, countryiso3s, downloader)
+    json_headers, json_columns = get_tabular_json(configuration, countryiso3s, downloader, 'national')
     tabular_headers, tabular_columns = get_tabular_hdx(configuration, countryiso3s, 'national', downloader)
     fts_headers, fts_columns = get_fts(configuration, countryiso3s, downloader)
     humaccess_headers, humaccess_columns = get_humaccess(configuration, countryiso3s, downloader)
     for i, header in enumerate(national):
-        header.extend(who_headers[i])
+        header.extend(json_headers[i])
         header.extend(tabular_headers[i])
         header.extend(fts_headers[i])
         header.extend(humaccess_headers[i])
@@ -29,7 +28,7 @@ def get_indicators(configuration, downloader):
     for i, countryiso3 in enumerate(countryiso3s):
         countryname = Country.get_country_name_from_iso3(countryiso3)
         row = [countryiso3, countryname]
-        for column in who_columns:
+        for column in json_columns:
             row.append(column[countryiso3])
         for column in tabular_columns:
             row.append(column.get(countryiso3))
