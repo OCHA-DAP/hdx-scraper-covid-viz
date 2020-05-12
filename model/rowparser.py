@@ -5,9 +5,9 @@ from hdx.utilities.dateparse import parse_date
 
 
 class RowParser(object):
-    def __init__(self, countries, datasetinfo):
-        self.countries = countries
-        self.iso3col = datasetinfo['iso3_col']
+    def __init__(self, adms, datasetinfo):
+        self.adms = adms
+        self.admcol = datasetinfo['adm_col']
         self.datecol = datasetinfo.get('date_col')
         self.datetype = datasetinfo.get('date_type')
         if self.datetype:
@@ -22,8 +22,8 @@ class RowParser(object):
             self.filtercol = self.filtercol.split('=')
 
     def do_set_value(self, row):
-        countryiso = row[self.iso3col]
-        if countryiso not in self.countries:
+        adm = row[self.admcol]
+        if adm not in self.adms:
             return None
         if self.datecol:
             date = row[self.datecol]
@@ -39,4 +39,4 @@ class RowParser(object):
         if self.filtercol:
             if row[self.filtercol[0]] != self.filtercol[1]:
                 return None
-        return countryiso
+        return adm

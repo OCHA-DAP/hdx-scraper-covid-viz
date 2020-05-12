@@ -14,7 +14,7 @@ def get_humaccess(configuration, countryiso3s, downloader):
         if header != iso3_col and header.lower() != 'country':
             val_cols.append(header)
             valuedicts.append(dict())
-    rowparser = RowParser(countryiso3s, {'iso3_col': 'ISO3'})
+    rowparser = RowParser(countryiso3s, {'adm_col': 'ISO3'})
     for row in iterator:
         countryiso = rowparser.do_set_value(row)
         if countryiso:

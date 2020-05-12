@@ -12,7 +12,7 @@ def get_who(configuration, countryiso3s, downloader):
     expression = parse('features[*].attributes')
     cases = dict()
     deaths = dict()
-    rowparser = RowParser(countryiso3s, {'iso3_col': 'ISO_3_CODE', 'date_col': 'date_epicrv', 'date_type': 'int'})
+    rowparser = RowParser(countryiso3s, {'adm_col': 'ISO_3_CODE', 'date_col': 'date_epicrv', 'date_type': 'int'})
     for result in expression.find(json):
         row = result.value
         countryiso = rowparser.do_set_value(row)

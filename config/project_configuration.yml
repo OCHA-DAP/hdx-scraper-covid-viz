@@ -8,28 +8,79 @@ subnational_sheetname: "SubnationalData"
 # national
 who_url: "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/COVID19_hist_cases_adm0_v5_view/FeatureServer/0/query?outFields=*&where=1%3D1&f=json"
 
-tabular_hdx:
+tabular_national:
   inform:
     dataset: "inform-covid-19-risk-index-version-0-1-2"
     format: "xlsx"
     sheetname: "INFORM COVID-19 RISK 2020 (a-z)"
     headers: 1
-    iso3_col: "ISO3"
-    val_col: "COVID-19 RISK CLASS"
-    header: "RiskClass"
-    hxltag: "#severity+type"
+    adm_col: "ISO3"
+    val_cols:
+      - "INFORM COVID-19 RISK"
+      - "COVID-19 RISK CLASS"
+    columns:
+      - "Risk"
+      - "RiskClass"
+    hxltags:
+      - "#severity+num"
+      - "#severity+type"
   needs:
     dataset: "global-humanitarian-overview-2020-figures"
     format: "xlsx"
     sheetname: "Raw Data"
     headers: 1
-    iso3_col: "Country Code"
+    adm_col: "Country Code"
     date_col: "Year"
     date_type: "int"
     filter_col: "Metric=People in need"
-    val_col: "Value"
-    header: "PeopleInNeed"
-    hxltag: "#affected+inneed"
+    val_cols:
+      - "Value"
+    columns:
+      - "PeopleInNeed"
+    hxltags:
+      - "#affected+inneed"
+  imperial:
+    dataset: "imperial-college-covid-19-projections"
+    format: "xlsx"
+    sheetname: 1
+    headers: 2
+    adm_col: "#country+code"
+    val_cols:
+      - "#affected+infected+cases+min"
+      - "#affected+infected+cases+max"
+      - "#affected+deaths+min"
+      - "#affected+deaths+max"
+    columns:
+      - "Imp: Total Cases(min)"
+      - "Imp: Total Cases(max)"
+      - "Imp: Total Deaths(min)"
+      - "Imp: Total Deaths(max)"
+    hxltags:
+      - "#affected+infected+cases+min+imperial"
+      - "#affected+infected+cases+max+imperial"
+      - "#affected+deaths+min+imperial"
+      - "#affected+deaths+max+imperial"
+  lshtm:
+    dataset: "lshtm-covid-19-projections"
+    format: "xlsx"
+    sheetname: 1
+    headers: 2
+    adm_col: "#country+code"
+    val_cols:
+      - "#affected+infected+cases+min"
+      - "#affected+infected+cases+max"
+      - "#affected+deaths+min"
+      - "#affected+deaths+max"
+    columns:
+      - "LSHTM: Total Cases(min)"
+      - "LSHTM: Total Cases(max)"
+      - "LSHTM: Total Deaths(min)"
+      - "LSHTM: Total Deaths(max)"
+    hxltags:
+      - "#affected+infected+cases+min+lshtm"
+      - "#affected+infected+cases+max+lshtm"
+      - "#affected+deaths+min+lshtm"
+      - "#affected+deaths+max+lshtm"
 
 fts_url: "https://api.hpc.tools/v1/public/"
 
@@ -37,6 +88,19 @@ hum_access_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8VFKSM9gMnP6r
 
 # subnational
 ipc_url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=1&limit=1&condition=A&country=%s"
+
+tabular_subnational:
+  ghrp:
+    dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
+    format: "csv"
+    headers: 1
+    adm_col: "ADM1_PCODE"
+    val_cols:
+      - "POPULATION"
+    columns:
+      - "Population"
+    hxltags:
+      - "#population"
 
 admin_info:
   - {ADM1_PCODE: AF01, ADM1_REF: Kabul, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
@@ -473,7 +537,7 @@ admin_info:
   - {ADM1_PCODE: ZW19, ADM1_REF: Harare, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
 
 adm1_name_replacements:
-  "Urban ": ""
+  " Urban": ""
   "Sud": "South"
   "Ouest": "West"
   "Est": "East"
