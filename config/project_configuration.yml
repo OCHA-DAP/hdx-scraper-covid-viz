@@ -1,7 +1,7 @@
 # prod
 prod_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1bbOp3N-pdW65HoxIYj1tVY4zLfTD4mbpaOZ5ZfrZE54/edit"
 # test
-test_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1bbOp3N-pdW65HoxIYj1tVY4zLfTD4mbpaOZ5ZfrZE54/edit"
+test_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1zS2gGeo5CHzucdKzyMYH_27dHlK2uyVqQwUDwlgfRlo/edit"
 national_sheetname: "NationalData"
 subnational_sheetname: "SubnationalData"
 
@@ -123,7 +123,7 @@ fts_url: "https://api.hpc.tools/v1/public/"
 hum_access_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8VFKSM9gMnP6rs6Xv_K5imWJuEXgtf-48_wrXPCpqACDl3u0GtQn6v4RQWhKzwwNtnc1Lvx5pK5Lo/pub?gid=0&single=true&output=csv"
 
 # subnational
-ipc_url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=1&limit=1&condition=A&country=%s"
+ipc_url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=1&limit=1&condition=A&export=true&country=%s"
 
 tabular_hdx_subnational:
   ghrp:

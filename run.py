@@ -36,7 +36,7 @@ def parse_args():
 def main(gsheet_auth, test, **ignore):
     logger.info('##### hdx-scraper-covid-viz version %.1f ####' % VERSION)
     configuration = Configuration.read()
-    with Download() as downloader:
+    with Download(rate_limit={'calls': 1, 'period': 1}) as downloader:
         national, subnational = get_indicators(configuration, downloader)
         # Write to gsheets
         info = json.loads(gsheet_auth)
