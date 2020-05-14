@@ -56,9 +56,11 @@ def get_ipc(configuration, admininfo, downloader):
             if not pcode:
                 continue
             population = row['Current Phase P3+ #']
-            dict_of_lists_add(popdict, pcode, population)
+            if population:
+                dict_of_lists_add(popdict, pcode, population)
             percentage = row['Current Phase P3+ %']
-            dict_of_lists_add(phasedict, pcode, percentage)
+            if percentage:
+                dict_of_lists_add(phasedict, pcode, percentage)
     for pcode in phasedict:
         percentages = phasedict[pcode]
         if len(percentages) == 1:

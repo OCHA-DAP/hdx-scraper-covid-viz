@@ -5,19 +5,31 @@ from model.rowparser import RowParser
 
 logger = logging.getLogger(__name__)
 
-hxl_lookup = {'Constraints': '#access+constraints', 'Impact': '#access+impact'}
+hxl_lookup = {'Constraints': '#access+constraints'}
 
 
 def get_humaccess(configuration, countryiso3s, downloader):
     url = configuration['hum_access_url']
+    superheaders_temp, _ = downloader.get_tabular_rows(url, headers=1, dict_form=True, format='csv')
     headers, iterator = downloader.get_tabular_rows(url, headers=2, dict_form=True, format='csv')
     valuedicts = list()
     iso3_col = 'ISO3'
     val_cols = list()
-    for header in headers:
+    superheaders = dict()
+    cursuperheader = None
+    j = 0
+    for i, header in enumerate(headers):
         if header != iso3_col and header.lower() != 'country':
             val_cols.append(header)
             valuedicts.append(dict())
+            superheader = superheaders_temp[i]
+            if superheader:
+                superheader = superheader.split(':')[0].lower()
+                if superheader != cursuperheader:
+                    cursuperheader = superheader
+            if cursuperheader:
+                superheaders[j] = cursuperheader
+            j = j + 1
     rowparser = RowParser(countryiso3s, {'adm_col': 'ISO3'})
     for row in iterator:
         countryiso = rowparser.do_set_value(row)
@@ -25,15 +37,16 @@ def get_humaccess(configuration, countryiso3s, downloader):
             for i, val_col in enumerate(val_cols):
                 valuedicts[i][countryiso] = row[val_col]
     hxlheaders = list()
-    curtype = None
+    cursuperheader = None
     counter = 1
-    for val_col in val_cols:
+    for i, val_col in enumerate(val_cols):
         hxltag = hxl_lookup.get(val_col)
-        if hxltag:
-            curtype = val_col.lower()
-            counter = 1
-        else:
-            hxltag = '#access+%s_%d' % (curtype, counter)
+        if not hxltag:
+            superheader = superheaders.get(i)
+            if superheader != cursuperheader:
+                counter = 1
+                cursuperheader = superheader
+            hxltag = '#access+%s_%d' % (cursuperheader, counter)
             counter += 1
         hxlheaders.append(hxltag)
     retheaders = [val_cols, hxlheaders]

@@ -138,6 +138,14 @@ tabular_hdx_subnational:
     hxltags:
       - "#population"
 
+road_networks_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=0&single=true&output=csv"
+
+health_facilities_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=532593078&single=true&output=csv"
+
+idps_locations_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=725426850&single=true&output=csv"
+
+3w_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=1662282962&single=true&output=csv"
+
 admin_info:
   - {ADM1_PCODE: AF01, ADM1_REF: Kabul, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
   - {ADM1_PCODE: AF02, ADM1_REF: Kapisa, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}

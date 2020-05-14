@@ -8,6 +8,7 @@ from model.fts import get_fts
 from model.humaccess import get_humaccess
 from model.ipc import get_ipc
 from model.tabularparser import get_tabular_hdx, get_tabular_json
+from model.whowhatwhere import get_whowhatwhere
 
 
 def get_indicators(configuration, downloader):
@@ -41,6 +42,7 @@ def get_indicators(configuration, downloader):
 
     pcodes = admininfo.pcodes
     ipc_headers, ipc_columns = get_ipc(configuration, admininfo, downloader)
+    #whowhatwhere_headers, whowhatwhere_columns = get_whowhatwhere(configuration, admininfo, downloader)
     tabular_headers, tabular_columns = get_tabular_hdx(configuration, pcodes, 'subnational', downloader)
     for i, header in enumerate(subnational):
         header.extend(ipc_headers[i])
