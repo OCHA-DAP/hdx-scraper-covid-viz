@@ -5,7 +5,7 @@ from model.rowparser import RowParser
 
 logger = logging.getLogger(__name__)
 
-hxl_lookup = {'Constraints': '#access+constraints'}
+hxl_lookup = {'Percentage of identified access contraints where the OCHA country office reported having an impact because of the COVID-19 outbreak': '#access+constraints'}
 
 
 def get_humaccess(configuration, countryiso3s, downloader):
