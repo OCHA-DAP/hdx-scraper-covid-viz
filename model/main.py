@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import logging
-
 from hdx.location.country import Country
 
 from model.admininfo import AdminInfo
