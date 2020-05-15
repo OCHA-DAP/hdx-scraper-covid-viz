@@ -1,2 +1,3 @@
+pyphonetics
 jsonpath_ng
 pygsheets==2.0.3.1

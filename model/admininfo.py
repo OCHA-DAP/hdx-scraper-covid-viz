@@ -3,8 +3,9 @@ import logging
 from difflib import get_close_matches
 
 from hdx.utilities.text import multiple_replace
+import pyphonetics
 from unidecode import unidecode
-from hdx.location.country import Country
+
 
 logger = logging.getLogger(__name__)
 
@@ -38,6 +39,9 @@ class AdminInfo(object):
             logger.error('Could not find %s in map names!' % countryiso3)
             return False
         adm1_name_lookup = unidecode(adm1_name)
+        if '/' in adm1_name_lookup:
+            adm1_name_lookup = adm1_name_lookup.split('/')[0]
+        adm1_name_lookup = adm1_name_lookup.strip()
         adm1_name_lookup2 = multiple_replace(adm1_name_lookup, self.adm1_name_replacements)
         adm1_name_lookup = adm1_name_lookup.lower()
         adm1_name_lookup2 = adm1_name_lookup2.lower()
@@ -56,15 +60,24 @@ class AdminInfo(object):
                     break
         if not pcode:
             map_names = list(name_to_pcode.keys())
-            lower_mapnames = [x.lower() for x in map_names]
-            matches = get_close_matches(adm1_name_lookup, lower_mapnames, 1, 0.8)
-            if not matches:
-                matches = get_close_matches(adm1_name_lookup2, lower_mapnames, 1, 0.8)
-                if not matches:
-                    logger.error('%s: Could not find %s in map names!' % (countryiso3, adm1_name))
-                    return None
-            index = lower_mapnames.index(matches[0])
-            map_name = map_names[index]
+            lower_mapnames = [x.lower().replace(' ', '') for x in map_names]
+            rs = pyphonetics.RefinedSoundex()
+            mindistance = None
+            match = None
+            for i, mapname in enumerate(lower_mapnames):
+                distance = rs.distance(adm1_name_lookup, mapname)
+                if mindistance is None or distance < mindistance:
+                    mindistance = distance
+                    match = i
+            for i, mapname in enumerate(lower_mapnames):
+                distance = rs.distance(adm1_name_lookup2, mapname)
+                if mindistance is None or distance < mindistance:
+                    mindistance = distance
+                    match = i
+            if mindistance > 2:
+                logger.error('%s: Could not find %s in map names!' % (countryiso3, adm1_name))
+                return None
+            map_name = map_names[match]
             pcode = name_to_pcode[map_name]
             logger.info('%s: Matching (fuzzy) %s to %s on map' % (countryiso3, adm1_name, self.pcode_to_name[pcode]))
         return pcode

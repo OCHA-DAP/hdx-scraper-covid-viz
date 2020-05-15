@@ -17,36 +17,37 @@ def get_indicators(configuration, downloader):
 
     admininfo = AdminInfo(configuration)
     countryiso3s = admininfo.countryiso3s
-    json_headers, json_columns = get_tabular_json(configuration, countryiso3s, downloader, 'national')
-    tabular_headers, tabular_columns = get_tabular_hdx(configuration, countryiso3s, 'national', downloader)
-    fts_headers, fts_columns = get_fts(configuration, countryiso3s, downloader)
-    humaccess_headers, humaccess_columns = get_humaccess(configuration, countryiso3s, downloader)
-    for i, header in enumerate(national):
-        header.extend(json_headers[i])
-        header.extend(tabular_headers[i])
-        header.extend(fts_headers[i])
-        header.extend(humaccess_headers[i])
-
-    for i, countryiso3 in enumerate(countryiso3s):
-        countryname = Country.get_country_name_from_iso3(countryiso3)
-        row = [countryiso3, countryname]
-        for column in json_columns:
-            row.append(column[countryiso3])
-        for column in tabular_columns:
-            row.append(column.get(countryiso3))
-        for column in fts_columns:
-            row.append(column[countryiso3])
-        for column in humaccess_columns:
-            row.append(column.get(countryiso3))
-        national.append(row)
+    # json_headers, json_columns = get_tabular_json(configuration, countryiso3s, downloader, 'national')
+    # tabular_headers, tabular_columns = get_tabular_hdx(configuration, countryiso3s, 'national', downloader)
+    # fts_headers, fts_columns = get_fts(configuration, countryiso3s, downloader)
+    # humaccess_headers, humaccess_columns = get_humaccess(configuration, countryiso3s, downloader)
+    # for i, header in enumerate(national):
+    #     header.extend(json_headers[i])
+    #     header.extend(tabular_headers[i])
+    #     header.extend(fts_headers[i])
+    #     header.extend(humaccess_headers[i])
+    #
+    # for i, countryiso3 in enumerate(countryiso3s):
+    #     countryname = Country.get_country_name_from_iso3(countryiso3)
+    #     row = [countryiso3, countryname]
+    #     for column in json_columns:
+    #         row.append(column[countryiso3])
+    #     for column in tabular_columns:
+    #         row.append(column.get(countryiso3))
+    #     for column in fts_columns:
+    #         row.append(column[countryiso3])
+    #     for column in humaccess_columns:
+    #         row.append(column.get(countryiso3))
+    #     national.append(row)
 
     pcodes = admininfo.pcodes
     ipc_headers, ipc_columns = get_ipc(configuration, admininfo, downloader)
-    #whowhatwhere_headers, whowhatwhere_columns = get_whowhatwhere(configuration, admininfo, downloader)
     tabular_headers, tabular_columns = get_tabular_hdx(configuration, pcodes, 'subnational', downloader)
+    whowhatwhere_headers, whowhatwhere_columns = get_whowhatwhere(configuration, admininfo, downloader)
     for i, header in enumerate(subnational):
         header.extend(ipc_headers[i])
         header.extend(tabular_headers[i])
+        header.extend(whowhatwhere_headers[i])
 
     for i, pcode in enumerate(pcodes):
         countryiso3 = admininfo.pcode_to_iso3[pcode]
@@ -56,6 +57,8 @@ def get_indicators(configuration, downloader):
         for column in ipc_columns:
             row.append(column.get(pcode))
         for column in tabular_columns:
+            row.append(column.get(pcode))
+        for column in whowhatwhere_columns:
             row.append(column.get(pcode))
         subnational.append(row)
 
