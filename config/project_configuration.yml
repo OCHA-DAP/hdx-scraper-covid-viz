@@ -4,11 +4,13 @@ prod_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1bbOp3N-pdW65HoxIY
 test_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1zS2gGeo5CHzucdKzyMYH_27dHlK2uyVqQwUDwlgfRlo/edit"
 national_sheetname: "NationalData"
 subnational_sheetname: "SubnationalData"
+sources_sheetname: "Sources"
 
 # national
 tabular_json_national:
   who:
     url: "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/COVID19_hist_cases_adm0_v5_view/FeatureServer/0/query?outFields=*&where=1%3D1&f=json"
+    source: "https://data.humdata.org/dataset/coronavirus-covid-19-cases-and-deaths"
     jsonpath: "features[*].attributes"
     adm_col: "ISO_3_CODE"
     date_col: "date_epicrv"
@@ -124,6 +126,7 @@ hum_access_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8VFKSM9gMnP6r
 
 # subnational
 ipc_url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=1&limit=1&condition=A&export=true&country=%s"
+ipc_dataset: "integrated-phase-classification-analysis"
 
 tabular_hdx_subnational:
   ghrp:

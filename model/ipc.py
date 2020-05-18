@@ -2,7 +2,9 @@ import logging
 
 import numpy
 import pandas
+from hdx.data.dataset import Dataset
 from hdx.location.country import Country
+from hdx.utilities.dateparse import parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 
 from model import get_percent
@@ -75,4 +77,7 @@ def get_ipc(configuration, admininfo, downloader):
                 denominator += population
             phasedict[pcode] = get_percent(numerator, denominator)
     logger.info('Processed IPC')
-    return [['FoodInsecurityP3+'], ['#affected+food+p3+pct']], [phasedict]
+    dataset = Dataset.read_from_hdx(configuration['ipc_dataset'])
+    date = parse_date(dataset['last_modified']).strftime('%Y-%m-%d')
+    return [['FoodInsecurityP3+'], ['#affected+food+p3+pct']], [phasedict], \
+           [['#affected+food+p3+pct', date, dataset.get_hdx_url()]]

@@ -12,13 +12,14 @@ from model.whowhatwhere import get_whowhatwhere
 def get_indicators(configuration, downloader):
     national = [['iso3', 'countryname'], ['#country+code', '#country+name']]
     subnational = [['iso3', 'countryname', 'adm1_pcode', 'adm1_name'], ['#country+code', '#country+name', '#adm1+code', '#adm1+name']]
+    sources = [['Indicator', 'Date', 'Url'], ['#indicator+name', '#date', '#meta+url']]
 
     admininfo = AdminInfo(configuration)
     countryiso3s = admininfo.countryiso3s
-    json_headers, json_columns = get_tabular_json(configuration, countryiso3s, downloader, 'national')
-    tabular_headers, tabular_columns = get_tabular_hdx(configuration, countryiso3s, 'national', downloader)
-    fts_headers, fts_columns = get_fts(configuration, countryiso3s, downloader)
-    humaccess_headers, humaccess_columns = get_humaccess(configuration, countryiso3s, downloader)
+    json_headers, json_columns, json_sources = get_tabular_json(configuration, countryiso3s, downloader, 'national')
+    tabular_headers, tabular_columns, tabular_sources = get_tabular_hdx(configuration, countryiso3s, 'national', downloader)
+    fts_headers, fts_columns, fts_sources = get_fts(configuration, countryiso3s, downloader)
+    humaccess_headers, humaccess_columns, humaccess_sources = get_humaccess(configuration, countryiso3s, downloader)
     for i, header in enumerate(national):
         header.extend(json_headers[i])
         header.extend(tabular_headers[i])
@@ -38,10 +39,15 @@ def get_indicators(configuration, downloader):
             row.append(column.get(countryiso3))
         national.append(row)
 
+    sources.extend(json_sources)
+    sources.extend(tabular_sources)
+    sources.extend(fts_sources)
+    sources.extend(humaccess_sources)
+
     pcodes = admininfo.pcodes
-    ipc_headers, ipc_columns = get_ipc(configuration, admininfo, downloader)
-    tabular_headers, tabular_columns = get_tabular_hdx(configuration, pcodes, 'subnational', downloader)
-    whowhatwhere_headers, whowhatwhere_columns = get_whowhatwhere(configuration, admininfo, downloader)
+    ipc_headers, ipc_columns, ipc_sources = get_ipc(configuration, admininfo, downloader)
+    tabular_headers, tabular_columns, tabular_sources = get_tabular_hdx(configuration, pcodes, 'subnational', downloader)
+    whowhatwhere_headers, whowhatwhere_columns, whowhatwhere_sources = get_whowhatwhere(configuration, admininfo, downloader)
     for i, header in enumerate(subnational):
         header.extend(ipc_headers[i])
         header.extend(tabular_headers[i])
@@ -60,4 +66,8 @@ def get_indicators(configuration, downloader):
             row.append(column.get(pcode))
         subnational.append(row)
 
-    return national, subnational
+    sources.extend(ipc_sources)
+    sources.extend(tabular_sources)
+    sources.extend(whowhatwhere_sources)
+
+    return national, subnational, sources

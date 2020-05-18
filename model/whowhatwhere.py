@@ -3,6 +3,8 @@ import logging
 import hxl
 from hdx.utilities.dictandlist import dict_of_sets_add
 
+from model import today_str
+
 logger = logging.getLogger(__name__)
 
 
@@ -56,4 +58,4 @@ def get_whowhatwhere(configuration, admininfo, downloader):
         else:
             orgcount[pcode] = len(orgdict[countrypcode])
     logger.info('Processed 3W')
-    return [['OrgCountAdm1'], ['#org+count+num']], [orgcount]
+    return [['OrgCountAdm1'], ['#org+count+num']], [orgcount], [['#org+count+num', today_str, url]]
