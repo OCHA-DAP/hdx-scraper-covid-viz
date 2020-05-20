@@ -148,33 +148,33 @@ ipc_url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/populati
 ipc_dataset: "integrated-phase-classification-analysis"
 
 tabular_subnational:
-#  ghrp:
-#    format: "csv"
-#    dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
-#    headers: 1
-#    adm_cols:
-#      - ~
-#      - "ADM1_PCODE"
-#    val_cols:
-#      - "POPULATION"
-#    columns:
-#      - "Population"
-#    hxltags:
-#      - "#population"
-#  healthfac:
-#    source: "HOTOSM"
-#    format: "csv"
-#    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT-266S0iZDEvcQmxC2i7LNHWi4fUXtDkrwp8D6NMyHArxnegAYO9XXVnhuHaWvdxaoZTq7M6yGLaPX/pub?gid=1620744216&single=true&output=csv"
-#    headers: 1
-#    adm_cols:
-#      - ~
-#      - "ADM1_PCODE"
-#    val_cols:
-#      - "NUMPOINTS"
-#    columns:
-#      - "NoHealthFacilities"
-#    hxltags:
-#      - "#loc+count+health"
+  ghrp:
+    format: "csv"
+    dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
+    headers: 1
+    adm_cols:
+      - ~
+      - "ADM1_PCODE"
+    val_cols:
+      - "POPULATION"
+    columns:
+      - "Population"
+    hxltags:
+      - "#population"
+  healthfac:
+    source: "HOTOSM"
+    format: "csv"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT-266S0iZDEvcQmxC2i7LNHWi4fUXtDkrwp8D6NMyHArxnegAYO9XXVnhuHaWvdxaoZTq7M6yGLaPX/pub?gid=1620744216&single=true&output=csv"
+    headers: 1
+    adm_cols:
+      - ~
+      - "ADM1_PCODE"
+    val_cols:
+      - "NUMPOINTS"
+    columns:
+      - "NoHealthFacilities"
+    hxltags:
+      - "#loc+count+health"
   who:
     source: "WHO"
     format: "csv"

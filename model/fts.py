@@ -40,10 +40,12 @@ def get_fts(configuration, countryiso3s, downloader):
         json = response.json()
         data = json['data']
 
+        covid_ids = list()
         req = 0
         for reqobj in data['requirements']['objects']:
             if 'COVID-19' in reqobj['tags']:
                 req += reqobj['revisedRequirements']
+                covid_ids.append(reqobj['id'])
         requirements[country] = req
 
         fund = 0
@@ -52,9 +54,22 @@ def get_fts(configuration, countryiso3s, downloader):
             funding[country] = None  # Not Yet Tracked
             percentage[country] = None
         else:
-            for fundobj in fundingobjects[0]['objectsBreakdown']:
-                if 'COVID-19' in fundobj['name']:
+            for fundobj in fundingobjects[0]['singleFundingObjects']:
+                fund_id = fundobj.get('id')
+                if fund_id and fund_id in covid_ids:
                     fund += fundobj['totalFunding']
+            sharedfundingobjects = fundingobjects[0].get('sharedFundingObjects')
+            if sharedfundingobjects:
+                for fundobj in sharedfundingobjects:
+                    fund_ids = fundobj.get('id')
+                    if fund_ids:
+                        match = True
+                        for fund_id in fund_ids:
+                            if int(fund_id) not in covid_ids:
+                                match = False
+                                break
+                        if match:
+                            fund += fundobj['totalFunding']
             funding[country] = fund
             if fund == 0:
                 percentage[country] = 0
