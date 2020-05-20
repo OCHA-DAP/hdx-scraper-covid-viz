@@ -7,12 +7,15 @@ subnational_sheetname: "SubnationalData"
 sources_sheetname: "Sources"
 
 # national
-tabular_json_national:
+tabular_national:
   who:
+    source: "WHO"
+    source_url: "https://data.humdata.org/dataset/coronavirus-covid-19-cases-and-deaths"
+    format: "json"
     url: "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/COVID19_hist_cases_adm0_v5_view/FeatureServer/0/query?outFields=*&where=1%3D1&f=json"
-    source: "https://data.humdata.org/dataset/coronavirus-covid-19-cases-and-deaths"
     jsonpath: "features[*].attributes"
-    adm_col: "ISO_3_CODE"
+    adm_cols:
+      - "ISO_3_CODE"
     date_col: "date_epicrv"
     date_type: "int"
     val_cols:
@@ -24,14 +27,13 @@ tabular_json_national:
     hxltags:
       - "#affected+infected"
       - "#affected+killed"
-
-tabular_hdx_national:
   inform:
-    dataset: "inform-covid-19-risk-index-version-0-1-2"
     format: "xlsx"
+    dataset: "inform-covid-19-risk-index-version-0-1-2"
     sheetname: "INFORM COVID-19 RISK 2020 (a-z)"
     headers: 1
-    adm_col: "ISO3"
+    adm_cols:
+      - "ISO3"
     val_cols:
       - "INFORM COVID-19 RISK"
       - "COVID-19 RISK CLASS"
@@ -42,11 +44,12 @@ tabular_hdx_national:
       - "#severity+num"
       - "#severity+type"
   needs:
-    dataset: "global-humanitarian-overview-2020-figures"
     format: "xlsx"
+    dataset: "global-humanitarian-overview-2020-figures"
     sheetname: "Raw Data"
     headers: 1
-    adm_col: "Country Code"
+    adm_cols:
+      - "Country Code"
     date_col: "Year"
     date_type: "int"
     indicator_cols:
@@ -65,11 +68,12 @@ tabular_hdx_national:
         hxltags:
           - "#value+funding+required+precovid+usd"
   imperial:
-    dataset: "imperial-college-covid-19-projections"
     format: "xlsx"
+    dataset: "imperial-college-covid-19-projections"
     sheetname: 1
     headers: 2
-    adm_col: "#country+code"
+    adm_cols:
+      - "#country+code"
     val_cols:
       - "#affected+infected+cases+min"
       - "#affected+infected+cases+max"
@@ -81,16 +85,17 @@ tabular_hdx_national:
       - "Imp: Total Deaths(min)"
       - "Imp: Total Deaths(max)"
     hxltags:
-      - "#affected+infected+cases+min+imperial"
-      - "#affected+infected+cases+max+imperial"
-      - "#affected+deaths+min+imperial"
-      - "#affected+deaths+max+imperial"
+      - "#affected+cases+infected+imperial+min"
+      - "#affected+cases+infected+imperial+max"
+      - "#affected+deaths+imperial+min"
+      - "#affected+deaths+imperial+max"
   lshtm:
-    dataset: "lshtm-covid-19-projections"
     format: "xlsx"
+    dataset: "lshtm-covid-19-projections"
     sheetname: 1
     headers: 2
-    adm_col: "#country+code"
+    adm_cols:
+      - "#country+code"
     val_cols:
       - "#affected+infected+cases+min"
       - "#affected+infected+cases+max"
@@ -102,15 +107,16 @@ tabular_hdx_national:
       - "LSHTM: Total Deaths(min)"
       - "LSHTM: Total Deaths(max)"
     hxltags:
-      - "#affected+infected+cases+min+lshtm"
-      - "#affected+infected+cases+max+lshtm"
-      - "#affected+deaths+min+lshtm"
-      - "#affected+deaths+max+lshtm"
+      - "#affected+cases+infected+lshtm+min"
+      - "#affected+cases+infected+lshtm+max"
+      - "#affected+deaths+lshtm+min"
+      - "#affected+deaths+lshtm+max"
   school:
-    dataset: "global-school-closures-covid19"
     format: "csv"
+    dataset: "global-school-closures-covid19"
     headers: 1
-    adm_col: "ISO"
+    adm_cols:
+      - "ISO"
     date_col: "Date"
     date_type: "date"
     val_cols:
@@ -128,18 +134,82 @@ hum_access_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8VFKSM9gMnP6r
 ipc_url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=1&limit=1&condition=A&export=true&country=%s"
 ipc_dataset: "integrated-phase-classification-analysis"
 
-tabular_hdx_subnational:
+tabular_subnational:
   ghrp:
-    dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
     format: "csv"
+    dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
     headers: 1
-    adm_col: "ADM1_PCODE"
+    adm_cols:
+      - ~
+      - "ADM1_PCODE"
     val_cols:
       - "POPULATION"
     columns:
       - "Population"
     hxltags:
       - "#population"
+  who:
+    source: "WHO"
+    format: "csv"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRfjaIXE1hvEIXD66g6cuCbPrGdZkx6vLIgXO_znVbjQ-OgwfaI1kJPhxhgjw2Yg08CmtBuMLAZkTnu/pub?gid=337443769&single=true&output=csv"
+    headers: 1
+    adm_cols:
+      - "iso"
+      - "Admin1"
+    date_col: "Year"
+    date_type: "int"
+    indicator_cols:
+      - filter_col: "Vaccine=HepB1"
+        val_cols:
+          - "Numerator"
+          - "Denominator"
+        total_col: "int((Numerator/Denominator * 100.0) + 0.5)"
+        columns:
+          - "HepB1 Coverage"
+        hxltags:
+          - "#population+hepb1+pct+vaccinated"
+      - filter_col: "Vaccine=HepB3"
+        val_cols:
+          - "Numerator"
+          - "Denominator"
+        total_col: "int((Numerator/Denominator * 100.0) + 0.5)"
+        columns:
+          - "HepB3 Coverage"
+        hxltags:
+          - "#population+hepb3+pct+vaccinated"
+      - filter_col: "Vaccine=MCV1"
+        val_cols:
+          - "Numerator"
+          - "Denominator"
+        total_col: "int((Numerator/Denominator * 100.0) + 0.5)"
+        columns:
+          - "MCV1 Coverage"
+        hxltags:
+          - "#population+mcv1+pct+vaccinated"
+      - filter_col: "Vaccine=Pol3"
+        val_cols:
+          - "Numerator"
+          - "Denominator"
+        total_col: "int((Numerator/Denominator * 100.0) + 0.5)"
+        columns:
+          - "Pol3 Coverage"
+        hxltags:
+          - "#population+pct+pol3+vaccinated"
+  healthfac:
+    source: "HOTOSM"
+    format: "csv"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT-266S0iZDEvcQmxC2i7LNHWi4fUXtDkrwp8D6NMyHArxnegAYO9XXVnhuHaWvdxaoZTq7M6yGLaPX/pub?gid=1620744216&single=true&output=csv"
+    headers: 1
+    adm_cols:
+      - ~
+      - "ADM1_PCODE"
+    val_cols:
+      - "NUMPOINTS"
+    columns:
+      - "NoHealthFacilities"
+    hxltags:
+      - "#loc+count+health"
+
 
 road_networks_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=0&single=true&output=csv"
 

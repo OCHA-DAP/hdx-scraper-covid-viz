@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
+from hdx.location.country import Country
 from hdx.utilities.dateparse import parse_date
+
+from model.admininfo import AdminInfo
 
 
 class RowParser(object):
     def __init__(self, adms, datasetinfo):
         self.adms = adms
-        self.admcol = datasetinfo['adm_col']
+        self.admcols = datasetinfo['adm_cols']
         self.datecol = datasetinfo.get('date_col')
         self.datetype = datasetinfo.get('date_type')
         if self.datetype:
@@ -22,9 +25,23 @@ class RowParser(object):
             self.filtercol = self.filtercol.split('=')
 
     def do_set_value(self, row):
-        adm = row[self.admcol]
-        if adm not in self.adms:
-            return None
+        adm = None
+        for i, admcol in enumerate(self.admcols):
+            if admcol is None:
+                continue
+            prev_adm = adm
+            adm = row[admcol]
+            if not adm:
+                return None
+            if adm not in self.adms[i]:
+                if i == 0:
+                    adm, _ = Country.get_iso3_country_code_fuzzy(adm)
+                elif i == 1:
+                    adm = AdminInfo.get().get_pcode(prev_adm, adm)
+                else:
+                    return None
+                if adm not in self.adms[i]:
+                    return None
         if self.datecol:
             date = row[self.datecol]
             if self.datetype == 'int':

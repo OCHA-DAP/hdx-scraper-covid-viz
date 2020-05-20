@@ -64,8 +64,8 @@ def get_fts(configuration, countryiso3s, downloader):
     if global_plan_id == 0:
         raise ValueError('No GHRP found!')
     logger.info('Processed FTS')
-    hxltags = ['#value+funding+required+covid+usd', '#value+funding+total+covid+usd', '#value+funding+covid+pct']
+    hxltags = ['#value+covid+funding+required+usd', '#value+covid+funding+total+usd', '#value+covid+funding+pct']
     return [['RequiredCovidFunding', 'CovidFunding', 'CovidPercentFunded'],
             hxltags], \
            [requirements, funding, percentage], \
-           [[hxltag, today_str, 'https://fts.unocha.org/appeals/952/summary'] for hxltag in hxltags]
+           [[hxltag, today_str, 'OCHA', 'https://fts.unocha.org/appeals/952/summary'] for hxltag in hxltags]

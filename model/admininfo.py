@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
-from difflib import get_close_matches
 
+from hdx.hdx_configuration import Configuration
 from hdx.utilities.text import multiple_replace
 import pyphonetics
 from unidecode import unidecode
@@ -11,12 +11,14 @@ logger = logging.getLogger(__name__)
 
 
 class AdminInfo(object):
+    _admininfo = None
     pcodes = list()
     name_to_pcode = dict()
     pcode_to_name = dict()
     pcode_to_iso3 = dict()
 
-    def __init__(self, configuration):
+    def __init__(self):
+        configuration = Configuration.read()
         admin_info = configuration['admin_info']
         self.adm1_name_replacements = configuration['adm1_name_replacements']
         countryiso3s = set()
@@ -81,3 +83,9 @@ class AdminInfo(object):
             pcode = name_to_pcode[map_name]
             logger.info('%s: Matching (fuzzy) %s to %s on map' % (countryiso3, adm1_name, self.pcode_to_name[pcode]))
         return pcode
+
+    @classmethod
+    def get(cls):
+        if not cls._admininfo:
+            cls._admininfo = AdminInfo()
+        return cls._admininfo

@@ -24,7 +24,7 @@ def get_humaccess(configuration, countryiso3s, downloader):
             val_cols.append(header)
             hxltags.append(hxlrow[header])
             valuedicts.append(dict())
-    rowparser = RowParser(countryiso3s, {'adm_col': 'ISO3'})
+    rowparser = RowParser([countryiso3s], {'adm_cols': ['ISO3']})
     for row in iterator:
         countryiso = rowparser.do_set_value(row)
         if countryiso:
@@ -32,7 +32,7 @@ def get_humaccess(configuration, countryiso3s, downloader):
                 valuedicts[i][countryiso] = row[val_col]
     retheaders = [val_cols, hxltags]
     logger.info('Processed Humanitarian Access')
-    return retheaders, valuedicts, [[hxltag, today_str, url] for hxltag in hxltags]
+    return retheaders, valuedicts, [[hxltag, today_str, 'OCHA', url] for hxltag in hxltags]
 
 
 

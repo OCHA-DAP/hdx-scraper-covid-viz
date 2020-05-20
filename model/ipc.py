@@ -80,4 +80,4 @@ def get_ipc(configuration, admininfo, downloader):
     dataset = Dataset.read_from_hdx(configuration['ipc_dataset'])
     date = parse_date(dataset['last_modified']).strftime('%Y-%m-%d')
     return [['FoodInsecurityP3+'], ['#affected+food+p3+pct']], [phasedict], \
-           [['#affected+food+p3+pct', date, dataset.get_hdx_url()]]
+           [['#affected+food+p3+pct', date, dataset['dataset_source'], dataset.get_hdx_url()]]

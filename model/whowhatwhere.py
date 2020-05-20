@@ -9,8 +9,8 @@ logger = logging.getLogger(__name__)
 
 
 def get_whowhatwhere(configuration, admininfo, downloader):
-    url = configuration['3w_url']
-    headers, iterator = downloader.get_tabular_rows(url, headers=1, dict_form=True, format='csv')
+    threew_url = configuration['3w_url']
+    headers, iterator = downloader.get_tabular_rows(threew_url, headers=1, dict_form=True, format='csv')
     rows = list(iterator)
     orgdict = dict()
     for ds_row in rows:
@@ -58,4 +58,4 @@ def get_whowhatwhere(configuration, admininfo, downloader):
         else:
             orgcount[pcode] = len(orgdict[countrypcode])
     logger.info('Processed 3W')
-    return [['OrgCountAdm1'], ['#org+count+num']], [orgcount], [['#org+count+num', today_str, url]]
+    return [['OrgCountAdm1'], ['#org+count+num']], [orgcount], [['#org+count+num', today_str, 'OCHA', threew_url]]
