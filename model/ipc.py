@@ -1,13 +1,12 @@
 import logging
 
-import numpy
-import pandas
 from hdx.data.dataset import Dataset
 from hdx.location.country import Country
 from hdx.utilities.dateparse import parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 
 from model import get_percent
+from model.tabularparser import get_tabular_source
 
 logger = logging.getLogger(__name__)
 
@@ -18,28 +17,12 @@ def get_ipc(configuration, admininfo, downloader):
     popdict = dict()
     for countryiso3 in admininfo.countryiso3s:
         countryiso2 = Country.get_iso2_from_iso3(countryiso3)
-        try:
-            df = pandas.read_excel(url % countryiso2, header=[9, 10, 11])
-        except AttributeError:
-            logger.info('No IPC data for %s!' % countryiso3)
-            continue
-        headers = list()
-        for col in list(df.columns):
-            colstrs = list()
-            for subcol in col:
-                if 'Unnamed' in subcol:
-                    continue
-                colstrs.append(subcol)
-            column = ' '.join(colstrs)
-            headers.append(column)
-        df.columns = headers
-        df.replace(numpy.nan, '', regex=True, inplace=True)
-        data = df.to_dict('records')
-
+        data = get_tabular_source(downloader, {'url': url % countryiso2, 'sheetname': 'IPC', 'headers': [4, 6], 'format': 'xlsx'}, fill_merged_cells=True)
+        data = list(data)
         adm1_names = set()
         for row in data:
             area = row['Area']
-            if not area:
+            if not area or area == row['Country']:
                 continue
             adm1_name = row['Level 1 Name']
             if adm1_name:

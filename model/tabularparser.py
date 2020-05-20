@@ -104,12 +104,12 @@ def _get_tabular(adms, name, datasetinfo, iterator, retheaders=[list(), list()],
     return retheaders, retval, sources
 
 
-def get_tabular_source(downloader, datasetinfo):
+def get_tabular_source(downloader, datasetinfo, **kwargs):
     url = datasetinfo['url']
     sheetname = datasetinfo.get('sheetname')
     headers = datasetinfo['headers']
     format = datasetinfo['format']
-    headers, iterator = downloader.get_tabular_rows(url, sheet=sheetname, headers=headers, dict_form=True, format=format)
+    headers, iterator = downloader.get_tabular_rows(url, sheet=sheetname, headers=headers, dict_form=True, format=format, **kwargs)
     return iterator
 
 
