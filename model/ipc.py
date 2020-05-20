@@ -28,14 +28,14 @@ def get_ipc(configuration, admininfo, downloader):
             if adm1_name:
                 adm1_names.add(adm1_name)
         for row in data:
+            country = row['Country']
             if adm1_names:
-                country = row['Country']
                 if country not in adm1_names:
                     continue
                 adm1_name = country
             else:
                 adm1_name = row['Area']
-                if not adm1_name:
+                if not adm1_name or adm1_name == country:
                     continue
             pcode = admininfo.get_pcode(countryiso3, adm1_name)
             if not pcode:

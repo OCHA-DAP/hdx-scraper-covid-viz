@@ -40,8 +40,7 @@ def get_indicators(configuration, downloader):
     sources.extend(humaccess_sources)
 
     pcodes = admininfo.pcodes
-    tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, [countryiso3s, pcodes], 'subnational',
-                                                                    downloader)
+    tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, [countryiso3s, pcodes], 'subnational', downloader)
     ipc_headers, ipc_columns, ipc_sources = get_ipc(configuration, admininfo, downloader)
     whowhatwhere_headers, whowhatwhere_columns, whowhatwhere_sources = get_whowhatwhere(configuration, admininfo, downloader)
     for i, header in enumerate(subnational):
