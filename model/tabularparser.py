@@ -18,6 +18,7 @@ def _get_tabular(adms, name, datasetinfo, iterator, retheaders=[list(), list()],
     indicatorcols = datasetinfo.get('indicator_cols')
     if not indicatorcols:
         indicatorcols = [{'filter_col': None, 'val_cols': datasetinfo['val_cols'], 'total_col': datasetinfo.get('total_col'),
+                          'ignore_vals': datasetinfo.get('ignore_vals'), 'add_fns': datasetinfo.get('add_fns'),
                           'columns': datasetinfo['columns'], 'hxltags': datasetinfo['hxltags']}]
     valuedicts = dict()
     for indicatorcol in indicatorcols:
@@ -38,10 +39,9 @@ def _get_tabular(adms, name, datasetinfo, iterator, retheaders=[list(), list()],
             totalcol = indicatorcol.get('total_col')
             for i, valcol in enumerate(indicatorcol['val_cols']):
                 valuedict = valuedicts[filtercol][i]
-                existing_val = valuedict.get(adm)
                 val = row[valcol]
-                if existing_val and totalcol:
-                    valuedict[adm] = float(valuedict[adm]) + float(val)
+                if totalcol:
+                    dict_of_lists_add(valuedict, adm, val)
                 else:
                     valuedict[adm] = val
     date = datasetinfo.get('modified')
@@ -66,14 +66,33 @@ def _get_tabular(adms, name, datasetinfo, iterator, retheaders=[list(), list()],
         retheaders[1].extend(hxltags)
         valdicts = valuedicts[indicatorcol['filter_col']]
         total_col = indicatorcol.get('total_col')
+        ignore_vals = indicatorcol.get('ignore_vals')
+        add_fns = indicatorcol.get('add_fns')
+        valcols = indicatorcol['val_cols']
         if total_col:
-            for i, valcol in enumerate(indicatorcol['val_cols']):
-                total_col = total_col.replace(valcol, 'valdicts[%d][adm]' % i)
+            newvaldicts = [dict() for _ in valdicts]
+            valdict0 = valdicts[0]
+            for adm in valdict0:
+                for i, val in enumerate(valdict0[adm]):
+                    if not val or val in ignore_vals:
+                        continue
+                    exists = True
+                    for valdict in valdicts[1:]:
+                        val = valdict[adm]
+                        if not val or val in ignore_vals:
+                            exists = False
+                            break
+                    if not exists:
+                        continue
+                    for j, valdict in enumerate(valdicts):
+                        newvaldicts[j][adm] = newvaldicts[j].get(adm, 0.0) + eval(add_fns[j].replace(valcols[j], 'valdict[adm][i]'))
+            for i, valcol in enumerate(valcols):
+                total_col = total_col.replace(valcol, 'newvaldicts[%d][adm]' % i)
             newvaldict = dict()
             for adm in valdicts[0].keys():
                 try:
                     val = eval(total_col)
-                except (ValueError, TypeError):
+                except (ValueError, TypeError, KeyError):
                     val = ''
                 newvaldict[adm] = val
             retval.append(newvaldict)

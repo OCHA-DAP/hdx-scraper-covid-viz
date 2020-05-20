@@ -43,6 +43,19 @@ tabular_national:
     hxltags:
       - "#severity+num"
       - "#severity+type"
+  economicindex:
+    format: "xlsx"
+    dataset: "covid-19-economic-exposure-index"
+    sheetname: "economic exposure"
+    headers: 1
+    adm_cols:
+      - "Country"
+    val_cols:
+      - "Covid 19 Economic exposure index"
+    columns:
+      - "EconomicExposure"
+    hxltags:
+      - "#severity+economic+num"
   needs:
     format: "xlsx"
     dataset: "global-humanitarian-overview-2020-figures"
@@ -135,19 +148,33 @@ ipc_url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/populati
 ipc_dataset: "integrated-phase-classification-analysis"
 
 tabular_subnational:
-  ghrp:
-    format: "csv"
-    dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
-    headers: 1
-    adm_cols:
-      - ~
-      - "ADM1_PCODE"
-    val_cols:
-      - "POPULATION"
-    columns:
-      - "Population"
-    hxltags:
-      - "#population"
+#  ghrp:
+#    format: "csv"
+#    dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
+#    headers: 1
+#    adm_cols:
+#      - ~
+#      - "ADM1_PCODE"
+#    val_cols:
+#      - "POPULATION"
+#    columns:
+#      - "Population"
+#    hxltags:
+#      - "#population"
+#  healthfac:
+#    source: "HOTOSM"
+#    format: "csv"
+#    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT-266S0iZDEvcQmxC2i7LNHWi4fUXtDkrwp8D6NMyHArxnegAYO9XXVnhuHaWvdxaoZTq7M6yGLaPX/pub?gid=1620744216&single=true&output=csv"
+#    headers: 1
+#    adm_cols:
+#      - ~
+#      - "ADM1_PCODE"
+#    val_cols:
+#      - "NUMPOINTS"
+#    columns:
+#      - "NoHealthFacilities"
+#    hxltags:
+#      - "#loc+count+health"
   who:
     source: "WHO"
     format: "csv"
@@ -164,51 +191,136 @@ tabular_subnational:
           - "Numerator"
           - "Denominator"
         total_col: "int((Numerator/Denominator * 100.0) + 0.5)"
+        ignore_vals:
+          - "-2222"
+          - "-4444"
+        add_fns:
+          - "max([float(Numerator), 0.0])"
+          - "max([float(Denominator), 0.0])"
         columns:
           - "HepB1 Coverage"
         hxltags:
           - "#population+hepb1+pct+vaccinated"
+      - filter_col: "Vaccine=HepB2"
+        val_cols:
+          - "Numerator"
+          - "Denominator"
+        total_col: "int((Numerator/Denominator * 100.0) + 0.5)"
+        ignore_vals:
+          - "-2222"
+          - "-4444"
+        add_fns:
+          - "max([float(Numerator), 0.0])"
+          - "max([float(Denominator), 0.0])"
+        columns:
+          - "HepB2 Coverage"
+        hxltags:
+          - "#population+hepb2+pct+vaccinated"
       - filter_col: "Vaccine=HepB3"
         val_cols:
           - "Numerator"
           - "Denominator"
         total_col: "int((Numerator/Denominator * 100.0) + 0.5)"
+        ignore_vals:
+          - "-2222"
+          - "-4444"
+        add_fns:
+          - "max([float(Numerator), 0.0])"
+          - "max([float(Denominator), 0.0])"
         columns:
           - "HepB3 Coverage"
         hxltags:
           - "#population+hepb3+pct+vaccinated"
+      - filter_col: "Vaccine=IPV1"
+        val_cols:
+          - "Numerator"
+          - "Denominator"
+        total_col: "int((Numerator/Denominator * 100.0) + 0.5)"
+        ignore_vals:
+          - "-2222"
+          - "-4444"
+        add_fns:
+          - "max([float(Numerator), 0.0])"
+          - "max([float(Denominator), 0.0])"
+        columns:
+          - "IPV1 Coverage"
+        hxltags:
+          - "#population+ipv1+pct+vaccinated"
       - filter_col: "Vaccine=MCV1"
         val_cols:
           - "Numerator"
           - "Denominator"
         total_col: "int((Numerator/Denominator * 100.0) + 0.5)"
+        ignore_vals:
+          - "-2222"
+          - "-4444"
+        add_fns:
+          - "max([float(Numerator), 0.0])"
+          - "max([float(Denominator), 0.0])"
         columns:
           - "MCV1 Coverage"
         hxltags:
           - "#population+mcv1+pct+vaccinated"
+      - filter_col: "Vaccine=MCV2"
+        val_cols:
+          - "Numerator"
+          - "Denominator"
+        total_col: "int((Numerator/Denominator * 100.0) + 0.5)"
+        ignore_vals:
+          - "-2222"
+          - "-4444"
+        add_fns:
+          - "max([float(Numerator), 0.0])"
+          - "max([float(Denominator), 0.0])"
+        columns:
+          - "MCV2 Coverage"
+        hxltags:
+          - "#population+mcv2+pct+vaccinated"
+      - filter_col: "Vaccine=Pol1"
+        val_cols:
+          - "Numerator"
+          - "Denominator"
+        total_col: "int((Numerator/Denominator * 100.0) + 0.5)"
+        ignore_vals:
+          - "-2222"
+          - "-4444"
+        add_fns:
+          - "max([float(Numerator), 0.0])"
+          - "max([float(Denominator), 0.0])"
+        columns:
+          - "Pol1 Coverage"
+        hxltags:
+          - "#population+pct+pol1+vaccinated"
+      - filter_col: "Vaccine=Pol2"
+        val_cols:
+          - "Numerator"
+          - "Denominator"
+        total_col: "int((Numerator/Denominator * 100.0) + 0.5)"
+        ignore_vals:
+          - "-2222"
+          - "-4444"
+        add_fns:
+          - "max([float(Numerator), 0.0])"
+          - "max([float(Denominator), 0.0])"
+        columns:
+          - "Pol2 Coverage"
+        hxltags:
+          - "#population+pct+pol2+vaccinated"
       - filter_col: "Vaccine=Pol3"
         val_cols:
           - "Numerator"
           - "Denominator"
         total_col: "int((Numerator/Denominator * 100.0) + 0.5)"
+        ignore_vals:
+          - "-2222"
+          - "-4444"
+        add_fns:
+          - "max([float(Numerator), 0.0])"
+          - "max([float(Denominator), 0.0])"
         columns:
           - "Pol3 Coverage"
         hxltags:
           - "#population+pct+pol3+vaccinated"
-  healthfac:
-    source: "HOTOSM"
-    format: "csv"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT-266S0iZDEvcQmxC2i7LNHWi4fUXtDkrwp8D6NMyHArxnegAYO9XXVnhuHaWvdxaoZTq7M6yGLaPX/pub?gid=1620744216&single=true&output=csv"
-    headers: 1
-    adm_cols:
-      - ~
-      - "ADM1_PCODE"
-    val_cols:
-      - "NUMPOINTS"
-    columns:
-      - "NoHealthFacilities"
-    hxltags:
-      - "#loc+count+health"
 
 
 road_networks_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=0&single=true&output=csv"
