@@ -20,9 +20,6 @@ class RowParser(object):
                 self.maxdate = 0
         else:
             self.maxdate = 0
-        self.filtercol = datasetinfo.get('filter_col')
-        if self.filtercol:
-            self.filtercol = self.filtercol.split('=')
 
     def do_set_value(self, row):
         adm = None
@@ -53,7 +50,4 @@ class RowParser(object):
             if date < self.maxdate:
                 return None
             self.maxdate = date
-        if self.filtercol:
-            if row[self.filtercol[0]] != self.filtercol[1]:
-                return None
         return adm

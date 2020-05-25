@@ -8,6 +8,6 @@ today_str = today.strftime('%Y-%m-%d')
 
 
 def get_percent(numerator, denominator):
-    return int((numerator / denominator * 100.0) + 0.5)
+    return '%.2f%%' % (numerator / denominator * 100.0)
 
 

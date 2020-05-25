@@ -7,7 +7,7 @@ from hdx.utilities.dateparse import parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 from jsonpath_ng import parse
 
-from model import today, logger, today_str
+from model import today, today_str, get_percent
 from model.rowparser import RowParser
 
 logger = logging.getLogger(__name__)
@@ -17,7 +17,7 @@ def _get_tabular(adms, name, datasetinfo, iterator, retheaders=[list(), list()],
     rowparser = RowParser(adms, datasetinfo)
     indicatorcols = datasetinfo.get('indicator_cols')
     if not indicatorcols:
-        indicatorcols = [{'filter_col': None, 'val_cols': datasetinfo['val_cols'], 'total_col': datasetinfo.get('total_col'),
+        indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo['val_cols'], 'total_col': datasetinfo.get('total_col'),
                           'ignore_vals': datasetinfo.get('ignore_vals'), 'add_fns': datasetinfo.get('add_fns'),
                           'columns': datasetinfo['columns'], 'hxltags': datasetinfo['hxltags']}]
     valuedicts = dict()
@@ -33,8 +33,14 @@ def _get_tabular(adms, name, datasetinfo, iterator, retheaders=[list(), list()],
         for indicatorcol in indicatorcols:
             filtercol = indicatorcol['filter_col']
             if filtercol:
-                filter = filtercol.split('=')
-                if row[filter[0]] != filter[1]:
+                filtercols = filtercol.split(',')
+                match = True
+                for filterstr in filtercols:
+                    filter = filterstr.split('=')
+                    if row[filter[0]] != filter[1]:
+                        match = False
+                        break
+                if not match:
                     continue
             totalcol = indicatorcol.get('total_col')
             for i, valcol in enumerate(indicatorcol['val_cols']):
