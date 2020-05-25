@@ -20,11 +20,17 @@ def _get_copy(adms, name, datasetinfo, headers, iterator, retheaders=[list(), li
         hxltag = hxlrow[header]
         if '#country' in hxltag:
             if 'code' in hxltag:
-                adm_cols.append(header)
+                if len(adm_cols) == 0:
+                    adm_cols.append(header)
+                else:
+                    adm_cols[0] = header
             continue
         if '#adm1' in hxltag:
             if 'code' in hxltag:
-                adm_cols.append(header)
+                if len(adm_cols) == 0:
+                    adm_cols.append(None)
+                if len(adm_cols) == 1:
+                    adm_cols.append(header)
             continue
         val_cols.append(header)
         hxltags.append(hxltag)

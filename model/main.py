@@ -39,6 +39,7 @@ def extend_sources(sources, *args):
 
 
 def get_indicators(configuration, downloader, scraper=None):
+    world = [list(), list()]
     national = [['iso3', 'countryname'], ['#country+code', '#country+name']]
     subnational = [['iso3', 'countryname', 'adm1_pcode', 'adm1_name'], ['#country+code', '#country+name', '#adm1+code', '#adm1+name']]
     sources = [['Indicator', 'Date', 'Source', 'Url'], ['#indicator+name', '#date', '#meta+source', '#meta+url']]
@@ -62,4 +63,4 @@ def get_indicators(configuration, downloader, scraper=None):
     extend_columns(subnational, pcodes, admininfo, tabular_columns, ipc_columns, whowhatwhere_columns)
     extend_sources(sources, tabular_sources, ipc_sources, whowhatwhere_sources)
 
-    return national, subnational, sources
+    return world, national, subnational, sources

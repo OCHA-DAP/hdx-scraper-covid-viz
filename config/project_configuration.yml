@@ -2,6 +2,7 @@
 prod_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1bbOp3N-pdW65HoxIYj1tVY4zLfTD4mbpaOZ5ZfrZE54/edit"
 # test
 test_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1zS2gGeo5CHzucdKzyMYH_27dHlK2uyVqQwUDwlgfRlo/edit"
+world_sheetname: "WorldData"
 national_sheetname: "NationalData"
 subnational_sheetname: "SubnationalData"
 sources_sheetname: "Sources"
