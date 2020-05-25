@@ -29,15 +29,16 @@ def parse_args():
     parser.add_argument('-hs', '--hdx_site', default=None, help='HDX site to use')
     parser.add_argument('-gs', '--gsheet_auth', default=None, help='Credentials for accessing Google Sheets')
     parser.add_argument('-t', '--test', action='store_true', help='Whether to output to test')
+    parser.add_argument('-sc', '--scraper', default=None, help='Scraper to run')
     args = parser.parse_args()
     return args
 
 
-def main(gsheet_auth, test, **ignore):
+def main(gsheet_auth, test, scraper, **ignore):
     logger.info('##### hdx-scraper-covid-viz version %.1f ####' % VERSION)
     configuration = Configuration.read()
     with Download(rate_limit={'calls': 1, 'period': 1}) as downloader:
-        national, subnational, sources = get_indicators(configuration, downloader)
+        national, subnational, sources = get_indicators(configuration, downloader, scraper)
         # Write to gsheets
         info = json.loads(gsheet_auth)
         scopes = ['https://www.googleapis.com/auth/spreadsheets']
@@ -76,4 +77,5 @@ if __name__ == '__main__':
     if gsheet_auth is None:
         gsheet_auth = getenv('GSHEET_AUTH')
     facade(main, hdx_read_only=True, user_agent=user_agent, preprefix=preprefix, hdx_site=hdx_site,
-           project_config_yaml=join('config', 'project_configuration.yml'), gsheet_auth=gsheet_auth, test=args.test)
+           project_config_yaml=join('config', 'project_configuration.yml'), gsheet_auth=gsheet_auth, test=args.test,
+           scraper=args.scraper)

@@ -139,9 +139,15 @@ tabular_national:
     hxltags:
       - "#impact+type"
 
-fts_url: "https://api.hpc.tools/v1/public/"
+# national
+copy_national:
+  humaccess:
+    source: "OCHA"
+    format: "csv"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8VFKSM9gMnP6rs6Xv_K5imWJuEXgtf-48_wrXPCpqACDl3u0GtQn6v4RQWhKzwwNtnc1Lvx5pK5Lo/pub?gid=0&single=true&output=csv"
+    headers: 2
 
-hum_access_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8VFKSM9gMnP6rs6Xv_K5imWJuEXgtf-48_wrXPCpqACDl3u0GtQn6v4RQWhKzwwNtnc1Lvx5pK5Lo/pub?gid=0&single=true&output=csv"
+fts_url: "https://api.hpc.tools/v1/public/"
 
 # subnational
 ipc_url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=1&limit=1&condition=A&export=true&country=%s"

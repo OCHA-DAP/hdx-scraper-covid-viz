@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import inspect
 import logging
 
 from model import get_percent, today_str
@@ -6,7 +7,9 @@ from model import get_percent, today_str
 logger = logging.getLogger(__name__)
 
 
-def get_fts(configuration, countryiso3s, downloader):
+def get_fts(configuration, countryiso3s, downloader, scraper=None):
+    if scraper and scraper not in inspect.currentframe().f_code.co_name:
+        return list(), list(), list()
     requirements = dict()
     funding = dict()
     percentage = dict()

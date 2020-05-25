@@ -115,8 +115,7 @@ def get_tabular_source(downloader, datasetinfo, **kwargs):
     sheetname = datasetinfo.get('sheetname')
     headers = datasetinfo['headers']
     format = datasetinfo['format']
-    headers, iterator = downloader.get_tabular_rows(url, sheet=sheetname, headers=headers, dict_form=True, format=format, **kwargs)
-    return iterator
+    return downloader.get_tabular_rows(url, sheet=sheetname, headers=headers, dict_form=True, format=format, **kwargs)
 
 
 def get_json_source(downloader, datasetinfo):
@@ -150,21 +149,23 @@ def get_hdx_source(downloader, datasetinfo):
     return get_tabular_source(downloader, datasetinfo)
 
 
-def get_tabular(configuration, adms, national_subnational, downloader):
+def get_tabular(configuration, adms, national_subnational, downloader, scraper=None):
     datasets = configuration['tabular_%s' % national_subnational]
     retheaders = [list(), list()]
     retval = list()
     sources = list()
     for name in datasets:
+        if scraper and scraper not in name:
+            continue
         datasetinfo = datasets[name]
         format = datasetinfo['format']
         if format == 'json':
             iterator = get_json_source(downloader, datasetinfo)
         elif format in ['csv', 'xls', 'xlsx']:
             if 'dataset' in datasetinfo:
-                iterator = get_hdx_source(downloader, datasetinfo)
+                _, iterator = get_hdx_source(downloader, datasetinfo)
             else:
-                iterator = get_tabular_source(downloader, datasetinfo)
+                _, iterator = get_tabular_source(downloader, datasetinfo)
         else:
             raise ValueError('Invalid format %s for %s!' % (format, name))
         if 'source_url' not in datasetinfo:

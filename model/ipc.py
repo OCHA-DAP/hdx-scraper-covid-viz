@@ -1,3 +1,4 @@
+import inspect
 import logging
 
 from hdx.data.dataset import Dataset
@@ -11,13 +12,15 @@ from model.tabularparser import get_tabular_source
 logger = logging.getLogger(__name__)
 
 
-def get_ipc(configuration, admininfo, downloader):
+def get_ipc(configuration, admininfo, downloader, scraper=None):
+    if scraper and scraper not in inspect.currentframe().f_code.co_name:
+        return list(), list(), list()
     url = configuration['ipc_url']
     phasedict = dict()
     popdict = dict()
     for countryiso3 in admininfo.countryiso3s:
         countryiso2 = Country.get_iso2_from_iso3(countryiso3)
-        data = get_tabular_source(downloader, {'url': url % countryiso2, 'sheetname': 'IPC', 'headers': [4, 6], 'format': 'xlsx'}, fill_merged_cells=True)
+        _, data = get_tabular_source(downloader, {'url': url % countryiso2, 'sheetname': 'IPC', 'headers': [4, 6], 'format': 'xlsx'}, fill_merged_cells=True)
         data = list(data)
         adm1_names = set()
         for row in data:
