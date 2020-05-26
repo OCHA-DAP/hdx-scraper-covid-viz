@@ -67,7 +67,7 @@ def get_requirements_and_funding(base_url, plan_id, downloader, isghrp):
 
 def get_fts(configuration, countryiso3s, downloader, scraper=None):
     if scraper and scraper not in inspect.currentframe().f_code.co_name:
-        return list(), list(), list()
+        return list(), list(), list(), list(), list(), list()
     requirements = [dict(), dict()]
     funding = [dict(), dict()]
     percentage = [dict(), dict()]

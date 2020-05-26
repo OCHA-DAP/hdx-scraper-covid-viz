@@ -139,6 +139,23 @@ tabular_national:
       - "SchoolClosure"
     hxltags:
       - "#impact+type"
+  cerf:
+    source: "OCHA"
+    format: "csv"
+    url: "https://cbpfapi.unocha.org/vo2/odata/ExtendedAllocationDetails?PoolfundCodeAbbrv=&$format=csv"
+    headers: 1
+    adm_cols:
+      - "ISO2Country"
+    val_cols:
+      - "TargetAmt"
+    total_col: "TargetAmt"
+    add_fns:
+      - "float(TargetAmt)"
+    columns:
+      - "CERFCovidFunding"
+    hxltags:
+      - "#value+covid+funding+cerf+total+usd"
+
 
 # national
 copy_national:

@@ -18,7 +18,7 @@ def _get_tabular(adms, name, datasetinfo, iterator, retheaders=[list(), list()],
     indicatorcols = datasetinfo.get('indicator_cols')
     if not indicatorcols:
         indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo['val_cols'], 'total_col': datasetinfo.get('total_col'),
-                          'ignore_vals': datasetinfo.get('ignore_vals'), 'add_fns': datasetinfo.get('add_fns'),
+                          'ignore_vals': datasetinfo.get('ignore_vals', list()), 'add_fns': datasetinfo.get('add_fns'),
                           'columns': datasetinfo['columns'], 'hxltags': datasetinfo['hxltags']}]
     valuedicts = dict()
     for indicatorcol in indicatorcols:
@@ -72,7 +72,7 @@ def _get_tabular(adms, name, datasetinfo, iterator, retheaders=[list(), list()],
         retheaders[1].extend(hxltags)
         valdicts = valuedicts[indicatorcol['filter_col']]
         total_col = indicatorcol.get('total_col')
-        ignore_vals = indicatorcol.get('ignore_vals')
+        ignore_vals = indicatorcol.get('ignore_vals', list())
         add_fns = indicatorcol.get('add_fns')
         valcols = indicatorcol['val_cols']
         if total_col:
