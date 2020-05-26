@@ -7,7 +7,9 @@ today = datetime.now()
 today_str = today.strftime('%Y-%m-%d')
 
 
-def get_percent(numerator, denominator):
-    return '%.2f%%' % (numerator / denominator * 100.0)
+def get_percent(numerator, denominator=None):
+    if denominator:
+        numerator /= denominator
+    return '%.0f%%' % (numerator * 100.0)
 
 

@@ -52,7 +52,7 @@ def get_ipc(configuration, admininfo, downloader, scraper=None):
     for pcode in phasedict:
         percentages = phasedict[pcode]
         if len(percentages) == 1:
-            phasedict[pcode] = get_percent(percentages[0], 1)
+            phasedict[pcode] = get_percent(percentages[0])
         else:
             populations = popdict[pcode]
             numerator = 0
