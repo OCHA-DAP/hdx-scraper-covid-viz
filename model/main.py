@@ -16,6 +16,15 @@ def extend_headers(headers, *args):
                 header.extend(arg[i])
 
 
+def extend_wcolumns(rows, *args):
+    row = list()
+    for arg in args:
+        if arg:
+            for column in arg:
+                row.append(column)
+    rows.append(row)
+
+
 def extend_columns(rows, adms, admininfo, *args):
     for i, adm in enumerate(adms):
         if admininfo:
@@ -46,8 +55,14 @@ def get_indicators(configuration, downloader, scraper=None):
 
     admininfo = AdminInfo.get()
     countryiso3s = admininfo.countryiso3s
+
+    fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(configuration, countryiso3s, downloader, scraper)
+
+    extend_headers(world, fts_wheaders)
+    extend_wcolumns(world, fts_wcolumns)
+    extend_sources(sources, fts_wsources)
+
     tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, [countryiso3s], 'national', downloader, scraper)
-    fts_headers, fts_columns, fts_sources = get_fts(configuration, countryiso3s, downloader, scraper)
     copy_headers, copy_columns, copy_sources = get_copy(configuration, [countryiso3s], 'national', downloader, scraper)
 
     extend_headers(national, tabular_headers, fts_headers, copy_headers)
