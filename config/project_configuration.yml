@@ -159,7 +159,7 @@ tabular_national:
         columns:
           - "CBPFCovidFunding"
         hxltags:
-          - "#value+covid+funding+cbpf+total+usd"
+          - "#value+cbpf+covid+funding+total+usd"
       - filter_col: "PFType=CERF"
         val_cols:
           - "TargetAmt"
@@ -169,18 +169,19 @@ tabular_national:
         columns:
           - "CERFCovidFunding"
         hxltags:
-          - "#value+covid+funding+cerf+total+usd"
+          - "#value+cerf+covid+funding+total+usd"
 
 
 # national
 copy_national:
   humaccess:
-    format: "csv"
+    format: "xlsx"
     dataset: "constraints-faced-by-people-due-to-covid-19-outbreak"
+    sheetname: 1
     headers: 2
 
 fts_url: "https://api.hpc.tools/v1/public/"
-fts_dataset: "covid-19-data-visual-inputs"
+fts_source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
 
 # subnational
 ipc_url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=1&limit=1&condition=A&export=true&country=%s"

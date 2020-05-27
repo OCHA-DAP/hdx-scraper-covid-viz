@@ -2,6 +2,7 @@
 import inspect
 import logging
 
+from hdx.data.dataset import Dataset
 from hdx.utilities.dictandlist import write_list_to_csv
 
 from model import get_percent, today_str, today, get_date_from_dataset_date
@@ -88,6 +89,8 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
     base_url = configuration['fts_url']
     url = '%splan/year/%d' % (base_url, today.year)
     data = download_data(url, downloader)
+    total_allreq = 0
+    total_allfund = 0
     total_covidreq = 0
     total_covidfund = 0
     rows = list()
@@ -100,6 +103,10 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
             isghrp = False
         allreq, allfund, covidreq, covidfund = get_requirements_and_funding(base_url, plan_id, downloader, isghrp)
         name = plan['planVersion']['name']
+        if allreq:
+            total_allreq += allreq
+        if allreq:
+            total_allfund += allfund
         if covidreq or covidfund:
             rows.append([name, covidreq, covidfund])
             logger.info('%s: Requirements=%d, Funding=%d' % (name, covidreq, covidfund))
@@ -139,20 +146,22 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
         if covidfund and covidreq:
             funding[index + 1][countryiso] = covidfund
             percentage[index + 1][countryiso] = get_percent(covidfund, covidreq)
-    total_percent = get_percent(total_covidfund, total_covidreq)
+    total_allpercent = get_percent(total_allfund, total_allreq)
+    total_covidpercent = get_percent(total_covidfund, total_covidreq)
     logger.info('Processed FTS')
     write_list_to_csv('ftscovid.csv', rows, ['Name', 'Requirements', 'Funding'])
-    whxltags = ['#value+covid+funding+ghrp+required+usd', '#value+covid+funding+ghrp+total+usd', '#value+covid+funding+ghrp+pct']
+    whxltags = ['#value+funding+required+usd', '#value+funding+total+usd', '#value+funding+pct',
+                '#value+covid+funding+ghrp+required+usd', '#value+covid+funding+ghrp+total+usd', '#value+covid+funding+ghrp+pct']
     hxltags = ['#value+funding+hrp+required+usd', '#value+funding+hrp+total+usd', '#value+funding+hrp+pct',
                '#value+covid+funding+hrp+required+usd', '#value+covid+funding+hrp+total+usd', '#value+covid+funding+hrp+pct',
                '#value+covid+funding+other+required+usd', '#value+covid+funding+other+total+usd', '#value+covid+funding+other+pct']
-    date = get_date_from_dataset_date(configuration['fts_dataset'])
-    return [['RequiredHRPCovidFunding', 'GHRPCovidFunding', 'GHRPCovidPercentFunded'], whxltags], \
-           [total_covidreq, total_covidfund, total_percent], \
+    return [['RequiredFunding', 'Funding', 'PercentFunded',
+             'RequiredHRPCovidFunding', 'GHRPCovidFunding', 'GHRPCovidPercentFunded'], whxltags], \
+           [total_allreq, total_allfund, total_allpercent, total_covidreq, total_covidfund, total_covidpercent], \
            [[hxltag, today_str, 'OCHA', 'https://fts.unocha.org/appeals/952/summary'] for hxltag in whxltags], \
            [['RequiredHRPFunding', 'HRPFunding', 'HRPPercentFunded',
              'RequiredHRPCovidFunding', 'HRPCovidFunding', 'HRPCovidPercentFunded',
              'RequiredOtherCovidFunding', 'OtherCovidFunding', 'OtherCovidPercentFunded'], hxltags], \
            [requirements[0], funding[0], percentage[0], requirements[1], funding[1], percentage[1],
             requirements[2], funding[2], percentage[2]], \
-           [[hxltag, date, 'OCHA', configuration['fts_source_url']] for hxltag in hxltags]
+           [[hxltag, today_str, 'OCHA', configuration['fts_source_url']] for hxltag in hxltags]
