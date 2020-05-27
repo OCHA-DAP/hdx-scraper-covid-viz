@@ -2,6 +2,9 @@
 prod_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1bbOp3N-pdW65HoxIYj1tVY4zLfTD4mbpaOZ5ZfrZE54/edit"
 # test
 test_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1zS2gGeo5CHzucdKzyMYH_27dHlK2uyVqQwUDwlgfRlo/edit"
+#scratch
+scratch_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1f9GpnTvgY6sTMYkj8ynctHTXezRKQk49udIoPQ5-3Hc/edit"
+
 world_sheetname: "WorldData"
 national_sheetname: "NationalData"
 subnational_sheetname: "SubnationalData"
@@ -146,15 +149,27 @@ tabular_national:
     headers: 1
     adm_cols:
       - "ISO2Country"
-    val_cols:
-      - "TargetAmt"
-    total_col: "TargetAmt"
-    add_fns:
-      - "float(TargetAmt)"
-    columns:
-      - "CERFCovidFunding"
-    hxltags:
-      - "#value+covid+funding+cerf+total+usd"
+    indicator_cols:
+      - filter_col: "PFType=CBPF"
+        val_cols:
+          - "TargetAmt"
+        total_col: "TargetAmt"
+        add_fns:
+          - "float(TargetAmt)"
+        columns:
+          - "CBPFCovidFunding"
+        hxltags:
+          - "#value+covid+funding+cbpf+total+usd"
+      - filter_col: "PFType=CERF"
+        val_cols:
+          - "TargetAmt"
+        total_col: "TargetAmt"
+        add_fns:
+          - "float(TargetAmt)"
+        columns:
+          - "CERFCovidFunding"
+        hxltags:
+          - "#value+covid+funding+cerf+total+usd"
 
 
 # national

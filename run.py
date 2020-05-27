@@ -28,13 +28,14 @@ def parse_args():
     parser.add_argument('-pp', '--preprefix', default=None, help='preprefix')
     parser.add_argument('-hs', '--hdx_site', default=None, help='HDX site to use')
     parser.add_argument('-gs', '--gsheet_auth', default=None, help='Credentials for accessing Google Sheets')
-    parser.add_argument('-t', '--test', action='store_true', help='Whether to output to test')
+    parser.add_argument('--test', action='store_true', help='Whether to output to test')
+    parser.add_argument('--scratch', action='store_true', help='Whether to output to scratch')
     parser.add_argument('-sc', '--scraper', default=None, help='Scraper to run')
     args = parser.parse_args()
     return args
 
 
-def main(gsheet_auth, test, scraper, **ignore):
+def main(gsheet_auth, test, scratch, scraper, **ignore):
     logger.info('##### hdx-scraper-covid-viz version %.1f ####' % VERSION)
     configuration = Configuration.read()
     with Download(rate_limit={'calls': 1, 'period': 1}) as downloader:
@@ -46,6 +47,8 @@ def main(gsheet_auth, test, scraper, **ignore):
         gc = pygsheets.authorize(custom_credentials=credentials)
         if test:
             url = configuration['test_spreadsheet_url']
+        elif scratch:
+            url = configuration['scratch_spreadsheet_url']
         else:
             url = configuration['prod_spreadsheet_url']
         spreadsheet = gc.open_by_url(url)
@@ -81,4 +84,4 @@ if __name__ == '__main__':
         gsheet_auth = getenv('GSHEET_AUTH')
     facade(main, hdx_read_only=True, user_agent=user_agent, preprefix=preprefix, hdx_site=hdx_site,
            project_config_yaml=join('config', 'project_configuration.yml'), gsheet_auth=gsheet_auth, test=args.test,
-           scraper=args.scraper)
+           scratch=args.scratch, scraper=args.scraper)
