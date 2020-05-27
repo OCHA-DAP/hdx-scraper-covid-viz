@@ -4,7 +4,7 @@ import logging
 
 from hdx.utilities.dictandlist import write_list_to_csv
 
-from model import get_percent, today_str, today
+from model import get_percent, today_str, today, get_date_from_dataset_date
 
 logger = logging.getLogger(__name__)
 
@@ -146,6 +146,7 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
     hxltags = ['#value+funding+hrp+required+usd', '#value+funding+hrp+total+usd', '#value+funding+hrp+pct',
                '#value+covid+funding+hrp+required+usd', '#value+covid+funding+hrp+total+usd', '#value+covid+funding+hrp+pct',
                '#value+covid+funding+other+required+usd', '#value+covid+funding+other+total+usd', '#value+covid+funding+other+pct']
+    date = get_date_from_dataset_date(configuration['fts_dataset'])
     return [['RequiredHRPCovidFunding', 'GHRPCovidFunding', 'GHRPCovidPercentFunded'], whxltags], \
            [total_covidreq, total_covidfund, total_percent], \
            [[hxltag, today_str, 'OCHA', 'https://fts.unocha.org/appeals/952/summary'] for hxltag in whxltags], \
@@ -154,4 +155,4 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
              'RequiredOtherCovidFunding', 'OtherCovidFunding', 'OtherCovidPercentFunded'], hxltags], \
            [requirements[0], funding[0], percentage[0], requirements[1], funding[1], percentage[1],
             requirements[2], funding[2], percentage[2]], \
-           [[hxltag, today_str, 'OCHA', 'https://fts.unocha.org/appeals/952/summary'] for hxltag in hxltags]
+           [[hxltag, date, 'OCHA', configuration['fts_source_url']] for hxltag in hxltags]

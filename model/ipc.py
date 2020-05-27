@@ -6,7 +6,7 @@ from hdx.location.country import Country
 from hdx.utilities.dateparse import parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 
-from model import get_percent
+from model import get_percent, get_date_from_dataset_date
 from model.tabularparser import get_tabular_source
 
 logger = logging.getLogger(__name__)
@@ -64,6 +64,6 @@ def get_ipc(configuration, admininfo, downloader, scraper=None):
             phasedict[pcode] = get_percent(numerator, denominator)
     logger.info('Processed IPC')
     dataset = Dataset.read_from_hdx(configuration['ipc_dataset'])
-    date = parse_date(dataset['last_modified']).strftime('%Y-%m-%d')
+    date = get_date_from_dataset_date(dataset)
     return [['FoodInsecurityP3+'], ['#affected+food+p3+pct']], [phasedict], \
            [['#affected+food+p3+pct', date, dataset['dataset_source'], dataset.get_hdx_url()]]

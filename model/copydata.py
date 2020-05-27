@@ -44,7 +44,7 @@ def _get_copy(adms, name, datasetinfo, headers, iterator, retheaders=[list(), li
     retheaders[0].extend(val_cols)
     retheaders[1].extend(hxltags)
     retval.extend(valuedicts)
-    date = datasetinfo.get('modified')
+    date = datasetinfo.get('date')
     sources.extend([[hxltag, date, datasetinfo['source'], datasetinfo['source_url']] for hxltag in hxltags])
     logger.info('Processed %s' % name)
     return retheaders, retval, sources
@@ -69,8 +69,8 @@ def get_copy(configuration, adms, national_subnational, downloader, scraper=None
             raise ValueError('Invalid format %s for %s!' % (format, name))
         if 'source_url' not in datasetinfo:
             datasetinfo['source_url'] = datasetinfo['url']
-        if 'modified' not in datasetinfo:
-            datasetinfo['modified'] = today_str
+        if 'date' not in datasetinfo:
+            datasetinfo['date'] = today_str
         _get_copy(adms, name, datasetinfo, headers, iterator, retheaders, retval, sources)
     return retheaders, retval, sources
 

@@ -7,7 +7,7 @@ from hdx.utilities.dateparse import parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 from jsonpath_ng import parse
 
-from model import today, today_str, get_percent
+from model import today, today_str, get_percent, get_date_from_dataset_date
 from model.rowparser import RowParser
 
 logger = logging.getLogger(__name__)
@@ -50,7 +50,7 @@ def _get_tabular(adms, name, datasetinfo, iterator, retheaders=[list(), list()],
                     dict_of_lists_add(valuedict, adm, val)
                 else:
                     valuedict[adm] = val
-    date = datasetinfo.get('modified')
+    date = datasetinfo.get('date')
     if date:
         date = parse_date(date)
     else:
@@ -141,7 +141,7 @@ def get_hdx_source(downloader, datasetinfo):
         logger.error('Cannot find %s resource in %s!' % (format, dataset_name))
         return None, None
     datasetinfo['url'] = url
-    datasetinfo['modified'] = dataset['last_modified']
+    datasetinfo['date'] = get_date_from_dataset_date(dataset)
     if 'source' not in datasetinfo:
         datasetinfo['source'] = dataset['dataset_source']
     if 'source_url' not in datasetinfo:
@@ -170,8 +170,8 @@ def get_tabular(configuration, adms, national_subnational, downloader, scraper=N
             raise ValueError('Invalid format %s for %s!' % (format, name))
         if 'source_url' not in datasetinfo:
             datasetinfo['source_url'] = datasetinfo['url']
-        if 'modified' not in datasetinfo:
-            datasetinfo['modified'] = today_str
+        if 'date' not in datasetinfo:
+            datasetinfo['date'] = today_str
         _get_tabular(adms, name, datasetinfo, iterator, retheaders, retval, sources)
     return retheaders, retval, sources
 

@@ -175,13 +175,12 @@ tabular_national:
 # national
 copy_national:
   humaccess:
-    source: "OCHA"
-    source_url: "https://data.humdata.org/dataset/constraints-faced-by-people-due-to-covid-19-outbreak"
     format: "csv"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8VFKSM9gMnP6rs6Xv_K5imWJuEXgtf-48_wrXPCpqACDl3u0GtQn6v4RQWhKzwwNtnc1Lvx5pK5Lo/pub?gid=0&single=true&output=csv"
+    dataset: "constraints-faced-by-people-due-to-covid-19-outbreak"
     headers: 2
 
 fts_url: "https://api.hpc.tools/v1/public/"
+fts_dataset: "covid-19-data-visual-inputs"
 
 # subnational
 ipc_url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=1&limit=1&condition=A&export=true&country=%s"
