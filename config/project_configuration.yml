@@ -176,6 +176,7 @@ tabular_national:
 copy_national:
   humaccess:
     source: "OCHA"
+    source_url: "https://data.humdata.org/dataset/constraints-faced-by-people-due-to-covid-19-outbreak"
     format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8VFKSM9gMnP6rs6Xv_K5imWJuEXgtf-48_wrXPCpqACDl3u0GtQn6v4RQWhKzwwNtnc1Lvx5pK5Lo/pub?gid=0&single=true&output=csv"
     headers: 2
