@@ -3,7 +3,7 @@ import logging
 
 from model import today_str
 from model.rowparser import RowParser
-from model.tabularparser import get_tabular_source, get_hdx_source
+from model.tabularparser import get_tabular_source, get_hdx_source, get_ole_source
 
 logger = logging.getLogger(__name__)
 
@@ -35,9 +35,9 @@ def _get_copy(adms, name, datasetinfo, headers, iterator, retheaders=[list(), li
         val_cols.append(header)
         hxltags.append(hxltag)
         valuedicts.append(dict())
-    rowparser = RowParser(adms, {'adm_cols': adm_cols})
+    rowparser = RowParser(adms, {'adm_cols': adm_cols}, headers)
     for row in iterator:
-        adm = rowparser.do_set_value(row)
+        adm, _ = rowparser.do_set_value(row)
         if adm:
             for i, val_col in enumerate(val_cols):
                 valuedicts[i][adm] = row[val_col]
@@ -60,11 +60,13 @@ def get_copy(configuration, adms, national_subnational, downloader, scraper=None
             continue
         datasetinfo = datasets[name]
         format = datasetinfo['format']
-        if format in ['csv', 'xls', 'xlsx']:
+        if format == 'ole':
+            headers, iterator = get_ole_source(downloader, datasetinfo, adms=adms)
+        elif format in ['csv', 'xls', 'xlsx']:
             if 'dataset' in datasetinfo:
                 headers, iterator = get_hdx_source(downloader, datasetinfo)
             else:
-                headers, iterator = get_tabular_source(downloader, datasetinfo)
+                headers, iterator = get_tabular_source(downloader, datasetinfo, adms=adms)
         else:
             raise ValueError('Invalid format %s for %s!' % (format, name))
         if 'source_url' not in datasetinfo:

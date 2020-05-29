@@ -7,6 +7,7 @@ scratch_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1f9GpnTvgY6sTMY
 
 world_sheetname: "WorldData"
 national_sheetname: "NationalData"
+national_timeseries_sheetname: "NationalTimeSeries"
 subnational_sheetname: "SubnationalData"
 sources_sheetname: "Sources"
 
@@ -60,6 +61,23 @@ tabular_national:
       - "EconomicExposure"
     hxltags:
       - "#severity+economic+num"
+  gam:
+    format: "xlsx"
+    dataset: "world-global-expanded-database-on-severe-wasting"
+    sheetname: "Trend"
+    headers:
+      - 3
+      - 4
+    adm_cols:
+      - "ISO"
+    date_col: "Year*"
+    date_type: "int"
+    val_cols:
+      - "National Point Estimate"
+    columns:
+      - "Malnutrition Estimate"
+    hxltags:
+      - "#severity+malnutrition+num+national"
   needs:
     format: "xlsx"
     dataset: "global-humanitarian-overview-2020-figures"
@@ -143,9 +161,8 @@ tabular_national:
     hxltags:
       - "#impact+type"
   cerf:
-    source: "OCHA"
     format: "csv"
-    url: "https://cbpfapi.unocha.org/vo2/odata/ExtendedAllocationDetails?PoolfundCodeAbbrv=&$format=csv"
+    dataset: "cerf-covid-19-allocations"
     headers: 1
     adm_cols:
       - "ISO2Country"
@@ -171,14 +188,75 @@ tabular_national:
         hxltags:
           - "#value+cerf+covid+funding+total+usd"
 
-
-# national
 copy_national:
   humaccess:
     format: "xlsx"
     dataset: "constraints-faced-by-people-due-to-covid-19-outbreak"
     sheetname: 1
     headers: 2
+
+timeseries_national:
+  imf:
+    source: "IMF"
+    format: "ole"
+    url: "https://www.imf.org/external/datamapper/export/excel.php?indicator=%s"
+    headers: 1
+    sheetname: 1
+    flatten:
+      - original: "{{2000}}"
+        new: "Value"
+        extracol: "Year"
+    indicators:
+      - url: "NGDP_RPCH"
+        name: "Real GDP growth"
+      - url: "PCPIPCH"
+        name: "Inflation rate, Consumer Prices"
+    adm_cols:
+      - "{{0}}"
+    date_col: "Year"
+    date_type: "int"
+    val_col: "Value"
+    ignore_vals:
+      - "no data"
+  worldbank:
+    source: "World Bank"
+    source_url: "https://data.humdata.org/organization/world-bank-group"
+    format: "json"
+    url: "http://api.worldbank.org/v2/country/{{';'.join(adms[0])}}/indicator/%s?format=json&per_page=10000"
+    jsonpath: "[1][*]"
+    indicators:
+      - url: "SH.MED.BEDS.ZS"
+        name: "Hospital beds (per 1,000 people)"
+      - url: "SH.MED.NUMW.P3"
+        name: "Nurses and midwives (per 1,000 people)"
+      - url: "SH.MED.PHYS.ZS"
+        name: "Physicians (per 1,000 people)"
+      - url: "SH.DYN.NCOM.ZS"
+        name: "Mortality from CVD, cancer, diabetes or CRD between exact ages 30 and 70"
+      - url: "SH.STA.DIAB.ZS"
+        name: "Diabetes prevalence (% of population ages 20 to 79)"
+      - url: "SH.PRV.SMOK"
+        name: "Smoking prevalence, total, ages 15+"
+      - url: "SH.STA.HYGN.ZS"
+        name: "People with basic handwashing facilities including soap and water (% of population)"
+      - url: "SP.POP.65UP.FE.ZS"
+        name: "Population ages 65 and above, female (% of population)"
+    adm_cols:
+      - "countryiso3code"
+    date_col: "date"
+    date_type: "int"
+    val_col: "value"
+    ignore_vals:
+      - ~
+#  imf:
+#    source: "IMF"
+#    format: "json"
+#    url: "http://dataservices.imf.org/REST/SDMX_JSON.svc/CompactData/IFS/A.{{'+'.join([Country.get_iso2_from_iso3(x) for x in adms[0]])}}.%s"
+#    jsonpath:
+#    indicators:
+#      - url: "PCPI_PC_CP_A_PT"
+#        name: "Inflation rate, Consumer Prices"
+#    adm_cols:
 
 fts_url: "https://api.hpc.tools/v1/public/"
 fts_source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
@@ -362,6 +440,29 @@ tabular_subnational:
           - "Pol3 Coverage"
         hxltags:
           - "#population+pct+pol3+vaccinated"
+  gam:
+    format: "xlsx"
+    dataset: "world-global-expanded-database-on-severe-wasting"
+    sheetname: "Trend"
+    headers:
+      - 3
+      - 4
+    flatten:
+      - original: "Region {{1}} Region Name"
+        new: "Region Name"
+      - original: "Region {{1}} Point Estimate"
+        new: "Region Point Estimate"
+    adm_cols:
+      - "ISO"
+      - "Region Name"
+    date_col: "Year*"
+    date_type: "int"
+    val_cols:
+      - "Region Point Estimate"
+    columns:
+      - "Malnutrition Estimate"
+    hxltags:
+      - "#severity+malnutrition+num+subnational"
 
 
 road_networks_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=0&single=true&output=csv"

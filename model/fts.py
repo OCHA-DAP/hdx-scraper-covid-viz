@@ -28,27 +28,32 @@ def download_data(url, downloader):
 
 
 def get_requirements_and_funding(base_url, plan_id, downloader, isghrp):
+    url = '%sgoverningEntity?planId=%d&scopes=governingEntityVersion' % (base_url, plan_id)
+    data = download_data(url.replace('v1', 'v2'), downloader)
+    covid_ids = set()
+    covidflag = True
+    for clusterobj in data:
+        tags = clusterobj['governingEntityVersion'].get('tags')
+        if tags and 'COVID-19' in tags:
+            covid_ids.add(clusterobj['id'])
+    if len(covid_ids) == 0:
+        logger.info('%s has no COVID component!' % plan_id)
+        covidflag = False
+
     url = '%sfts/flow?planid=%d&groupby=cluster' % (base_url, plan_id)
     data = download_data(url, downloader)
     if isghrp:
         fund = data['report3']['fundingTotals']['total']
         return 0, fund, 0, fund
-
-    covid_ids = list()
-    covidflag = True
     covidreq = 0
     allreq = 0
     for reqobj in data['requirements']['objects']:
         req = reqobj.get('revisedRequirements')
         if req:
             allreq += req
-            tags = reqobj.get('tags')
-            if tags and 'COVID-19' in tags:
+            req_id = reqobj.get('id')
+            if covidflag and req_id and req_id in covid_ids:
                 covidreq += req
-                covid_ids.append(reqobj['id'])
-    if len(covid_ids) == 0:
-        logger.info('%s has no COVID component!' % plan_id)
-        covidflag = False
 
     covidfund = 0
     allfund = 0
@@ -93,6 +98,7 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
     total_allfund = 0
     total_covidreq = 0
     total_covidfund = 0
+
     rows = list()
     for plan in data:
         plan_id = plan['id']
@@ -103,17 +109,18 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
             isghrp = False
         allreq, allfund, covidreq, covidfund = get_requirements_and_funding(base_url, plan_id, downloader, isghrp)
         name = plan['planVersion']['name']
-        if allreq:
-            total_allreq += allreq
-        if allreq:
-            total_allfund += allfund
-        if covidreq or covidfund:
-            rows.append([name, covidreq, covidfund])
-            logger.info('%s: Requirements=%d, Funding=%d' % (name, covidreq, covidfund))
-            if covidreq:
-                total_covidreq += covidreq
-            if covidfund:
-                total_covidfund += covidfund
+        if plan['categories'][0]['includeTotals']:
+            if allreq:
+                total_allreq += allreq
+            if allreq:
+                total_allfund += allfund
+            if covidreq or covidfund:
+                rows.append([name, covidreq, covidfund])
+                logger.info('%s: Requirements=%d, Funding=%d' % (name, covidreq, covidfund))
+                if covidreq:
+                    total_covidreq += covidreq
+                if covidfund:
+                    total_covidfund += covidfund
         locations = plan['locations']
         iso3s = set()
         for location in locations:

@@ -6,6 +6,7 @@ from model.fts import get_fts
 from model.copydata import get_copy
 from model.ipc import get_ipc
 from model.tabularparser import get_tabular
+from model.timeseriesparser import get_timeseries
 from model.whowhatwhere import get_whowhatwhere
 
 
@@ -50,6 +51,7 @@ def extend_sources(sources, *args):
 def get_indicators(configuration, downloader, scraper=None):
     world = [list(), list()]
     national = [['iso3', 'countryname'], ['#country+code', '#country+name']]
+    nationaltimeseries = [['iso3', 'date', 'indicator', 'value'], ['#country+code', '#date', '#indicator+name', '#indicator+value+num']]
     subnational = [['iso3', 'countryname', 'adm1_pcode', 'adm1_name'], ['#country+code', '#country+name', '#adm1+code', '#adm1+name']]
     sources = [['Indicator', 'Date', 'Source', 'Url'], ['#indicator+name', '#date', '#meta+source', '#meta+url']]
 
@@ -69,6 +71,9 @@ def get_indicators(configuration, downloader, scraper=None):
     extend_columns(national, countryiso3s, None, tabular_columns, fts_columns, copy_columns)
     extend_sources(sources, tabular_sources, fts_sources, copy_sources)
 
+    timeseries_sources = get_timeseries(nationaltimeseries, configuration, [countryiso3s], 'national', downloader, scraper)
+    extend_sources(sources, timeseries_sources)
+
     pcodes = admininfo.pcodes
     tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, [countryiso3s, pcodes], 'subnational', downloader, scraper)
     ipc_headers, ipc_columns, ipc_sources = get_ipc(configuration, admininfo, downloader, scraper)
@@ -78,4 +83,4 @@ def get_indicators(configuration, downloader, scraper=None):
     extend_columns(subnational, pcodes, admininfo, tabular_columns, ipc_columns, whowhatwhere_columns)
     extend_sources(sources, tabular_sources, ipc_sources, whowhatwhere_sources)
 
-    return world, national, subnational, sources
+    return world, national, nationaltimeseries, subnational, sources

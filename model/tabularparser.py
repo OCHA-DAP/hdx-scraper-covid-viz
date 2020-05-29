@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
 import logging
 from datetime import datetime
+from os.path import join
 
 from hdx.data.dataset import Dataset
 from hdx.utilities.dateparse import parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
+from hdx.utilities.path import temp_dir
 from jsonpath_ng import parse
+from olefile import olefile
 
-from model import today, today_str, get_percent, get_date_from_dataset_date
+from model import today, today_str, get_percent, get_date_from_dataset_date, template
 from model.rowparser import RowParser
 
 logger = logging.getLogger(__name__)
 
 
-def _get_tabular(adms, name, datasetinfo, iterator, retheaders=[list(), list()], retval=list(), sources=list()):
-    rowparser = RowParser(adms, datasetinfo)
+def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(), list()], retval=list(), sources=list()):
+    rowparser = RowParser(adms, datasetinfo, headers)
     indicatorcols = datasetinfo.get('indicator_cols')
     if not indicatorcols:
         indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo['val_cols'], 'total_col': datasetinfo.get('total_col'),
@@ -24,12 +27,11 @@ def _get_tabular(adms, name, datasetinfo, iterator, retheaders=[list(), list()],
     for indicatorcol in indicatorcols:
         for _ in indicatorcol['val_cols']:
             dict_of_lists_add(valuedicts, indicatorcol['filter_col'], dict())
-    for row in iterator:
-        if not isinstance(row, dict):
-            row = row.value
-        adm = rowparser.do_set_value(row)
+
+    def add_row(row):
+        adm, _ = rowparser.do_set_value(row)
         if not adm:
-            continue
+            return
         for indicatorcol in indicatorcols:
             filtercol = indicatorcol['filter_col']
             if filtercol:
@@ -50,11 +52,18 @@ def _get_tabular(adms, name, datasetinfo, iterator, retheaders=[list(), list()],
                     dict_of_lists_add(valuedict, adm, val)
                 else:
                     valuedict[adm] = val
+
+    for row in iterator:
+        if not isinstance(row, dict):
+            row = row.value
+        for newrow in rowparser.flatten(row):
+            add_row(newrow)
+
     date = datasetinfo.get('date')
     if date:
         date = parse_date(date)
     else:
-        date = rowparser.maxdate
+        date = rowparser.get_maxdate()
         if date == 0:
             raise ValueError('No date given in datasetinfo or as a column!')
         if rowparser.datetype == 'date':
@@ -110,16 +119,44 @@ def _get_tabular(adms, name, datasetinfo, iterator, retheaders=[list(), list()],
     return retheaders, retval, sources
 
 
+def get_url(url, **kwargs):
+    for kwarg in kwargs:
+        exec('%s=%s' % (kwarg, kwargs[kwarg]))
+    match = template.search(url)
+    if match:
+        template_string = match.group()
+        replace_string = eval(template_string[2:-2])
+        url = url.replace(template_string, replace_string)
+    return url
+
+
 def get_tabular_source(downloader, datasetinfo, **kwargs):
-    url = datasetinfo['url']
+    url = get_url(datasetinfo['url'], **kwargs)
     sheetname = datasetinfo.get('sheetname')
     headers = datasetinfo['headers']
+    if isinstance(headers, list):
+        kwargs['fill_merged_cells'] = True
     format = datasetinfo['format']
     return downloader.get_tabular_rows(url, sheet=sheetname, headers=headers, dict_form=True, format=format, **kwargs)
 
 
-def get_json_source(downloader, datasetinfo):
-    response = downloader.download(datasetinfo['url'])
+def get_ole_source(downloader, datasetinfo, **kwargs):
+    url = get_url(datasetinfo['url'], **kwargs)
+    with temp_dir('ole') as folder:
+        path = downloader.download_file(url, folder, 'olefile')
+        ole = olefile.OleFileIO(path)
+        data = ole.openstream('Workbook').getvalue()
+        outputfile = join(folder, 'excel_file.xls')
+        with open(outputfile, 'wb') as f:
+            f.write(data)
+        datasetinfo['url'] = outputfile
+        datasetinfo['format'] = 'xls'
+        return get_tabular_source(downloader, datasetinfo, **kwargs)
+
+
+def get_json_source(downloader, datasetinfo, **kwargs):
+    url = get_url(datasetinfo['url'], **kwargs)
+    response = downloader.download(url)
     json = response.json()
     expression = datasetinfo.get('jsonpath')
     if expression:
@@ -160,19 +197,22 @@ def get_tabular(configuration, adms, national_subnational, downloader, scraper=N
         datasetinfo = datasets[name]
         format = datasetinfo['format']
         if format == 'json':
-            iterator = get_json_source(downloader, datasetinfo)
+            iterator = get_json_source(downloader, datasetinfo, adms=adms)
+            headers = None
+        elif format == 'ole':
+            headers, iterator = get_ole_source(downloader, datasetinfo, adms=adms)
         elif format in ['csv', 'xls', 'xlsx']:
             if 'dataset' in datasetinfo:
-                _, iterator = get_hdx_source(downloader, datasetinfo)
+                headers, iterator = get_hdx_source(downloader, datasetinfo)
             else:
-                _, iterator = get_tabular_source(downloader, datasetinfo)
+                headers, iterator = get_tabular_source(downloader, datasetinfo, adms=adms)
         else:
             raise ValueError('Invalid format %s for %s!' % (format, name))
         if 'source_url' not in datasetinfo:
             datasetinfo['source_url'] = datasetinfo['url']
         if 'date' not in datasetinfo:
             datasetinfo['date'] = today_str
-        _get_tabular(adms, name, datasetinfo, iterator, retheaders, retval, sources)
+        _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders, retval, sources)
     return retheaders, retval, sources
 
 

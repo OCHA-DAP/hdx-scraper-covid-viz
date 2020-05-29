@@ -39,7 +39,7 @@ def main(gsheet_auth, test, scratch, scraper, **ignore):
     logger.info('##### hdx-scraper-covid-viz version %.1f ####' % VERSION)
     configuration = Configuration.read()
     with Download(rate_limit={'calls': 1, 'period': 1}) as downloader:
-        world, national, subnational, sources = get_indicators(configuration, downloader, scraper)
+        world, national, nationaltimeseries, subnational, sources = get_indicators(configuration, downloader, scraper)
         # Write to gsheets
         info = json.loads(gsheet_auth)
         scopes = ['https://www.googleapis.com/auth/spreadsheets']
@@ -58,6 +58,9 @@ def main(gsheet_auth, test, scratch, scraper, **ignore):
         sheet = spreadsheet.worksheet_by_title(configuration['national_sheetname'])
         sheet.clear(fields='*')
         sheet.update_values('A1', national)
+        sheet = spreadsheet.worksheet_by_title(configuration['national_timeseries_sheetname'])
+        sheet.clear(fields='*')
+        sheet.update_values('A1', nationaltimeseries)
         sheet = spreadsheet.worksheet_by_title(configuration['subnational_sheetname'])
         sheet.clear(fields='*')
         sheet.update_values('A1', subnational)

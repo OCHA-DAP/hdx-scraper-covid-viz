@@ -1,25 +1,62 @@
 # -*- coding: utf-8 -*-
+import copy
 from datetime import datetime
 
 from hdx.location.country import Country
 from hdx.utilities.dateparse import parse_date
 
+from model import template
 from model.admininfo import AdminInfo
 
 
 class RowParser(object):
-    def __init__(self, adms, datasetinfo):
+    def __init__(self, adms, datasetinfo, headers, maxdateonly=True):
         self.adms = adms
         self.admcols = datasetinfo['adm_cols']
         self.datecol = datasetinfo.get('date_col')
         self.datetype = datasetinfo.get('date_type')
         if self.datetype:
             if self.datetype == 'date':
-                self.maxdate = parse_date('1900-01-01')
+                date = parse_date('1900-01-01')
             else:
-                self.maxdate = 0
+                date = 0
         else:
-            self.maxdate = 0
+            date = 0
+        self.maxdates = {adm: date for adm in adms[-1]}
+        self.maxdateonly = maxdateonly
+        self.flatteninfo = datasetinfo.get('flatten')
+        self.headers = headers
+
+    def flatten(self, row):
+        if not self.flatteninfo:
+            yield row
+            return
+        counters = [-1 for _ in self.flatteninfo]
+        while True:
+            newrow = copy.deepcopy(row)
+            for i, flatten in enumerate(self.flatteninfo):
+                colname = flatten['original']
+                match = template.search(colname)
+                if not match:
+                    raise ValueError('Column name for flattening lacks an incrementing number!')
+                template_string = match.group()
+                if counters[i] == -1:
+                    replace_string = template_string[2:-2]
+                    counters[i] = int(replace_string)
+                else:
+                    replace_string = '%d' % counters[i]
+                colname = colname.replace(template_string, replace_string)
+                if colname not in row:
+                    return
+                newrow[flatten['new']] = row[colname]
+                extracol = flatten.get('extracol')
+                if extracol:
+                    newrow[extracol] = colname
+                counters[i] += 1
+            yield newrow
+
+    def get_maxdate(self):
+        return max(self.maxdates.values())
 
     def do_set_value(self, row):
         adm = None
@@ -27,18 +64,22 @@ class RowParser(object):
             if admcol is None:
                 continue
             prev_adm = adm
+            match = template.search(admcol)
+            if match:
+                template_string = match.group()
+                admcol = self.headers[int(template_string[2:-2])]
             adm = row[admcol]
             if not adm:
-                return None
+                return None, None
             if adm not in self.adms[i]:
                 if i == 0:
                     adm, _ = Country.get_iso3_country_code_fuzzy(adm)
                 elif i == 1:
                     adm = AdminInfo.get().get_pcode(prev_adm, adm)
                 else:
-                    return None
+                    return None, None
                 if adm not in self.adms[i]:
-                    return None
+                    return None, None
         if self.datecol:
             date = row[self.datecol]
             if self.datetype == 'int':
@@ -47,7 +88,10 @@ class RowParser(object):
                 if not isinstance(date, datetime):
                     date = parse_date(date)
                 date = date.replace(tzinfo=None)
-            if date < self.maxdate:
-                return None
-            self.maxdate = date
-        return adm
+            if self.maxdateonly:
+                if date < self.maxdates[adm]:
+                    return None, None
+            self.maxdates[adm] = date
+        else:
+            date = None
+        return adm, date
