@@ -58,28 +58,40 @@ class RowParser(object):
     def get_maxdate(self):
         return max(self.maxdates.values())
 
-    def do_set_value(self, row):
+    def do_set_value(self, row, scrapername=None):
         adm = None
-        for i, admcol in enumerate(self.admcols):
-            if admcol is None:
-                continue
-            prev_adm = adm
+
+        def get_adm(admcol, prev_adm):
             match = template.search(admcol)
             if match:
                 template_string = match.group()
                 admcol = self.headers[int(template_string[2:-2])]
             adm = row[admcol]
             if not adm:
-                return None, None
+                return None
             if adm not in self.adms[i]:
                 if i == 0:
                     adm, _ = Country.get_iso3_country_code_fuzzy(adm)
                 elif i == 1:
-                    adm = AdminInfo.get().get_pcode(prev_adm, adm)
+                    adm = AdminInfo.get().get_pcode(prev_adm, adm, scrapername)
                 else:
-                    return None, None
+                    return None
                 if adm not in self.adms[i]:
-                    return None, None
+                    return None
+            return adm
+
+        for i, admcol in enumerate(self.admcols):
+            if admcol is None:
+                continue
+            prev_adm = adm
+            if isinstance(admcol, str):
+                admcol = [admcol]
+            for admcl in admcol:
+                adm = get_adm(admcl, prev_adm)
+                if adm:
+                    break
+            if not adm:
+                return None, None
         if self.datecol:
             date = row[self.datecol]
             if self.datetype == 'int':

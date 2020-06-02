@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
 import logging
 from datetime import datetime
-from os.path import join
+from hdx.location.country import Country
 
-from hdx.data.dataset import Dataset
 from hdx.utilities.dateparse import parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
-from hdx.utilities.path import temp_dir
-from jsonpath_ng import parse
-from olefile import olefile
 
-from model import today, today_str, get_percent, get_date_from_dataset_date, template
+from model import today, today_str, get_percent, get_rowval
 from model.rowparser import RowParser
+from model.sources import get_tabular_source, get_ole_source, get_json_source, get_hdx_source
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +26,7 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
             dict_of_lists_add(valuedicts, indicatorcol['filter_col'], dict())
 
     def add_row(row):
-        adm, _ = rowparser.do_set_value(row)
+        adm, _ = rowparser.do_set_value(row, name)
         if not adm:
             return
         for indicatorcol in indicatorcols:
@@ -47,7 +44,7 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
             totalcol = indicatorcol.get('total_col')
             for i, valcol in enumerate(indicatorcol['val_cols']):
                 valuedict = valuedicts[filtercol][i]
-                val = row[valcol]
+                val = get_rowval(row, valcol)
                 if totalcol:
                     dict_of_lists_add(valuedict, adm, val)
                 else:
@@ -117,73 +114,6 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
         sources.extend([[hxltag, date, datasetinfo['source'], datasetinfo['source_url']] for hxltag in hxltags])
     logger.info('Processed %s' % name)
     return retheaders, retval, sources
-
-
-def get_url(url, **kwargs):
-    for kwarg in kwargs:
-        exec('%s=%s' % (kwarg, kwargs[kwarg]))
-    match = template.search(url)
-    if match:
-        template_string = match.group()
-        replace_string = eval(template_string[2:-2])
-        url = url.replace(template_string, replace_string)
-    return url
-
-
-def get_tabular_source(downloader, datasetinfo, **kwargs):
-    url = get_url(datasetinfo['url'], **kwargs)
-    sheetname = datasetinfo.get('sheetname')
-    headers = datasetinfo['headers']
-    if isinstance(headers, list):
-        kwargs['fill_merged_cells'] = True
-    format = datasetinfo['format']
-    return downloader.get_tabular_rows(url, sheet=sheetname, headers=headers, dict_form=True, format=format, **kwargs)
-
-
-def get_ole_source(downloader, datasetinfo, **kwargs):
-    url = get_url(datasetinfo['url'], **kwargs)
-    with temp_dir('ole') as folder:
-        path = downloader.download_file(url, folder, 'olefile')
-        ole = olefile.OleFileIO(path)
-        data = ole.openstream('Workbook').getvalue()
-        outputfile = join(folder, 'excel_file.xls')
-        with open(outputfile, 'wb') as f:
-            f.write(data)
-        datasetinfo['url'] = outputfile
-        datasetinfo['format'] = 'xls'
-        return get_tabular_source(downloader, datasetinfo, **kwargs)
-
-
-def get_json_source(downloader, datasetinfo, **kwargs):
-    url = get_url(datasetinfo['url'], **kwargs)
-    response = downloader.download(url)
-    json = response.json()
-    expression = datasetinfo.get('jsonpath')
-    if expression:
-        expression = parse(expression)
-        return expression.find(json)
-    return json
-
-
-def get_hdx_source(downloader, datasetinfo):
-    dataset_name = datasetinfo['dataset']
-    dataset = Dataset.read_from_hdx(dataset_name)
-    format = datasetinfo['format']
-    url = None
-    for resource in dataset.get_resources():
-        if resource['format'] == format.upper():
-            url = resource['url']
-            break
-    if not url:
-        logger.error('Cannot find %s resource in %s!' % (format, dataset_name))
-        return None, None
-    datasetinfo['url'] = url
-    datasetinfo['date'] = get_date_from_dataset_date(dataset)
-    if 'source' not in datasetinfo:
-        datasetinfo['source'] = dataset['dataset_source']
-    if 'source_url' not in datasetinfo:
-        datasetinfo['source_url'] = dataset.get_hdx_url()
-    return get_tabular_source(downloader, datasetinfo)
 
 
 def get_tabular(configuration, adms, national_subnational, downloader, scraper=None):

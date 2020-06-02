@@ -7,23 +7,24 @@ from hdx.utilities.dateparse import parse_date
 from hdx.location.country import Country
 
 
-from model import today, today_str, get_percent
+from model import today, today_str, get_percent, get_rowval
 from model.rowparser import RowParser
-from model.tabularparser import get_json_source, get_hdx_source, get_tabular_source, get_ole_source
+from model.sources import get_tabular_source, get_ole_source, get_json_source, get_hdx_source
 
 logger = logging.getLogger(__name__)
 
 
 def _get_timeseries(timeseries, adms, datasetinfo, headers, iterator, sources=list()):
     rowparser = RowParser(adms, datasetinfo, headers, maxdateonly=False)
+    name = datasetinfo['name']
     valcol = datasetinfo['val_col']
     ignore_vals = datasetinfo.get('ignore_vals', list())
     indicatorcols = datasetinfo.get('indicator_cols')
     if not indicatorcols:
-        indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'name': datasetinfo['name']}]
+        indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'name': name}]
 
     def add_row(row):
-        adm, date = rowparser.do_set_value(row)
+        adm, date = rowparser.do_set_value(row, name)
         if not adm:
             return
         for indicatorcol in indicatorcols:
@@ -38,7 +39,7 @@ def _get_timeseries(timeseries, adms, datasetinfo, headers, iterator, sources=li
                         break
                 if not match:
                     continue
-            val = row[valcol]
+            val = get_rowval(row, valcol)
             if val in ignore_vals:
                 continue
             timeseries.append([adm, date, indicatorcol['name'], val])
@@ -67,7 +68,7 @@ def _get_timeseries(timeseries, adms, datasetinfo, headers, iterator, sources=li
     date = date.strftime('%Y-%m-%d')
     for indicatorcol in indicatorcols:
         sources.append([indicatorcol['name'], date, datasetinfo['source'], datasetinfo['source_url']])
-    logger.info('Processed %s' % datasetinfo['name'])
+    logger.info('Processed %s' % name)
     return sources
 
 

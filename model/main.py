@@ -79,12 +79,14 @@ def get_indicators(configuration, downloader, sheets, scraper=None):
 
     if 'subnational' in sheets:
         pcodes = admininfo.pcodes
-        tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, [countryiso3s, pcodes], 'subnational', downloader, scraper)
         ipc_headers, ipc_columns, ipc_sources = get_ipc(configuration, admininfo, downloader, scraper)
         whowhatwhere_headers, whowhatwhere_columns, whowhatwhere_sources = get_whowhatwhere(configuration, admininfo, downloader, scraper)
+        tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, [countryiso3s, pcodes], 'subnational', downloader, scraper)
 
-        extend_headers(subnational, tabular_headers, ipc_headers, whowhatwhere_headers)
-        extend_columns(subnational, pcodes, admininfo, tabular_columns, ipc_columns, whowhatwhere_columns)
+        extend_headers(subnational, ipc_headers, tabular_headers, whowhatwhere_headers)
+        extend_columns(subnational, pcodes, admininfo, ipc_columns, tabular_columns, whowhatwhere_columns)
         extend_sources(sources, tabular_sources, ipc_sources, whowhatwhere_sources)
 
+    admininfo.output_matches()
+    admininfo.output_errors()
     return world, national, nationaltimeseries, subnational, sources

@@ -34,31 +34,33 @@ class AdminInfo(object):
             self.name_to_pcode[countryiso3] = name_to_pcode
             self.pcode_to_iso3[pcode] = countryiso3
         self.countryiso3s = sorted(list(countryiso3s))
+        self.init_matches_errors()
 
-    def get_pcode(self, countryiso3, adm1_name):
+    def init_matches_errors(self, scraper=None):
+        self.matches = set()
+        self.errors = set()
+
+    def get_pcode(self, countryiso3, adm1_name, scrapername=None):
         name_to_pcode = self.name_to_pcode.get(countryiso3)
         if not name_to_pcode:
-            logger.error('Could not find %s in map names!' % countryiso3)
+            self.errors.add((scrapername, countryiso3))
             return False
         adm1_name_lookup = unidecode(adm1_name)
         if '/' in adm1_name_lookup:
             adm1_name_lookup = adm1_name_lookup.split('/')[0]
-        adm1_name_lookup = adm1_name_lookup.strip()
+        adm1_name_lookup = adm1_name_lookup.strip().lower()
         adm1_name_lookup2 = multiple_replace(adm1_name_lookup, self.adm1_name_replacements)
-        adm1_name_lookup = adm1_name_lookup.lower()
-        adm1_name_lookup2 = adm1_name_lookup2.lower()
         pcode = name_to_pcode.get(adm1_name_lookup, name_to_pcode.get(adm1_name_lookup2))
         if not pcode:
             for map_name in name_to_pcode:
                 if adm1_name_lookup in map_name:
                     pcode = name_to_pcode[map_name]
-                    logger.info('%s: Matching (substring) %s to %s on map' % (countryiso3, adm1_name, self.pcode_to_name[pcode]))
+                    self.matches.add((scrapername, countryiso3, adm1_name, self.pcode_to_name[pcode], 'substring'))
                     break
             for map_name in name_to_pcode:
                 if adm1_name_lookup2 in map_name:
                     pcode = name_to_pcode[map_name]
-                    logger.info(
-                        '%s: Matching (substring) %s to %s on map' % (countryiso3, adm1_name, self.pcode_to_name[pcode]))
+                    self.matches.add((scrapername, countryiso3, adm1_name, self.pcode_to_name[pcode], 'substring'))
                     break
         if not pcode:
             map_names = list(name_to_pcode.keys())
@@ -77,12 +79,23 @@ class AdminInfo(object):
                     mindistance = distance
                     match = i
             if mindistance > 2:
-                logger.error('%s: Could not find %s in map names!' % (countryiso3, adm1_name))
+                self.errors.add((scrapername, countryiso3, adm1_name))
                 return None
             map_name = map_names[match]
             pcode = name_to_pcode[map_name]
-            logger.info('%s: Matching (fuzzy) %s to %s on map' % (countryiso3, adm1_name, self.pcode_to_name[pcode]))
+            self.matches.add((scrapername, countryiso3, adm1_name, self.pcode_to_name[pcode], 'fuzzy'))
         return pcode
+
+    def output_matches(self):
+        for match in sorted(self.matches):
+            logger.info('%s - %s: Matching (%s) %s to %s on map' % (match[0], match[1], match[4], match[2], match[3]))
+
+    def output_errors(self):
+        for error in sorted(self.errors):
+            if len(error) == 2:
+                logger.error('%s - Could not find %s in map names!' % (error[0], error[1]))
+            else:
+                logger.error('%s - %s: Could not find %s in map names!' % (error[0], error[1], error[2]))
 
     @classmethod
     def get(cls):

@@ -41,7 +41,7 @@ def get_whowhatwhere(configuration, admininfo, downloader, scraper=None):
             if not pcode:
                 adm1name = row.get('#adm1+name')
                 if adm1name:
-                    pcode = admininfo.get_pcode(countryiso3, adm1name)
+                    pcode = admininfo.get_pcode(countryiso3, adm1name, '3W')
             if pcode:
                 pcode = pcode.strip().upper()
                 org = row.get('#org')

@@ -8,13 +8,25 @@ logger = logging.getLogger(__name__)
 
 today = datetime.now()
 today_str = today.strftime('%Y-%m-%d')
-template = re.compile('{{.*}}')
+template = re.compile('{{.*?}}')
 
 
 def get_percent(numerator, denominator=None):
     if denominator:
         numerator /= denominator
     return '%.2f' % numerator
+
+
+def get_rowval(row, valcol):
+    if '{{' in valcol:
+        repvalcol = valcol
+        for match in template.finditer(valcol):
+            template_string = match.group()
+            replace_string = 'row["%s"]' % template_string[2:-2]
+            repvalcol = repvalcol.replace(template_string, replace_string)
+        return eval(repvalcol)
+    else:
+        return row[valcol]
 
 
 def get_date_from_dataset_date(dataset):

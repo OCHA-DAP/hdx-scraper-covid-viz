@@ -3,7 +3,7 @@ import logging
 
 from model import today_str
 from model.rowparser import RowParser
-from model.tabularparser import get_tabular_source, get_hdx_source, get_ole_source
+from model.sources import get_tabular_source, get_ole_source, get_hdx_source
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +37,7 @@ def _get_copy(adms, name, datasetinfo, headers, iterator, retheaders=[list(), li
         valuedicts.append(dict())
     rowparser = RowParser(adms, {'adm_cols': adm_cols}, headers)
     for row in iterator:
-        adm, _ = rowparser.do_set_value(row)
+        adm, _ = rowparser.do_set_value(row, name)
         if adm:
             for i, val_col in enumerate(val_cols):
                 valuedicts[i][adm] = row[val_col]
