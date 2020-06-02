@@ -5,11 +5,12 @@ test_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1zS2gGeo5CHzucdKzy
 #scratch
 scratch_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1f9GpnTvgY6sTMYkj8ynctHTXezRKQk49udIoPQ5-3Hc/edit"
 
-world_sheetname: "WorldData"
-national_sheetname: "NationalData"
-national_timeseries_sheetname: "NationalTimeSeries"
-subnational_sheetname: "SubnationalData"
-sources_sheetname: "Sources"
+sheets:
+  world: "WorldData"
+  national: "NationalData"
+  national_timeseries: "NationalTimeSeries"
+  subnational: "SubnationalData"
+  sources: "Sources"
 
 # national
 tabular_national:
