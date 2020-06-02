@@ -4,6 +4,7 @@ from hdx.location.country import Country
 from model.admininfo import AdminInfo
 from model.fts import get_fts
 from model.copydata import get_copy
+from model.fx import get_fx
 from model.ipc import get_ipc
 from model.tabularparser import get_tabular
 from model.timeseriesparser import get_timeseries
@@ -74,8 +75,9 @@ def get_indicators(configuration, downloader, sheets, scraper=None):
             extend_sources(sources, tabular_sources, fts_sources, copy_sources)
 
     if 'national_timeseries' in sheets:
+        fx_sources = get_fx(nationaltimeseries, configuration, countryiso3s, downloader, scraper)
         timeseries_sources = get_timeseries(nationaltimeseries, configuration, [countryiso3s], 'national', downloader, scraper)
-        extend_sources(sources, timeseries_sources)
+        extend_sources(sources, fx_sources, timeseries_sources)
 
     if 'subnational' in sheets:
         pcodes = admininfo.pcodes

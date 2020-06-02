@@ -11,6 +11,12 @@ today_str = today.strftime('%Y-%m-%d')
 template = re.compile('{{.*?}}')
 
 
+def get_date_from_timestamp(date):
+    if date > today.timestamp():
+        date = date / 1000
+    return datetime.fromtimestamp(date)
+
+
 def get_percent(numerator, denominator=None):
     if denominator:
         numerator /= denominator

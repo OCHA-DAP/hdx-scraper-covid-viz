@@ -212,6 +212,10 @@ timeseries_national:
         name: "Real GDP growth"
       - url: "PCPIPCH"
         name: "Inflation rate, Consumer Prices"
+      - url: "BCA_NGDPD"
+        name: "Current account balance"
+      - url: "GGXCNL_NGDP"
+        name: "General government net lending/borrowing"
     adm_cols:
       - "{{0}}"
     date_col: "Year"
@@ -242,6 +246,14 @@ timeseries_national:
         name: "People with basic handwashing facilities including soap and water (% of population)"
       - url: "SP.POP.65UP.FE.ZS"
         name: "Population ages 65 and above, female (% of population)"
+      - url: "SI.POV.DDAY"
+        name: "Poverty headcount ratio at $1.90 a day (2011 PPP)"
+      - url: "SI.POV.LMIC"
+        name: "Poverty headcount ratio at $3.20 a day (2011 PPP)"
+      - url: "SI.POV.UMIC"
+        name: "Poverty headcount ratio at $5.50 a day (2011 PPP)"
+      - url: "BX.TRF.PWKR.DT.GD.ZS"
+        name: "Personal remittances, received"
     adm_cols:
       - "countryiso3code"
     date_col: "date"
@@ -258,6 +270,9 @@ timeseries_national:
 #      - url: "PCPI_PC_CP_A_PT"
 #        name: "Inflation rate, Consumer Prices"
 #    adm_cols:
+
+country_currency_url: "https://www.currency-iso.org/dam/downloads/lists/list_one.xls"
+alphavantage_url: "https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=USD&to_symbol=%s&apikey=YHFVGAV55LIXK1TR&datatype=csv"
 
 fts_url: "https://api.hpc.tools/v1/public/"
 fts_source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"

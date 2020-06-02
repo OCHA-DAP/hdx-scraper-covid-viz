@@ -7,7 +7,7 @@ from hdx.utilities.dateparse import parse_date
 from hdx.location.country import Country
 
 
-from model import today, today_str, get_percent, get_rowval
+from model import today, today_str, get_percent, get_rowval, get_date_from_timestamp
 from model.rowparser import RowParser
 from model.sources import get_tabular_source, get_ole_source, get_json_source, get_hdx_source
 
@@ -60,9 +60,7 @@ def _get_timeseries(timeseries, adms, datasetinfo, headers, iterator, sources=li
         if rowparser.datetype == 'date':
             date = parse_date(date)
         elif rowparser.datetype == 'int':
-            if date > today.timestamp():
-                date = date / 1000
-            date = datetime.fromtimestamp(date)
+            date = get_date_from_timestamp(date)
         else:
             raise ValueError('No date type specified!')
     date = date.strftime('%Y-%m-%d')
