@@ -51,7 +51,7 @@ def extend_sources(sources, *args):
             sources.extend(arg)
 
 
-def get_indicators(configuration, downloader, sheets, scraper=None):
+def get_indicators(configuration, downloader, tabs, scraper=None):
     world = [list(), list()]
     national = [['iso3', 'countryname'], ['#country+code', '#country+name']]
     nationaltimeseries = [['iso3', 'date', 'indicator', 'value'], ['#country+code', '#date', '#indicator+name', '#indicator+value+num']]
@@ -61,14 +61,14 @@ def get_indicators(configuration, downloader, sheets, scraper=None):
     admininfo = AdminInfo.get()
     countryiso3s = admininfo.countryiso3s
 
-    if 'world' in sheets or 'national' in sheets:
+    if 'world' in tabs or 'national' in tabs:
         fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(configuration, countryiso3s, downloader, scraper)
 
         extend_headers(world, fts_wheaders)
         extend_wcolumns(world, fts_wcolumns)
         extend_sources(sources, fts_wsources)
 
-        if 'national' in sheets:
+        if 'national' in tabs:
             tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, [countryiso3s], 'national', downloader, scraper)
             copy_headers, copy_columns, copy_sources = get_copy(configuration, [countryiso3s], 'national', downloader, scraper)
 
@@ -76,12 +76,12 @@ def get_indicators(configuration, downloader, sheets, scraper=None):
             extend_columns(national, countryiso3s, None, tabular_columns, fts_columns, copy_columns)
             extend_sources(sources, tabular_sources, fts_sources, copy_sources)
 
-    if 'national_timeseries' in sheets:
+    if 'national_timeseries' in tabs:
         fx_sources = get_fx(nationaltimeseries, configuration, countryiso3s, downloader, scraper)
         timeseries_sources = get_timeseries(nationaltimeseries, configuration, [countryiso3s], 'national', downloader, scraper)
         extend_sources(sources, fx_sources, timeseries_sources)
 
-    if 'subnational' in sheets:
+    if 'subnational' in tabs:
         pcodes = admininfo.pcodes
         ipc_headers, ipc_columns, ipc_sources = get_ipc(configuration, admininfo, downloader, scraper)
         whowhatwhere_headers, whowhatwhere_columns, whowhatwhere_sources = get_whowhatwhere(configuration, admininfo, downloader, scraper)

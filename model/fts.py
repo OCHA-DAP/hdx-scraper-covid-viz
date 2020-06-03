@@ -170,7 +170,7 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
                '#value+covid+funding+hrp+required+usd', '#value+covid+funding+hrp+total+usd', '#value+covid+funding+hrp+pct',
                '#value+covid+funding+other+required+usd', '#value+covid+funding+other+total+usd', '#value+covid+funding+other+pct']
     return [['RequiredFunding', 'Funding', 'PercentFunded',
-             'RequiredHRPCovidFunding', 'GHRPCovidFunding', 'GHRPCovidPercentFunded'], whxltags], \
+             'RequiredGHRPCovidFunding', 'GHRPCovidFunding', 'GHRPCovidPercentFunded'], whxltags], \
            [total_allreq, total_allfund, total_allpercent, total_covidreq, total_covidfund, total_covidpercent], \
            [[hxltag, today_str, 'OCHA', 'https://fts.unocha.org/appeals/952/summary'] for hxltag in whxltags], \
            [['RequiredHRPFunding', 'HRPFunding', 'HRPPercentFunded',

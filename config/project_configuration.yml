@@ -1,11 +1,9 @@
-# prod
-prod_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1bbOp3N-pdW65HoxIYj1tVY4zLfTD4mbpaOZ5ZfrZE54/edit"
-# test
-test_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1zS2gGeo5CHzucdKzyMYH_27dHlK2uyVqQwUDwlgfRlo/edit"
-#scratch
-scratch_spreadsheet_url: "https://docs.google.com/spreadsheets/d/1f9GpnTvgY6sTMYkj8ynctHTXezRKQk49udIoPQ5-3Hc/edit"
+spreadsheets:
+  prod: "https://docs.google.com/spreadsheets/d/1bbOp3N-pdW65HoxIYj1tVY4zLfTD4mbpaOZ5ZfrZE54/edit"
+  test: "https://docs.google.com/spreadsheets/d/1zS2gGeo5CHzucdKzyMYH_27dHlK2uyVqQwUDwlgfRlo/edit"
+  scratch: "https://docs.google.com/spreadsheets/d/1f9GpnTvgY6sTMYkj8ynctHTXezRKQk49udIoPQ5-3Hc/edit"
 
-sheets:
+tabs:
   world: "WorldData"
   national: "NationalData"
   national_timeseries: "NationalTimeSeries"
