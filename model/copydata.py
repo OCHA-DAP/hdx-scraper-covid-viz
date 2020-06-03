@@ -3,7 +3,7 @@ import logging
 
 from model import today_str
 from model.rowparser import RowParser
-from model.sources import get_tabular_source, get_ole_source, get_hdx_source
+from model.readers import read_tabular, read_ole, read_hdx
 
 logger = logging.getLogger(__name__)
 
@@ -61,18 +61,19 @@ def get_copy(configuration, adms, national_subnational, downloader, scraper=None
         datasetinfo = datasets[name]
         format = datasetinfo['format']
         if format == 'ole':
-            headers, iterator = get_ole_source(downloader, datasetinfo, adms=adms)
+            headers, iterator = read_ole(downloader, datasetinfo, adms=adms)
         elif format in ['csv', 'xls', 'xlsx']:
             if 'dataset' in datasetinfo:
-                headers, iterator = get_hdx_source(downloader, datasetinfo)
+                headers, iterator = read_hdx(downloader, datasetinfo)
             else:
-                headers, iterator = get_tabular_source(downloader, datasetinfo, adms=adms)
+                headers, iterator = read_tabular(downloader, datasetinfo, adms=adms)
         else:
             raise ValueError('Invalid format %s for %s!' % (format, name))
         if 'source_url' not in datasetinfo:
             datasetinfo['source_url'] = datasetinfo['url']
         if 'date' not in datasetinfo:
             datasetinfo['date'] = today_str
+        datasetinfo['adm_mappings'] = configuration['adm_mappings']
         _get_copy(adms, name, datasetinfo, headers, iterator, retheaders, retval, sources)
     return retheaders, retval, sources
 

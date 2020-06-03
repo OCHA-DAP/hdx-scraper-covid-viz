@@ -9,7 +9,7 @@ from hdx.utilities.dateparse import parse_date
 from hdx.utilities.path import get_temp_dir
 
 from model import today, get_date_from_timestamp
-from model.sources import get_tabular_source
+from model.readers import read_tabular
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +19,7 @@ def get_fx(timeseries, configuration, countryiso3s, downloader, scraper=None):
         return list()
 
     url = configuration['country_currency_url']
-    _, data = get_tabular_source(downloader, {'url': url, 'sheet': 'Active', 'headers': 4, 'format': 'xls'})
+    _, data = read_tabular(downloader, {'url': url, 'sheet': 'Active', 'headers': 4, 'format': 'xls'})
     mapping = dict()
     for row in data:
         countryname = row['ENTITY']
@@ -40,7 +40,7 @@ def get_fx(timeseries, configuration, countryiso3s, downloader, scraper=None):
             url = base_url % currency
             downloader.download_file(url, temp_dir, filename)
             time.sleep(20)
-        _, data = get_tabular_source(downloader, {'url': path, 'headers': 1, 'format': 'csv'})
+        _, data = read_tabular(downloader, {'url': path, 'headers': 1, 'format': 'csv'})
         norows = 0
         for row in data:
             date = row.get('timestamp')

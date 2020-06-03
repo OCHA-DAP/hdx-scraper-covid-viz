@@ -3,7 +3,7 @@ import argparse
 import json
 import logging
 from os import getenv
-from os.path import join
+from os.path import join, expanduser
 
 import pygsheets
 from google.oauth2 import service_account
@@ -39,7 +39,7 @@ def parse_args():
 def main(gsheet_auth, test, scratch, scraper, updatesheets, **ignore):
     logger.info('##### hdx-scraper-covid-viz version %.1f ####' % VERSION)
     configuration = Configuration.read()
-    with Download(rate_limit={'calls': 1, 'period': 1}) as downloader:
+    with Download(extra_params_yaml=join(expanduser('~'), '.extraparams.yml'), extra_params_lookup='hdx-scraper-fts', rate_limit={'calls': 1, 'period': 1}) as downloader:
         sheets = configuration['sheets']
         if updatesheets is None:
             updatesheets = sheets.keys()

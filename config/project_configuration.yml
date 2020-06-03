@@ -12,6 +12,12 @@ sheets:
   subnational: "SubnationalData"
   sources: "Sources"
 
+additional_sources:
+  - indicator: "#food-prices"
+    dataset: "wfp-food-prices"
+  - indicator: "#vaccination-campaigns"
+    dataset: "immunization-campaigns-impacted"
+
 # national
 tabular_national:
   who:
@@ -946,6 +952,10 @@ admin_info:
   - {ADM1_PCODE: ZW17, ADM1_REF: Midlands, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
   - {ADM1_PCODE: ZW18, ADM1_REF: Masvingo, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
   - {ADM1_PCODE: ZW19, ADM1_REF: Harare, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
+
+adm_mappings:
+  - "Congo DR": "COD"
+  -
 
 adm1_name_replacements:
   " urban": ""

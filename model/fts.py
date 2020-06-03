@@ -153,6 +153,13 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
         if covidfund and covidreq:
             funding[index + 1][countryiso] = covidfund
             percentage[index + 1][countryiso] = get_percent(covidfund, covidreq)
+
+    # override total requirements and funding from direct call
+    url = '%sfts/flow/plan/overview/snapshot/%s' % (base_url, today.year)
+    data = download_data(url.replace('v1/public', 'v2'), downloader)
+    total_allreq = data['totals']['revisedRequirements']
+    total_allfund = data['totals']['totalFunding']
+
     total_allpercent = get_percent(total_allfund, total_allreq)
     total_covidpercent = get_percent(total_covidfund, total_covidreq)
     logger.info('Processed FTS')

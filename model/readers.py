@@ -23,7 +23,7 @@ def get_url(url, **kwargs):
     return url
 
 
-def get_tabular_source(downloader, datasetinfo, **kwargs):
+def read_tabular(downloader, datasetinfo, **kwargs):
     url = get_url(datasetinfo['url'], **kwargs)
     sheet = datasetinfo.get('sheet')
     headers = datasetinfo['headers']
@@ -33,7 +33,7 @@ def get_tabular_source(downloader, datasetinfo, **kwargs):
     return downloader.get_tabular_rows(url, sheet=sheet, headers=headers, dict_form=True, format=format, **kwargs)
 
 
-def get_ole_source(downloader, datasetinfo, **kwargs):
+def read_ole(downloader, datasetinfo, **kwargs):
     url = get_url(datasetinfo['url'], **kwargs)
     with temp_dir('ole') as folder:
         path = downloader.download_file(url, folder, 'olefile')
@@ -44,10 +44,10 @@ def get_ole_source(downloader, datasetinfo, **kwargs):
             f.write(data)
         datasetinfo['url'] = outputfile
         datasetinfo['format'] = 'xls'
-        return get_tabular_source(downloader, datasetinfo, **kwargs)
+        return read_tabular(downloader, datasetinfo, **kwargs)
 
 
-def get_json_source(downloader, datasetinfo, **kwargs):
+def read_json(downloader, datasetinfo, **kwargs):
     url = get_url(datasetinfo['url'], **kwargs)
     response = downloader.download(url)
     json = response.json()
@@ -58,7 +58,7 @@ def get_json_source(downloader, datasetinfo, **kwargs):
     return json
 
 
-def get_hdx_source(downloader, datasetinfo):
+def read_hdx(downloader, datasetinfo):
     dataset_name = datasetinfo['dataset']
     dataset = Dataset.read_from_hdx(dataset_name)
     format = datasetinfo['format']
@@ -76,4 +76,4 @@ def get_hdx_source(downloader, datasetinfo):
         datasetinfo['source'] = dataset['dataset_source']
     if 'source_url' not in datasetinfo:
         datasetinfo['source_url'] = dataset.get_hdx_url()
-    return get_tabular_source(downloader, datasetinfo)
+    return read_tabular(downloader, datasetinfo)

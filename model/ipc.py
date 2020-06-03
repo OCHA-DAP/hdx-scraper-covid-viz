@@ -7,7 +7,7 @@ from hdx.utilities.dateparse import parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 
 from model import get_percent, get_date_from_dataset_date
-from model.sources import get_tabular_source
+from model.readers import read_tabular
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +20,7 @@ def get_ipc(configuration, admininfo, downloader, scraper=None):
     popdict = dict()
     for countryiso3 in admininfo.countryiso3s:
         countryiso2 = Country.get_iso2_from_iso3(countryiso3)
-        _, data = get_tabular_source(downloader, {'url': url % countryiso2, 'sheet': 'IPC', 'headers': [4, 6], 'format': 'xlsx'}, fill_merged_cells=True)
+        _, data = read_tabular(downloader, {'url': url % countryiso2, 'sheet': 'IPC', 'headers': [4, 6], 'format': 'xlsx'}, fill_merged_cells=True)
         data = list(data)
         adm1_names = set()
         for row in data:

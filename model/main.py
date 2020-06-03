@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+from hdx.data.dataset import Dataset
 from hdx.location.country import Country
 
+from model import get_date_from_dataset_date
 from model.admininfo import AdminInfo
 from model.fts import get_fts
 from model.copydata import get_copy
@@ -91,4 +93,18 @@ def get_indicators(configuration, downloader, sheets, scraper=None):
 
     admininfo.output_matches()
     admininfo.output_errors()
+
+    for sourceinfo in configuration['additional_sources']:
+        dataset_name = sourceinfo.get('dataset')
+        if dataset_name:
+            dataset = Dataset.read_from_hdx(dataset_name)
+            date = get_date_from_dataset_date(dataset)
+            source = dataset['dataset_source']
+            source_url = dataset.get_hdx_url()
+        else:
+            date = sourceinfo['date']
+            source = sourceinfo['source']
+            source_url = sourceinfo['source_url']
+        sources.append([sourceinfo['indicator'], date, source, source_url])
+
     return world, national, nationaltimeseries, subnational, sources

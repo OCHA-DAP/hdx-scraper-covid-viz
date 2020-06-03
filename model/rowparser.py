@@ -26,6 +26,7 @@ class RowParser(object):
         self.maxdateonly = maxdateonly
         self.flatteninfo = datasetinfo.get('flatten')
         self.headers = headers
+        self.adm_mappings = datasetinfo['adm_mappings']
 
     def flatten(self, row):
         if not self.flatteninfo:
@@ -70,6 +71,9 @@ class RowParser(object):
             if not adm:
                 return None
             if adm not in self.adms[i]:
+                mapped_adm = self.adm_mappings[i].get(adm)
+                if mapped_adm:
+                    return mapped_adm
                 if i == 0:
                     adm, _ = Country.get_iso3_country_code_fuzzy(adm)
                 elif i == 1:

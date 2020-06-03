@@ -8,7 +8,7 @@ from hdx.utilities.dictandlist import dict_of_lists_add
 
 from model import today, today_str, get_percent, get_rowval, get_date_from_timestamp
 from model.rowparser import RowParser
-from model.sources import get_tabular_source, get_ole_source, get_json_source, get_hdx_source
+from model.readers import read_tabular, read_ole, read_json, read_hdx
 
 logger = logging.getLogger(__name__)
 
@@ -125,21 +125,22 @@ def get_tabular(configuration, adms, national_subnational, downloader, scraper=N
         datasetinfo = datasets[name]
         format = datasetinfo['format']
         if format == 'json':
-            iterator = get_json_source(downloader, datasetinfo, adms=adms)
+            iterator = read_json(downloader, datasetinfo, adms=adms)
             headers = None
         elif format == 'ole':
-            headers, iterator = get_ole_source(downloader, datasetinfo, adms=adms)
+            headers, iterator = read_ole(downloader, datasetinfo, adms=adms)
         elif format in ['csv', 'xls', 'xlsx']:
             if 'dataset' in datasetinfo:
-                headers, iterator = get_hdx_source(downloader, datasetinfo)
+                headers, iterator = read_hdx(downloader, datasetinfo)
             else:
-                headers, iterator = get_tabular_source(downloader, datasetinfo, adms=adms)
+                headers, iterator = read_tabular(downloader, datasetinfo, adms=adms)
         else:
             raise ValueError('Invalid format %s for %s!' % (format, name))
         if 'source_url' not in datasetinfo:
             datasetinfo['source_url'] = datasetinfo['url']
         if 'date' not in datasetinfo:
             datasetinfo['date'] = today_str
+        datasetinfo['adm_mappings'] = configuration['adm_mappings']
         _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders, retval, sources)
     return retheaders, retval, sources
 
