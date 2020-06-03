@@ -3,6 +3,7 @@ import logging
 import time
 from datetime import timedelta
 from os.path import exists, join, getctime
+from urllib.request import urlretrieve
 
 from hdx.location.country import Country
 from hdx.utilities.dateparse import parse_date
@@ -34,11 +35,13 @@ def get_fx(timeseries, configuration, countryiso3s, downloader, scraper=None):
     temp_dir = get_temp_dir('fx')
     for countryiso3 in countryiso3s:
         currency = mapping[countryiso3]
+        if not currency:
+            continue
         filename = '%s.csv' % currency
         path = join(temp_dir, filename)
         if not exists(path) or (today - get_date_from_timestamp(getctime(path))) > timedelta(hours=12):
             url = base_url % currency
-            downloader.download_file(url, temp_dir, filename)
+            urlretrieve(url, path)
             time.sleep(20)
         _, data = read_tabular(downloader, {'url': path, 'headers': 1, 'format': 'csv'})
         norows = 0

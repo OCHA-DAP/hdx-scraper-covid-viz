@@ -955,7 +955,7 @@ admin_info:
 
 adm_mappings:
   - "Congo DR": "COD"
-  -
+  - {}
 
 adm1_name_replacements:
   " urban": ""

@@ -35,7 +35,7 @@ def _get_copy(adms, name, datasetinfo, headers, iterator, retheaders=[list(), li
         val_cols.append(header)
         hxltags.append(hxltag)
         valuedicts.append(dict())
-    rowparser = RowParser(adms, {'adm_cols': adm_cols}, headers)
+    rowparser = RowParser(adms, {'adm_cols': adm_cols, 'adm_mappings': datasetinfo['adm_mappings']}, headers)
     for row in iterator:
         adm, _ = rowparser.do_set_value(row, name)
         if adm:
