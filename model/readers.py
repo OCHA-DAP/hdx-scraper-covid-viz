@@ -58,22 +58,27 @@ def read_json(downloader, datasetinfo, **kwargs):
     return json
 
 
-def read_hdx(downloader, datasetinfo):
+def read_hdx_metadata(datasetinfo):
     dataset_name = datasetinfo['dataset']
     dataset = Dataset.read_from_hdx(dataset_name)
     format = datasetinfo['format']
-    url = None
-    for resource in dataset.get_resources():
-        if resource['format'] == format.upper():
-            url = resource['url']
-            break
+    url = datasetinfo.get('url')
     if not url:
-        logger.error('Cannot find %s resource in %s!' % (format, dataset_name))
-        return None, None
-    datasetinfo['url'] = url
+        for resource in dataset.get_resources():
+            if resource['format'] == format.upper():
+                url = resource['url']
+                break
+        if not url:
+            logger.error('Cannot find %s resource in %s!' % (format, dataset_name))
+            return None, None
+        datasetinfo['url'] = url
     datasetinfo['date'] = get_date_from_dataset_date(dataset)
     if 'source' not in datasetinfo:
         datasetinfo['source'] = dataset['dataset_source']
     if 'source_url' not in datasetinfo:
         datasetinfo['source_url'] = dataset.get_hdx_url()
+
+
+def read_hdx(downloader, datasetinfo):
+    read_hdx_metadata(datasetinfo)
     return read_tabular(downloader, datasetinfo)

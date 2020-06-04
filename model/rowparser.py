@@ -61,6 +61,7 @@ class RowParser(object):
 
     def do_set_value(self, row, scrapername=None):
         adm = None
+        admininfo = AdminInfo.get()
 
         def get_adm(admcol, prev_adm):
             match = template.search(admcol)
@@ -69,20 +70,28 @@ class RowParser(object):
                 admcol = self.headers[int(template_string[2:-2])]
             adm = row[admcol]
             if not adm:
-                return None
+                return None, None
+            exact = True
             if adm not in self.adms[i]:
                 mapped_adm = self.adm_mappings[i].get(adm)
                 if mapped_adm:
-                    return mapped_adm
+                    return mapped_adm, True
                 if i == 0:
                     adm, _ = Country.get_iso3_country_code_fuzzy(adm)
+                    exact = False
                 elif i == 1:
-                    adm = AdminInfo.get().get_pcode(prev_adm, adm, scrapername)
+                    pcode = admininfo.convert_pcode_length(prev_adm, adm, scrapername)
+                    if pcode:
+                        adm = pcode
+                        exact = True
+                    else:
+                        adm = admininfo.get_pcode(prev_adm, adm, scrapername)
+                        exact = False
                 else:
-                    return None
+                    return None, None
                 if adm not in self.adms[i]:
-                    return None
-            return adm
+                    return None, None
+            return adm, exact
 
         for i, admcol in enumerate(self.admcols):
             if admcol is None:
@@ -91,8 +100,8 @@ class RowParser(object):
             if isinstance(admcol, str):
                 admcol = [admcol]
             for admcl in admcol:
-                adm = get_adm(admcl, prev_adm)
-                if adm:
+                adm, exact = get_adm(admcl, prev_adm)
+                if adm and exact:
                     break
             if not adm:
                 return None, None

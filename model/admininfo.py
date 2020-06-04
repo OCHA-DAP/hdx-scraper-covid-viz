@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
+import re
 
 from hdx.hdx_configuration import Configuration
+from hdx.location.country import Country
 from hdx.utilities.text import multiple_replace
 import pyphonetics
 from unidecode import unidecode
@@ -9,10 +11,13 @@ from unidecode import unidecode
 
 logger = logging.getLogger(__name__)
 
+ascii = '([^\x00-\x7F])+'
+
 
 class AdminInfo(object):
     _admininfo = None
     pcodes = list()
+    pcode_lengths = dict()
     name_to_pcode = dict()
     pcode_to_name = dict()
     pcode_to_iso3 = dict()
@@ -21,12 +26,14 @@ class AdminInfo(object):
         configuration = Configuration.read()
         admin_info = configuration['admin_info']
         self.adm1_name_replacements = configuration['adm1_name_replacements']
+        self.adm1_fuzzy_ignore = configuration['adm1_fuzzy_ignore']
         countryiso3s = set()
         for row in admin_info:
             countryiso3 = row['alpha_3']
             countryiso3s.add(countryiso3)
             pcode = row['ADM1_PCODE']
             self.pcodes.append(pcode)
+            self.pcode_lengths[countryiso3] = len(pcode)
             adm1_name = row['ADM1_REF']
             self.pcode_to_name[pcode] = adm1_name
             name_to_pcode = self.name_to_pcode.get(countryiso3, dict())
@@ -40,14 +47,43 @@ class AdminInfo(object):
         self.matches = set()
         self.errors = set()
 
+    def convert_pcode_length(self, countryiso3, adm1_pcode, scrapername):
+        if adm1_pcode in self.pcodes:
+            return adm1_pcode
+        pcode_length = len(adm1_pcode)
+        country_pcodelength = self.pcode_lengths.get(countryiso3)
+        if not country_pcodelength:
+            return None
+        if pcode_length == country_pcodelength or pcode_length < 4 or pcode_length > 6:
+            return None
+        if country_pcodelength == 4:
+            pcode = '%s%s' % (Country.get_iso2_from_iso3(adm1_pcode[:3]), adm1_pcode[-2:])
+        elif country_pcodelength == 5:
+            if pcode_length == 4:
+                pcode = '%s0%s' % (adm1_pcode[:2], adm1_pcode[-2:])
+            else:
+                pcode = '%s%s' % (Country.get_iso2_from_iso3(adm1_pcode[:3]), adm1_pcode[-3:])
+        elif country_pcodelength == 6:
+            if pcode_length == 4:
+                pcode = '%s0%s' % (Country.get_iso3_from_iso2(adm1_pcode[:2]), adm1_pcode[-2:])
+            else:
+                pcode = '%s%s' % (Country.get_iso3_from_iso2(adm1_pcode[:2]), adm1_pcode[-3:])
+        else:
+            pcode = None
+        if pcode in self.pcodes:
+            self.matches.add((scrapername, countryiso3, adm1_pcode, self.pcode_to_name[pcode], 'pcode length conversion'))
+            return pcode
+        return None
+
     def get_pcode(self, countryiso3, adm1_name, scrapername=None):
         name_to_pcode = self.name_to_pcode.get(countryiso3)
         if not name_to_pcode:
             self.errors.add((scrapername, countryiso3))
-            return False
+            return None
+        if adm1_name.lower() in self.adm1_fuzzy_ignore:
+            return None
         adm1_name_lookup = unidecode(adm1_name)
-        if '/' in adm1_name_lookup:
-            adm1_name_lookup = adm1_name_lookup.split('/')[0]
+        adm1_name_lookup = re.sub(ascii, ' ', adm1_name_lookup)
         adm1_name_lookup = adm1_name_lookup.strip().lower()
         adm1_name_lookup2 = multiple_replace(adm1_name_lookup, self.adm1_name_replacements)
         pcode = name_to_pcode.get(adm1_name_lookup, name_to_pcode.get(adm1_name_lookup2))

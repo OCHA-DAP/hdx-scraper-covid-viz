@@ -59,12 +59,14 @@ def get_requirements_and_funding(base_url, plan_id, downloader, isghrp):
     allfund = 0
     fundingobjects = data['report3']['fundingTotals']['objects']
     if len(fundingobjects) != 0:
-        for fundobj in fundingobjects[0]['singleFundingObjects']:
-            fund_id = fundobj.get('id')
-            fund = fundobj['totalFunding']
-            allfund += fund
-            if covidflag and fund_id and fund_id in covid_ids:
-                covidfund += fund
+        singlefundingobjects = fundingobjects[0].get('singleFundingObjects')
+        if singlefundingobjects:
+            for fundobj in singlefundingobjects:
+                fund_id = fundobj.get('id')
+                fund = fundobj['totalFunding']
+                allfund += fund
+                if covidflag and fund_id and fund_id in covid_ids:
+                    covidfund += fund
         sharedfundingobjects = fundingobjects[0].get('sharedFundingObjects')
         if sharedfundingobjects:
             for fundobj in sharedfundingobjects:
