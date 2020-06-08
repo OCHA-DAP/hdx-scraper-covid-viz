@@ -4,7 +4,7 @@ name: Python package
 
 on:
   schedule:
-    - cron: "10 8 * * *"
+    - cron: "45 8 * * *"
 
 jobs:
   build:
