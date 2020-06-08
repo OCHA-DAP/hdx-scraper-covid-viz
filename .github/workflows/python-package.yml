@@ -26,5 +26,11 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Run script
+      env:
+        HDX_KEY: ${{ secrets.HDX_KEY }}
+        PREPREFIX: ${{ secrets.PREPREFIX }}
+        GSHEET_AUTH: ${{ secrets.GSHEET_AUTH }}
+        UPDATE_SHEETS: ${{ secrets.UPDATE_SHEETS }}
+        BASIC_AUTH: ${{ secrets.BASIC_AUTH }}
       run: |
         python run.py

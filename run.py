@@ -35,7 +35,7 @@ def parse_args():
     return args
 
 
-def main(gsheet_auth, updatesheets, scraper, updatetabs, **ignore):
+def main(gsheet_auth, updatesheets, updatetabs, scraper, **ignore):
     logger.info('##### hdx-scraper-covid-viz version %.1f ####' % VERSION)
     configuration = Configuration.read()
     with Download(extra_params_yaml=join(expanduser('~'), '.extraparams.yml'), extra_params_lookup='hdx-scraper-fts', rate_limit={'calls': 1, 'period': 1}) as downloader:
@@ -96,8 +96,11 @@ if __name__ == '__main__':
     gsheet_auth = args.gsheet_auth
     if gsheet_auth is None:
         gsheet_auth = getenv('GSHEET_AUTH')
-    if args.updatespreadsheets:
-        updatesheets = args.updatespreadsheets.split(',')
+    updatesheets = getenv('UPDATESHEETS')
+    if updatesheets is None:
+        updatesheets = args.updatespreadsheets
+    if updatesheets:
+        updatesheets = updatesheets.split(',')
     else:
         updatesheets = None
     if args.updatetabs:
@@ -106,4 +109,4 @@ if __name__ == '__main__':
         updatetabs = None
     facade(main, hdx_read_only=True, user_agent=user_agent, preprefix=preprefix, hdx_site=hdx_site,
            project_config_yaml=join('config', 'project_configuration.yml'), gsheet_auth=gsheet_auth,
-           updatesheets=updatesheets, scraper=args.scraper, updatetabs=updatetabs)
+           updatesheets=updatesheets, updatetabs=updatetabs, scraper=args.scraper)
