@@ -3,13 +3,34 @@ import logging
 
 from hdx.data.dataset import Dataset
 from hdx.location.country import Country
-from hdx.utilities.dateparse import parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 
 from model import get_percent, get_date_from_dataset_date
 from model.readers import read_tabular
 
 logger = logging.getLogger(__name__)
+
+
+def get_data(downloader, url, countryiso2):
+    for page in range(1, 3):
+        _, data = read_tabular(downloader, {'url': url % (page, countryiso2), 'sheet': 'IPC', 'headers': [4, 6],
+                                            'format': 'xlsx'}, fill_merged_cells=True)
+        data = list(data)
+        adm1_names = set()
+        percentages = list()
+        for row in data:
+            area = row['Area']
+            percentage = row['Current Phase P3+ %']
+            if percentage:
+                percentages.append(percentage)
+            if not area or area == row['Country']:
+                continue
+            adm1_name = row['Level 1 Name']
+            if adm1_name:
+                adm1_names.add(adm1_name)
+        if len(percentages) != 0:
+            return data, adm1_names
+    return None, None
 
 
 def get_ipc(configuration, admininfo, downloader, scraper=None):
@@ -20,16 +41,9 @@ def get_ipc(configuration, admininfo, downloader, scraper=None):
     popdict = dict()
     for countryiso3 in admininfo.countryiso3s:
         countryiso2 = Country.get_iso2_from_iso3(countryiso3)
-        _, data = read_tabular(downloader, {'url': url % countryiso2, 'sheet': 'IPC', 'headers': [4, 6], 'format': 'xlsx'}, fill_merged_cells=True)
-        data = list(data)
-        adm1_names = set()
-        for row in data:
-            area = row['Area']
-            if not area or area == row['Country']:
-                continue
-            adm1_name = row['Level 1 Name']
-            if adm1_name:
-                adm1_names.add(adm1_name)
+        data, adm1_names = get_data(downloader, url, countryiso2)
+        if not data:
+            continue
         for row in data:
             country = row['Country']
             if adm1_names:
