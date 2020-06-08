@@ -3,12 +3,8 @@
 name: Python package
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-#  schedule:
-#    - cron: "* 23 * * *"
+  schedule:
+    - cron: "10 8 * * *"
 
 jobs:
   build:
@@ -30,7 +26,7 @@ jobs:
         HDX_KEY: ${{ secrets.HDX_KEY }}
         PREPREFIX: ${{ secrets.PREPREFIX }}
         GSHEET_AUTH: ${{ secrets.GSHEET_AUTH }}
-        UPDATE_SHEETS: ${{ secrets.UPDATE_SHEETS }}
         BASIC_AUTH: ${{ secrets.BASIC_AUTH }}
+        UPDATESHEETS: ${{ secrets.UPDATESHEETS }}
       run: |
         python run.py
