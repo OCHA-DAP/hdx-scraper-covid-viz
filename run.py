@@ -96,9 +96,9 @@ if __name__ == '__main__':
     gsheet_auth = args.gsheet_auth
     if gsheet_auth is None:
         gsheet_auth = getenv('GSHEET_AUTH')
-    updatesheets = getenv('UPDATESHEETS')
+    updatesheets = args.updatespreadsheets
     if updatesheets is None:
-        updatesheets = args.updatespreadsheets
+        updatesheets = getenv('UPDATESHEETS')
     if updatesheets:
         updatesheets = updatesheets.split(',')
     else:
