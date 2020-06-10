@@ -30,3 +30,8 @@ jobs:
         UPDATESHEETS: ${{ secrets.UPDATESHEETS }}
       run: |
         python run.py
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      name: Commit updated data bundle
+      with:
+        file_pattern: out.json
+        commit_message: automatic - Data bundle updated
