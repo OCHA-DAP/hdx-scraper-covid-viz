@@ -16,6 +16,41 @@ additional_sources:
   - indicator: "#vaccination-campaigns"
     dataset: "immunization-campaigns-impacted"
 
+additional_json:
+  - name: "vaccination_campaigns"
+    format: "csv"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT8m53T3ITzFdJWWKkdRRVRjezgt6MeeU5c2tJWl9SNff7SYn3iJ9_7DZZ_tYSmYI67-vH7cqze1VE0/pub?gid=0&single=true&output=csv"
+    headers: 1
+
+# global
+tabular_global:
+  cerf:
+    format: "csv"
+    dataset: "cerf-covid-19-allocations"
+    headers: 1
+    indicator_cols:
+      - filter_col: "PFType=CBPF"
+        val_cols:
+          - "TargetAmt"
+        total_col: "TargetAmt"
+        add_fns:
+          - "float(TargetAmt)"
+        columns:
+          - "CBPFCovidFunding"
+        hxltags:
+          - "#value+cbpf+covid+funding+global+usd"
+      - filter_col: "PFType=CERF"
+        val_cols:
+          - "TargetAmt"
+        total_col: "TargetAmt"
+        add_fns:
+          - "float(TargetAmt)"
+        columns:
+          - "CERFCovidFunding"
+        hxltags:
+          - "#value+cerf+covid+funding+global+usd"
+
+
 # national
 tabular_national:
   who:
@@ -340,6 +375,20 @@ tabular_subnational:
       - "NoHealthFacilities"
     hxltags:
       - "#loc+count+health"
+  idmc:
+    source: "IDMC"
+    format: "csv"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSo25hpVc-ttGF0LEfWP2QTbqFTaf5SdGqp5eAqOfRwoGE6ROitk_Boco_3TMXjDARK8he3HdmzYkIP/pub?gid=893315748&single=true&output=csv"
+    headers: 1
+    adm_cols:
+      - ~
+      - "ADM1_PCODE"
+    val_cols:
+      - "DISPLACED"
+    columns:
+      - "NoDisplaced"
+    hxltags:
+      - "#affected+displaced"
   who:
     source: "WHO"
     format: "csv"

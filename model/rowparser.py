@@ -11,8 +11,6 @@ from model.admininfo import AdminInfo
 
 class RowParser(object):
     def __init__(self, adms, datasetinfo, headers, maxdateonly=True):
-        self.adms = adms
-        self.admcols = datasetinfo['adm_cols']
         self.datecol = datasetinfo.get('date_col')
         self.datetype = datasetinfo.get('date_type')
         if self.datetype:
@@ -22,11 +20,17 @@ class RowParser(object):
                 date = 0
         else:
             date = 0
-        self.maxdates = {adm: date for adm in adms[-1]}
+        if adms is None:
+            self.adms = 'global'
+            self.maxdates = {'global': date}
+        else:
+            self.adms = adms
+            self.admcols = datasetinfo['adm_cols']
+            self.adm_mappings = datasetinfo['adm_mappings']
+            self.maxdates = {adm: date for adm in adms[-1]}
         self.maxdateonly = maxdateonly
         self.flatteninfo = datasetinfo.get('flatten')
         self.headers = headers
-        self.adm_mappings = datasetinfo['adm_mappings']
 
     def flatten(self, row):
         if not self.flatteninfo:
@@ -93,18 +97,21 @@ class RowParser(object):
                     return None, None
             return adm, exact
 
-        for i, admcol in enumerate(self.admcols):
-            if admcol is None:
-                continue
-            prev_adm = adm
-            if isinstance(admcol, str):
-                admcol = [admcol]
-            for admcl in admcol:
-                adm, exact = get_adm(admcl, prev_adm)
-                if adm and exact:
-                    break
-            if not adm:
-                return None, None
+        if self.adms == 'global':
+            adm = 'global'
+        else:
+            for i, admcol in enumerate(self.admcols):
+                if admcol is None:
+                    continue
+                prev_adm = adm
+                if isinstance(admcol, str):
+                    admcol = [admcol]
+                for admcl in admcol:
+                    adm, exact = get_adm(admcl, prev_adm)
+                    if adm and exact:
+                        break
+                if not adm:
+                    return None, None
         if self.datecol:
             date = row[self.datecol]
             if self.datetype == 'int':

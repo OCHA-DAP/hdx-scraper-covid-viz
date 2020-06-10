@@ -20,22 +20,17 @@ def extend_headers(headers, *args):
                 header.extend(arg[i])
 
 
-def extend_wcolumns(rows, *args):
-    row = list()
-    for arg in args:
-        if arg:
-            for column in arg:
-                row.append(column)
-    rows.append(row)
-
-
 def extend_columns(rows, adms, admininfo, *args):
+    if adms is None:
+        adms = ['global']
     for i, adm in enumerate(adms):
         if admininfo:
             countryiso3 = admininfo.pcode_to_iso3[adm]
             countryname = Country.get_country_name_from_iso3(countryiso3)
             adm1_name = admininfo.pcode_to_name[adm]
             row = [countryiso3, countryname, adm, adm1_name]
+        elif adm == 'global':
+            row = list()
         else:
             row = [adm, Country.get_country_name_from_iso3(adm)]
         for arg in args:
@@ -64,9 +59,12 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
     if 'world' in tabs or 'national' in tabs:
         fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(configuration, countryiso3s, downloader, scraper)
 
-        extend_headers(world, fts_wheaders)
-        extend_wcolumns(world, fts_wcolumns)
-        extend_sources(sources, fts_wsources)
+        if 'world' in tabs:
+            tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, None, 'global', downloader, scraper)
+
+            extend_headers(world, fts_wheaders, tabular_headers)
+            extend_columns(world, None, None, fts_wcolumns, tabular_columns)
+            extend_sources(sources, fts_wsources, tabular_sources)
 
         if 'national' in tabs:
             tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, [countryiso3s], 'national', downloader, scraper)

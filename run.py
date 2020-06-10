@@ -10,9 +10,12 @@ from google.oauth2 import service_account
 
 from hdx.facades.keyword_arguments import facade
 from hdx.hdx_configuration import Configuration
+from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.downloader import Download
 from hdx.utilities.easy_logging import setup_logging
+from hdx.utilities.saver import save_json
 
+from model.additional_json import add_additional_json
 from model.main import get_indicators
 
 setup_logging()
@@ -35,6 +38,61 @@ def parse_args():
     return args
 
 
+def generate_json(json, key, rows):
+    hxltags = rows[1]
+    for row in rows[2:]:
+        newrow = dict()
+        for i, hxltag in enumerate(hxltags):
+            value = row[i]
+            if value is None:
+                value = ''
+            newrow[hxltag] = str(value)
+        dict_of_lists_add(json, key, newrow)
+
+
+def write_json(configuration, downloader, updatetabs, world, national, nationaltimeseries, subnational, sources):
+    json = dict()
+
+    def update_json(tabname, values):
+        if tabname not in updatetabs:
+            return
+        generate_json(json, '%s_data' % tabname, values)
+
+    update_json('world', world)
+    update_json('national', national)
+    update_json('national_timeseries', nationaltimeseries)
+    update_json('subnational', subnational)
+    update_json('sources', sources)
+    add_additional_json(configuration, downloader, json)
+    save_json(json, 'out.json')
+
+
+def write_to_gsheets(spreadsheets, updatesheets, tabs, updatetabs, world, national, nationaltimeseries, subnational, sources):
+    # Write to gsheets
+    info = json.loads(gsheet_auth)
+    scopes = ['https://www.googleapis.com/auth/spreadsheets']
+    credentials = service_account.Credentials.from_service_account_info(info, scopes=scopes)
+    gc = pygsheets.authorize(custom_credentials=credentials)
+    for sheet in spreadsheets:
+        if sheet not in updatesheets:
+            continue
+        url = spreadsheets[sheet]
+        spreadsheet = gc.open_by_url(url)
+
+        def update_tab(tabname, values):
+            if tabname not in updatetabs:
+                return
+            tab = spreadsheet.worksheet_by_title(tabs[tabname])
+            tab.clear(fields='*')
+            tab.update_values('A1', values)
+
+        update_tab('world', world)
+        update_tab('national', national)
+        update_tab('national_timeseries', nationaltimeseries)
+        update_tab('subnational', subnational)
+        update_tab('sources', sources)
+
+
 def main(gsheet_auth, updatesheets, updatetabs, scraper, **ignore):
     logger.info('##### hdx-scraper-covid-viz version %.1f ####' % VERSION)
     configuration = Configuration.read()
@@ -55,29 +113,8 @@ def main(gsheet_auth, updatesheets, updatetabs, scraper, **ignore):
         if scraper:
             logger.info('Updating only scraper: %s' % scraper)
         world, national, nationaltimeseries, subnational, sources = get_indicators(configuration, downloader, updatetabs, scraper)
-        # Write to gsheets
-        info = json.loads(gsheet_auth)
-        scopes = ['https://www.googleapis.com/auth/spreadsheets']
-        credentials = service_account.Credentials.from_service_account_info(info, scopes=scopes)
-        gc = pygsheets.authorize(custom_credentials=credentials)
-        for sheet in spreadsheets:
-            if sheet not in updatesheets:
-                continue
-            url = spreadsheets[sheet]
-            spreadsheet = gc.open_by_url(url)
-
-            def update_tab(tabname, values):
-                if tabname not in updatetabs:
-                    return
-                tab = spreadsheet.worksheet_by_title(tabs[tabname])
-                tab.clear(fields='*')
-                tab.update_values('A1', values)
-
-            update_tab('world', world)
-            update_tab('national', national)
-            update_tab('national_timeseries', nationaltimeseries)
-            update_tab('subnational', subnational)
-            update_tab('sources', sources)
+        write_to_gsheets(spreadsheets, updatesheets, tabs, updatetabs, world, national, nationaltimeseries, subnational, sources)
+        write_json(configuration, downloader, updatetabs, world, national, nationaltimeseries, subnational, sources)
 
 
 if __name__ == '__main__':

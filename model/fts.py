@@ -171,6 +171,12 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
     hxltags = ['#value+funding+hrp+required+usd', '#value+funding+hrp+total+usd', '#value+funding+hrp+pct',
                '#value+covid+funding+hrp+required+usd', '#value+covid+funding+hrp+total+usd', '#value+covid+funding+hrp+pct',
                '#value+covid+funding+other+required+usd', '#value+covid+funding+other+total+usd', '#value+covid+funding+other+pct']
+    total_allreq = {'global': total_allreq}
+    total_allfund = {'global': total_allfund}
+    total_allpercent = {'global': total_allpercent}
+    total_covidreq = {'global': total_covidreq}
+    total_covidfund = {'global': total_covidfund}
+    total_covidpercent = {'global': total_covidpercent}
     return [['RequiredFunding', 'Funding', 'PercentFunded',
              'RequiredGHRPCovidFunding', 'GHRPCovidFunding', 'GHRPCovidPercentFunded'], whxltags], \
            [total_allreq, total_allfund, total_allpercent, total_covidreq, total_covidfund, total_covidpercent], \
