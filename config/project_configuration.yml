@@ -53,7 +53,7 @@ tabular_global:
 
 # national
 tabular_national:
-  who:
+  who_national:
     source: "WHO"
     source_url: "https://data.humdata.org/dataset/coronavirus-covid-19-cases-and-deaths"
     format: "json"
@@ -227,6 +227,23 @@ tabular_national:
           - "CERFCovidFunding"
         hxltags:
           - "#value+cerf+covid+funding+total+usd"
+  travel:
+    format: "csv"
+    dataset: "covid-19-global-travel-restrictions-and-airline-information"
+    headers: 1
+    adm_cols:
+      - "iso3"
+    val_cols:
+      - "info"
+      - "published"
+    append_cols:
+      - "info"
+    columns:
+      - "TravelRestrictions"
+      - "TravelRestrictionsPublished"
+    hxltags:
+      - "#severity+travel"
+      - "#severity+date+travel"
 
 copy_national:
   humaccess:
@@ -389,7 +406,7 @@ tabular_subnational:
       - "NoDisplaced"
     hxltags:
       - "#affected+displaced"
-  who:
+  who_subnational:
     source: "WHO"
     format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRfjaIXE1hvEIXD66g6cuCbPrGdZkx6vLIgXO_znVbjQ-OgwfaI1kJPhxhgjw2Yg08CmtBuMLAZkTnu/pub?gid=337443769&single=true&output=csv"

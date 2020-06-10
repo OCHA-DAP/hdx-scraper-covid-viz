@@ -17,8 +17,8 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
     rowparser = RowParser(adms, datasetinfo, headers)
     indicatorcols = datasetinfo.get('indicator_cols')
     if not indicatorcols:
-        indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo['val_cols'], 'total_col': datasetinfo.get('total_col'),
-                          'ignore_vals': datasetinfo.get('ignore_vals', list()), 'add_fns': datasetinfo.get('add_fns'),
+        indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo['val_cols'], 'append_cols': datasetinfo.get('append_cols', list()),
+                          'total_col': datasetinfo.get('total_col'), 'ignore_vals': datasetinfo.get('ignore_vals', list()), 'add_fns': datasetinfo.get('add_fns'),
                           'columns': datasetinfo['columns'], 'hxltags': datasetinfo['hxltags']}]
     valuedicts = dict()
     for indicatorcol in indicatorcols:
@@ -42,12 +42,17 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
                 if not match:
                     continue
             totalcol = indicatorcol.get('total_col')
+            appendcols = indicatorcol.get('append_cols', list())
             for i, valcol in enumerate(indicatorcol['val_cols']):
                 valuedict = valuedicts[filtercol][i]
                 val = get_rowval(row, valcol)
                 if totalcol:
                     dict_of_lists_add(valuedict, adm, val)
                 else:
+                    if valcol in appendcols:
+                        curval = valuedict.get(adm)
+                        if curval:
+                            val = curval + val
                     valuedict[adm] = val
 
     for row in iterator:
