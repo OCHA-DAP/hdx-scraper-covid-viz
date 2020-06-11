@@ -113,8 +113,8 @@ def main(gsheet_auth, updatesheets, updatetabs, scraper, **ignore):
         if scraper:
             logger.info('Updating only scraper: %s' % scraper)
         world, national, nationaltimeseries, subnational, sources = get_indicators(configuration, downloader, updatetabs, scraper)
-        write_to_gsheets(spreadsheets, updatesheets, tabs, updatetabs, world, national, nationaltimeseries, subnational, sources)
         write_json(configuration, downloader, updatetabs, world, national, nationaltimeseries, subnational, sources)
+        write_to_gsheets(spreadsheets, updatesheets, tabs, updatetabs, world, national, nationaltimeseries, subnational, sources)
 
 
 if __name__ == '__main__':

@@ -24,7 +24,7 @@ additional_json:
 
 # global
 tabular_global:
-  cerf:
+  cerf_global:
     format: "csv"
     dataset: "cerf-covid-19-allocations"
     headers: 1
@@ -200,7 +200,7 @@ tabular_national:
       - "SchoolClosure"
     hxltags:
       - "#impact+type"
-  cerf:
+  cerf_national:
     format: "csv"
     dataset: "cerf-covid-19-allocations"
     headers: 1
@@ -245,12 +245,12 @@ tabular_national:
       - "#severity+travel"
       - "#severity+date+travel"
 
-copy_national:
-  humaccess:
-    format: "xlsx"
-    dataset: "constraints-faced-by-people-due-to-covid-19-outbreak"
-    sheet: 1
-    headers: 2
+copy_national: {}
+#  humaccess:
+#    format: "xlsx"
+#    dataset: "constraints-faced-by-people-due-to-covid-19-outbreak"
+#    sheet: 1
+#    headers: 2
 
 timeseries_national:
   imf:
@@ -1018,6 +1018,44 @@ admin_info:
   - {ADM1_PCODE: ZW17, ADM1_REF: Midlands, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
   - {ADM1_PCODE: ZW18, ADM1_REF: Masvingo, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
   - {ADM1_PCODE: ZW19, ADM1_REF: Harare, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
+  - {alpha_3: AGO}
+  - {alpha_3: ARG}
+  - {alpha_3: ABW}
+  - {alpha_3: BGD}
+  - {alpha_3: BEN}
+  - {alpha_3: BOL}
+  - {alpha_3: BRA}
+  - {alpha_3: CHL}
+  - {alpha_3: CRI}
+  - {alpha_3: CUW}
+  - {alpha_3: DJI}
+  - {alpha_3: DOM}
+  - {alpha_3: PRK}
+  - {alpha_3: ECU}
+  - {alpha_3: EGY}
+  - {alpha_3: GUY}
+  - {alpha_3: IRN}
+  - {alpha_3: JOR}
+  - {alpha_3: KEN}
+  - {alpha_3: LBN}
+  - {alpha_3: LBR}
+  - {alpha_3: MEX}
+  - {alpha_3: MOZ}
+  - {alpha_3: PAK}
+  - {alpha_3: PAN}
+  - {alpha_3: PRY}
+  - {alpha_3: PER}
+  - {alpha_3: PHL}
+  - {alpha_3: COG}
+  - {alpha_3: RWA}
+  - {alpha_3: SLE}
+  - {alpha_3: TZA}
+  - {alpha_3: TGO}
+  - {alpha_3: TTO}
+  - {alpha_3: TUR}
+  - {alpha_3: UGA}
+  - {alpha_3: URY}
+  - {alpha_3: ZMB}
 
 adm_mappings:
   - "Congo DR": "COD"

@@ -31,7 +31,9 @@ class AdminInfo(object):
         for row in admin_info:
             countryiso3 = row['alpha_3']
             countryiso3s.add(countryiso3)
-            pcode = row['ADM1_PCODE']
+            pcode = row.get('ADM1_PCODE')
+            if not pcode:
+                continue
             self.pcodes.append(pcode)
             self.pcode_lengths[countryiso3] = len(pcode)
             adm1_name = row['ADM1_REF']
