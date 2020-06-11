@@ -33,7 +33,7 @@ tabular_global:
         val_cols:
           - "TargetAmt"
         total_col: "TargetAmt"
-        add_fns:
+        val_fns:
           - "float(TargetAmt)"
         columns:
           - "CBPFCovidFunding"
@@ -43,7 +43,7 @@ tabular_global:
         val_cols:
           - "TargetAmt"
         total_col: "TargetAmt"
-        add_fns:
+        val_fns:
           - "float(TargetAmt)"
         columns:
           - "CERFCovidFunding"
@@ -142,6 +142,26 @@ tabular_national:
           - "RequiredFundingPreCovid"
         hxltags:
           - "#value+funding+required+precovid+usd"
+  idmc:
+    format: "csv"
+    dataset: "idmc-internally-displaced-persons-idps"
+    headers: 2
+    adm_cols:
+      - "#country+code"
+    date_col: "#date+year"
+    date_type: "int"
+    val_cols:
+      - "#affected+idps+ind+stock+conflict"
+      - "#affected+idps+ind+stock+disaster"
+    eval_cols:
+      - "#affected+idps+ind+stock+conflict + #affected+idps+ind+stock+disaster"
+    val_fns:
+      - "int(#affected+idps+ind+stock+conflict) if #affected+idps+ind+stock+conflict else 0"
+      - "int(#affected+idps+ind+stock+disaster) if #affected+idps+ind+stock+disaster else 0"
+    columns:
+      - "TotalIDPs"
+    hxltags:
+      - "#affected+displaced"
   imperial:
     format: "xlsx"
     dataset: "imperial-college-covid-19-projections"
@@ -211,7 +231,7 @@ tabular_national:
         val_cols:
           - "TargetAmt"
         total_col: "TargetAmt"
-        add_fns:
+        val_fns:
           - "float(TargetAmt)"
         columns:
           - "CBPFCovidFunding"
@@ -221,7 +241,7 @@ tabular_national:
         val_cols:
           - "TargetAmt"
         total_col: "TargetAmt"
-        add_fns:
+        val_fns:
           - "float(TargetAmt)"
         columns:
           - "CERFCovidFunding"
@@ -328,7 +348,7 @@ timeseries_national:
 #    adm_cols:
 
 country_currency_url: "https://www.currency-iso.org/dam/downloads/lists/list_one.xls"
-alphavantage_url: "https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=USD&to_symbol=%s&apikey=YHFVGAV55LIXK1TR&datatype=csv"
+alphavantage_url: "https://www.alphavantage.co/query?function=FX_WEEKLY&from_symbol=USD&to_symbol=%s&apikey=YHFVGAV55LIXK1TR&datatype=csv"
 
 fts_url: "https://api.hpc.tools/v1/public/"
 fts_source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
@@ -356,7 +376,7 @@ tabular_subnational:
           - "phase35"
           - "population"
         total_col: "get_percent(phase35, population)"
-        add_fns:
+        val_fns:
           - "float(phase35)"
           - "float(population)"
         columns:
@@ -392,20 +412,20 @@ tabular_subnational:
       - "NoHealthFacilities"
     hxltags:
       - "#loc+count+health"
-  idmc:
-    source: "IDMC"
-    format: "csv"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSo25hpVc-ttGF0LEfWP2QTbqFTaf5SdGqp5eAqOfRwoGE6ROitk_Boco_3TMXjDARK8he3HdmzYkIP/pub?gid=893315748&single=true&output=csv"
-    headers: 1
-    adm_cols:
-      - ~
-      - "ADM1_PCODE"
-    val_cols:
-      - "DISPLACED"
-    columns:
-      - "NoDisplaced"
-    hxltags:
-      - "#affected+displaced"
+#  idmc:
+#    source: "IDMC"
+#    format: "csv"
+#    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSo25hpVc-ttGF0LEfWP2QTbqFTaf5SdGqp5eAqOfRwoGE6ROitk_Boco_3TMXjDARK8he3HdmzYkIP/pub?gid=893315748&single=true&output=csv"
+#    headers: 1
+#    adm_cols:
+#      - ~
+#      - "ADM1_PCODE"
+#    val_cols:
+#      - "DISPLACED"
+#    columns:
+#      - "NoDisplaced"
+#    hxltags:
+#      - "#affected+displaced"
   who_subnational:
     source: "WHO"
     format: "csv"
@@ -425,7 +445,7 @@ tabular_subnational:
         ignore_vals:
           - "-2222"
           - "-4444"
-        add_fns:
+        val_fns:
           - "float(Numerator)"
           - "float(Denominator)"
         columns:
@@ -440,7 +460,7 @@ tabular_subnational:
         ignore_vals:
           - "-2222"
           - "-4444"
-        add_fns:
+        val_fns:
           - "float(Numerator)"
           - "float(Denominator)"
         columns:
@@ -455,7 +475,7 @@ tabular_subnational:
         ignore_vals:
           - "-2222"
           - "-4444"
-        add_fns:
+        val_fns:
           - "float(Numerator)"
           - "float(Denominator)"
         columns:
@@ -470,7 +490,7 @@ tabular_subnational:
         ignore_vals:
           - "-2222"
           - "-4444"
-        add_fns:
+        val_fns:
           - "float(Numerator)"
           - "float(Denominator)"
         columns:
@@ -485,7 +505,7 @@ tabular_subnational:
         ignore_vals:
           - "-2222"
           - "-4444"
-        add_fns:
+        val_fns:
           - "float(Numerator)"
           - "float(Denominator)"
         columns:
@@ -500,7 +520,7 @@ tabular_subnational:
         ignore_vals:
           - "-2222"
           - "-4444"
-        add_fns:
+        val_fns:
           - "float(Numerator)"
           - "float(Denominator)"
         columns:
@@ -515,7 +535,7 @@ tabular_subnational:
         ignore_vals:
           - "-2222"
           - "-4444"
-        add_fns:
+        val_fns:
           - "float(Numerator)"
           - "float(Denominator)"
         columns:
@@ -530,7 +550,7 @@ tabular_subnational:
         ignore_vals:
           - "-2222"
           - "-4444"
-        add_fns:
+        val_fns:
           - "float(Numerator)"
           - "float(Denominator)"
         columns:
@@ -545,7 +565,7 @@ tabular_subnational:
         ignore_vals:
           - "-2222"
           - "-4444"
-        add_fns:
+        val_fns:
           - "float(Numerator)"
           - "float(Denominator)"
         columns:

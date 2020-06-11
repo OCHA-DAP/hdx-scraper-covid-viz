@@ -17,8 +17,9 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
     rowparser = RowParser(adms, datasetinfo, headers)
     indicatorcols = datasetinfo.get('indicator_cols')
     if not indicatorcols:
-        indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo['val_cols'], 'append_cols': datasetinfo.get('append_cols', list()),
-                          'total_col': datasetinfo.get('total_col'), 'ignore_vals': datasetinfo.get('ignore_vals', list()), 'add_fns': datasetinfo.get('add_fns'),
+        indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo['val_cols'], 'val_fns': datasetinfo.get('val_fns'),
+                          'eval_cols':  datasetinfo.get('eval_cols', list()), 'append_cols': datasetinfo.get('append_cols', list()),
+                          'total_col': datasetinfo.get('total_col'), 'ignore_vals': datasetinfo.get('ignore_vals', list()),
                           'columns': datasetinfo['columns'], 'hxltags': datasetinfo['hxltags']}]
     valuedicts = dict()
     for indicatorcol in indicatorcols:
@@ -41,15 +42,16 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
                         break
                 if not match:
                     continue
-            totalcol = indicatorcol.get('total_col')
-            appendcols = indicatorcol.get('append_cols', list())
+            total_col = indicatorcol.get('total_col')
+            eval_cols = indicatorcol.get('eval_cols')
+            append_cols = indicatorcol.get('append_cols', list())
             for i, valcol in enumerate(indicatorcol['val_cols']):
                 valuedict = valuedicts[filtercol][i]
                 val = get_rowval(row, valcol)
-                if totalcol:
+                if total_col or eval_cols:
                     dict_of_lists_add(valuedict, adm, val)
                 else:
-                    if valcol in appendcols:
+                    if valcol in append_cols:
                         curval = valuedict.get(adm)
                         if curval:
                             val = curval + val
@@ -80,11 +82,27 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
         hxltags = indicatorcol['hxltags']
         retheaders[1].extend(hxltags)
         valdicts = valuedicts[indicatorcol['filter_col']]
+        eval_cols = indicatorcol.get('eval_cols')
         total_col = indicatorcol.get('total_col')
         ignore_vals = indicatorcol.get('ignore_vals', list())
-        add_fns = indicatorcol.get('add_fns')
+        val_fns = indicatorcol.get('val_fns')
         valcols = indicatorcol['val_cols']
-        if total_col:
+        if eval_cols:
+            newvaldicts = [dict() for _ in eval_cols]
+            for i, eval_col in enumerate(eval_cols):
+                valdict0 = valdicts[0]
+                for adm in valdict0:
+                    newvaldicts[i][adm] = eval_col
+                    for j, valcol in enumerate(valcols):
+                        val = valdicts[j][adm][-1]
+                        if not val or val in ignore_vals:
+                            val = 0
+                        else:
+                            val = eval(val_fns[j].replace(valcol, val))
+                        newvaldicts[i][adm] = newvaldicts[i][adm].replace(valcol, str(val))
+                    newvaldicts[i][adm] = eval(newvaldicts[i][adm])
+            retval.extend(newvaldicts)
+        elif total_col:
             newvaldicts = [dict() for _ in valdicts]
             valdict0 = valdicts[0]
             for adm in valdict0:
@@ -100,7 +118,7 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
                     if not exists:
                         continue
                     for j, valdict in enumerate(valdicts):
-                        newvaldicts[j][adm] = newvaldicts[j].get(adm, 0.0) + eval(add_fns[j].replace(valcols[j], 'valdict[adm][i]'))
+                        newvaldicts[j][adm] = newvaldicts[j].get(adm, 0.0) + eval(val_fns[j].replace(valcols[j], 'valdict[adm][i]'))
             for i, valcol in enumerate(valcols):
                 total_col = total_col.replace(valcol, 'newvaldicts[%d][adm]' % i)
             newvaldict = dict()
