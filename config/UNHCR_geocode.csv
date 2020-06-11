@@ -1,0 +1,200 @@
+EGY,1,Egypt
+IRQ,5,Iraq
+JOR,36,Jordan
+LBN,71,Lebanon
+SYR,112,Syrian Arab Republic
+TUR,113,Turkey
+DJI,151,Djibouti
+ERI,157,Eritrea
+ETH,160,Ethiopia
+KEN,178,Kenya
+SOM,192,Somalia
+TZA,217,Tanzania (United Republic of)
+UGA,220,Uganda
+YEM,225,Yemen
+SSD,259,South Sudan
+SDN,295,Sudan
+CMR,349,Cameroon
+CAF,399,Central African Republic
+TCD,410,Chad
+COG,476,Republic of the Congo
+COD,486,Democratic Republic of the Congo
+CIV,509,Cote d'Ivoire
+LBR,535,Liberia
+AFG,575,Afghanistan
+ALB,576,Albania
+AND,577,Andorra
+AGO,578,Angola
+ATG,579,Antigua and Barbuda
+ARG,580,Argentina
+ARM,581,Armenia
+AUS,582,Australia
+AUT,583,Austria
+AZE,584,Azerbaijan
+BHR,585,Bahrain
+BRB,586,Barbados
+BDI,587,Burundi
+BEL,588,Belgium
+BEN,589,Benin
+BGD,591,Bangladesh
+BHS,592,Bahamas
+BTN,593,Bhutan
+BFA,594,Burkina Faso
+BLR,595,Belarus
+BOL,596,Bolivia (Plurinational State of)
+BWA,597,Botswana
+BRA,598,Brazil
+BRN,599,Brunei Darussalam
+BIH,600,Bosnia and Herzegovina
+BGR,601,Bulgaria
+BLZ,602,Belize
+KHM,603,Cambodia
+CAN,604,Canada
+CHN,606,China
+CHL,607,Chile
+COM,610,Comoros
+COL,612,Colombia
+CRI,613,Costa Rica
+CUB,614,Cuba
+CVI,615,Cabo Verde
+CYP,616,Cyprus
+CZE,617,Czech Republic
+DNK,618,Denmark
+DMA,619,Dominica
+DOM,620,Dominican Republic
+ECU,621,Ecuador
+GNQ,622,Equatorial Guinea
+EST,623,Estonia
+FJI,625,Fiji
+FIN,626,Finland
+FRA,629,France
+FSM,631,Micronesia (Federated States of)
+GAB,632,Gabon
+GMB,633,Gambia
+GBR,634,United Kingdom
+GEO,635,Georgia
+DEU,636,Germany
+GHA,637,Ghana
+GNB,639,Guinea-Bissau
+GRC,640,Greece
+GRD,641,Grenada
+GTM,642,Guatemala
+GIN,643,Guinea
+GUY,644,Guyana
+HTI,645,Haiti
+HND,647,Honduras
+HRV,648,Croatia
+HUN,649,Hungary
+ISL,650,Iceland
+IND,651,India
+IDN,652,Indonesia
+IRL,653,Ireland
+IRN,654,Iran (Islamic Republic of)
+ISR,655,Israel
+ITA,656,Italy
+JAM,657,Jamaica
+JPN,658,Japan
+KAZ,659,Kazakhstan
+KGZ,660,Kyrgyzstan
+KIR,661,Kiribati
+KOR,662,Republic of Korea
+KRN,663,Democratic People's Republic of Korea
+KWT,664,Kuwait
+LAO,665,Lao People's Democratic Republic
+LBY,666,Libya
+LCA,667,Saint Lucia
+LSO,668,Lesotho
+LIE,669,Liechtenstein
+LKA,670,Sri Lanka
+LTU,671,Lithuania
+LUX,672,Luxembourg
+LVA,673,Latvia
+MDG,675,Madagascar
+MRT,677,Mauritania
+MKD,678,North Macedonia
+MCO,679,Monaco
+MDA,680,Republic of Moldova
+MDV,681,Maldives
+MEX,682,Mexico
+MHL,683,Marshall Islands
+MLI,684,Mali
+MYS,685,Malaysia
+MWI,686,Malawi
+MNG,687,Mongolia
+MAR,688,Morocco
+MOZ,689,Mozambique
+MLT,690,Malta
+MNE,691,Montenegro
+MUS,692,Mauritius
+MMR,693,Myanmar
+NAM,694,Namibia
+NPL,695,Nepal
+NLD,696,Netherlands
+NER,697,Niger
+NIC,698,Nicaragua
+NGA,699,Nigeria
+NOR,701,Norway
+NRU,702,Nauru
+NZL,703,New Zealand
+OMN,704,Oman
+PAK,705,Pakistan
+PAN,706,Panama
+PRY,707,Paraguay
+PER,708,Peru
+PHL,709,Philippines
+PLW,710,Palau
+PNG,711,Papua New Guinea
+POL,712,Poland
+PRT,713,Portugal
+QAT,715,Qatar
+ROU,716,Romania
+ZAF,717,South Africa
+RUS,718,Russian Federation
+RWA,719,Rwanda
+SLV,720,El Salvador
+SAU,721,Saudi Arabia
+SRB,722,Serbia
+SEN,723,Senegal
+SYC,724,Seychelles
+SGP,725,Singapore
+SLE,726,Sierra Leone
+SMR,727,San Marino
+SLB,728,Solomon Islands
+ESP,729,Spain
+VNM,730,Viet Nam
+KNA,731,Saint Kitts and Nevis
+STP,732,Sao Tome and Principe
+SUR,733,Suriname
+SVK,734,Slovakia
+SVN,735,Slovenia
+SWZ,736,Swaziland
+SWE,737,Sweden
+CHE,738,Switzerland
+THA,741,Thailand
+TJK,742,Tajikistan
+TKM,743,Turkmenistan
+TLS,744,Timor-Leste
+TGO,745,Togo
+TON,746,Tonga
+TTO,747,Trinidad and Tobago
+TUN,748,Tunisia
+TUV,749,Tuvalu
+ARE,750,United Arab Emirates
+UKR,751,Ukraine
+URY,752,Uruguay
+USA,753,United States of America
+UZB,754,Uzbekistan
+VUT,755,Vanuatu
+VAT,756,Holy See
+VCT,757,Saint Vincent and the Grenadines
+VEN,758,Venezuela
+WSM,759,Samoa
+ESH,760,Western Sahara
+ZMB,761,Zambia
+ZWE,762,Zimbabwe
+DZA,769,Algeria
+NULL,10004,Other (Sub-Saharan Africa)
+NULL,10006,Other (North Africa)
+ABW,11773,Aruba
+CUW,11774,Curaçao
+NULL,11916,Caribbean

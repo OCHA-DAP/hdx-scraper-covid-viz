@@ -348,10 +348,13 @@ timeseries_national:
 #    adm_cols:
 
 country_currency_url: "https://www.currency-iso.org/dam/downloads/lists/list_one.xls"
-alphavantage_url: "https://www.alphavantage.co/query?function=FX_WEEKLY&from_symbol=USD&to_symbol=%s&apikey=YHFVGAV55LIXK1TR&datatype=csv"
+alphavantage_url: "https://www.alphavantage.co/query?function=FX_MONTHLY&from_symbol=USD&to_symbol=%s&apikey=YHFVGAV55LIXK1TR&datatype=csv"
 
 fts_url: "https://api.hpc.tools/v1/public/"
 fts_source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
+
+unhcr_url: "https://data2.unhcr.org/api/population/get?population_collection=4&geo_id="
+unhcr_source_url: "https://data2.unhcr.org/en/countries/"
 
 # subnational
 ipc_url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=%d&limit=1&condition=A&export=true&country=%s"

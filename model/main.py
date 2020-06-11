@@ -10,6 +10,7 @@ from model.fx import get_fx
 from model.ipc import get_ipc
 from model.tabularparser import get_tabular
 from model.timeseriesparser import get_timeseries
+from model.unhcr import get_unhcr
 from model.whowhatwhere import get_whowhatwhere
 
 
@@ -67,12 +68,13 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
             extend_sources(sources, fts_wsources, tabular_sources)
 
         if 'national' in tabs:
+            unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, countryiso3s, downloader, scraper)
             tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, [countryiso3s], 'national', downloader, scraper)
             copy_headers, copy_columns, copy_sources = get_copy(configuration, [countryiso3s], 'national', downloader, scraper)
 
-            extend_headers(national, tabular_headers, fts_headers, copy_headers)
-            extend_columns(national, countryiso3s, None, tabular_columns, fts_columns, copy_columns)
-            extend_sources(sources, tabular_sources, fts_sources, copy_sources)
+            extend_headers(national, tabular_headers, fts_headers, unhcr_headers, copy_headers)
+            extend_columns(national, countryiso3s, None, tabular_columns, fts_columns, unhcr_columns, copy_columns)
+            extend_sources(sources, tabular_sources, fts_sources, unhcr_sources, copy_sources)
 
     if 'national_timeseries' in tabs:
         fx_sources = get_fx(nationaltimeseries, configuration, countryiso3s, downloader, scraper)

@@ -93,14 +93,19 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
                 valdict0 = valdicts[0]
                 for adm in valdict0:
                     newvaldicts[i][adm] = eval_col
+                    hasvalues = False
                     for j, valcol in enumerate(valcols):
                         val = valdicts[j][adm][-1]
                         if not val or val in ignore_vals:
                             val = 0
                         else:
                             val = eval(val_fns[j].replace(valcol, val))
+                            hasvalues = True
                         newvaldicts[i][adm] = newvaldicts[i][adm].replace(valcol, str(val))
-                    newvaldicts[i][adm] = eval(newvaldicts[i][adm])
+                    if hasvalues:
+                        newvaldicts[i][adm] = eval(newvaldicts[i][adm])
+                    else:
+                        newvaldicts[i][adm] = ''
             retval.extend(newvaldicts)
         elif total_col:
             newvaldicts = [dict() for _ in valdicts]

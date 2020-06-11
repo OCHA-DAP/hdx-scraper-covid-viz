@@ -106,7 +106,8 @@ def main(gsheet_auth, updatesheets, updatetabs, scraper, **ignore):
 
         tabs = configuration['tabs']
         if updatetabs is None:
-            updatetabs = tabs.keys()
+            updatetabs = list(tabs.keys())
+            updatetabs.remove('national_timeseries')  ## REMOVING TIMESERIES for now
             logger.info('Updating all tabs')
         else:
             logger.info('Updating only these tabs: %s' % updatetabs)
