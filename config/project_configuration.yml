@@ -220,6 +220,25 @@ tabular_national:
       - "SchoolClosure"
     hxltags:
       - "#impact+type"
+  travel:
+    format: "csv"
+    dataset: "covid-19-global-travel-restrictions-and-airline-information"
+    headers: 1
+    adm_cols:
+      - "iso3"
+    val_cols:
+      - "info"
+      - "published"
+    append_cols:
+      - "info"
+    keep_cols:
+      - "published"
+    columns:
+      - "TravelRestrictions"
+      - "TravelRestrictionsPublished"
+    hxltags:
+      - "#severity+travel"
+      - "#severity+date+travel"
   cerf_national:
     format: "csv"
     dataset: "cerf-covid-19-allocations"
@@ -247,23 +266,6 @@ tabular_national:
           - "CERFCovidFunding"
         hxltags:
           - "#value+cerf+covid+funding+total+usd"
-  travel:
-    format: "csv"
-    dataset: "covid-19-global-travel-restrictions-and-airline-information"
-    headers: 1
-    adm_cols:
-      - "iso3"
-    val_cols:
-      - "info"
-      - "published"
-    append_cols:
-      - "info"
-    columns:
-      - "TravelRestrictions"
-      - "TravelRestrictionsPublished"
-    hxltags:
-      - "#severity+travel"
-      - "#severity+date+travel"
 
 copy_national: {}
 #  humaccess:
@@ -754,7 +756,7 @@ admin_info:
   - {ADM1_PCODE: CO81, ADM1_REF: Arauca, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
   - {ADM1_PCODE: CO85, ADM1_REF: Casanare, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
   - {ADM1_PCODE: CO86, ADM1_REF: Putumayo, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO88, ADM1_REF: 'Archipielago de San Andres, Providencia y Santa Catalina', ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
+  - {ADM1_PCODE: CO88, ADM1_REF: "Archipielago de San Andres, Providencia y Santa Catalina", ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
   - {ADM1_PCODE: CO91, ADM1_REF: Amazonas, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
   - {ADM1_PCODE: CO94, ADM1_REF: Guainia, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
   - {ADM1_PCODE: CO95, ADM1_REF: Guaviare, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
@@ -1159,3 +1161,4 @@ adm1_fuzzy_ignore:
   - "mordex"
   - "sahil"
   - "say'on"
+  - "syria"

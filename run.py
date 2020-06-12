@@ -34,6 +34,7 @@ def parse_args():
     parser.add_argument('-us', '--updatespreadsheets', default=None, help='Spreadsheets to update')
     parser.add_argument('-sc', '--scraper', default=None, help='Scraper to run')
     parser.add_argument('-ut', '--updatetabs', default=None, help='Sheets to update')
+    parser.add_argument('-nj', '--nojson', default=False, action='store_true', help='Do not update json')
     args = parser.parse_args()
     return args
 
@@ -51,6 +52,7 @@ def generate_json(json, key, rows):
 
 
 def write_json(configuration, downloader, updatetabs, world, national, nationaltimeseries, subnational, sources):
+    logger.info('Writing JSON')
     json = dict()
 
     def update_json(tabname, values):
@@ -93,7 +95,7 @@ def write_to_gsheets(spreadsheets, updatesheets, tabs, updatetabs, world, nation
         update_tab('sources', sources)
 
 
-def main(gsheet_auth, updatesheets, updatetabs, scraper, **ignore):
+def main(gsheet_auth, updatesheets, updatetabs, scraper, nojson, **ignore):
     logger.info('##### hdx-scraper-covid-viz version %.1f ####' % VERSION)
     configuration = Configuration.read()
     with Download(extra_params_yaml=join(expanduser('~'), '.extraparams.yml'), extra_params_lookup='hdx-scraper-fts', rate_limit={'calls': 1, 'period': 1}) as downloader:
@@ -114,7 +116,8 @@ def main(gsheet_auth, updatesheets, updatetabs, scraper, **ignore):
         if scraper:
             logger.info('Updating only scraper: %s' % scraper)
         world, national, nationaltimeseries, subnational, sources = get_indicators(configuration, downloader, updatetabs, scraper)
-        write_json(configuration, downloader, updatetabs, world, national, nationaltimeseries, subnational, sources)
+        if not nojson:
+            write_json(configuration, downloader, updatetabs, world, national, nationaltimeseries, subnational, sources)
         write_to_gsheets(spreadsheets, updatesheets, tabs, updatetabs, world, national, nationaltimeseries, subnational, sources)
 
 
@@ -147,4 +150,4 @@ if __name__ == '__main__':
         updatetabs = None
     facade(main, hdx_read_only=True, user_agent=user_agent, preprefix=preprefix, hdx_site=hdx_site,
            project_config_yaml=join('config', 'project_configuration.yml'), gsheet_auth=gsheet_auth,
-           updatesheets=updatesheets, updatetabs=updatetabs, scraper=args.scraper)
+           updatesheets=updatesheets, updatetabs=updatetabs, scraper=args.scraper, nojson=args.nojson)

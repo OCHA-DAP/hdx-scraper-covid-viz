@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import re
+import unicodedata
 
 from hdx.hdx_configuration import Configuration
 from hdx.location.country import Country
@@ -84,8 +85,11 @@ class AdminInfo(object):
             return None
         if adm1_name.lower() in self.adm1_fuzzy_ignore:
             return None
-        adm1_name_lookup = unidecode(adm1_name)
+        # Replace accented characters with non accented ones
+        adm1_name_lookup = ''.join((c for c in unicodedata.normalize('NFD', adm1_name) if unicodedata.category(c) != 'Mn'))
+        # Remove all non-ASCII characters
         adm1_name_lookup = re.sub(ascii, ' ', adm1_name_lookup)
+        adm1_name_lookup = unidecode(adm1_name_lookup)
         adm1_name_lookup = adm1_name_lookup.strip().lower()
         adm1_name_lookup2 = multiple_replace(adm1_name_lookup, self.adm1_name_replacements)
         pcode = name_to_pcode.get(adm1_name_lookup, name_to_pcode.get(adm1_name_lookup2))
