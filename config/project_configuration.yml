@@ -56,15 +56,13 @@ tabular_global:
 # national
 tabular_national:
   who_national:
-    source: "WHO"
-    source_url: "https://data.humdata.org/dataset/coronavirus-covid-19-cases-and-deaths"
-    format: "json"
-    url: "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/COVID19_hist_cases_adm0_v5_view/FeatureServer/0/query?outFields=*&where=1%3D1&f=json"
-    jsonpath: "features[*].attributes"
+    format: "csv"
+    dataset: "coronavirus-covid-19-cases-and-deaths"
+    headers: 1
     adm_cols:
       - "ISO_3_CODE"
     date_col: "date_epicrv"
-    date_type: "int"
+    date_type: "date"
     val_cols:
       - "CumCase"
       - "CumDeath"
