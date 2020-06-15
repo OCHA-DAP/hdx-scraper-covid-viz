@@ -1,23 +1,35 @@
 # -*- coding: utf-8 -*-
 import logging
+import regex
 from datetime import datetime
 from hdx.location.country import Country
 
 from hdx.utilities.dateparse import parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 
-from model import today, today_str, get_percent, get_rowval, get_date_from_timestamp
+from model import today, today_str, number_format, get_percent, div_100, get_rowval, get_date_from_timestamp
 from model.rowparser import RowParser
 from model.readers import read_tabular, read_ole, read_json, read_hdx
 
 logger = logging.getLogger(__name__)
+
+brackets = r'''
+(?<rec> #capturing group rec
+ \( #open parenthesis
+ (?: #non-capturing group
+  [^()]++ #anyting but parenthesis one or more times without backtracking
+  | #or
+   (?&rec) #recursive substitute of group rec
+ )*
+ \) #close parenthesis
+)'''
 
 
 def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(), list()], retval=list(), sources=list()):
     rowparser = RowParser(adms, datasetinfo, headers)
     indicatorcols = datasetinfo.get('indicator_cols')
     if not indicatorcols:
-        indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo['val_cols'], 'val_fns': datasetinfo.get('val_fns'),
+        indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo['val_cols'], 'val_fns': datasetinfo.get('val_fns', dict()),
                           'eval_cols':  datasetinfo.get('eval_cols', list()), 'keep_cols': datasetinfo.get('keep_cols', list()),
                           'append_cols': datasetinfo.get('append_cols', list()), 'total_col': datasetinfo.get('total_col'),
                           'ignore_vals': datasetinfo.get('ignore_vals', list()), 'columns': datasetinfo['columns'], 'hxltags': datasetinfo['hxltags']}]
@@ -81,6 +93,7 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
         else:
             raise ValueError('No date type specified!')
     date = date.strftime('%Y-%m-%d')
+
     for indicatorcol in indicatorcols:
         retheaders[0].extend(indicatorcol['columns'])
         hxltags = indicatorcol['hxltags']
@@ -90,29 +103,50 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
         keep_cols = indicatorcol.get('keep_cols')
         total_col = indicatorcol.get('total_col')
         ignore_vals = indicatorcol.get('ignore_vals', list())
-        val_fns = indicatorcol.get('val_fns')
+        val_fns = indicatorcol.get('val_fns', dict())
         valcols = indicatorcol['val_cols']
         if eval_cols:
             newvaldicts = [dict() for _ in eval_cols]
+
+            def text_replacement(string, adm):
+                hasvalues = False
+                for j, valcol in enumerate(valcols):
+                    if valcol not in string:
+                        continue
+                    if valcol in keep_cols:
+                        keep_col_index = 0
+                    else:
+                        keep_col_index = -1
+                    val = valdicts[j][adm][keep_col_index]
+                    if not val or val in ignore_vals:
+                        val = 0
+                    else:
+                        val_fn = val_fns.get(valcol)
+                        if val_fn:
+                            val = eval(val_fn.replace(valcol, str(val)))
+                        hasvalues = True
+                    string = string.replace(valcol, str(val))
+                return string, hasvalues
+
             for i, eval_col in enumerate(eval_cols):
                 valdict0 = valdicts[0]
                 for adm in valdict0:
-                    newvaldicts[i][adm] = eval_col
-                    hasvalues = False
-                    for j, valcol in enumerate(valcols):
-                        if valcol in keep_cols:
-                            index = 0
-                        else:
-                            index = -1
-                        val = valdicts[j][adm][index]
-                        if not val or val in ignore_vals:
-                            val = 0
-                        else:
-                            val = eval(val_fns[j].replace(valcol, val))
-                            hasvalues = True
-                        newvaldicts[i][adm] = newvaldicts[i][adm].replace(valcol, str(val))
+                    hasvalues = True
+                    matches = regex.search(brackets, eval_col, flags=regex.VERBOSE)
+                    if matches:
+                        for bracketed_str in matches.captures('rec'):
+                            if any(bracketed_str in x for x in valcols):
+                                continue
+                            _, hasvalues_t = text_replacement(bracketed_str, adm)
+                            if not hasvalues_t:
+                                hasvalues = False
+                                break
                     if hasvalues:
-                        newvaldicts[i][adm] = eval(newvaldicts[i][adm])
+                        newvaldicts[i][adm], hasvalues_t = text_replacement(eval_col, adm)
+                        if hasvalues_t:
+                            newvaldicts[i][adm] = eval(newvaldicts[i][adm])
+                        else:
+                            newvaldicts[i][adm] = ''
                     else:
                         newvaldicts[i][adm] = ''
             retval.extend(newvaldicts)
@@ -132,7 +166,11 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
                     if not exists:
                         continue
                     for j, valdict in enumerate(valdicts):
-                        newvaldicts[j][adm] = newvaldicts[j].get(adm, 0.0) + eval(val_fns[j].replace(valcols[j], 'valdict[adm][i]'))
+                        valcol = valcols[j]
+                        val_fn = val_fns.get(valcol)
+                        if not val_fn:
+                            val_fn = valcol
+                        newvaldicts[j][adm] = newvaldicts[j].get(adm, 0.0) + eval(val_fn.replace(valcol, 'valdict[adm][i]'))
             for i, valcol in enumerate(valcols):
                 total_col = total_col.replace(valcol, 'newvaldicts[%d][adm]' % i)
             newvaldict = dict()

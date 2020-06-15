@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 import inspect
+import logging
+
 from os.path import join
 
 from model import today_str
+
+logger = logging.getLogger(__name__)
 
 
 def get_unhcr(configuration, countryiso3s, downloader, scraper=None):
@@ -19,7 +23,6 @@ def get_unhcr(configuration, countryiso3s, downloader, scraper=None):
         data = r.json()['data'][0]
         valuedicts[0][countryiso3] = data['individuals']
         valuedicts[1][countryiso3] = data['date']
+    logger.info('Processed UNHCR')
     hxltags = ['#affected+refugees', '#affected+date+refugees']
     return [['TotalRefugees', 'TotalRefugeesDate'], hxltags], valuedicts, [[hxltag, today_str, 'UNHCR', configuration['unhcr_source_url']] for hxltag in hxltags]
-
-

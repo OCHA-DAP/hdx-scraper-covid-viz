@@ -1,4 +1,5 @@
 pyphonetics
 oletools
 jsonpath_ng
+regex
 pygsheets==2.0.3.1

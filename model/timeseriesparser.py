@@ -7,7 +7,7 @@ from hdx.utilities.dateparse import parse_date
 from hdx.location.country import Country
 
 
-from model import today, today_str, get_percent, get_rowval, get_date_from_timestamp
+from model import today, today_str, number_format, get_percent, div_100, get_rowval, get_date_from_timestamp
 from model.rowparser import RowParser
 from model.readers import read_tabular, read_ole, read_json, read_hdx
 
