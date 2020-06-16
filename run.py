@@ -45,8 +45,8 @@ def generate_json(json, key, rows):
         newrow = dict()
         for i, hxltag in enumerate(hxltags):
             value = row[i]
-            if value is None:
-                value = ''
+            if value in [None, '']:
+                continue
             newrow[hxltag] = str(value)
         dict_of_lists_add(json, key, newrow)
 
