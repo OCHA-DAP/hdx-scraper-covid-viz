@@ -34,7 +34,9 @@ tabular_global:
       - filter_col: "PFType=CBPF"
         val_cols:
           - "TargetAmt"
-        total_col: "TargetAmt"
+        total_col:
+          formula: "TargetAmt"
+          mustbepopulated: False
         val_fns:
           TargetAmt: "float(TargetAmt)"
         columns:
@@ -44,13 +46,53 @@ tabular_global:
       - filter_col: "PFType=CERF"
         val_cols:
           - "TargetAmt"
-        total_col: "TargetAmt"
+        total_col:
+          formula: "TargetAmt"
+          mustbepopulated: False
         val_fns:
           TargetAmt: "float(TargetAmt)"
         columns:
           - "CERFCovidFunding"
         hxltags:
           - "#value+cerf+covid+funding+global+usd"
+  ifi_global:
+    format: "xlsx"
+    dataset: "compilation-of-international-financial-institution-and-economic-data"
+    sheet: "Master"
+    headers: 2
+    stop_row:
+      Countries: "Total"
+    adm_cols:
+      - "Countries"
+    val_cols:
+      - "IMF CCRT"
+      - "IMF RCF"
+      - "IMF Augmented SBA"
+      - "IMF RFI"
+      - "IMF Augmented ECF"
+      - "WB first tranche"
+      - "WB FTF and other financing mechanism"
+      - "WB second tranche"
+      - "WB Partial redeploying of existing projects"
+      - "WB Paid out Cat DDO's"
+    val_fns:
+      "IMF CCRT": "float(IMF CCRT) if IMF CCRT else 0"
+      "IMF RCF": "float(IMF RCF) if IMF RCF else 0"
+      "IMF Augmented SBA": "float(IMF Augmented SBA) if IMF Augmented SBA else 0"
+      "IMF RFI": "float(IMF RFI) if IMF RFI else 0"
+      "IMF Augmented ECF": "float(IMF Augmented ECF) if IMF Augmented ECF else 0"
+      "WB first tranche": "float(WB first tranche) if WB first tranche else 0"
+      "WB FTF and other financing mechanism": "float(WB FTF and other financing mechanism) if WB FTF and other financing mechanism else 0"
+      "WB second tranche": "float(WB second tranche) if WB second tranche else 0"
+      "WB Partial redeploying of existing projects": "float(WB Partial redeploying of existing projects) if WB Partial redeploying of existing projects else 0"
+      "WB Paid out Cat DDO's": "float(WB Paid out Cat DDO's) if WB Paid out Cat DDO's else 0"
+    total_col:
+      formula: "number_format((IMF CCRT + IMF RCF + IMF Augmented SBA + IMF RFI + IMF Augmented ECF + WB first tranche + WB FTF and other financing mechanism + WB second tranche + WB Partial redeploying of existing projects + WB Paid out Cat DDO's) * 1000000, format='%.0f')"
+      mustbepopulated: False
+    columns:
+      - "IFI_COVID19_global"
+    hxltags:
+      - "#value+ifi+global"
 
 
 # national
@@ -101,13 +143,13 @@ tabular_national:
       - "EconomicExposure"
     hxltags:
       - "#severity+economic+num"
-  ifi:
-    source: "OCHA"
-    source_url: "https://drive.google.com/uc?export=download&id=1ami3A-0m1P-owN0gjSfhW7XlNBoRuWqX"
+  ifi_national:
     format: "xlsx"
-    url: "https://drive.google.com/uc?export=download&id=1ami3A-0m1P-owN0gjSfhW7XlNBoRuWqX"
+    dataset: "compilation-of-international-financial-institution-and-economic-data"
     sheet: "Master"
     headers: 2
+    stop_row:
+      Countries: "Total"
     adm_cols:
       - "Countries"
     val_cols:
@@ -130,39 +172,6 @@ tabular_national:
     ignore_vals:
       - "No data"
       - "x"
-    keep_cols:
-      - "Population"
-      - "GDP per capita (current US$) 2018"
-      - "Volume of remittances (in USD) as a proportion of total GDP (%) 2014-18"
-      - "Fuels, ores and metals exports (% of total merchandise exports))"
-      - "tourism as percentage of GDP"
-      - "General government gross debt (Percent of GDP) - 2019"
-      - "IMF CCRT"
-      - "IMF RCF"
-      - "IMF Augmented SBA"
-      - "IMF RFI"
-      - "IMF Augmented ECF"
-      - "WB first tranche"
-      - "WB FTF and other financing mechanism"
-      - "WB second tranche"
-      - "WB Partial redeploying of existing projects"
-      - "WB Paid out Cat DDO's"
-    eval_cols:
-      - "Population"
-      - "number_format(GDP per capita (current US$) 2018, format='%.0f')"
-      - "Volume of remittances (in USD) as a proportion of total GDP (%) 2014-18"
-      - "Fuels, ores and metals exports (% of total merchandise exports))"
-      - "tourism as percentage of GDP"
-      - "General government gross debt (Percent of GDP) - 2019"
-      - "IMF CCRT + IMF RCF + IMF Augmented SBA + IMF RFI + IMF Augmented ECF"
-      - "number_format((IMF CCRT + IMF RCF + IMF Augmented SBA + IMF RFI + IMF Augmented ECF) * 1000000 / Population)"
-      - "number_format((IMF CCRT + IMF RCF + IMF Augmented SBA + IMF RFI + IMF Augmented ECF) * 1000000 / Population / GDP per capita (current US$) 2018, format='%.4f')"
-      - "WB first tranche + WB FTF and other financing mechanism + WB second tranche + WB Partial redeploying of existing projects + WB Paid out Cat DDO's"
-      - "number_format((WB first tranche + WB FTF and other financing mechanism + WB second tranche + WB Partial redeploying of existing projects + WB Paid out Cat DDO's) * 1000000 / Population)"
-      - "number_format((WB first tranche + WB FTF and other financing mechanism + WB second tranche + WB Partial redeploying of existing projects + WB Paid out Cat DDO's) * 1000000 / Population / GDP per capita (current US$) 2018, format='%.4f')"
-      - "IMF CCRT + IMF RCF + IMF Augmented SBA + IMF RFI + IMF Augmented ECF + WB first tranche + WB FTF and other financing mechanism + WB second tranche + WB Partial redeploying of existing projects + WB Paid out Cat DDO's"
-      - "number_format((IMF CCRT + IMF RCF + IMF Augmented SBA + IMF RFI + IMF Augmented ECF + WB first tranche + WB FTF and other financing mechanism + WB second tranche + WB Partial redeploying of existing projects + WB Paid out Cat DDO's) * 1000000 / Population)"
-      - "number_format((IMF CCRT + IMF RCF + IMF Augmented SBA + IMF RFI + IMF Augmented ECF + WB first tranche + WB FTF and other financing mechanism + WB second tranche + WB Partial redeploying of existing projects + WB Paid out Cat DDO's) * 1000000 / Population / GDP per capita (current US$) 2018, format='%.4f')"
     val_fns:
       "GDP per capita (current US$) 2018": "float(GDP per capita (current US$) 2018)"
       "Volume of remittances (in USD) as a proportion of total GDP (%) 2014-18": "div_100(Volume of remittances (in USD) as a proportion of total GDP (%) 2014-18, format='%.4f')"
@@ -179,6 +188,22 @@ tabular_national:
       "WB second tranche": "float(WB second tranche) if WB second tranche else 0"
       "WB Partial redeploying of existing projects": "float(WB Partial redeploying of existing projects) if WB Partial redeploying of existing projects else 0"
       "WB Paid out Cat DDO's": "float(WB Paid out Cat DDO's) if WB Paid out Cat DDO's else 0"
+    eval_cols:
+      - "Population"
+      - "number_format(GDP per capita (current US$) 2018, format='%.0f')"
+      - "Volume of remittances (in USD) as a proportion of total GDP (%) 2014-18"
+      - "Fuels, ores and metals exports (% of total merchandise exports))"
+      - "tourism as percentage of GDP"
+      - "General government gross debt (Percent of GDP) - 2019"
+      - "number_format((IMF CCRT + IMF RCF + IMF Augmented SBA + IMF RFI + IMF Augmented ECF) * 1000000, format='%.0f')"
+      - "number_format((IMF CCRT + IMF RCF + IMF Augmented SBA + IMF RFI + IMF Augmented ECF) * 1000000 / Population)"
+      - "number_format((IMF CCRT + IMF RCF + IMF Augmented SBA + IMF RFI + IMF Augmented ECF) * 1000000 / Population / GDP per capita (current US$) 2018, format='%.4f')"
+      - "number_format((WB first tranche + WB FTF and other financing mechanism + WB second tranche + WB Partial redeploying of existing projects + WB Paid out Cat DDO's) * 1000000, format='%.0f')"
+      - "number_format((WB first tranche + WB FTF and other financing mechanism + WB second tranche + WB Partial redeploying of existing projects + WB Paid out Cat DDO's) * 1000000 / Population)"
+      - "number_format((WB first tranche + WB FTF and other financing mechanism + WB second tranche + WB Partial redeploying of existing projects + WB Paid out Cat DDO's) * 1000000 / Population / GDP per capita (current US$) 2018, format='%.4f')"
+      - "number_format((IMF CCRT + IMF RCF + IMF Augmented SBA + IMF RFI + IMF Augmented ECF + WB first tranche + WB FTF and other financing mechanism + WB second tranche + WB Partial redeploying of existing projects + WB Paid out Cat DDO's) * 1000000, format='%.0f')"
+      - "number_format((IMF CCRT + IMF RCF + IMF Augmented SBA + IMF RFI + IMF Augmented ECF + WB first tranche + WB FTF and other financing mechanism + WB second tranche + WB Partial redeploying of existing projects + WB Paid out Cat DDO's) * 1000000 / Population)"
+      - "number_format((IMF CCRT + IMF RCF + IMF Augmented SBA + IMF RFI + IMF Augmented ECF + WB first tranche + WB FTF and other financing mechanism + WB second tranche + WB Partial redeploying of existing projects + WB Paid out Cat DDO's) * 1000000 / Population / GDP per capita (current US$) 2018, format='%.4f')"
     columns:
       - "Population"
       - "GDP Per Capita"
@@ -263,11 +288,11 @@ tabular_national:
     val_cols:
       - "#affected+idps+ind+stock+conflict"
       - "#affected+idps+ind+stock+disaster"
-    eval_cols:
-      - "#affected+idps+ind+stock+conflict + #affected+idps+ind+stock+disaster"
     val_fns:
       "#affected+idps+ind+stock+conflict": "int(#affected+idps+ind+stock+conflict) if #affected+idps+ind+stock+conflict else 0"
       "#affected+idps+ind+stock+disaster": "int(#affected+idps+ind+stock+disaster) if #affected+idps+ind+stock+disaster else 0"
+    eval_cols:
+      - "#affected+idps+ind+stock+conflict + #affected+idps+ind+stock+disaster"
     columns:
       - "TotalIDPs"
     hxltags:
@@ -359,9 +384,11 @@ tabular_national:
       - filter_col: "PFType=CBPF"
         val_cols:
           - "TargetAmt"
-        total_col: "TargetAmt"
         val_fns:
           TargetAmt: "float(TargetAmt)"
+        total_col:
+          formula: "TargetAmt"
+          mustbepopulated: False
         columns:
           - "CBPFCovidFunding"
         hxltags:
@@ -369,9 +396,11 @@ tabular_national:
       - filter_col: "PFType=CERF"
         val_cols:
           - "TargetAmt"
-        total_col: "TargetAmt"
         val_fns:
           TargetAmt: "float(TargetAmt)"
+        total_col:
+          formula: "TargetAmt"
+          mustbepopulated: False
         columns:
           - "CERFCovidFunding"
         hxltags:
@@ -490,10 +519,12 @@ tabular_subnational:
         val_cols:
           - "phase35"
           - "population"
-        total_col: "get_percent(phase35, population)"
         val_fns:
           "phase35": "float(phase35)"
           "population": "float(population)"
+        total_col:
+          formula: "get_percent(phase35, population)"
+          mustbepopulated: True
         columns:
           - "FoodInsecurityCHP3+"
         hxltags:
@@ -505,7 +536,7 @@ tabular_subnational:
     dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
     headers: 1
     adm_cols:
-      - ~
+      - "alpha_3"
       - "ADM1_PCODE"
     val_cols:
       - "POPULATION"
@@ -519,7 +550,7 @@ tabular_subnational:
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT-266S0iZDEvcQmxC2i7LNHWi4fUXtDkrwp8D6NMyHArxnegAYO9XXVnhuHaWvdxaoZTq7M6yGLaPX/pub?gid=1620744216&single=true&output=csv"
     headers: 1
     adm_cols:
-      - ~
+      - "alpha_3"
       - "ADM1_PCODE"
     val_cols:
       - "NUMPOINTS"
@@ -556,13 +587,15 @@ tabular_subnational:
         val_cols:
           - "Numerator"
           - "Denominator"
-        total_col: "get_percent(Numerator, Denominator)"
         ignore_vals:
           - "-2222"
           - "-4444"
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
+        total_col:
+          formula: "get_percent(Numerator, Denominator)"
+          mustbepopulated: True
         columns:
           - "HepB1 Coverage"
         hxltags:
@@ -571,13 +604,15 @@ tabular_subnational:
         val_cols:
           - "Numerator"
           - "Denominator"
-        total_col: "get_percent(Numerator, Denominator)"
         ignore_vals:
           - "-2222"
           - "-4444"
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
+        total_col:
+          formula: "get_percent(Numerator, Denominator)"
+          mustbepopulated: True
         columns:
           - "HepB2 Coverage"
         hxltags:
@@ -586,13 +621,15 @@ tabular_subnational:
         val_cols:
           - "Numerator"
           - "Denominator"
-        total_col: "get_percent(Numerator, Denominator)"
         ignore_vals:
           - "-2222"
           - "-4444"
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
+        total_col:
+          formula: "get_percent(Numerator, Denominator)"
+          mustbepopulated: True
         columns:
           - "HepB3 Coverage"
         hxltags:
@@ -601,13 +638,15 @@ tabular_subnational:
         val_cols:
           - "Numerator"
           - "Denominator"
-        total_col: "get_percent(Numerator, Denominator)"
         ignore_vals:
           - "-2222"
           - "-4444"
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
+        total_col:
+          formula: "get_percent(Numerator, Denominator)"
+          mustbepopulated: True
         columns:
           - "IPV1 Coverage"
         hxltags:
@@ -616,13 +655,15 @@ tabular_subnational:
         val_cols:
           - "Numerator"
           - "Denominator"
-        total_col: "get_percent(Numerator, Denominator)"
         ignore_vals:
           - "-2222"
           - "-4444"
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
+        total_col:
+          formula: "get_percent(Numerator, Denominator)"
+          mustbepopulated: True
         columns:
           - "MCV1 Coverage"
         hxltags:
@@ -631,13 +672,15 @@ tabular_subnational:
         val_cols:
           - "Numerator"
           - "Denominator"
-        total_col: "get_percent(Numerator, Denominator)"
         ignore_vals:
           - "-2222"
           - "-4444"
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
+        total_col:
+          formula: "get_percent(Numerator, Denominator)"
+          mustbepopulated: True
         columns:
           - "MCV2 Coverage"
         hxltags:
@@ -646,13 +689,15 @@ tabular_subnational:
         val_cols:
           - "Numerator"
           - "Denominator"
-        total_col: "get_percent(Numerator, Denominator)"
         ignore_vals:
           - "-2222"
           - "-4444"
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
+        total_col:
+          formula: "get_percent(Numerator, Denominator)"
+          mustbepopulated: True
         columns:
           - "Pol1 Coverage"
         hxltags:
@@ -661,13 +706,15 @@ tabular_subnational:
         val_cols:
           - "Numerator"
           - "Denominator"
-        total_col: "get_percent(Numerator, Denominator)"
         ignore_vals:
           - "-2222"
           - "-4444"
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
+        total_col:
+          formula: "get_percent(Numerator, Denominator)"
+          mustbepopulated: True
         columns:
           - "Pol2 Coverage"
         hxltags:
@@ -676,13 +723,15 @@ tabular_subnational:
         val_cols:
           - "Numerator"
           - "Denominator"
-        total_col: "get_percent(Numerator, Denominator)"
         ignore_vals:
           - "-2222"
           - "-4444"
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
+        total_col:
+          formula: "get_percent(Numerator, Denominator)"
+          mustbepopulated: True
         columns:
           - "Pol3 Coverage"
         hxltags:

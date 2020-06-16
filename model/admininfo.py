@@ -28,12 +28,14 @@ class AdminInfo(object):
         admin_info = configuration['admin_info']
         self.adm1_name_replacements = configuration['adm1_name_replacements']
         self.adm1_fuzzy_ignore = configuration['adm1_fuzzy_ignore']
+        iso3s_no_pcodes = set()
         countryiso3s = set()
         for row in admin_info:
             countryiso3 = row['alpha_3']
             countryiso3s.add(countryiso3)
             pcode = row.get('ADM1_PCODE')
             if not pcode:
+                iso3s_no_pcodes.add(countryiso3)
                 continue
             self.pcodes.append(pcode)
             self.pcode_lengths[countryiso3] = len(pcode)
@@ -44,10 +46,12 @@ class AdminInfo(object):
             self.name_to_pcode[countryiso3] = name_to_pcode
             self.pcode_to_iso3[pcode] = countryiso3
         self.countryiso3s = sorted(list(countryiso3s))
+        self.iso3s_no_pcodes = sorted(list(iso3s_no_pcodes))
         self.init_matches_errors()
 
     def init_matches_errors(self, scraper=None):
         self.matches = set()
+        self.ignored = set()
         self.errors = set()
 
     def convert_pcode_length(self, countryiso3, adm1_pcode, scrapername):
@@ -79,11 +83,15 @@ class AdminInfo(object):
         return None
 
     def get_pcode(self, countryiso3, adm1_name, scrapername=None):
+        if countryiso3 in self.iso3s_no_pcodes:
+            self.ignored.add((scrapername, countryiso3))
+            return None
         name_to_pcode = self.name_to_pcode.get(countryiso3)
         if not name_to_pcode:
             self.errors.add((scrapername, countryiso3))
             return None
         if adm1_name.lower() in self.adm1_fuzzy_ignore:
+            self.ignored.add((scrapername, countryiso3, adm1_name))
             return None
         # Replace accented characters with non accented ones
         adm1_name_lookup = ''.join((c for c in unicodedata.normalize('NFD', adm1_name) if unicodedata.category(c) != 'Mn'))
@@ -131,6 +139,13 @@ class AdminInfo(object):
     def output_matches(self):
         for match in sorted(self.matches):
             logger.info('%s - %s: Matching (%s) %s to %s on map' % (match[0], match[1], match[4], match[2], match[3]))
+
+    def output_ignored(self):
+        for ignored in sorted(self.ignored):
+            if len(ignored) == 2:
+                logger.info('%s - Ignored %s!' % (ignored[0], ignored[1]))
+            else:
+                logger.info('%s - %s: Ignored %s!' % (ignored[0], ignored[1], ignored[2]))
 
     def output_errors(self):
         for error in sorted(self.errors):

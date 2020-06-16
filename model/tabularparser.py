@@ -25,14 +25,15 @@ brackets = r'''
 )'''
 
 
-def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(), list()], retval=list(), sources=list()):
-    rowparser = RowParser(adms, datasetinfo, headers)
+def _get_tabular(adms, level, name, datasetinfo, headers, iterator, retheaders=[list(), list()], retval=list(), sources=list()):
+    rowparser = RowParser(adms, level, datasetinfo, headers)
     indicatorcols = datasetinfo.get('indicator_cols')
     if not indicatorcols:
-        indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo['val_cols'], 'val_fns': datasetinfo.get('val_fns', dict()),
-                          'eval_cols':  datasetinfo.get('eval_cols', list()), 'keep_cols': datasetinfo.get('keep_cols', list()),
-                          'append_cols': datasetinfo.get('append_cols', list()), 'total_col': datasetinfo.get('total_col'),
-                          'ignore_vals': datasetinfo.get('ignore_vals', list()), 'columns': datasetinfo['columns'], 'hxltags': datasetinfo['hxltags']}]
+        indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo['val_cols'],
+                          'val_fns': datasetinfo.get('val_fns', dict()), 'eval_cols':  datasetinfo.get('eval_cols', list()),
+                          'keep_cols': datasetinfo.get('keep_cols', list()), 'append_cols': datasetinfo.get('append_cols', list()),
+                          'total_col': datasetinfo.get('total_col'), 'ignore_vals': datasetinfo.get('ignore_vals', list()),
+                          'columns': datasetinfo['columns'], 'hxltags': datasetinfo['hxltags']}]
     valuedicts = dict()
     for indicatorcol in indicatorcols:
         for _ in indicatorcol['val_cols']:
@@ -73,9 +74,13 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
                             val = curval
                     valuedict[adm] = val
 
+    stop_row = datasetinfo.get('stop_row')
     for row in iterator:
         if not isinstance(row, dict):
             row = row.value
+        if stop_row:
+            if all(row[key] == value for key, value in stop_row.items()):
+                break
         for newrow in rowparser.flatten(row):
             add_row(newrow)
 
@@ -151,19 +156,22 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
                         newvaldicts[i][adm] = ''
             retval.extend(newvaldicts)
         elif total_col:
+            formula = total_col['formula']
+            mustbepopulated = total_col.get('mustbepopulated', False)
             newvaldicts = [dict() for _ in valdicts]
             valdict0 = valdicts[0]
             for adm in valdict0:
                 for i, val in enumerate(valdict0[adm]):
                     if not val or val in ignore_vals:
-                        continue
-                    exists = True
-                    for valdict in valdicts[1:]:
-                        val = valdict[adm]
-                        if not val or val in ignore_vals:
-                            exists = False
-                            break
-                    if not exists:
+                        exists = False
+                    else:
+                        exists = True
+                        for valdict in valdicts[1:]:
+                            val = valdict[adm]
+                            if not val or val in ignore_vals:
+                                exists = False
+                                break
+                    if mustbepopulated and not exists:
                         continue
                     for j, valdict in enumerate(valdicts):
                         valcol = valcols[j]
@@ -172,11 +180,11 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
                             val_fn = valcol
                         newvaldicts[j][adm] = newvaldicts[j].get(adm, 0.0) + eval(val_fn.replace(valcol, 'valdict[adm][i]'))
             for i, valcol in enumerate(valcols):
-                total_col = total_col.replace(valcol, 'newvaldicts[%d][adm]' % i)
+                formula = formula.replace(valcol, 'newvaldicts[%d][adm]' % i)
             newvaldict = dict()
             for adm in valdicts[0].keys():
                 try:
-                    val = eval(total_col)
+                    val = eval(formula)
                 except (ValueError, TypeError, KeyError):
                     val = ''
                 newvaldict[adm] = val
@@ -189,8 +197,8 @@ def _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders=[list(),
     return retheaders, retval, sources
 
 
-def get_tabular(configuration, adms, national_subnational, downloader, scraper=None):
-    datasets = configuration['tabular_%s' % national_subnational]
+def get_tabular(configuration, adms, level, downloader, scraper=None):
+    datasets = configuration['tabular_%s' % level]
     retheaders = [list(), list()]
     retval = list()
     sources = list()
@@ -216,7 +224,7 @@ def get_tabular(configuration, adms, national_subnational, downloader, scraper=N
         if 'date' not in datasetinfo:
             datasetinfo['date'] = today_str
         datasetinfo['adm_mappings'] = configuration['adm_mappings']
-        _get_tabular(adms, name, datasetinfo, headers, iterator, retheaders, retval, sources)
+        _get_tabular(adms, level, name, datasetinfo, headers, iterator, retheaders, retval, sources)
     return retheaders, retval, sources
 
 

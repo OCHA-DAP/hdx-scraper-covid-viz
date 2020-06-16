@@ -8,7 +8,7 @@ from model.readers import read_tabular, read_ole, read_hdx
 logger = logging.getLogger(__name__)
 
 
-def _get_copy(adms, name, datasetinfo, headers, iterator, retheaders=[list(), list()], retval=list(), sources=list()):
+def _get_copy(adms, level, name, datasetinfo, headers, iterator, retheaders=[list(), list()], retval=list(), sources=list()):
     valuedicts = list()
     val_cols = list()
     hxltags = list()
@@ -35,7 +35,7 @@ def _get_copy(adms, name, datasetinfo, headers, iterator, retheaders=[list(), li
         val_cols.append(header)
         hxltags.append(hxltag)
         valuedicts.append(dict())
-    rowparser = RowParser(adms, {'adm_cols': adm_cols, 'adm_mappings': datasetinfo['adm_mappings']}, headers)
+    rowparser = RowParser(adms, level, {'adm_cols': adm_cols, 'adm_mappings': datasetinfo['adm_mappings']}, headers)
     for row in iterator:
         adm, _ = rowparser.do_set_value(row, name)
         if adm:
@@ -50,8 +50,8 @@ def _get_copy(adms, name, datasetinfo, headers, iterator, retheaders=[list(), li
     return retheaders, retval, sources
 
 
-def get_copy(configuration, adms, national_subnational, downloader, scraper=None):
-    datasets = configuration['copy_%s' % national_subnational]
+def get_copy(configuration, adms, level, downloader, scraper=None):
+    datasets = configuration['copy_%s' % level]
     retheaders = [list(), list()]
     retval = list()
     sources = list()
@@ -74,7 +74,7 @@ def get_copy(configuration, adms, national_subnational, downloader, scraper=None
         if 'date' not in datasetinfo:
             datasetinfo['date'] = today_str
         datasetinfo['adm_mappings'] = configuration['adm_mappings']
-        _get_copy(adms, name, datasetinfo, headers, iterator, retheaders, retval, sources)
+        _get_copy(adms, level, name, datasetinfo, headers, iterator, retheaders, retval, sources)
     return retheaders, retval, sources
 
 

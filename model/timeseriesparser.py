@@ -14,8 +14,8 @@ from model.readers import read_tabular, read_ole, read_json, read_hdx
 logger = logging.getLogger(__name__)
 
 
-def _get_timeseries(timeseries, adms, datasetinfo, headers, iterator, sources=list()):
-    rowparser = RowParser(adms, datasetinfo, headers, maxdateonly=False)
+def _get_timeseries(timeseries, adms, level, datasetinfo, headers, iterator, sources=list()):
+    rowparser = RowParser(adms, level, datasetinfo, headers, maxdateonly=False)
     name = datasetinfo['name']
     valcol = datasetinfo['val_col']
     ignore_vals = datasetinfo.get('ignore_vals', list())
@@ -70,8 +70,8 @@ def _get_timeseries(timeseries, adms, datasetinfo, headers, iterator, sources=li
     return sources
 
 
-def get_timeseries(timeseries, configuration, adms, national_subnational, downloader, scraper=None):
-    datasets = configuration['timeseries_%s' % national_subnational]
+def get_timeseries(timeseries, configuration, adms, level, downloader, scraper=None):
+    datasets = configuration['timeseries_%s' % level]
     sources = list()
     for name in datasets:
         if scraper and scraper not in name:
@@ -90,6 +90,7 @@ def get_timeseries(timeseries, configuration, adms, national_subnational, downlo
         for datasetinfo in datasetinfos:
             format = datasetinfo['format']
             if format == 'json':
+                headers = None
                 iterator = read_json(downloader, datasetinfo, adms=adms)
             elif format == 'ole':
                 headers, iterator = read_ole(downloader, datasetinfo, adms=adms)
@@ -105,7 +106,7 @@ def get_timeseries(timeseries, configuration, adms, national_subnational, downlo
             if 'date' not in datasetinfo:
                 datasetinfo['date'] = today_str
             datasetinfo['adm_mappings'] = configuration['adm_mappings']
-            _get_timeseries(timeseries, adms, datasetinfo, headers, iterator, sources)
+            _get_timeseries(timeseries, adms, level, datasetinfo, headers, iterator, sources)
     return sources
 
 

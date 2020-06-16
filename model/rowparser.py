@@ -10,7 +10,11 @@ from model.admininfo import AdminInfo
 
 
 class RowParser(object):
-    def __init__(self, adms, datasetinfo, headers, maxdateonly=True):
+    levels = {'global': 0, 'national': 1, 'subnational': 2}
+
+    def __init__(self, adms, level, datasetinfo, headers, maxdateonly=True):
+        self.adms = adms
+        self.level = self.levels[level]
         self.datecol = datasetinfo.get('date_col')
         self.datetype = datasetinfo.get('date_type')
         if self.datetype:
@@ -20,14 +24,13 @@ class RowParser(object):
                 date = 0
         else:
             date = 0
-        if adms is None:
-            self.adms = 'global'
-            self.maxdates = {'global': date}
-        else:
-            self.adms = adms
-            self.admcols = datasetinfo['adm_cols']
-            self.adm_mappings = datasetinfo['adm_mappings']
-            self.maxdates = {adm: date for adm in adms[-1]}
+        self.admcols = copy.deepcopy(datasetinfo.get('adm_cols', list()))
+        if self.level > len(self.admcols):
+            raise ValueError('No admin columns specified for required level!')
+        self.admcols.insert(0, None)
+        self.adm_mappings = copy.deepcopy(datasetinfo.get('adm_mappings', [dict(), dict()]))
+        self.adm_mappings.insert(0, None)
+        self.maxdates = {adm: date for adm in adms[self.level]}
         self.maxdateonly = maxdateonly
         self.flatteninfo = datasetinfo.get('flatten')
         self.headers = headers
@@ -64,10 +67,9 @@ class RowParser(object):
         return max(self.maxdates.values())
 
     def do_set_value(self, row, scrapername=None):
-        adm = None
         admininfo = AdminInfo.get()
 
-        def get_adm(admcol, prev_adm):
+        def get_adm(admcol, adms, i):
             match = template.search(admcol)
             if match:
                 template_string = match.group()
@@ -80,16 +82,16 @@ class RowParser(object):
                 mapped_adm = self.adm_mappings[i].get(adm)
                 if mapped_adm:
                     return mapped_adm, True
-                if i == 0:
+                if i == 1:
                     adm, _ = Country.get_iso3_country_code_fuzzy(adm)
                     exact = False
-                elif i == 1:
-                    pcode = admininfo.convert_pcode_length(prev_adm, adm, scrapername)
+                elif i == 2:
+                    pcode = admininfo.convert_pcode_length(adms[1], adm, scrapername)
                     if pcode:
                         adm = pcode
                         exact = True
                     else:
-                        adm = admininfo.get_pcode(prev_adm, adm, scrapername)
+                        adm = admininfo.get_pcode(adms[1], adm, scrapername)
                         exact = False
                 else:
                     return None, None
@@ -97,21 +99,19 @@ class RowParser(object):
                     return None, None
             return adm, exact
 
-        if self.adms == 'global':
-            adm = 'global'
-        else:
-            for i, admcol in enumerate(self.admcols):
-                if admcol is None:
-                    continue
-                prev_adm = adm
-                if isinstance(admcol, str):
-                    admcol = [admcol]
-                for admcl in admcol:
-                    adm, exact = get_adm(admcl, prev_adm)
-                    if adm and exact:
-                        break
-                if not adm:
-                    return None, None
+        adms = [None for _ in range(len(self.admcols))]
+        adms[0] = 'global'
+        for i, admcol in enumerate(self.admcols):
+            if admcol is None:
+                continue
+            if isinstance(admcol, str):
+                admcol = [admcol]
+            for admcl in admcol:
+                adms[i], exact = get_adm(admcl, adms, i)
+                if adms[i] and exact:
+                    break
+            if not adms[i]:
+                return None, None
         if self.datecol:
             date = row[self.datecol]
             if self.datetype == 'int':
@@ -121,9 +121,9 @@ class RowParser(object):
                     date = parse_date(date)
                 date = date.replace(tzinfo=None)
             if self.maxdateonly:
-                if date < self.maxdates[adm]:
+                if date < self.maxdates[adms[self.level]]:
                     return None, None
-            self.maxdates[adm] = date
+            self.maxdates[adms[self.level]] = date
         else:
             date = None
-        return adm, date
+        return adms[self.level], date
