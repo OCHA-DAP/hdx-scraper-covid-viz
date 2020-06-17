@@ -488,7 +488,8 @@ timeseries_national:
 #        name: "Inflation rate, Consumer Prices"
 #    adm_cols:
 
-fts_url: "https://api.hpc.tools/v1/public/"
+fts_v1_url: "https://api.hpc.tools/v1/public/"
+fts_v2_url: "https://api.hpc.tools/v2/"
 fts_source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
 
 country_currency_url: "https://www.currency-iso.org/dam/downloads/lists/list_one.xls"

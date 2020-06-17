@@ -27,36 +27,29 @@ def download_data(url, downloader):
     return download(url, downloader)['data']
 
 
-def get_requirements_and_funding(base_url, plan_id, downloader, isghrp):
-    url = '%sgoverningEntity?planId=%d&scopes=governingEntityVersion' % (base_url, plan_id)
-    data = download_data(url.replace('v1', 'v2'), downloader)
+def get_requirements_and_funding(v1_url, v2_url, plan_id, downloader):
+    url = '%spublic/governingEntity?planId=%d&scopes=governingEntityVersion' % (v2_url, plan_id)
+    data = download_data(url, downloader)
     covid_ids = set()
-    covidflag = True
     for clusterobj in data:
         tags = clusterobj['governingEntityVersion'].get('tags')
         if tags and 'COVID-19' in tags:
             covid_ids.add(clusterobj['id'])
     if len(covid_ids) == 0:
         logger.info('%s has no COVID component!' % plan_id)
-        covidflag = False
+        return None, None
 
-    url = '%sfts/flow?planid=%d&groupby=cluster' % (base_url, plan_id)
+    url = '%sfts/flow?planid=%d&groupby=cluster' % (v1_url, plan_id)
     data = download_data(url, downloader)
-    if isghrp:
-        fund = data['report3']['fundingTotals']['total']
-        return 0, fund, 0, fund
     covidreq = 0
-    allreq = 0
     for reqobj in data['requirements']['objects']:
         req = reqobj.get('revisedRequirements')
         if req:
-            allreq += req
             req_id = reqobj.get('id')
-            if covidflag and req_id and req_id in covid_ids:
+            if req_id and req_id in covid_ids:
                 covidreq += req
 
     covidfund = 0
-    allfund = 0
     fundingobjects = data['report3']['fundingTotals']['objects']
     if len(fundingobjects) != 0:
         singlefundingobjects = fundingobjects[0].get('singleFundingObjects')
@@ -64,16 +57,14 @@ def get_requirements_and_funding(base_url, plan_id, downloader, isghrp):
             for fundobj in singlefundingobjects:
                 fund_id = fundobj.get('id')
                 fund = fundobj['totalFunding']
-                allfund += fund
-                if covidflag and fund_id and fund_id in covid_ids:
+                if fund_id and fund_id in covid_ids:
                     covidfund += fund
         sharedfundingobjects = fundingobjects[0].get('sharedFundingObjects')
         if sharedfundingobjects:
             for fundobj in sharedfundingobjects:
                 fund_ids = fundobj.get('id')
                 fund = fundobj['totalFunding']
-                allfund += fund
-                if covidflag and fund_ids:
+                if fund_ids:
                     match = True
                     for fund_id in fund_ids:
                         if int(fund_id) not in covid_ids:
@@ -81,9 +72,7 @@ def get_requirements_and_funding(base_url, plan_id, downloader, isghrp):
                             break
                     if match:
                         covidfund += fund
-    if not covidflag:
-        return allreq, allfund, None, None
-    return allreq, allfund, covidreq, covidfund
+    return covidreq, covidfund
 
 
 def get_fts(configuration, countryiso3s, downloader, scraper=None):
@@ -93,29 +82,28 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
     funding = [dict(), dict(), dict()]
     percentage = [dict(), dict(), dict()]
 
-    base_url = configuration['fts_url']
-    url = '%splan/year/%d' % (base_url, today.year)
+    v1_url = configuration['fts_v1_url']
+    v2_url = configuration['fts_v2_url']
+
+    url = '%sfts/flow/plan/overview/progress/%d' % (v2_url, today.year)
     data = download_data(url, downloader)
-    total_allreq = 0
-    total_allfund = 0
     total_covidreq = 0
     total_covidfund = 0
 
     rows = list()
-    for plan in data:
+    for plan in data['plans']:
         plan_id = plan['id']
-        emergencies = plan['emergencies']
-        if len(emergencies) == 1 and emergencies[0]['id'] == 911:
-            isghrp = True
+        allreq = plan['requirements']['revisedRequirements']
+        allfund = plan.get('funding')
+        if allfund:
+            allfund = allfund['totalFunding']
+        if plan_id == 952:
+            covidreq = allreq
+            covidfund = allfund
         else:
-            isghrp = False
-        allreq, allfund, covidreq, covidfund = get_requirements_and_funding(base_url, plan_id, downloader, isghrp)
-        name = plan['planVersion']['name']
-        if plan['categories'][0]['includeTotals']:
-            if allreq:
-                total_allreq += allreq
-            if allreq:
-                total_allfund += allfund
+            covidreq, covidfund = get_requirements_and_funding(v1_url, v2_url, plan_id, downloader)
+        name = plan['name']
+        if plan['planType']['includeTotals']:
             if covidreq or covidfund:
                 rows.append([name, covidreq, covidfund])
                 logger.info('%s: Requirements=%d, Funding=%d' % (name, covidreq, covidfund))
@@ -123,17 +111,17 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
                     total_covidreq += covidreq
                 if covidfund:
                     total_covidfund += covidfund
-        locations = plan['locations']
+        countries = plan['countries']
         iso3s = set()
-        for location in locations:
-            countryiso = location['iso3']
+        for country in countries:
+            countryiso = country['iso3']
             if countryiso:
                 iso3s.add(countryiso)
         if len(iso3s) == 1:
             countryiso = iso3s.pop()
             if not countryiso or countryiso not in countryiso3s:
                 continue
-            plan_type = plan['categories'][0]['name'].lower()
+            plan_type = plan['planType']['name'].lower()
             if plan_type == 'humanitarian response plan':
                 index = 0
             else:
@@ -147,7 +135,7 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
                 requirements[index][countryiso] = None
             if allfund and allreq:
                 funding[index][countryiso] = allfund
-                percentage[index][countryiso] = get_percent(allfund, allreq)
+                percentage[index][countryiso] = get_percent(plan['funding']['progress'], 100)
         if covidreq:
             requirements[index + 1][countryiso] = covidreq
         else:
@@ -156,13 +144,9 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
             funding[index + 1][countryiso] = covidfund
             percentage[index + 1][countryiso] = get_percent(covidfund, covidreq)
 
-    # override total requirements and funding from direct call
-    url = '%sfts/flow/plan/overview/snapshot/%s' % (base_url, today.year)
-    data = download_data(url.replace('v1/public', 'v2'), downloader)
     total_allreq = data['totals']['revisedRequirements']
     total_allfund = data['totals']['totalFunding']
-
-    total_allpercent = get_percent(total_allfund, total_allreq)
+    total_allpercent = get_percent(data['totals']['progress'], 100)
     total_covidpercent = get_percent(total_covidfund, total_covidreq)
     logger.info('Processed FTS')
     write_list_to_csv('ftscovid.csv', rows, ['Name', 'Requirements', 'Funding'])
@@ -170,7 +154,7 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
                 '#value+covid+funding+ghrp+required+usd', '#value+covid+funding+ghrp+total+usd', '#value+covid+funding+ghrp+pct']
     hxltags = ['#value+funding+hrp+required+usd', '#value+funding+hrp+total+usd', '#value+funding+hrp+pct',
                '#value+covid+funding+hrp+required+usd', '#value+covid+funding+hrp+total+usd', '#value+covid+funding+hrp+pct',
-               '#value+covid+funding+other+required+usd', '#value+covid+funding+other+total+usd', '#value+covid+funding+other+pct']
+               '#value+funding+other+planname', '#value+funding+other+required+usd', '#value+funding+other+total+usd', '#value+funding+other+pct']
     total_allreq = {'global': total_allreq}
     total_allfund = {'global': total_allfund}
     total_allpercent = {'global': total_allpercent}
@@ -183,7 +167,8 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
            [[hxltag, today_str, 'OCHA', 'https://fts.unocha.org/appeals/952/summary'] for hxltag in whxltags], \
            [['RequiredHRPFunding', 'HRPFunding', 'HRPPercentFunded',
              'RequiredHRPCovidFunding', 'HRPCovidFunding', 'HRPCovidPercentFunded',
-             'RequiredOtherCovidFunding', 'OtherCovidFunding', 'OtherCovidPercentFunded'], hxltags], \
+             'OtherPlans', 'RequiredOtherPlansFunding', 'OtherPlansFunding', 'OtherPlansPercentFunded'],
+             hxltags], \
            [requirements[0], funding[0], percentage[0], requirements[1], funding[1], percentage[1],
             requirements[2], funding[2], percentage[2]], \
            [[hxltag, today_str, 'OCHA', configuration['fts_source_url']] for hxltag in hxltags]
