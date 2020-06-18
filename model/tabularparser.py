@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
+import re
+
 import regex
 from datetime import datetime
 from hdx.location.country import Country
@@ -115,7 +117,10 @@ def _get_tabular(adms, level, name, datasetinfo, headers, iterator, retheaders=[
 
             def text_replacement(string, adm):
                 hasvalues = False
-                for j, valcol in enumerate(valcols):
+                # Indices of list sorted by length
+                indices = sorted(range(len(valcols)), key=lambda k: len(valcols[k]), reverse=True)
+                for j in indices:
+                    valcol = valcols[j]
                     if valcol not in string:
                         continue
                     if valcol in keep_cols:
