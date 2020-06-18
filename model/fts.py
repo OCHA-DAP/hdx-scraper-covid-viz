@@ -3,7 +3,7 @@ import inspect
 import logging
 
 from hdx.data.dataset import Dataset
-from hdx.utilities.dictandlist import write_list_to_csv
+from hdx.utilities.dictandlist import write_list_to_csv, dict_of_lists_add
 
 from model import get_percent, today_str, today, get_date_from_dataset_date
 
@@ -75,75 +75,161 @@ def get_requirements_and_funding(v1_url, v2_url, plan_id, downloader):
     return covidreq, covidfund
 
 
+def get_requirements_and_funding_location(v1_url, plan_id, countryid_iso3mapping, countryiso3s, downloader):
+    url = '%sfts/flow?planid=%d&groupby=location' % (v1_url, plan_id)
+    data = download_data(url, downloader)
+    allreqs, allfunds = dict(), dict()
+    for reqobj in data['requirements']['objects']:
+        countryid = reqobj.get('id')
+        if not countryid:
+            continue
+        countryiso = countryid_iso3mapping[countryid]
+        if countryiso not in countryiso3s:
+            continue
+        req = reqobj.get('revisedRequirements')
+        if req:
+            allreqs[countryiso] = req
+
+    fundingobjects = data['report3']['fundingTotals']['objects']
+    if len(fundingobjects) != 0:
+        singlefundingobjects = fundingobjects[0].get('singleFundingObjects')
+        if singlefundingobjects:
+            for fundobj in singlefundingobjects:
+                countryid = fundobj.get('id')
+                if not countryid:
+                    continue
+                countryiso = countryid_iso3mapping[countryid]
+                if countryiso not in countryiso3s:
+                    continue
+                allfunds[countryiso] = fundobj['totalFunding']
+    return allreqs, allfunds
+
+
 def get_fts(configuration, countryiso3s, downloader, scraper=None):
     if scraper and scraper not in inspect.currentframe().f_code.co_name:
         return list(), list(), list(), list(), list(), list()
-    requirements = [dict(), dict(), dict()]
-    funding = [dict(), dict(), dict()]
-    percentage = [dict(), dict(), dict()]
+    hrp_requirements = dict()
+    hrp_funding = dict()
+    hrp_percentage = dict()
+    hrp_covid_requirements = dict()
+    hrp_covid_funding = dict()
+    hrp_covid_percentage = dict()
+    other_planname = dict()
+    other_requirements = dict()
+    other_funding = dict()
+    other_percentage = dict()
+
+    def add_other_requirements_and_funding(iso3, name, req, fund, pct):
+        dict_of_lists_add(other_planname, iso3, name)
+        if req:
+            dict_of_lists_add(other_requirements, iso3, req)
+        else:
+            dict_of_lists_add(other_requirements, iso3, None)
+        if fund and req:
+            dict_of_lists_add(other_funding, iso3, fund)
+            dict_of_lists_add(other_percentage, iso3, pct)
+        else:
+            dict_of_lists_add(other_funding, iso3, None)
+            dict_of_lists_add(other_percentage, iso3, None)
 
     v1_url = configuration['fts_v1_url']
     v2_url = configuration['fts_v2_url']
 
-    url = '%sfts/flow/plan/overview/progress/%d' % (v2_url, today.year)
-    data = download_data(url, downloader)
     total_covidreq = 0
     total_covidfund = 0
-
     rows = list()
+
+    def add_covid_requirements_and_funding(includetotals, req, fund):
+        nonlocal total_covidreq, total_covidfund
+
+        if not includetotals:
+            return
+        if req or fund:
+            rows.append([planname, req, fund])
+            logger.info('%s: Requirements=%d, Funding=%d' % (planname, req, fund))
+            if req:
+                total_covidreq += req
+            if fund:
+                total_covidfund += fund
+
+    url = '%sfts/flow/plan/overview/progress/%d' % (v2_url, today.year)
+    data = download_data(url, downloader)
     for plan in data['plans']:
         plan_id = plan['id']
+        planname = plan['name']
         allreq = plan['requirements']['revisedRequirements']
-        allfund = plan.get('funding')
-        if allfund:
-            allfund = allfund['totalFunding']
-        if plan_id == 952:
-            covidreq = allreq
-            covidfund = allfund
+        funding = plan.get('funding')
+        if funding:
+            allfund = funding['totalFunding']
         else:
-            covidreq, covidfund = get_requirements_and_funding(v1_url, v2_url, plan_id, downloader)
-        name = plan['name']
-        if plan['planType']['includeTotals']:
-            if covidreq or covidfund:
-                rows.append([name, covidreq, covidfund])
-                logger.info('%s: Requirements=%d, Funding=%d' % (name, covidreq, covidfund))
-                if covidreq:
-                    total_covidreq += covidreq
-                if covidfund:
-                    total_covidfund += covidfund
+            allfund = None
+        includetotals = plan['planType']['includeTotals']
+        if plan_id == 952:
+            add_covid_requirements_and_funding(includetotals, allreq, allfund)
+            continue
+        covidreq, covidfund = get_requirements_and_funding(v1_url, v2_url, plan_id, downloader)
+        add_covid_requirements_and_funding(includetotals, covidreq, covidfund)
+
         countries = plan['countries']
-        iso3s = set()
+        countryid_iso3mapping = dict()
         for country in countries:
             countryiso = country['iso3']
             if countryiso:
-                iso3s.add(countryiso)
-        if len(iso3s) == 1:
-            countryiso = iso3s.pop()
+                countryid = country['id']
+                countryid_iso3mapping[countryid] = countryiso
+        if len(countryid_iso3mapping) == 0:
+            continue
+        if len(countryid_iso3mapping) == 1:
+            countryiso = countryid_iso3mapping.popitem()[1]
             if not countryiso or countryiso not in countryiso3s:
                 continue
             plan_type = plan['planType']['name'].lower()
+            if funding:
+                allpct = get_percent(funding['progress'], 100)
+            else:
+                allpct = None
             if plan_type == 'humanitarian response plan':
-                index = 0
+                if allreq:
+                    hrp_requirements[countryiso] = allreq
+                else:
+                    hrp_requirements[countryiso] = None
+                if allfund and allreq:
+                    hrp_funding[countryiso] = allfund
+                    hrp_percentage[countryiso] = allpct
+                if covidreq:
+                    hrp_covid_requirements[countryiso] = covidreq
+                else:
+                    hrp_covid_requirements[countryiso] = None
+                if covidfund and covidreq:
+                    hrp_covid_funding[countryiso] = covidfund
+                    hrp_covid_percentage[countryiso] = get_percent(covidfund, covidreq)
             else:
-                index = 1
+                add_other_requirements_and_funding(countryiso, planname, allreq, allfund, allpct)
         else:
-            continue
-        if index == 0:
-            if allreq:
-                requirements[index][countryiso] = allreq
-            else:
-                requirements[index][countryiso] = None
-            if allfund and allreq:
-                funding[index][countryiso] = allfund
-                percentage[index][countryiso] = get_percent(plan['funding']['progress'], 100)
-        if covidreq:
-            requirements[index + 1][countryiso] = covidreq
-        else:
-            requirements[index + 1][countryiso] = None
-        if covidfund and covidreq:
-            funding[index + 1][countryiso] = covidfund
-            percentage[index + 1][countryiso] = get_percent(covidfund, covidreq)
+            allreqs, allfunds = get_requirements_and_funding_location(v1_url, plan_id, countryid_iso3mapping, countryiso3s, downloader)
+            for countryiso in allreqs:
+                allreq = allreqs[countryiso]
+                allfund = allfunds[countryiso]
+                if allfund:
+                    allpct = get_percent(allfund, allreq)
+                else:
+                    allpct = None
+                add_other_requirements_and_funding(countryiso, planname, allreq, allfund, allpct)
 
+    def create_output(vallist):
+        strings = list()
+        for val in vallist:
+            if val is None:
+                strings.append('')
+            else:
+                strings.append(str(val))
+        return '|'.join(strings)
+
+    for countryiso in other_requirements:
+        other_planname[countryiso] = create_output(other_planname[countryiso])
+        other_requirements[countryiso] = create_output(other_requirements[countryiso])
+        other_funding[countryiso] = create_output(other_funding[countryiso])
+        other_percentage[countryiso] = create_output(other_percentage[countryiso])
     total_allreq = data['totals']['revisedRequirements']
     total_allfund = data['totals']['totalFunding']
     total_allpercent = get_percent(data['totals']['progress'], 100)
@@ -169,6 +255,6 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
              'RequiredHRPCovidFunding', 'HRPCovidFunding', 'HRPCovidPercentFunded',
              'OtherPlans', 'RequiredOtherPlansFunding', 'OtherPlansFunding', 'OtherPlansPercentFunded'],
              hxltags], \
-           [requirements[0], funding[0], percentage[0], requirements[1], funding[1], percentage[1],
-            requirements[2], funding[2], percentage[2]], \
+           [hrp_requirements, hrp_funding, hrp_percentage, hrp_covid_requirements, hrp_covid_funding, hrp_covid_percentage,
+            other_planname, other_requirements, other_funding, other_percentage], \
            [[hxltag, today_str, 'OCHA', configuration['fts_source_url']] for hxltag in hxltags]
