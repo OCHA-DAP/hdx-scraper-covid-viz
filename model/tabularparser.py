@@ -112,14 +112,14 @@ def _get_tabular(adms, level, name, datasetinfo, headers, iterator, retheaders=[
         ignore_vals = indicatorcol.get('ignore_vals', list())
         val_fns = indicatorcol.get('val_fns', dict())
         valcols = indicatorcol['val_cols']
+        # Indices of list sorted by length
+        sorted_len_indices = sorted(range(len(valcols)), key=lambda k: len(valcols[k]), reverse=True)
         if eval_cols:
             newvaldicts = [dict() for _ in eval_cols]
 
             def text_replacement(string, adm):
                 hasvalues = False
-                # Indices of list sorted by length
-                indices = sorted(range(len(valcols)), key=lambda k: len(valcols[k]), reverse=True)
-                for j in indices:
+                for j in sorted_len_indices:
                     valcol = valcols[j]
                     if valcol not in string:
                         continue
