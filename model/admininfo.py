@@ -13,7 +13,7 @@ from unidecode import unidecode
 logger = logging.getLogger(__name__)
 
 ascii = '([^\x00-\x7F])+'
-
+match_threshold = 2
 
 class AdminInfo(object):
     _admininfo = None
@@ -114,23 +114,31 @@ class AdminInfo(object):
                     break
         if not pcode:
             map_names = list(name_to_pcode.keys())
-            lower_mapnames = [x.lower().replace(' ', '') for x in map_names]
+            lower_mapnames = [x.lower() for x in map_names]
             rs = pyphonetics.RefinedSoundex()
             mindistance = None
             match = None
-            for i, mapname in enumerate(lower_mapnames):
-                distance = rs.distance(adm1_name_lookup, mapname)
+
+            def check_name(lookup, mapname, index):
+                nonlocal mindistance, match
+
+                distance = rs.distance(lookup, mapname)
                 if mindistance is None or distance < mindistance:
                     mindistance = distance
-                    match = i
+                    match = index
+
             for i, mapname in enumerate(lower_mapnames):
-                distance = rs.distance(adm1_name_lookup2, mapname)
-                if mindistance is None or distance < mindistance:
-                    mindistance = distance
-                    match = i
-            if mindistance > 2:
+                check_name(adm1_name_lookup, mapname, i)
+            for i, mapname in enumerate(lower_mapnames):
+                if mapname[:3] == 'al ':
+                    check_name(adm1_name_lookup, 'ad %s' % mapname[3:], i)
+                    check_name(adm1_name_lookup, mapname[3:], i)
+                check_name(adm1_name_lookup2, mapname, i)
+
+            if mindistance is None or mindistance > match_threshold:
                 self.errors.add((scrapername, countryiso3, adm1_name))
                 return None
+
             map_name = map_names[match]
             pcode = name_to_pcode[map_name]
             self.matches.add((scrapername, countryiso3, adm1_name, self.pcode_to_name[pcode], 'fuzzy'))
