@@ -17,11 +17,11 @@ def get_date_from_timestamp(date):
     return datetime.fromtimestamp(date)
 
 
-def number_format(val, format='%.2f'):
+def number_format(val, format='%.4f'):
     return format % val
 
 
-def get_percent(numerator, denominator=None, format='%.2f'):
+def get_percent(numerator, denominator=None, format='%.4f'):
     if numerator:
         numerator = float(numerator)
         if denominator:
@@ -30,7 +30,7 @@ def get_percent(numerator, denominator=None, format='%.2f'):
     return ''
 
 
-def div_100(val, format='%.2f'):
+def div_100(val, format='%.4f'):
     if val:
         return number_format(float(val) / 100, format)
     return ''

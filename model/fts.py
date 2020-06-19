@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import inspect
 import logging
+import re
 
 from hdx.data.dataset import Dataset
 from hdx.utilities.dictandlist import write_list_to_csv, dict_of_lists_add
+from hdx.utilities.text import multiple_replace
 
 from model import get_percent, today_str, today, get_date_from_dataset_date
 
@@ -105,6 +107,36 @@ def get_requirements_and_funding_location(v1_url, plan_id, countryid_iso3mapping
     return allreqs, allfunds
 
 
+def map_planname(origname):
+    name = None
+    if 'Refugee' in origname:
+        words = origname.split(' ')
+        try:
+            index = words.index('Regional')
+            name = ' '.join(words[:index+1])
+        except ValueError:
+            try:
+                index = words.index('from')
+                newwords = list()
+                for word in words[index+1:]:
+                    if '(' in word:
+                        break
+                    newwords.append(word)
+                name = '%s Regional' % ' '.join(newwords)
+            except ValueError:
+                index = words.index('Refugee')
+                name = '%s Regional' % ' '.join(words[:index])
+    if not name:
+        name = re.sub('[\(\[].*?[\)\]]', '', origname)
+        name = multiple_replace(name, {'Intersectoral': '', 'Response': '', 'Plan': '', 'Joint': ''})
+        name = ' '.join(name.split())
+    if origname == name:
+        logger.info('Plan name %s not simplified' % name)
+    else:
+        logger.info('Plan name %s simplified from %s' % (name, origname))
+    return name
+
+
 def get_fts(configuration, countryiso3s, downloader, scraper=None):
     if scraper and scraper not in inspect.currentframe().f_code.co_name:
         return list(), list(), list(), list(), list(), list()
@@ -139,14 +171,14 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
     total_covidfund = 0
     rows = list()
 
-    def add_covid_requirements_and_funding(includetotals, req, fund):
+    def add_covid_requirements_and_funding(name, includetotals, req, fund):
         nonlocal total_covidreq, total_covidfund
 
         if not includetotals:
             return
         if req or fund:
-            rows.append([planname, req, fund])
-            logger.info('%s: Requirements=%d, Funding=%d' % (planname, req, fund))
+            rows.append([name, req, fund])
+            logger.info('%s: Requirements=%d, Funding=%d' % (name, req, fund))
             if req:
                 total_covidreq += req
             if fund:
@@ -165,10 +197,10 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
             allfund = None
         includetotals = plan['planType']['includeTotals']
         if plan_id == 952:
-            add_covid_requirements_and_funding(includetotals, allreq, allfund)
+            add_covid_requirements_and_funding(planname, includetotals, allreq, allfund)
             continue
         covidreq, covidfund = get_requirements_and_funding(v1_url, v2_url, plan_id, downloader)
-        add_covid_requirements_and_funding(includetotals, covidreq, covidfund)
+        add_covid_requirements_and_funding(planname, includetotals, covidreq, covidfund)
 
         countries = plan['countries']
         countryid_iso3mapping = dict()
@@ -204,9 +236,11 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
                     hrp_covid_funding[countryiso] = covidfund
                     hrp_covid_percentage[countryiso] = get_percent(covidfund, covidreq)
             else:
+                planname = map_planname(planname)
                 add_other_requirements_and_funding(countryiso, planname, allreq, allfund, allpct)
         else:
             allreqs, allfunds = get_requirements_and_funding_location(v1_url, plan_id, countryid_iso3mapping, countryiso3s, downloader)
+            planname = map_planname(planname)
             for countryiso in allreqs:
                 allreq = allreqs[countryiso]
                 allfund = allfunds[countryiso]

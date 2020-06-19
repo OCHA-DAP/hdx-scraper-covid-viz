@@ -166,10 +166,10 @@ tabular_national:
       - "x"
     val_fns:
       "GDP per capita (current US$) 2018": "float(GDP per capita (current US$) 2018)"
-      "Volume of remittances (in USD) as a proportion of total GDP (%) 2014-18": "div_100(Volume of remittances (in USD) as a proportion of total GDP (%) 2014-18, format='%.4f')"
-      "Fuels, ores and metals exports (% of total merchandise exports))": "div_100(Fuels, ores and metals exports (% of total merchandise exports)), format='%.4f')"
-      "tourism as percentage of GDP": "div_100(tourism as percentage of GDP, format='%.4f')"
-      "General government gross debt (Percent of GDP) - 2019": "div_100(General government gross debt (Percent of GDP) - 2019, format='%.4f')"
+      "Volume of remittances (in USD) as a proportion of total GDP (%) 2014-18": "div_100(Volume of remittances (in USD) as a proportion of total GDP (%) 2014-18)"
+      "Fuels, ores and metals exports (% of total merchandise exports))": "div_100(Fuels, ores and metals exports (% of total merchandise exports)))"
+      "tourism as percentage of GDP": "div_100(tourism as percentage of GDP)"
+      "General government gross debt (Percent of GDP) - 2019": "div_100(General government gross debt (Percent of GDP) - 2019)"
       "IMF CCRT": "float(IMF CCRT) if IMF CCRT else 0"
       "IMF RCF": "float(IMF RCF) if IMF RCF else 0"
       "IMF Augmented SBA": "float(IMF Augmented SBA) if IMF Augmented SBA else 0"
@@ -208,7 +208,7 @@ tabular_national:
       - "number_format(UN MPTF * 1000000, format='%.0f')"
       - "number_format(Total (USD mn) * 1000000, format='%.0f')"
       - "number_format(Total per capita (USD))"
-      - "number_format(Total as percentage of GDP (%), format='%.4f')"
+      - "number_format(Total as percentage of GDP (%))"
     columns:
       - "Population"
       - "GDP Per Capita"
@@ -1281,6 +1281,11 @@ adm_mappings:
     "al-amana": "YE23"
     "PL.Sool": "SO14"
     "Sc.Mudug": "SO18"
+    "Amanat Al Asimah": "YE23"
+    "Juba Dhexe": "SO27"
+    "Juba Hoose": "SO28"
+    "Shabelle Dhexe": "SO21"
+    "Shabelle Hoose": "SO23"
 
 adm1_name_replacements:
   " urban": ""
