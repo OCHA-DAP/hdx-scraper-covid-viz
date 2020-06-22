@@ -149,7 +149,7 @@ class AdminInfo(object):
 
     def get_pcode(self, countryiso3, adm1_name, scrapername=None):
         pcode = self.adm_mappings[1].get(adm1_name)
-        if pcode:
+        if pcode and self.pcode_to_iso3[pcode] == countryiso3:
             return pcode, True
         pcode = self.convert_pcode_length(countryiso3, adm1_name, scrapername)
         if pcode:
