@@ -27,8 +27,8 @@ brackets = r'''
 )'''
 
 
-def _get_tabular(adms, level, name, datasetinfo, headers, iterator, retheaders=[list(), list()], retval=list(), sources=list()):
-    rowparser = RowParser(adms, level, datasetinfo, headers)
+def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list(), list()], retval=list(), sources=list()):
+    rowparser = RowParser(level, datasetinfo, headers)
     indicatorcols = datasetinfo.get('indicator_cols')
     if not indicatorcols:
         indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo['val_cols'],
@@ -202,7 +202,7 @@ def _get_tabular(adms, level, name, datasetinfo, headers, iterator, retheaders=[
     return retheaders, retval, sources
 
 
-def get_tabular(configuration, adms, level, downloader, scraper=None):
+def get_tabular(configuration, level, downloader, scraper=None, **kwargs):
     datasets = configuration['tabular_%s' % level]
     retheaders = [list(), list()]
     retval = list()
@@ -213,23 +213,22 @@ def get_tabular(configuration, adms, level, downloader, scraper=None):
         datasetinfo = datasets[name]
         format = datasetinfo['format']
         if format == 'json':
-            iterator = read_json(downloader, datasetinfo, adms=adms)
+            iterator = read_json(downloader, datasetinfo, **kwargs)
             headers = None
         elif format == 'ole':
-            headers, iterator = read_ole(downloader, datasetinfo, adms=adms)
+            headers, iterator = read_ole(downloader, datasetinfo, **kwargs)
         elif format in ['csv', 'xls', 'xlsx']:
             if 'dataset' in datasetinfo:
-                headers, iterator = read_hdx(downloader, datasetinfo)
+                headers, iterator = read_hdx(downloader, datasetinfo, **kwargs)
             else:
-                headers, iterator = read_tabular(downloader, datasetinfo, adms=adms)
+                headers, iterator = read_tabular(downloader, datasetinfo, **kwargs)
         else:
             raise ValueError('Invalid format %s for %s!' % (format, name))
         if 'source_url' not in datasetinfo:
             datasetinfo['source_url'] = datasetinfo['url']
         if 'date' not in datasetinfo:
             datasetinfo['date'] = today_str
-        datasetinfo['adm_mappings'] = configuration['adm_mappings']
-        _get_tabular(adms, level, name, datasetinfo, headers, iterator, retheaders, retval, sources)
+        _get_tabular(level, name, datasetinfo, headers, iterator, retheaders, retval, sources)
     return retheaders, retval, sources
 
 

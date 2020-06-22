@@ -14,8 +14,8 @@ from model.readers import read_tabular, read_ole, read_json, read_hdx
 logger = logging.getLogger(__name__)
 
 
-def _get_timeseries(timeseries, adms, level, datasetinfo, headers, iterator, sources=list()):
-    rowparser = RowParser(adms, level, datasetinfo, headers, maxdateonly=False)
+def _get_timeseries(timeseries, level, datasetinfo, headers, iterator, sources=list()):
+    rowparser = RowParser(level, datasetinfo, headers, maxdateonly=False)
     name = datasetinfo['name']
     valcol = datasetinfo['val_col']
     ignore_vals = datasetinfo.get('ignore_vals', list())
@@ -70,7 +70,7 @@ def _get_timeseries(timeseries, adms, level, datasetinfo, headers, iterator, sou
     return sources
 
 
-def get_timeseries(timeseries, configuration, adms, level, downloader, scraper=None):
+def get_timeseries(timeseries, configuration, level, downloader, scraper=None, **kwargs):
     datasets = configuration['timeseries_%s' % level]
     sources = list()
     for name in datasets:
@@ -91,22 +91,21 @@ def get_timeseries(timeseries, configuration, adms, level, downloader, scraper=N
             format = datasetinfo['format']
             if format == 'json':
                 headers = None
-                iterator = read_json(downloader, datasetinfo, adms=adms)
+                iterator = read_json(downloader, datasetinfo, **kwargs)
             elif format == 'ole':
-                headers, iterator = read_ole(downloader, datasetinfo, adms=adms)
+                headers, iterator = read_ole(downloader, datasetinfo, **kwargs)
             elif format in ['csv', 'xls', 'xlsx']:
                 if 'dataset' in datasetinfo:
-                    headers, iterator = read_hdx(downloader, datasetinfo)
+                    headers, iterator = read_hdx(downloader, datasetinfo, **kwargs)
                 else:
-                    headers, iterator = read_tabular(downloader, datasetinfo, adms=adms)
+                    headers, iterator = read_tabular(downloader, datasetinfo, **kwargs)
             else:
                 raise ValueError('Invalid format %s for %s!' % (format, name))
             if 'source_url' not in datasetinfo:
                 datasetinfo['source_url'] = datasetinfo['url']
             if 'date' not in datasetinfo:
                 datasetinfo['date'] = today_str
-            datasetinfo['adm_mappings'] = configuration['adm_mappings']
-            _get_timeseries(timeseries, adms, level, datasetinfo, headers, iterator, sources)
+            _get_timeseries(timeseries, level, datasetinfo, headers, iterator, sources)
     return sources
 
 

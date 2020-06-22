@@ -55,7 +55,7 @@ def get_ipc(configuration, admininfo, downloader, scraper=None):
                 adm1_name = row['Area']
                 if not adm1_name or adm1_name == country:
                     continue
-            pcode = admininfo.get_pcode(countryiso3, adm1_name, 'IPC')
+            pcode, _ = admininfo.get_pcode(countryiso3, adm1_name, 'IPC')
             if not pcode:
                 continue
             population = row['Current Phase P3+ #']

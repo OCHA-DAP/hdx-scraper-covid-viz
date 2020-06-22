@@ -42,12 +42,12 @@ def get_whowhatwhere(configuration, admininfo, downloader, scraper=None):
             if not pcode:
                 adm1name = row.get('#adm1+name')
                 if adm1name:
-                    pcode = admininfo.get_pcode(countryiso3, adm1name, '3W')
+                    pcode, _ = admininfo.get_pcode(countryiso3, adm1name, '3W')
             if not pcode:
                 location = row.get('#loc')
                 if location:
                     location = location.split('>')[-1]
-                    pcode = admininfo.get_pcode(countryiso3, location, '3W')
+                    pcode, _ = admininfo.get_pcode(countryiso3, location, '3W')
             if pcode:
                 pcode = pcode.strip().upper()
                 org = row.get('#org')

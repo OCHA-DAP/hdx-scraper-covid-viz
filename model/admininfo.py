@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 ascii = '([^\x00-\x7F])+'
 match_threshold = 2
 
+
 class AdminInfo(object):
     _admininfo = None
     pcodes = list()
@@ -28,6 +29,7 @@ class AdminInfo(object):
         admin_info = configuration['admin_info']
         self.adm1_name_replacements = configuration['adm1_name_replacements']
         self.adm1_fuzzy_ignore = configuration['adm1_fuzzy_ignore']
+        self.adm_mappings = configuration.get('adm_mappings', [dict(), dict()])
         iso3s_no_pcodes = set()
         countryiso3s = set()
         for row in admin_info:
@@ -46,6 +48,7 @@ class AdminInfo(object):
             self.name_to_pcode[countryiso3] = name_to_pcode
             self.pcode_to_iso3[pcode] = countryiso3
         self.countryiso3s = sorted(list(countryiso3s))
+        self.adms = [self.countryiso3s, self.pcodes]
         self.iso3s_no_pcodes = sorted(list(iso3s_no_pcodes))
         self.init_matches_errors()
 
@@ -82,7 +85,7 @@ class AdminInfo(object):
             return pcode
         return None
 
-    def get_pcode(self, countryiso3, adm1_name, scrapername=None):
+    def fuzzy_pcode(self, countryiso3, adm1_name, scrapername=None):
         if countryiso3 in self.iso3s_no_pcodes:
             self.ignored.add((scrapername, countryiso3))
             return None
@@ -143,6 +146,40 @@ class AdminInfo(object):
             pcode = name_to_pcode[map_name]
             self.matches.add((scrapername, countryiso3, adm1_name, self.pcode_to_name[pcode], 'fuzzy'))
         return pcode
+
+    def get_pcode(self, countryiso3, adm1_name, scrapername=None):
+        pcode = self.adm_mappings[1].get(adm1_name)
+        if pcode:
+            return pcode, True
+        pcode = self.convert_pcode_length(countryiso3, adm1_name, scrapername)
+        if pcode:
+            adm = pcode
+            exact = True
+        else:
+            adm = self.fuzzy_pcode(countryiso3, adm1_name, scrapername)
+            exact = False
+        return adm, exact
+
+    def get_adm(self, adms, i, scrapername):
+        adm = adms[i]
+        if adm in self.adms[i]:
+            exact = True
+        else:
+            exact = False
+            if i == 0:
+                mappingadm = self.adm_mappings[0].get(adm)
+                if mappingadm:
+                    adms[i] = mappingadm
+                    return True
+                adms[i], _ = Country.get_iso3_country_code_fuzzy(adm)
+                exact = False
+            elif i == 1:
+                adms[i], exact = self.get_pcode(adms[0], adm, scrapername)
+            else:
+                adms[i] = None
+            if adms[i] not in self.adms[i]:
+                adms[i] = None
+        return exact
 
     def output_matches(self):
         for match in sorted(self.matches):

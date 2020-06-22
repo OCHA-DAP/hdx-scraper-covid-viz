@@ -57,13 +57,12 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
     admininfo = AdminInfo.get()
     countryiso3s = admininfo.countryiso3s
     pcodes = admininfo.pcodes
-    adms = [['global'], countryiso3s, pcodes]
 
     if 'world' in tabs or 'national' in tabs:
         fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(configuration, countryiso3s, downloader, scraper)
 
         if 'world' in tabs:
-            tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, adms, 'global', downloader, scraper)
+            tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'global', downloader, scraper)
 
             extend_headers(world, fts_wheaders, tabular_headers)
             extend_columns(world, None, None, fts_wcolumns, tabular_columns)
@@ -71,8 +70,8 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
 
         if 'national' in tabs:
             unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, countryiso3s, downloader, scraper)
-            tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, adms, 'national', downloader, scraper)
-            copy_headers, copy_columns, copy_sources = get_copy(configuration, adms, 'national', downloader, scraper)
+            tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'national', downloader, scraper)
+            copy_headers, copy_columns, copy_sources = get_copy(configuration, 'national', downloader, scraper)
 
             extend_headers(national, tabular_headers, fts_headers, unhcr_headers, copy_headers)
             extend_columns(national, countryiso3s, None, tabular_columns, fts_columns, unhcr_columns, copy_columns)
@@ -80,13 +79,13 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
 
     if 'national_timeseries' in tabs:
         fx_sources = get_fx(nationaltimeseries, configuration, countryiso3s, downloader, scraper)
-        timeseries_sources = get_timeseries(nationaltimeseries, configuration, adms, 'national', downloader, scraper)
+        timeseries_sources = get_timeseries(nationaltimeseries, configuration, 'national', downloader, scraper)
         extend_sources(sources, fx_sources, timeseries_sources)
 
     if 'subnational' in tabs:
         ipc_headers, ipc_columns, ipc_sources = get_ipc(configuration, admininfo, downloader, scraper)
         whowhatwhere_headers, whowhatwhere_columns, whowhatwhere_sources = get_whowhatwhere(configuration, admininfo, downloader, scraper)
-        tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, adms, 'subnational', downloader, scraper)
+        tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'subnational', downloader, scraper)
 
         extend_headers(subnational, ipc_headers, tabular_headers, whowhatwhere_headers)
         extend_columns(subnational, pcodes, admininfo, ipc_columns, tabular_columns, whowhatwhere_columns)

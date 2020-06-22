@@ -8,7 +8,7 @@ from model.readers import read_tabular, read_ole, read_hdx
 logger = logging.getLogger(__name__)
 
 
-def _get_copy(adms, level, name, datasetinfo, headers, iterator, retheaders=[list(), list()], retval=list(), sources=list()):
+def _get_copy(level, name, datasetinfo, headers, iterator, retheaders=[list(), list()], retval=list(), sources=list()):
     valuedicts = list()
     val_cols = list()
     hxltags = list()
@@ -35,7 +35,7 @@ def _get_copy(adms, level, name, datasetinfo, headers, iterator, retheaders=[lis
         val_cols.append(header)
         hxltags.append(hxltag)
         valuedicts.append(dict())
-    rowparser = RowParser(adms, level, {'adm_cols': adm_cols, 'adm_mappings': datasetinfo['adm_mappings']}, headers)
+    rowparser = RowParser(level, {'adm_cols': adm_cols, 'adm_mappings': datasetinfo['adm_mappings']}, headers)
     for row in iterator:
         adm, _ = rowparser.do_set_value(row, name)
         if adm:
@@ -50,7 +50,7 @@ def _get_copy(adms, level, name, datasetinfo, headers, iterator, retheaders=[lis
     return retheaders, retval, sources
 
 
-def get_copy(configuration, adms, level, downloader, scraper=None):
+def get_copy(configuration, level, downloader, scraper=None, **kwargs):
     datasets = configuration['copy_%s' % level]
     retheaders = [list(), list()]
     retval = list()
@@ -61,20 +61,19 @@ def get_copy(configuration, adms, level, downloader, scraper=None):
         datasetinfo = datasets[name]
         format = datasetinfo['format']
         if format == 'ole':
-            headers, iterator = read_ole(downloader, datasetinfo, adms=adms)
+            headers, iterator = read_ole(downloader, datasetinfo, **kwargs)
         elif format in ['csv', 'xls', 'xlsx']:
             if 'dataset' in datasetinfo:
-                headers, iterator = read_hdx(downloader, datasetinfo)
+                headers, iterator = read_hdx(downloader, datasetinfo, **kwargs)
             else:
-                headers, iterator = read_tabular(downloader, datasetinfo, adms=adms)
+                headers, iterator = read_tabular(downloader, datasetinfo, **kwargs)
         else:
             raise ValueError('Invalid format %s for %s!' % (format, name))
         if 'source_url' not in datasetinfo:
             datasetinfo['source_url'] = datasetinfo['url']
         if 'date' not in datasetinfo:
             datasetinfo['date'] = today_str
-        datasetinfo['adm_mappings'] = configuration['adm_mappings']
-        _get_copy(adms, level, name, datasetinfo, headers, iterator, retheaders, retval, sources)
+        _get_copy(level, name, datasetinfo, headers, iterator, retheaders, retval, sources)
     return retheaders, retval, sources
 
 
