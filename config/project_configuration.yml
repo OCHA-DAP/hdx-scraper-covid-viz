@@ -21,7 +21,7 @@ additional_sources:
 additional_json:
   - name: "vaccination_campaigns"
     format: "csv"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT8m53T3ITzFdJWWKkdRRVRjezgt6MeeU5c2tJWl9SNff7SYn3iJ9_7DZZ_tYSmYI67-vH7cqze1VE0/pub?gid=0&single=true&output=csv"
+    dataset: "immunization-campaigns-impacted"
     headers: 1
 
 # global
