@@ -5,7 +5,7 @@ from model.readers import read_json, read_ole, read_hdx, read_tabular
 
 
 def add_additional_json(configuration, downloader, json):
-    for datasetinfo in configuration['additional_json']:
+    for datasetinfo in configuration.get('additional_json', list()):
         name = datasetinfo['name']
         format = datasetinfo['format']
         if format == 'json':

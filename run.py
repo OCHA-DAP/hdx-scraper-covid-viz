@@ -51,9 +51,8 @@ def generate_json(json, key, rows):
         dict_of_lists_add(json, key, newrow)
 
 
-def write_json(configuration, downloader, updatetabs, world, national, nationaltimeseries, subnational, sources):
+def write_json(configuration, downloader, updatetabs, world, regional, national, nationaltimeseries, subnational, sources, json):
     logger.info('Writing JSON')
-    json = dict()
 
     def update_json(tabname, values):
         if tabname not in updatetabs:
@@ -61,6 +60,7 @@ def write_json(configuration, downloader, updatetabs, world, national, nationalt
         generate_json(json, '%s_data' % tabname, values)
 
     update_json('world', world)
+    update_json('regional', regional)
     update_json('national', national)
     update_json('national_timeseries', nationaltimeseries)
     update_json('subnational', subnational)
@@ -69,7 +69,7 @@ def write_json(configuration, downloader, updatetabs, world, national, nationalt
     save_json(json, 'out.json')
 
 
-def write_to_gsheets(spreadsheets, updatesheets, tabs, updatetabs, world, national, nationaltimeseries, subnational, sources):
+def write_to_gsheets(spreadsheets, updatesheets, tabs, updatetabs, world, regional, national, nationaltimeseries, subnational, sources):
     # Write to gsheets
     info = json.loads(gsheet_auth)
     scopes = ['https://www.googleapis.com/auth/spreadsheets']
@@ -89,6 +89,7 @@ def write_to_gsheets(spreadsheets, updatesheets, tabs, updatetabs, world, nation
             tab.update_values('A1', values)
 
         update_tab('world', world)
+        update_tab('regional', regional)
         update_tab('national', national)
         update_tab('national_timeseries', nationaltimeseries)
         update_tab('subnational', subnational)
@@ -115,10 +116,10 @@ def main(gsheet_auth, updatesheets, updatetabs, scraper, nojson, **ignore):
             logger.info('Updating only these tabs: %s' % updatetabs)
         if scraper:
             logger.info('Updating only scraper: %s' % scraper)
-        world, national, nationaltimeseries, subnational, sources = get_indicators(configuration, downloader, updatetabs, scraper)
+        world, regional, national, nationaltimeseries, subnational, sources, json = get_indicators(configuration, downloader, updatetabs, scraper)
         if not nojson:
-            write_json(configuration, downloader, updatetabs, world, national, nationaltimeseries, subnational, sources)
-        write_to_gsheets(spreadsheets, updatesheets, tabs, updatetabs, world, national, nationaltimeseries, subnational, sources)
+            write_json(configuration, downloader, updatetabs, world, regional, national, nationaltimeseries, subnational, sources, json)
+        write_to_gsheets(spreadsheets, updatesheets, tabs, updatetabs, world, regional, national, nationaltimeseries, subnational, sources)
 
 
 if __name__ == '__main__':

@@ -8,9 +8,11 @@ from model.fts import get_fts
 from model.copydata import get_copy
 from model.fx import get_fx
 from model.ipc import get_ipc
+from model.regional import get_regional
 from model.tabularparser import get_tabular
 from model.timeseriesparser import get_timeseries
 from model.unhcr import get_unhcr
+from model.vaccination_campaigns import add_vaccination_campaigns
 from model.whowhatwhere import get_whowhatwhere
 
 
@@ -48,6 +50,7 @@ def extend_sources(sources, *args):
 
 
 def get_indicators(configuration, downloader, tabs, scraper=None):
+    json = dict()
     world = [list(), list()]
     national = [['iso3', 'countryname'], ['#country+code', '#country+name']]
     nationaltimeseries = [['iso3', 'date', 'indicator', 'value'], ['#country+code', '#date', '#indicator+name', '#indicator+value+num']]
@@ -69,13 +72,17 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
             extend_sources(sources, fts_wsources, tabular_sources)
 
         if 'national' in tabs:
+            campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, countryiso3s, downloader, json, scraper)
             unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, countryiso3s, downloader, scraper)
             tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'national', downloader, scraper)
             copy_headers, copy_columns, copy_sources = get_copy(configuration, 'national', downloader, scraper)
 
-            extend_headers(national, tabular_headers, fts_headers, unhcr_headers, copy_headers)
-            extend_columns(national, countryiso3s, None, tabular_columns, fts_columns, unhcr_columns, copy_columns)
-            extend_sources(sources, tabular_sources, fts_sources, unhcr_sources, copy_sources)
+            extend_headers(national, tabular_headers, campaign_headers, fts_headers, unhcr_headers, copy_headers)
+            extend_columns(national, countryiso3s, None, tabular_columns, campaign_columns, fts_columns, unhcr_columns, copy_columns)
+            extend_sources(sources, tabular_sources, campaign_sources, fts_sources, unhcr_sources, copy_sources)
+
+            if 'regional' in tabs:
+                regional = get_regional(configuration, national, downloader)
 
     if 'national_timeseries' in tabs:
         fx_sources = get_fx(nationaltimeseries, configuration, countryiso3s, downloader, scraper)
@@ -108,4 +115,4 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
             source_url = sourceinfo['source_url']
         sources.append([sourceinfo['indicator'], date, source, source_url])
 
-    return world, national, nationaltimeseries, subnational, sources
+    return world, regional, national, nationaltimeseries, subnational, sources, json

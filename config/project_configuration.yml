@@ -5,6 +5,7 @@ spreadsheets:
 
 tabs:
   world: "WorldData"
+  regional: "RegionalData"
   national: "NationalData"
   national_timeseries: "NationalTimeSeries"
   subnational: "SubnationalData"
@@ -17,12 +18,6 @@ additional_sources:
     dataset: "immunization-campaigns-impacted"
   - indicator: "#covid+cases+per+capita"
     dataset: "coronavirus-covid-19-cases-and-deaths"
-
-additional_json:
-  - name: "vaccination_campaigns"
-    format: "csv"
-    dataset: "immunization-campaigns-impacted"
-    headers: 1
 
 # global
 tabular_global:
@@ -76,6 +71,61 @@ tabular_global:
     hxltags:
       - "#value+ifi+global"
 
+# regional
+regional:
+  format: "xlsx"
+  dataset: "unocha-office-locations"
+  sheet: 1
+  headers: 1
+  iso3: "ISO3"
+  region: "Regional_office"
+  val_fns:
+    "NoCases": "sum"
+    "NoDeaths": "sum"
+    "Risk": "range"
+#    "RiskClass": "sum"
+    "EconomicExposure": "range"
+    "Population": "sum"
+    "GDP Per Capita": "range"
+    "Volume of remittances as a proportion of total GDP": "range"
+    "Fuels, ores and metals exports": "range"
+    "Tourism as percentage of GDP": "range"
+    "General government gross debt": "range"
+    "WB total": "sum"
+    "IMF total": "sum"
+    "AfDB total": "sum"
+    "ADB total": "sum"
+    "IADB total": "sum"
+    "EIB total": "sum"
+    "ISDB total": "sum"
+    "DevCO total": "sum"
+    "UN MPTF total": "sum"
+    "IFI COVID19 total": "sum"
+    "IFI COVID19 total percap": "range"
+    "IFI COVID19 total pcgdp": "range"
+    "PeopleInNeed": "sum"
+    "RequiredFundingPreCovid": "sum"
+    "TotalIDPs": "sum"
+    "Imp: Total Cases(min)": "sum"
+    "Imp: Total Cases(max)": "sum"
+    "Imp: Total Deaths(min)": "sum"
+    "Imp: Total Deaths(max)": "sum"
+    "LSHTM: Total Cases(min)": "sum"
+    "LSHTM: Total Cases(max)": "sum"
+    "LSHTM: Total Deaths(min)": "sum"
+    "LSHTM: Total Deaths(max)": "sum"
+    "CBPFCovidFunding": "sum"
+    "CERFCovidFunding": "sum"
+    "RequiredHRPFunding": "sum"
+    "HRPFunding": "sum"
+    "HRPPercentFunded": "get_percent(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
+    "RequiredHRPCovidFunding": "sum"
+    "HRPCovidFunding": "sum"
+    "HRPCovidPercentFunded": "get_percent(HRPCovidFunding, RequiredHRPCovidFunding) if HRPCovidFunding is not None and RequiredHRPCovidFunding is not None else ''"
+    "RequiredOtherPlansFunding": "sum"
+    "OtherPlansFunding": "sum"
+    "OtherPlansPercentFunded": "get_percent(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
+    "TotalRefugees": "sum"
 
 # national
 tabular_national:
@@ -756,6 +806,10 @@ tabular_subnational:
     hxltags:
       - "#severity+malnutrition+num+subnational"
 
+vaccination_campaigns:
+  format: "csv"
+  dataset: "immunization-campaigns-impacted"
+  headers: 1
 
 road_networks_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=0&single=true&output=csv"
 
