@@ -24,19 +24,8 @@ def get_numeric(valuestr):
     return valuestr
 
 
-def get_regional(configuration, national, downloader):
+def get_regional(configuration, national, admininfo):
     regional_config = configuration['regional']
-    _, iterator = read_hdx(downloader, regional_config)
-    country_region = dict()
-    regions = set()
-    for row in iterator:
-        countryiso = row[regional_config['iso3']]
-        if countryiso:
-            region = row[regional_config['region']]
-            if region == 'NO COVERAGE':
-                continue
-            regions.add(region)
-            country_region[countryiso] = region
     iso_index = national[1].index('#country+code')
     regional = [['regionname'], ['#region+name']]
     headers = national[0][2:]
@@ -52,14 +41,14 @@ def get_regional(configuration, national, downloader):
             regional[1].append(national[1][index + 2])
         except ValueError:
             regional[1].append('')
-    regions = sorted(list(regions))
+    regions = sorted(list(admininfo.regions))
     for region in regions:
         regiondata = [region]
         regiondata.extend([list() for _ in val_fns])
         regional.append(regiondata)
     for countrydata in national[2:]:
         countryiso = countrydata[iso_index]
-        region = country_region.get(countryiso)
+        region = admininfo.iso3_to_region.get(countryiso)
         if not region:
             continue
         regiondata = regional[regions.index(region) + 2]

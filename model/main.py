@@ -23,19 +23,19 @@ def extend_headers(headers, *args):
                 header.extend(arg[i])
 
 
-def extend_columns(rows, adms, admininfo, *args):
+def extend_columns(level, rows, adms, admininfo, *args):
     if adms is None:
         adms = ['global']
     for i, adm in enumerate(adms):
-        if admininfo:
+        if level == 'global':
+            row = list()
+        elif level == 'national':
+            row = [adm, Country.get_country_name_from_iso3(adm), admininfo.iso3_to_region[adm]]
+        elif level == 'subnational':
             countryiso3 = admininfo.pcode_to_iso3[adm]
             countryname = Country.get_country_name_from_iso3(countryiso3)
             adm1_name = admininfo.pcode_to_name[adm]
             row = [countryiso3, countryname, adm, adm1_name]
-        elif adm == 'global':
-            row = list()
-        else:
-            row = [adm, Country.get_country_name_from_iso3(adm)]
         for arg in args:
             if arg:
                 for column in arg:
@@ -52,12 +52,13 @@ def extend_sources(sources, *args):
 def get_indicators(configuration, downloader, tabs, scraper=None):
     json = dict()
     world = [list(), list()]
-    national = [['iso3', 'countryname'], ['#country+code', '#country+name']]
+    regional = [['regionname'], ['#region+name']]
+    national = [['iso3', 'countryname', 'region'], ['#country+code', '#country+name', '#region+name']]
     nationaltimeseries = [['iso3', 'date', 'indicator', 'value'], ['#country+code', '#date', '#indicator+name', '#indicator+value+num']]
     subnational = [['iso3', 'countryname', 'adm1_pcode', 'adm1_name'], ['#country+code', '#country+name', '#adm1+code', '#adm1+name']]
     sources = [['Indicator', 'Date', 'Source', 'Url'], ['#indicator+name', '#date', '#meta+source', '#meta+url']]
 
-    admininfo = AdminInfo.get()
+    admininfo = AdminInfo.setup(downloader)
     countryiso3s = admininfo.countryiso3s
     pcodes = admininfo.pcodes
 
@@ -68,7 +69,7 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
             tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'global', downloader, scraper)
 
             extend_headers(world, fts_wheaders, tabular_headers)
-            extend_columns(world, None, None, fts_wcolumns, tabular_columns)
+            extend_columns('global', world, None, None, fts_wcolumns, tabular_columns)
             extend_sources(sources, fts_wsources, tabular_sources)
 
         if 'national' in tabs:
@@ -78,11 +79,11 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
             copy_headers, copy_columns, copy_sources = get_copy(configuration, 'national', downloader, scraper)
 
             extend_headers(national, tabular_headers, campaign_headers, fts_headers, unhcr_headers, copy_headers)
-            extend_columns(national, countryiso3s, None, tabular_columns, campaign_columns, fts_columns, unhcr_columns, copy_columns)
+            extend_columns('national', national, countryiso3s, admininfo, tabular_columns, campaign_columns, fts_columns, unhcr_columns, copy_columns)
             extend_sources(sources, tabular_sources, campaign_sources, fts_sources, unhcr_sources, copy_sources)
 
             if 'regional' in tabs:
-                regional = get_regional(configuration, national, downloader)
+                regional = get_regional(configuration, national, admininfo)
 
     if 'national_timeseries' in tabs:
         fx_sources = get_fx(nationaltimeseries, configuration, countryiso3s, downloader, scraper)
@@ -95,7 +96,7 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
         tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'subnational', downloader, scraper)
 
         extend_headers(subnational, ipc_headers, tabular_headers, whowhatwhere_headers)
-        extend_columns(subnational, pcodes, admininfo, ipc_columns, tabular_columns, whowhatwhere_columns)
+        extend_columns('subnational', subnational, pcodes, admininfo, ipc_columns, tabular_columns, whowhatwhere_columns)
         extend_sources(sources, tabular_sources, ipc_sources, whowhatwhere_sources)
 
     admininfo.output_matches()

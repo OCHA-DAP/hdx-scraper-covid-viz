@@ -9,6 +9,7 @@ from hdx.utilities.text import multiple_replace
 import pyphonetics
 from unidecode import unidecode
 
+from model.readers import read_hdx
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +25,7 @@ class AdminInfo(object):
     pcode_to_name = dict()
     pcode_to_iso3 = dict()
 
-    def __init__(self):
+    def __init__(self, downloader):
         configuration = Configuration.read()
         admin_info = configuration['admin_info']
         self.adm1_name_replacements = configuration['adm1_name_replacements']
@@ -50,7 +51,24 @@ class AdminInfo(object):
         self.countryiso3s = sorted(list(countryiso3s))
         self.adms = [self.countryiso3s, self.pcodes]
         self.iso3s_no_pcodes = sorted(list(iso3s_no_pcodes))
+        self.regions, self.iso3_to_region = self.read_regional(configuration, self.countryiso3s, downloader)
         self.init_matches_errors()
+
+    @staticmethod
+    def read_regional(configuration, countryiso3s, downloader):
+        regional_config = configuration['regional']
+        _, iterator = read_hdx(downloader, regional_config)
+        iso3_to_region = dict()
+        regions = set()
+        for row in iterator:
+            countryiso = row[regional_config['iso3']]
+            if countryiso and countryiso in countryiso3s:
+                region = row[regional_config['region']]
+                if region == 'NO COVERAGE':
+                    continue
+                regions.add(region)
+                iso3_to_region[countryiso] = region
+        return regions, iso3_to_region
 
     def init_matches_errors(self, scraper=None):
         self.matches = set()
@@ -200,7 +218,13 @@ class AdminInfo(object):
                 logger.error('%s - %s: Could not find %s in map names!' % (error[0], error[1], error[2]))
 
     @classmethod
+    def setup(cls, downloader):
+        if not cls._admininfo:
+            cls._admininfo = AdminInfo(downloader)
+        return cls._admininfo
+
+    @classmethod
     def get(cls):
         if not cls._admininfo:
-            cls._admininfo = AdminInfo()
+            raise ValueError('AdminInfo not set up yet')
         return cls._admininfo

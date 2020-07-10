@@ -8,15 +8,11 @@ from jsonpath_ng import parse
 from olefile import olefile
 
 from model import template, get_date_from_dataset_date
-from model.admininfo import AdminInfo
 
 logger = logging.getLogger(__name__)
 
 
 def get_url(url, **kwargs):
-    admininfo = AdminInfo.get()
-    countryiso3s = admininfo.countryiso3s
-    pcodes = admininfo.pcodes
     for kwarg in kwargs:
         exec('%s=%s' % (kwarg, kwargs[kwarg]))
     match = template.search(url)
