@@ -39,7 +39,7 @@ def add_vaccination_campaigns(configuration, countryiso3s, downloader, json, scr
             dict_of_lists_add(json, '%s_data' % name, newrow)
     ratios = dict()
     for countryiso in affected_campaigns_per_country:
-        ratios[countryiso] = number_format(1 - affected_campaigns_per_country[countryiso] / campaigns_per_country[countryiso])
+        ratios[countryiso] = number_format(affected_campaigns_per_country[countryiso] / campaigns_per_country[countryiso])
     hxltag = '#vaccination+num+ratio'
     logger.info('Processed vaccination campaigns')
     return [['Vaccination Ratio'], [hxltag]], [ratios], [[hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']]]
