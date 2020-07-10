@@ -37,7 +37,8 @@ def get_data(downloader, url, countryiso2):
 def get_ipc(configuration, admininfo, downloader, scraper=None):
     if scraper and scraper not in inspect.currentframe().f_code.co_name:
         return list(), list(), list()
-    url = configuration['ipc_url']
+    ipc_configuration = configuration['ipc']
+    url = ipc_configuration['url']
     phasedict = dict()
     popdict = dict()
     for countryiso3 in admininfo.countryiso3s:
@@ -78,7 +79,7 @@ def get_ipc(configuration, admininfo, downloader, scraper=None):
                 denominator += population
             phasedict[pcode] = get_percent(numerator, denominator)
     logger.info('Processed IPC')
-    dataset = Dataset.read_from_hdx(configuration['ipc_dataset'])
+    dataset = Dataset.read_from_hdx(ipc_configuration['dataset'])
     date = get_date_from_dataset_date(dataset)
     hxltag = '#affected+food+ipc+p3+pct'
     return [['FoodInsecurityIPCP3+'], [hxltag]], [phasedict], \

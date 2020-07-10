@@ -164,8 +164,9 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
             dict_of_lists_add(other_funding, iso3, None)
             dict_of_lists_add(other_percentage, iso3, None)
 
-    v1_url = configuration['fts_v1_url']
-    v2_url = configuration['fts_v2_url']
+    fts_configuration = configuration['fts']
+    v1_url = fts_configuration['v1_url']
+    v2_url = fts_configuration['v2_url']
 
     total_covidreq = 0
     total_covidfund = 0
@@ -291,4 +292,4 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
              hxltags], \
            [hrp_requirements, hrp_funding, hrp_percentage, hrp_covid_requirements, hrp_covid_funding, hrp_covid_percentage,
             other_planname, other_requirements, other_funding, other_percentage], \
-           [[hxltag, today_str, 'OCHA', configuration['fts_source_url']] for hxltag in hxltags]
+           [[hxltag, today_str, 'OCHA', fts_configuration['source_url']] for hxltag in hxltags]

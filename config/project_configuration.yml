@@ -533,19 +533,33 @@ timeseries_national:
 #        name: "Inflation rate, Consumer Prices"
 #    adm_cols:
 
-fts_v1_url: "https://api.hpc.tools/v1/public/"
-fts_v2_url: "https://api.hpc.tools/v2/"
-fts_source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
+fts:
+  v1_url: "https://api.hpc.tools/v1/public/"
+  v2_url: "https://api.hpc.tools/v2/"
+  source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
+
+food_prices:
+  format: "csv"
+  url: "https://drive.google.com/uc?export=download&id=1eSctTkAGxM_5dPOnsOBhJUw7Xy-rhdSc"
+  headers: 1
+  source: 'WFP'
+
+vaccination_campaigns:
+  format: "csv"
+  dataset: "immunization-campaigns-impacted"
+  headers: 1
+
+unhcr:
+  url: "https://data2.unhcr.org/api/population/get?population_collection=4&geo_id="
+  source_url: "https://data2.unhcr.org/en/countries/"
 
 country_currency_url: "https://www.currency-iso.org/dam/downloads/lists/list_one.xls"
 alphavantage_url: "https://www.alphavantage.co/query?function=FX_MONTHLY&from_symbol=USD&to_symbol=%s&apikey=YHFVGAV55LIXK1TR&datatype=csv"
 
-unhcr_url: "https://data2.unhcr.org/api/population/get?population_collection=4&geo_id="
-unhcr_source_url: "https://data2.unhcr.org/en/countries/"
-
 # subnational
-ipc_url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=%d&limit=1&condition=A&export=true&country=%s"
-ipc_dataset: "ipc-country-data"
+ipc:
+  url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=%d&limit=1&condition=A&export=true&country=%s"
+  dataset: "ipc-country-data"
 
 tabular_subnational:
   fsnwg:
@@ -805,11 +819,6 @@ tabular_subnational:
       - "Malnutrition Estimate"
     hxltags:
       - "#severity+malnutrition+num+subnational"
-
-vaccination_campaigns:
-  format: "csv"
-  dataset: "immunization-campaigns-impacted"
-  headers: 1
 
 road_networks_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=0&single=true&output=csv"
 

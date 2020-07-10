@@ -13,7 +13,8 @@ def get_unhcr(configuration, countryiso3s, downloader, scraper=None):
     if scraper and scraper not in inspect.currentframe().f_code.co_name:
         return list(), list(), list()
     iso3tocode = downloader.download_tabular_key_value(join('config', 'UNHCR_geocode.csv'))
-    base_url = configuration['unhcr_url']
+    unhcr_configuration = configuration['unhcr']
+    base_url = unhcr_configuration['url']
     valuedicts = [dict(), dict()]
     for countryiso3 in countryiso3s:
         code = iso3tocode.get(countryiso3)
@@ -25,4 +26,4 @@ def get_unhcr(configuration, countryiso3s, downloader, scraper=None):
         valuedicts[1][countryiso3] = data['date']
     logger.info('Processed UNHCR')
     hxltags = ['#affected+refugees', '#affected+date+refugees']
-    return [['TotalRefugees', 'TotalRefugeesDate'], hxltags], valuedicts, [[hxltag, today_str, 'UNHCR', configuration['unhcr_source_url']] for hxltag in hxltags]
+    return [['TotalRefugees', 'TotalRefugeesDate'], hxltags], valuedicts, [[hxltag, today_str, 'UNHCR', unhcr_configuration['source_url']] for hxltag in hxltags]
