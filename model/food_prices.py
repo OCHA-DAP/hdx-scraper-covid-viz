@@ -19,7 +19,7 @@ def add_food_prices(configuration, countryiso3s, downloader, scraper=None):
     datasetinfo = configuration[name]
     headers, iterator = read_tabular(downloader, datasetinfo)
     allowed_months = set()
-    for i in range(1, 4, 1):
+    for i in range(1, 7, 1):
         month = today.month - i
         if month > 0:
             allowed_months.add('%d/%d' % (today.year, month))
