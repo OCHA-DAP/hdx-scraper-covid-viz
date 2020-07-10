@@ -33,7 +33,7 @@ def add_vaccination_campaigns(configuration, countryiso3s, downloader, json, scr
                         break
                     campaigns_per_country[value] = campaigns_per_country.get(countryiso, 0) + 1
                 if hxltag == '#status+name':
-                    if value != 'On track' and value != 'Cancelled':
+                    if value != 'On track':
                         affected_campaigns_per_country[countryiso] = affected_campaigns_per_country.get(countryiso, 0) + 1
         if countryiso:
             dict_of_lists_add(json, '%s_data' % name, newrow)
