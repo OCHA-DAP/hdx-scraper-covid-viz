@@ -58,3 +58,12 @@ def get_date_from_dataset_date(dataset):
         return dataset.get_dataset_date(date_format='%Y-%m-%d')
     return None
 
+
+def calculate_ratios(items_per_country, affected_items_per_country):
+    ratios = dict()
+    for countryiso in items_per_country:
+        if countryiso in affected_items_per_country:
+            ratios[countryiso] = number_format(affected_items_per_country[countryiso] / items_per_country[countryiso])
+        else:
+            ratios[countryiso] = '0.0'
+    return ratios

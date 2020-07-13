@@ -6,7 +6,7 @@ from os.path import join
 
 from hdx.location.country import Country
 
-from model import today_str, today, number_format
+from model import today_str, today, number_format, calculate_ratios
 from model.readers import read_tabular
 
 logger = logging.getLogger(__name__)
@@ -38,9 +38,7 @@ def add_food_prices(configuration, countryiso3s, downloader, scraper=None):
         commods_per_country[countryiso] = commods_per_country.get(countryiso, 0) + 1
         if row['ALPS'] != 'Normal':
             affected_commods_per_country[countryiso] = affected_commods_per_country.get(countryiso, 0) + 1
-    ratios = dict()
-    for countryiso in affected_commods_per_country:
-        ratios[countryiso] = number_format(affected_commods_per_country[countryiso] / commods_per_country[countryiso])
+    ratios = calculate_ratios(commods_per_country, affected_commods_per_country)
     hxltag = '#value+food+num+ratio'
     logger.info('Processed WFP')
     return [['Food Prices Ratio'], [hxltag]], [ratios], [[hxltag, today_str, datasetinfo['source'], datasetinfo['url']]]

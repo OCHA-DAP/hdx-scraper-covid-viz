@@ -3,7 +3,7 @@ import logging
 
 from hdx.utilities.dictandlist import dict_of_lists_add
 
-from model import number_format
+from model import number_format, calculate_ratios
 from model.readers import read_hdx
 
 logger = logging.getLogger(__name__)
@@ -37,9 +37,7 @@ def add_vaccination_campaigns(configuration, countryiso3s, downloader, json, scr
                         affected_campaigns_per_country[countryiso] = affected_campaigns_per_country.get(countryiso, 0) + 1
         if countryiso:
             dict_of_lists_add(json, '%s_data' % name, newrow)
-    ratios = dict()
-    for countryiso in affected_campaigns_per_country:
-        ratios[countryiso] = number_format(affected_campaigns_per_country[countryiso] / campaigns_per_country[countryiso])
+    ratios = calculate_ratios(campaigns_per_country, affected_campaigns_per_country)
     hxltag = '#vaccination+num+ratio'
     logger.info('Processed vaccination campaigns')
     return [['Vaccination Ratio'], [hxltag]], [ratios], [[hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']]]
