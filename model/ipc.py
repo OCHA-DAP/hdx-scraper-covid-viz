@@ -83,4 +83,4 @@ def get_ipc(configuration, admininfo, downloader, scraper=None):
     date = get_date_from_dataset_date(dataset)
     hxltag = '#affected+food+ipc+p3+pct'
     return [['FoodInsecurityIPCP3+'], [hxltag]], [phasedict], \
-           [[hxltag, date, dataset['dataset_source'], dataset.get_hdx_url()]]
+           [(hxltag, date, dataset['dataset_source'], dataset.get_hdx_url())]

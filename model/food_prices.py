@@ -41,4 +41,4 @@ def add_food_prices(configuration, countryiso3s, downloader, scraper=None):
     ratios = calculate_ratios(commods_per_country, affected_commods_per_country)
     hxltag = '#value+food+num+ratio'
     logger.info('Processed WFP')
-    return [['Food Prices Ratio'], [hxltag]], [ratios], [[hxltag, today_str, datasetinfo['source'], datasetinfo['url']]]
+    return [['Food Prices Ratio'], [hxltag]], [ratios], [(hxltag, today_str, datasetinfo['source'], datasetinfo['url'])]

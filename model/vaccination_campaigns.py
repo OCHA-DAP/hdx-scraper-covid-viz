@@ -40,4 +40,4 @@ def add_vaccination_campaigns(configuration, countryiso3s, downloader, json, scr
     ratios = calculate_ratios(campaigns_per_country, affected_campaigns_per_country)
     hxltag = '#vaccination+num+ratio'
     logger.info('Processed vaccination campaigns')
-    return [['Vaccination Ratio'], [hxltag]], [ratios], [[hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']]]
+    return [['Vaccination Ratio'], [hxltag]], [ratios], [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url'])]

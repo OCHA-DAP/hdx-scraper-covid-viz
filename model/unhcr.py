@@ -26,4 +26,4 @@ def get_unhcr(configuration, countryiso3s, downloader, scraper=None):
         valuedicts[1][countryiso3] = data['date']
     logger.info('Processed UNHCR')
     hxltags = ['#affected+refugees', '#affected+date+refugees']
-    return [['TotalRefugees', 'TotalRefugeesDate'], hxltags], valuedicts, [[hxltag, today_str, 'UNHCR', unhcr_configuration['source_url']] for hxltag in hxltags]
+    return [['TotalRefugees', 'TotalRefugeesDate'], hxltags], valuedicts, [(hxltag, today_str, 'UNHCR', unhcr_configuration['source_url']) for hxltag in hxltags]

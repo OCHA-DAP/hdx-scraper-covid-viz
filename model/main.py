@@ -57,7 +57,7 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
     national = [['iso3', 'countryname', 'region'], ['#country+code', '#country+name', '#region+name']]
     nationaltimeseries = [['iso3', 'date', 'indicator', 'value'], ['#country+code', '#date', '#indicator+name', '#indicator+value+num']]
     subnational = [['iso3', 'countryname', 'adm1_pcode', 'adm1_name'], ['#country+code', '#country+name', '#adm1+code', '#adm1+name']]
-    sources = [['Indicator', 'Date', 'Source', 'Url'], ['#indicator+name', '#date', '#meta+source', '#meta+url']]
+    sources = [('Indicator', 'Date', 'Source', 'Url'), ('#indicator+name', '#date', '#meta+source', '#meta+url')]
 
     admininfo = AdminInfo.setup(downloader)
     countryiso3s = admininfo.countryiso3s
@@ -116,6 +116,7 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
             date = sourceinfo['date']
             source = sourceinfo['source']
             source_url = sourceinfo['source_url']
-        sources.append([sourceinfo['indicator'], date, source, source_url])
+        sources.append((sourceinfo['indicator'], date, source, source_url))
 
+    sources = [list(elem) for elem in dict.fromkeys(sources)]
     return world, regional, national, nationaltimeseries, subnational, sources, json

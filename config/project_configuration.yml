@@ -37,7 +37,7 @@ tabular_global:
         columns:
           - "CBPFCovidFunding"
         hxltags:
-          - "#value+cbpf+covid+funding+global+usd"
+          - "#value+cbpf+covid+funding+total+usd"
       - filter_col: "PFType=CERF"
         val_cols:
           - "TargetAmt"
@@ -49,7 +49,7 @@ tabular_global:
         columns:
           - "CERFCovidFunding"
         hxltags:
-          - "#value+cerf+covid+funding+global+usd"
+          - "#value+cerf+covid+funding+total+usd"
   ifi_global:
     format: "xlsx"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
@@ -69,7 +69,7 @@ tabular_global:
     columns:
       - "IFI COVID19 global"
     hxltags:
-      - "#value+ifi+global"
+      - "#value+ifi+total"
 
 # regional
 regional:
@@ -80,12 +80,12 @@ regional:
   iso3: "ISO3"
   region: "Regional_office"
   val_fns:
-    "NoCases": "sum"
-    "NoDeaths": "sum"
+#    "NoCases": "sum"
+#    "NoDeaths": "sum"
 #    "Risk": "range"
 #    "RiskClass": "sum"
 #    "EconomicExposure": "range"
-    "Population": "sum"
+#    "Population": "sum"
 #    "GDP Per Capita": "range"
 #    "Volume of remittances as a proportion of total GDP": "range"
 #    "Fuels, ores and metals exports": "range"
@@ -103,7 +103,7 @@ regional:
     "IFI COVID19 total": "sum"
 #    "IFI COVID19 total percap": "range"
 #    "IFI COVID19 total pcgdp": "range"
-    "PeopleInNeed": "sum"
+#    "PeopleInNeed": "sum"
 #    "RequiredFundingPreCovid": "sum"
 #    "TotalIDPs": "sum"
 #    "Imp: Total Cases(min)": "sum"
@@ -125,7 +125,7 @@ regional:
     "RequiredOtherPlansFunding": "sum"
     "OtherPlansFunding": "sum"
     "OtherPlansPercentFunded": "get_percent(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
-    "TotalRefugees": "sum"
+#    "TotalRefugees": "sum"
 
 # national
 tabular_national:

@@ -45,7 +45,7 @@ def _get_copy(level, name, datasetinfo, headers, iterator, retheaders=[list(), l
     retheaders[1].extend(hxltags)
     retval.extend(valuedicts)
     date = datasetinfo.get('date')
-    sources.extend([[hxltag, date, datasetinfo['source'], datasetinfo['source_url']] for hxltag in hxltags])
+    sources.extend([(hxltag, date, datasetinfo['source'], datasetinfo['source_url']) for hxltag in hxltags])
     logger.info('Processed %s' % name)
     return retheaders, retval, sources
 

@@ -65,7 +65,7 @@ def _get_timeseries(timeseries, level, datasetinfo, headers, iterator, sources=l
             raise ValueError('No date type specified!')
     date = date.strftime('%Y-%m-%d')
     for indicatorcol in indicatorcols:
-        sources.append([indicatorcol['name'], date, datasetinfo['source'], datasetinfo['source_url']])
+        sources.append((indicatorcol['name'], date, datasetinfo['source'], datasetinfo['source_url']))
     logger.info('Processed %s' % name)
     return sources
 

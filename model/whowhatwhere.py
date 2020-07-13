@@ -67,4 +67,4 @@ def get_whowhatwhere(configuration, admininfo, downloader, scraper=None):
         else:
             orgcount[pcode] = len(orgdict[countrypcode])
     logger.info('Processed 3W')
-    return [['OrgCountAdm1'], ['#org+count+num']], [orgcount], [['#org+count+num', today_str, 'OCHA', threew_url]]
+    return [['OrgCountAdm1'], ['#org+count+num']], [orgcount], [('#org+count+num', today_str, 'OCHA', threew_url)]

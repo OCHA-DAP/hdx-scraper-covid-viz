@@ -57,7 +57,7 @@ def get_fx(timeseries, configuration, countryiso3s, downloader, scraper=None):
             date = parse_date(date)
             if date > max_date:
                 max_date = date
-        sources.append([currency, max_date.strftime('%Y-%m-%d'), 'Alpha Vantage', 'https://www.alphavantage.co/'])
+        sources.append((currency, max_date.strftime('%Y-%m-%d'), 'Alpha Vantage', 'https://www.alphavantage.co/'))
         if norows == 0:
             logger.error('Problem with %s: %s' % (countryiso3, currency))
         else:

@@ -271,11 +271,9 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
     total_covidpercent = get_percent(total_covidfund, total_covidreq)
     logger.info('Processed FTS')
     write_list_to_csv('ftscovid.csv', rows, ['Name', 'Requirements', 'Funding'])
-    whxltags = ['#value+funding+required+usd', '#value+funding+total+usd', '#value+funding+pct',
-                '#value+covid+funding+ghrp+required+usd', '#value+covid+funding+ghrp+total+usd', '#value+covid+funding+ghrp+pct']
-    hxltags = ['#value+funding+hrp+required+usd', '#value+funding+hrp+total+usd', '#value+funding+hrp+pct',
-               '#value+covid+funding+hrp+required+usd', '#value+covid+funding+hrp+total+usd', '#value+covid+funding+hrp+pct',
-               '#value+funding+other+planname', '#value+funding+other+required+usd', '#value+funding+other+total+usd', '#value+funding+other+pct']
+    whxltags = ['#value+funding+hrp+required+usd', '#value+funding+hrp+total+usd', '#value+funding+hrp+pct',
+                '#value+covid+funding+hrp+required+usd', '#value+covid+funding+hrp+total+usd', '#value+covid+funding+hrp+pct']
+    hxltags = whxltags + ['#value+funding+other+planname', '#value+funding+other+required+usd', '#value+funding+other+total+usd', '#value+funding+other+pct']
     total_allreq = {'global': total_allreq}
     total_allfund = {'global': total_allfund}
     total_allpercent = {'global': total_allpercent}
@@ -285,11 +283,11 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
     return [['RequiredFunding', 'Funding', 'PercentFunded',
              'RequiredGHRPCovidFunding', 'GHRPCovidFunding', 'GHRPCovidPercentFunded'], whxltags], \
            [total_allreq, total_allfund, total_allpercent, total_covidreq, total_covidfund, total_covidpercent], \
-           [[hxltag, today_str, 'OCHA', 'https://fts.unocha.org/appeals/952/summary'] for hxltag in whxltags], \
+           [(hxltag, today_str, 'OCHA', fts_configuration['source_url']) for hxltag in whxltags], \
            [['RequiredHRPFunding', 'HRPFunding', 'HRPPercentFunded',
              'RequiredHRPCovidFunding', 'HRPCovidFunding', 'HRPCovidPercentFunded',
              'OtherPlans', 'RequiredOtherPlansFunding', 'OtherPlansFunding', 'OtherPlansPercentFunded'],
              hxltags], \
            [hrp_requirements, hrp_funding, hrp_percentage, hrp_covid_requirements, hrp_covid_funding, hrp_covid_percentage,
             other_planname, other_requirements, other_funding, other_percentage], \
-           [[hxltag, today_str, 'OCHA', fts_configuration['source_url']] for hxltag in hxltags]
+           [(hxltag, today_str, 'OCHA', fts_configuration['source_url']) for hxltag in hxltags]

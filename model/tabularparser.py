@@ -197,7 +197,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
         else:
             retval.extend(valdicts)
 
-        sources.extend([[hxltag, date, datasetinfo['source'], datasetinfo['source_url']] for hxltag in hxltags])
+        sources.extend([(hxltag, date, datasetinfo['source'], datasetinfo['source_url']) for hxltag in hxltags])
     logger.info('Processed %s' % name)
     return retheaders, retval, sources
 
