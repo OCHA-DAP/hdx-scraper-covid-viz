@@ -70,7 +70,7 @@ class AdminInfo(object):
                     continue
                 regions.add(region)
                 dict_of_sets_add(iso3_to_regions, countryiso, region)
-        region = 'HRP Countries'
+        region = 'H25'
         regions.add(region)
         for countryiso in hrp_iso3s:
             dict_of_sets_add(iso3_to_regions, countryiso, region)
