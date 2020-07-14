@@ -48,14 +48,12 @@ def get_regional(configuration, national, admininfo):
         regional.append(regiondata)
     for countrydata in national[2:]:
         countryiso = countrydata[iso_index]
-        region = admininfo.iso3_to_region.get(countryiso)
-        if not region:
-            continue
-        regiondata = regional[regions.index(region) + 2]
-        for i, value in enumerate(countrydata[2:]):
-            index = header_to_valfn.get(i)
-            if index is not None:
-                regiondata[index].append(value)
+        for region in admininfo.iso3_to_regions.get(countryiso, list()):
+            regiondata = regional[regions.index(region) + 2]
+            for i, value in enumerate(countrydata[2:]):
+                index = header_to_valfn.get(i)
+                if index is not None:
+                    regiondata[index].append(value)
     for regiondata in regional[2:]:
         for index, valuelist in enumerate(regiondata[1:]):
             action = list(val_fns.values())[index]

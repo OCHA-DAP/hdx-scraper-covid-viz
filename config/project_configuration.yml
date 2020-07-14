@@ -24,6 +24,7 @@ tabular_global:
   cerf_global:
     format: "csv"
     dataset: "cerf-covid-19-allocations"
+    force_date_today: True
     headers: 1
     indicator_cols:
       - filter_col: "PFType=CBPF"
@@ -53,6 +54,7 @@ tabular_global:
   ifi_global:
     format: "xlsx"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
+    force_date_today: True
     sheet: "Master"
     headers: 2
     stop_row:
@@ -132,6 +134,7 @@ tabular_national:
   who_national:
     format: "csv"
     dataset: "coronavirus-covid-19-cases-and-deaths"
+    force_date_today: True
     headers: 1
     adm_cols:
       - "ISO_3_CODE"
@@ -178,6 +181,7 @@ tabular_national:
   ifi_national:
     format: "xlsx"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
+    force_date_today: True
     sheet: "Master"
     headers: 2
     stop_row:
@@ -422,6 +426,7 @@ tabular_national:
   cerf_national:
     format: "csv"
     dataset: "cerf-covid-19-allocations"
+    force_date_today: True
     headers: 1
     adm_cols:
       - "ISO2Country"

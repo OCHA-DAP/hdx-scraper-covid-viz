@@ -71,7 +71,7 @@ def get_copy(configuration, level, downloader, scraper=None, **kwargs):
             raise ValueError('Invalid format %s for %s!' % (format, name))
         if 'source_url' not in datasetinfo:
             datasetinfo['source_url'] = datasetinfo['url']
-        if 'date' not in datasetinfo:
+        if 'date' not in datasetinfo or datasetinfo.get('force_date_today', False):
             datasetinfo['date'] = today_str
         _get_copy(level, name, datasetinfo, headers, iterator, retheaders, retval, sources)
     return retheaders, retval, sources

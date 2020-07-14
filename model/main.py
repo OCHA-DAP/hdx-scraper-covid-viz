@@ -31,7 +31,7 @@ def extend_columns(level, rows, adms, admininfo, *args):
         if level == 'global':
             row = list()
         elif level == 'national':
-            row = [adm, Country.get_country_name_from_iso3(adm), admininfo.iso3_to_region[adm]]
+            row = [adm, Country.get_country_name_from_iso3(adm), '|'.join(sorted(list(admininfo.iso3_to_regions[adm])))]
         elif level == 'subnational':
             countryiso3 = admininfo.pcode_to_iso3[adm]
             countryname = Country.get_country_name_from_iso3(countryiso3)
@@ -53,7 +53,7 @@ def extend_sources(sources, *args):
 def get_indicators(configuration, downloader, tabs, scraper=None):
     json = dict()
     world = [list(), list()]
-    regional = [['regionname'], ['#region+name']]
+    regional = [['regionnames'], ['#region+name']]
     national = [['iso3', 'countryname', 'region'], ['#country+code', '#country+name', '#region+name']]
     nationaltimeseries = [['iso3', 'date', 'indicator', 'value'], ['#country+code', '#date', '#indicator+name', '#indicator+value+num']]
     subnational = [['iso3', 'countryname', 'adm1_pcode', 'adm1_name'], ['#country+code', '#country+name', '#adm1+code', '#adm1+name']]

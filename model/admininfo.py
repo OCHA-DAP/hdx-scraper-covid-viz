@@ -5,6 +5,7 @@ import unicodedata
 
 from hdx.hdx_configuration import Configuration
 from hdx.location.country import Country
+from hdx.utilities.dictandlist import dict_of_sets_add
 from hdx.utilities.text import multiple_replace
 import pyphonetics
 from unidecode import unidecode
@@ -51,14 +52,15 @@ class AdminInfo(object):
         self.countryiso3s = sorted(list(countryiso3s))
         self.adms = [self.countryiso3s, self.pcodes]
         self.iso3s_no_pcodes = sorted(list(iso3s_no_pcodes))
-        self.regions, self.iso3_to_region = self.read_regional(configuration, self.countryiso3s, downloader)
+        self.hrp_iso3s = sorted(list(self.name_to_pcode.keys()))
+        self.regions, self.iso3_to_regions = self.read_regional(configuration, self.countryiso3s, self.hrp_iso3s, downloader)
         self.init_matches_errors()
 
     @staticmethod
-    def read_regional(configuration, countryiso3s, downloader):
+    def read_regional(configuration, countryiso3s, hrp_iso3s, downloader):
         regional_config = configuration['regional']
         _, iterator = read_hdx(downloader, regional_config)
-        iso3_to_region = dict()
+        iso3_to_regions = dict()
         regions = set()
         for row in iterator:
             countryiso = row[regional_config['iso3']]
@@ -67,8 +69,12 @@ class AdminInfo(object):
                 if region == 'NO COVERAGE':
                     continue
                 regions.add(region)
-                iso3_to_region[countryiso] = region
-        return regions, iso3_to_region
+                dict_of_sets_add(iso3_to_regions, countryiso, region)
+        region = 'HRP Countries'
+        regions.add(region)
+        for countryiso in hrp_iso3s:
+            dict_of_sets_add(iso3_to_regions, countryiso, region)
+        return regions, iso3_to_regions
 
     def init_matches_errors(self, scraper=None):
         self.matches = set()
