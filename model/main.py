@@ -2,7 +2,7 @@
 from hdx.data.dataset import Dataset
 from hdx.location.country import Country
 
-from model import get_date_from_dataset_date
+from model import get_date_from_dataset_date, today_str
 from model.admininfo import AdminInfo
 from model.food_prices import add_food_prices
 from model.fts import get_fts
@@ -116,6 +116,8 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
             date = sourceinfo['date']
             source = sourceinfo['source']
             source_url = sourceinfo['source_url']
+        if sourceinfo.get('force_date_today', False):
+            date = today_str
         sources.append((sourceinfo['indicator'], date, source, source_url))
 
     sources = [list(elem) for elem in dict.fromkeys(sources)]

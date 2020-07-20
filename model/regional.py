@@ -9,6 +9,8 @@ logger = logging.getLogger(__name__)
 
 
 def get_float_or_int(valuestr):
+    if not valuestr:
+        return None
     if '.' in valuestr:
         return float(valuestr)
     else:
@@ -18,8 +20,14 @@ def get_float_or_int(valuestr):
 def get_numeric(valuestr):
     if isinstance(valuestr, str):
         total = 0
+        hasvalues = False
         for value in valuestr.split('|'):
-            total += get_float_or_int(value)
+            value = get_float_or_int(value)
+            if value:
+                hasvalues = True
+                total += value
+        if hasvalues is False:
+            return ''
         return total
     return valuestr
 
@@ -62,10 +70,11 @@ def get_regional(configuration, national, admininfo):
                 for valuestr in valuelist:
                     if valuestr:
                         value = get_numeric(valuestr)
-                        if total == '':
-                            total = value
-                        else:
-                            total += value
+                        if value:
+                            if total == '':
+                                total = value
+                            else:
+                                total += value
                 if isinstance(total, float):
                     regiondata[index + 1] = number_format(total)
                 else:

@@ -18,6 +18,7 @@ additional_sources:
     dataset: "immunization-campaigns-impacted"
   - indicator: "#covid+cases+per+capita"
     dataset: "coronavirus-covid-19-cases-and-deaths"
+    force_date_today: True
 
 # global
 tabular_global:

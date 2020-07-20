@@ -85,7 +85,9 @@ def get_requirements_and_funding_location(v1_url, plan_id, countryid_iso3mapping
         countryid = reqobj.get('id')
         if not countryid:
             continue
-        countryiso = countryid_iso3mapping[countryid]
+        countryiso = countryid_iso3mapping.get(countryid)
+        if not countryiso:
+            continue
         if countryiso not in countryiso3s:
             continue
         req = reqobj.get('revisedRequirements')
@@ -244,7 +246,7 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
             planname = map_planname(planname)
             for countryiso in allreqs:
                 allreq = allreqs[countryiso]
-                allfund = allfunds[countryiso]
+                allfund = allfunds.get(countryiso)
                 if allfund:
                     allpct = get_percent(allfund, allreq)
                 else:
