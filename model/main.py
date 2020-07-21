@@ -3,6 +3,7 @@ from hdx.data.dataset import Dataset
 from hdx.location.country import Country
 
 from model import get_date_from_dataset_date, today_str
+from model.access_constraints import get_access
 from model.admininfo import AdminInfo
 from model.food_prices import add_food_prices
 from model.fts import get_fts
@@ -77,12 +78,13 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
             food_headers, food_columns, food_sources = add_food_prices(configuration, countryiso3s, downloader, scraper)
             campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, countryiso3s, downloader, json, scraper)
             unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, countryiso3s, downloader, scraper)
+            access_headers, access_columns, access_sources = get_access(configuration, countryiso3s, downloader, scraper)
             tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'national', downloader, scraper)
             copy_headers, copy_columns, copy_sources = get_copy(configuration, 'national', downloader, scraper)
 
-            extend_headers(national, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, copy_headers)
-            extend_columns('national', national, countryiso3s, admininfo, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, copy_columns)
-            extend_sources(sources, tabular_sources, food_sources, campaign_sources, fts_sources, unhcr_sources, copy_sources)
+            extend_headers(national, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, access_headers, copy_headers)
+            extend_columns('national', national, countryiso3s, admininfo, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, access_columns, copy_columns)
+            extend_sources(sources, tabular_sources, food_sources, campaign_sources, fts_sources, unhcr_sources, access_sources, copy_sources)
 
             if 'regional' in tabs:
                 regional = get_regional(configuration, national, admininfo)

@@ -200,10 +200,10 @@ tabular_national:
       - "IMF Total"
       - "AfDB"
       - "ADB"
-      - "IADB"
+      - "IDB"
       - "EIB"
       - "ISDB"
-      - "DevCO"
+      - "EC"
       - "UN MPTF"
       - "Total (USD mn)"
       - "Total per capita (USD)"
@@ -221,10 +221,10 @@ tabular_national:
       "IMF Total": "float(IMF Total) if IMF Total else 0"
       "AfDB": "float(AfDB) if AfDB else 0"
       "ADB": "float(ADB) if ADB else 0"
-      "IADB": "float(IADB) if IADB else 0"
+      "IDB": "float(IDB) if IDB else 0"
       "EIB": "float(EIB) if EIB else 0"
       "ISDB": "float(ISDB) if ISDB else 0"
-      "DevCO": "float(DevCO) if DevCO else 0"
+      "EC": "float(EC) if EC else 0"
       "UN MPTF": "float(UN MPTF) if UN MPTF else 0"
       "Total (USD mn)": "float(Total (USD mn)) if Total (USD mn) else 0"
       "Total per capita (USD)": "float(Total per capita (USD)) if Total per capita (USD) else 0"
@@ -240,10 +240,10 @@ tabular_national:
       - "number_format(IMF Total * 1000000, format='%.0f')"
       - "number_format(AfDB * 1000000, format='%.0f')"
       - "number_format(ADB * 1000000, format='%.0f')"
-      - "number_format(IADB * 1000000, format='%.0f')"
+      - "number_format(IDB * 1000000, format='%.0f')"
       - "number_format(EIB * 1000000, format='%.0f')"
       - "number_format(ISDB * 1000000, format='%.0f')"
-      - "number_format(DevCO * 1000000, format='%.0f')"
+      - "number_format(EC * 1000000, format='%.0f')"
       - "number_format(UN MPTF * 1000000, format='%.0f')"
       - "number_format(Total (USD mn) * 1000000, format='%.0f')"
       - "number_format(Total per capita (USD))"
@@ -259,10 +259,10 @@ tabular_national:
       - "IMF total"
       - "AfDB total"
       - "ADB total"
-      - "IADB total"
+      - "IDB total"
       - "EIB total"
       - "ISDB total"
-      - "DevCO total"
+      - "EC total"
       - "UN MPTF total"
       - "IFI COVID19 total"
       - "IFI COVID19 total percap"
@@ -278,10 +278,10 @@ tabular_national:
       - "#value+imf+total"
       - "#value+afdb+total"
       - "#value+adb+total"
-      - "#value+iadb+total"
+      - "#value+idb+total"
       - "#value+eib+total"
       - "#value+isdb+total"
-      - "#value+devco+total"
+      - "#value+ec+total"
       - "#value+unmptf+total"
       - "#value+ifi+total"
       - "#value+ifi+percap"
@@ -464,6 +464,75 @@ copy_national: {}
 #    sheet: 1
 #    headers: 2
 
+fts:
+  v1_url: "https://api.hpc.tools/v1/public/"
+  v2_url: "https://api.hpc.tools/v2/"
+  source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
+
+food_prices:
+  format: "csv"
+  url: "https://drive.google.com/uc?export=download&id=1eSctTkAGxM_5dPOnsOBhJUw7Xy-rhdSc"
+  headers: 1
+  source: 'WFP'
+
+vaccination_campaigns:
+  format: "csv"
+  dataset: "immunization-campaigns-impacted"
+  headers: 1
+
+unhcr:
+  url: "https://data2.unhcr.org/api/population/get?population_collection=4&geo_id="
+  source_url: "https://data2.unhcr.org/en/countries/"
+
+access_constraints:
+  format: "xlsx"
+  url: "https://drive.google.com/uc?export=download&id=1BVlPDERRuTO6Y7ZXqRgNB3mmI2IiOckb"
+  category:
+    "0-3": 0
+    "4-7": 1
+    "8+": 2
+  sheets:
+    constraints_into:
+      sheetname: "Constraints-Into"
+      isocol: "Admin0_code"
+      textcol: "Constraint_"
+      scorecol: "Score"
+      weight: 1
+      ranges:
+        "0-13": 1
+        "14-20": 2
+        "21+": 3
+    constraints_within:
+      sheetname: "Constraints- Within"
+      isocol: "Admin0_code"
+      textcol: "Constraint_"
+      scorecol: "Score"
+      weight: 1
+      ranges:
+        "0-19": 1
+        "20-27": 2
+        "28+": 3
+    impact:
+      sheetname: "Impact"
+      isocol: "admin0 code"
+      textcol: "Impact"
+      scorecol: "Score"
+      weight: 2
+      ranges:
+        "0-3": 1
+        "4-7": 2
+        "8+": 3
+    mitigation:
+      sheetname: "Gereral"
+      isocol: "Admin0 Code"
+      scorecol: "Mitigation Rate"
+      scoring:
+        "no mitigation": 0
+        "unsatisfactory": 1
+        "needs improvement": 2
+        "satisfactory": 3
+      weight: 1
+
 timeseries_national:
   imf:
     source: "IMF"
@@ -539,25 +608,6 @@ timeseries_national:
 #        name: "Inflation rate, Consumer Prices"
 #    adm_cols:
 
-fts:
-  v1_url: "https://api.hpc.tools/v1/public/"
-  v2_url: "https://api.hpc.tools/v2/"
-  source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
-
-food_prices:
-  format: "csv"
-  url: "https://drive.google.com/uc?export=download&id=1eSctTkAGxM_5dPOnsOBhJUw7Xy-rhdSc"
-  headers: 1
-  source: 'WFP'
-
-vaccination_campaigns:
-  format: "csv"
-  dataset: "immunization-campaigns-impacted"
-  headers: 1
-
-unhcr:
-  url: "https://data2.unhcr.org/api/population/get?population_collection=4&geo_id="
-  source_url: "https://data2.unhcr.org/en/countries/"
 
 country_currency_url: "https://www.currency-iso.org/dam/downloads/lists/list_one.xls"
 alphavantage_url: "https://www.alphavantage.co/query?function=FX_MONTHLY&from_symbol=USD&to_symbol=%s&apikey=YHFVGAV55LIXK1TR&datatype=csv"
