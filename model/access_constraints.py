@@ -29,9 +29,21 @@ def get_access(configuration, countryiso3s, downloader, scraper=None):
     if scraper and scraper not in inspect.currentframe().f_code.co_name:
         return list(), list(), list()
     access_configuration = configuration['access_constraints']
+    ranking_url = access_configuration['ranking_url']
+    headers, rows = read_tabular(downloader, {'url': ranking_url, 'headers': 1, 'format': 'csv'})
+    sheets = access_configuration['sheets']
+    constraint_rankings = {x: dict() for x in sheets}
+    for row in rows:
+        countryiso = row['iso3']
+        for sheet in sheets:
+            type_ranking = constraint_rankings.get(sheet, dict())
+            for i in range(1, 4):
+                constraint = row['%s_%d' % (sheet, i)]
+                dict_of_lists_add(type_ranking, countryiso, constraint)
+            constraint_rankings[sheet] = type_ranking
     url = access_configuration['url']
     data = dict()
-    for sheet, sheetinfo in access_configuration['sheets'].items():
+    for sheet, sheetinfo in sheets.items():
         headers, rows = read_tabular(downloader, {'url': url, 'sheet': sheetinfo['sheetname'], 'headers': 1,
                                                   'format': 'xlsx'})
         datasheet = data.get(sheet, dict())
@@ -66,7 +78,8 @@ def get_access(configuration, countryiso3s, downloader, scraper=None):
             texts = list()
             for value, text in countrydata['text']:
                 if value == top_value:
-                    texts.append(text)
+                    if text in constraint_rankings[sheet][countryiso]:
+                        texts.append(text)
             valuedicts[i+2][countryiso] = '|'.join(texts)
             if sheet != 'impact':
                 score = severityscore.get(countryiso, 0)

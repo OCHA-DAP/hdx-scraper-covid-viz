@@ -487,6 +487,7 @@ unhcr:
 access_constraints:
   format: "xlsx"
   url: "https://drive.google.com/uc?export=download&id=1BVlPDERRuTO6Y7ZXqRgNB3mmI2IiOckb"
+  ranking_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRfUPVA3sPjfqguh_kukPfCWZeNdhcrLA-l1stFB5rzRuo9qAER9ajpWAL6zRt4ESJJQafCjOuHiNgH/pub?gid=847946299&single=true&output=csv"
   category:
     "0-66": 0
     "67-85": 1
@@ -497,7 +498,6 @@ access_constraints:
       isocol: "Admin0_code"
       textcol: "Constraint_"
       scorecol: "Score"
-
     constraints_within:
       sheetname: "Constraints- Within"
       isocol: "Admin0_code"
@@ -510,7 +510,6 @@ access_constraints:
         "Bureaucratic impediments": 4
         "Poor infrastructure (lack of fuel, electricity, telecommunication, etc.)": 4
         "Terrain (no physical access, enclaved areas)": 4
-
     impact:
       sheetname: "Impact"
       isocol: "admin0 code"
