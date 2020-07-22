@@ -6,7 +6,7 @@ from hdx.location.country import Country
 from hdx.utilities.dictandlist import dict_of_lists_add
 
 from model import today_str
-from model.readers import read_tabular
+from model.readers import read_tabular, read_hdx
 
 logger = logging.getLogger(__name__)
 
@@ -41,11 +41,11 @@ def get_access(configuration, countryiso3s, downloader, scraper=None):
                 constraint = row['%s_%d' % (sheet, i)]
                 dict_of_lists_add(type_ranking, countryiso, constraint)
             constraint_rankings[sheet] = type_ranking
-    url = access_configuration['url']
     data = dict()
+    datasetinfo = {'dataset': access_configuration['dataset'], 'headers': 1, 'format': 'xlsx'}
     for sheet, sheetinfo in sheets.items():
-        headers, rows = read_tabular(downloader, {'url': url, 'sheet': sheetinfo['sheetname'], 'headers': 1,
-                                                  'format': 'xlsx'})
+        datasetinfo['sheet'] = sheetinfo['sheetname']
+        headers, rows = read_hdx(downloader, datasetinfo)
         datasheet = data.get(sheet, dict())
         for row in rows:
             countryiso = Country.get_iso3_country_code(row[sheetinfo['isocol']])
@@ -95,7 +95,7 @@ def get_access(configuration, countryiso3s, downloader, scraper=None):
         severitycategory[countryiso] = process_range(ranges, score)
     logger.info('Processed access')
     hxltags = ['#severity+access+num+score', '#severity+access+category+num', '#access+constraints+into', '#access+constraints+within', '#access+impact']
-    return [['Access Severity Score', 'Access Severity Category', 'Access Constraints Into', 'Access Constraints Within', 'Access Impact'], hxltags], valuedicts, [(hxltag, today_str, 'OCHA', url) for hxltag in hxltags]
+    return [['Access Severity Score', 'Access Severity Category', 'Access Constraints Into', 'Access Constraints Within', 'Access Impact'], hxltags], valuedicts, [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']) for hxltag in hxltags]
 
 
 

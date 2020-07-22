@@ -102,7 +102,9 @@ def get_requirements_and_funding_location(v1_url, plan_id, countryid_iso3mapping
                 countryid = fundobj.get('id')
                 if not countryid:
                     continue
-                countryiso = countryid_iso3mapping[countryid]
+                countryiso = countryid_iso3mapping.get(countryid)
+                if not countryiso:
+                    continue
                 if countryiso not in countryiso3s:
                     continue
                 allfunds[countryiso] = fundobj['totalFunding']
