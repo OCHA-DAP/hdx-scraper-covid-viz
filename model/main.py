@@ -31,6 +31,8 @@ def extend_columns(level, rows, adms, admininfo, *args):
     for i, adm in enumerate(adms):
         if level == 'global':
             row = list()
+        elif level == 'regional':
+            row = [adm]
         elif level == 'national':
             row = [adm, Country.get_country_name_from_iso3(adm), '|'.join(sorted(list(admininfo.iso3_to_regions[adm])))]
         elif level == 'subnational':
@@ -61,24 +63,25 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
     sources = [('Indicator', 'Date', 'Source', 'Url'), ('#indicator+name', '#date', '#meta+source', '#meta+url')]
 
     admininfo = AdminInfo.setup(downloader)
+    regions = admininfo.regions
     countryiso3s = admininfo.countryiso3s
     pcodes = admininfo.pcodes
 
     if 'world' in tabs or 'national' in tabs:
         fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(configuration, countryiso3s, downloader, scraper)
+        access_wheaders, access_wcolumns, access_wsources, access_headers, access_columns, access_sources = get_access(configuration, countryiso3s, downloader, scraper)
 
         if 'world' in tabs:
             tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'global', downloader, scraper)
 
-            extend_headers(world, fts_wheaders, tabular_headers)
-            extend_columns('global', world, None, None, fts_wcolumns, tabular_columns)
-            extend_sources(sources, fts_wsources, tabular_sources)
+            extend_headers(world, fts_wheaders, access_wheaders, tabular_headers)
+            extend_columns('global', world, None, None, fts_wcolumns, access_wcolumns, tabular_columns)
+            extend_sources(sources, fts_wsources, access_wsources, tabular_sources)
 
         if 'national' in tabs:
             food_headers, food_columns, food_sources = add_food_prices(configuration, countryiso3s, downloader, scraper)
             campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, countryiso3s, downloader, json, scraper)
             unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, countryiso3s, downloader, scraper)
-            access_headers, access_columns, access_sources = get_access(configuration, countryiso3s, downloader, scraper)
             tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'national', downloader, scraper)
             copy_headers, copy_columns, copy_sources = get_copy(configuration, 'national', downloader, scraper)
 
@@ -88,6 +91,9 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
 
             if 'regional' in tabs:
                 regional = get_regional(configuration, national, admininfo)
+                # extend_headers(regional, access_rheaders)
+                # extend_columns('regional', regional, regions, admininfo, access_rcolumns)
+                # extend_sources(sources, access_rsources)
 
     if 'national_timeseries' in tabs:
         fx_sources = get_fx(nationaltimeseries, configuration, countryiso3s, downloader, scraper)

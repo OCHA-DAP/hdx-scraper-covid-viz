@@ -515,6 +515,10 @@ access_constraints:
       isocol: "admin0 code"
       textcol: "Impact"
       scorecol: "Score"
+    mitigation:
+      sheetname: "General"
+      isocol: "Admin0 Code"
+      scorecol: "Mitigation Ind."
 
 timeseries_national:
   imf:

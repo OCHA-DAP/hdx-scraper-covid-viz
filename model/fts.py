@@ -275,9 +275,9 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
     total_covidpercent = get_percent(total_covidfund, total_covidreq)
     logger.info('Processed FTS')
     write_list_to_csv('ftscovid.csv', rows, ['Name', 'Requirements', 'Funding'])
-    whxltags = ['#value+funding+hrp+required+usd', '#value+funding+hrp+total+usd', '#value+funding+hrp+pct',
+    ghxltags = ['#value+funding+hrp+required+usd', '#value+funding+hrp+total+usd', '#value+funding+hrp+pct',
                 '#value+covid+funding+hrp+required+usd', '#value+covid+funding+hrp+total+usd', '#value+covid+funding+hrp+pct']
-    hxltags = whxltags + ['#value+funding+other+planname', '#value+funding+other+required+usd', '#value+funding+other+total+usd', '#value+funding+other+pct']
+    hxltags = ghxltags + ['#value+funding+other+planname', '#value+funding+other+required+usd', '#value+funding+other+total+usd', '#value+funding+other+pct']
     total_allreq = {'global': total_allreq}
     total_allfund = {'global': total_allfund}
     total_allpercent = {'global': total_allpercent}
@@ -285,9 +285,9 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
     total_covidfund = {'global': total_covidfund}
     total_covidpercent = {'global': total_covidpercent}
     return [['RequiredFunding', 'Funding', 'PercentFunded',
-             'RequiredGHRPCovidFunding', 'GHRPCovidFunding', 'GHRPCovidPercentFunded'], whxltags], \
+             'RequiredGHRPCovidFunding', 'GHRPCovidFunding', 'GHRPCovidPercentFunded'], ghxltags], \
            [total_allreq, total_allfund, total_allpercent, total_covidreq, total_covidfund, total_covidpercent], \
-           [(hxltag, today_str, 'OCHA', fts_configuration['source_url']) for hxltag in whxltags], \
+           [(hxltag, today_str, 'OCHA', fts_configuration['source_url']) for hxltag in ghxltags], \
            [['RequiredHRPFunding', 'HRPFunding', 'HRPPercentFunded',
              'RequiredHRPCovidFunding', 'HRPCovidFunding', 'HRPCovidPercentFunded',
              'OtherPlans', 'RequiredOtherPlansFunding', 'OtherPlansFunding', 'OtherPlansPercentFunded'],
