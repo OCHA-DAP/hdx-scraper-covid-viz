@@ -25,7 +25,7 @@ def process_range(ranges, score):
     raise ValueError('Score %s not found in ranges!' % score)
 
 
-def get_access(configuration, countryiso3s, downloader, scraper=None):
+def get_access(configuration, admininfo, downloader, scraper=None):
     if scraper and scraper not in inspect.currentframe().f_code.co_name:
         return list(), list(), list(), list(), list(), list()
     access_configuration = configuration['access_constraints']
@@ -46,16 +46,17 @@ def get_access(configuration, countryiso3s, downloader, scraper=None):
                 dict_of_lists_add(type_ranking, countryiso, constraint)
             constraint_rankings[sheet] = type_ranking
     data = dict()
-    top3counts = dict()
+    top3counts = {'global': dict()}
+    for region in admininfo.regions:
+        top3counts[region] = dict()
     datasetinfo = {'dataset': access_configuration['dataset'], 'headers': 1, 'format': 'xlsx'}
     for sheet, sheetinfo in sheets.items():
         datasetinfo['sheet'] = sheetinfo['sheetname']
         headers, rows = read_hdx(downloader, datasetinfo)
         datasheet = data.get(sheet, dict())
-        top3countssheet = top3counts.get(sheet, dict())
         for row in rows:
             countryiso = Country.get_iso3_country_code(row[sheetinfo['isocol']])
-            if countryiso not in countryiso3s:
+            if countryiso not in admininfo.countryiso3s:
                 continue
             countrydata = datasheet.get(countryiso, dict())
             score = countrydata.get('score', 0)
@@ -64,12 +65,17 @@ def get_access(configuration, countryiso3s, downloader, scraper=None):
             if textcol:
                 text = row[textcol]
                 dict_of_lists_add(countrydata, 'text', (newscore, text))
-                if sheet == 'impact':
-                    if newscore != 0:
-                        top3countssheet[text] = top3countssheet.get(text, 0) + 1
-                else:
-                    if newscore == 3:
-                        top3countssheet[text] = top3countssheet.get(text, 0) + 1
+                for region, top3countsregion in top3counts.items():
+                    if region != 'global' and region not in admininfo.iso3_to_regions.get(countryiso, list()):
+                        continue
+                    top3countssheet = top3countsregion.get(sheet, dict())
+                    if sheet == 'impact':
+                        if newscore != 0:
+                            top3countssheet[text] = top3countssheet.get(text, 0) + 1
+                    else:
+                        if newscore == 3:
+                            top3countssheet[text] = top3countssheet.get(text, 0) + 1
+                    top3countsregion[sheet] = top3countssheet
                 weights = sheetinfo.get('weights')
                 if weights:
                     weight = weights.get(text)
@@ -78,26 +84,36 @@ def get_access(configuration, countryiso3s, downloader, scraper=None):
                 score += newscore
             else:
                 dict_of_lists_add(countrydata, 'text', (newscore, newscore))
-                if newscore == 'yes':
-                    top3countssheet[sheet] = top3countssheet.get(sheet, 0) + 1
+                for region, top3countsregion in top3counts.items():
+                    if region != 'global' and region not in admininfo.iso3_to_regions.get(countryiso, list()):
+                        continue
+                    top3countssheet = top3countsregion.get(sheet, dict())
+                    if newscore == 'yes':
+                        top3countssheet[sheet] = top3countssheet.get(sheet, 0) + 1
+                    top3countsregion[sheet] = top3countssheet
                 score = newscore
             countrydata['score'] = score
             datasheet[countryiso] = countrydata
         data[sheet] = datasheet
-        top3counts[sheet] = top3countssheet
     gvaluedicts = [dict() for _ in range(7)]
-    for i, (sheet, top3countssheet) in enumerate(top3counts.items()):
-        sortedcounts = sorted(top3countssheet, key=top3countssheet.get, reverse=True)
-        texts = list()
-        pcts = list()
-        for text in sortedcounts[:3]:
-            texts.append(text)
-            pcts.append(get_percent(top3countssheet[text], nocountries))
-        if sheet == 'mitigation':
-            gvaluedicts[i * 2]['global'] = pcts[0]
+    rvaluedicts = [dict() for _ in range(7)]
+    for region, top3countsregion in top3counts.items():
+        if region == 'global':
+            valuedicts = gvaluedicts
         else:
-            gvaluedicts[i * 2]['global'] = '|'.join(texts)
-            gvaluedicts[i * 2 + 1]['global'] = '|'.join(pcts)
+            valuedicts = rvaluedicts
+        for i, (sheet, top3countssheet) in enumerate(top3countsregion.items()):
+            sortedcounts = sorted(top3countssheet, key=top3countssheet.get, reverse=True)
+            texts = list()
+            pcts = list()
+            for text in sortedcounts[:3]:
+                texts.append(text)
+                pcts.append(get_percent(top3countssheet[text], nocountries))
+            if sheet == 'mitigation':
+                valuedicts[i * 2][region] = pcts[0]
+            else:
+                valuedicts[i * 2][region] = '|'.join(texts)
+                valuedicts[i * 2 + 1][region] = '|'.join(pcts)
     valuedicts = [dict() for _ in range(6)]
     severityscore = valuedicts[0]
     for i, sheet in enumerate(data):
@@ -125,12 +141,14 @@ def get_access(configuration, countryiso3s, downloader, scraper=None):
             continue
         severitycategory[countryiso] = process_range(ranges, score)
     logger.info('Processed access')
-    gheaders = ['Access Constraints Into', 'Access Constraints Into Pct', 'Access Constraints Within', 'Access Constraints Within Pct', 'Access Impact', 'Access Impact Pct', 'Mitigation Pct']
+    grheaders = ['Access Constraints Into', 'Access Constraints Into Pct', 'Access Constraints Within', 'Access Constraints Within Pct', 'Access Impact', 'Access Impact Pct', 'Mitigation Pct']
     headers = ['Access Severity Score', 'Access Severity Category', 'Access Constraints Into', 'Access Constraints Within', 'Access Impact', 'Mitigation']
-    ghxltags = ['#access+constraints+into+desc', '#access+constraints+into+pct', '#access+constraints+within+desc', '#access+constraints+within+pct', '#access+impact+desc', '#access+impact+pct', '#access+mitigation+pct']
+    grhxltags = ['#access+constraints+into+desc', '#access+constraints+into+pct', '#access+constraints+within+desc', '#access+constraints+within+pct', '#access+impact+desc', '#access+impact+pct', '#access+mitigation+pct']
     hxltags = ['#severity+access+num+score', '#severity+access+category+num', '#access+constraints+into+desc', '#access+constraints+within+desc', '#access+impact+desc', '#access+mitigation+desc']
-    return [gheaders, ghxltags], gvaluedicts, \
-           [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']) for hxltag in hxltags], \
+    return [grheaders, grhxltags], gvaluedicts, \
+           [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']) for hxltag in grhxltags], \
+           [grheaders, grhxltags], rvaluedicts, \
+           [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']) for hxltag in grhxltags], \
            [headers, hxltags], valuedicts, \
            [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']) for hxltag in hxltags]
 

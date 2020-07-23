@@ -19,10 +19,17 @@ from model.whowhatwhere import get_whowhatwhere
 
 
 def extend_headers(headers, *args):
-    for i, header in enumerate(headers):
+    for i, header in enumerate(headers[:2]):
         for arg in args:
             if arg:
                 header.extend(arg[i])
+
+
+def extend_access_columns(rows, access_rcolumns):
+    for row in rows[2:]:
+        region = row[0]
+        for i, column in enumerate(access_rcolumns):
+            row.append(column[region])
 
 
 def extend_columns(level, rows, adms, admininfo, *args):
@@ -63,13 +70,12 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
     sources = [('Indicator', 'Date', 'Source', 'Url'), ('#indicator+name', '#date', '#meta+source', '#meta+url')]
 
     admininfo = AdminInfo.setup(downloader)
-    regions = admininfo.regions
     countryiso3s = admininfo.countryiso3s
     pcodes = admininfo.pcodes
 
     if 'world' in tabs or 'national' in tabs:
         fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(configuration, countryiso3s, downloader, scraper)
-        access_wheaders, access_wcolumns, access_wsources, access_headers, access_columns, access_sources = get_access(configuration, countryiso3s, downloader, scraper)
+        access_wheaders, access_wcolumns, access_wsources, access_rheaders, access_rcolumns, access_rsources, access_headers, access_columns, access_sources = get_access(configuration, admininfo, downloader, scraper)
 
         if 'world' in tabs:
             tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'global', downloader, scraper)
@@ -91,9 +97,9 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
 
             if 'regional' in tabs:
                 regional = get_regional(configuration, national, admininfo)
-                # extend_headers(regional, access_rheaders)
-                # extend_columns('regional', regional, regions, admininfo, access_rcolumns)
-                # extend_sources(sources, access_rsources)
+                extend_headers(regional, access_rheaders)
+                extend_access_columns(regional, access_rcolumns)
+                extend_sources(sources, access_rsources)
 
     if 'national_timeseries' in tabs:
         fx_sources = get_fx(nationaltimeseries, configuration, countryiso3s, downloader, scraper)
