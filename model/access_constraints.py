@@ -27,16 +27,22 @@ def process_range(ranges, score):
 
 def get_access(configuration, admininfo, downloader, scraper=None):
     if scraper and scraper not in inspect.currentframe().f_code.co_name:
-        return list(), list(), list(), list(), list(), list()
+        return list(), list(), list(), list(), list(), list(), list(), list(), list()
     access_configuration = configuration['access_constraints']
     ranking_url = access_configuration['ranking_url']
     headers, rows = read_tabular(downloader, {'url': ranking_url, 'headers': 1, 'format': 'csv'})
     sheets = access_configuration['sheets']
     constraint_rankings = {x: dict() for x in sheets}
-    nocountries = 0
+    nocountries_per_region = {'global': 0}
+    top3counts = {'global': dict()}
+    for region in admininfo.regions:
+        nocountries_per_region[region] = 0
+        top3counts[region] = dict()
     for row in rows:
         countryiso = row['iso3']
-        nocountries += 1
+        nocountries_per_region['global'] += 1
+        for region in admininfo.iso3_to_regions.get(countryiso, list()):
+            nocountries_per_region[region] += 1
         for sheet in sheets:
             if '%s_1' % sheet not in row:
                 continue
@@ -46,9 +52,6 @@ def get_access(configuration, admininfo, downloader, scraper=None):
                 dict_of_lists_add(type_ranking, countryiso, constraint)
             constraint_rankings[sheet] = type_ranking
     data = dict()
-    top3counts = {'global': dict()}
-    for region in admininfo.regions:
-        top3counts[region] = dict()
     datasetinfo = {'dataset': access_configuration['dataset'], 'headers': 1, 'format': 'xlsx'}
     for sheet, sheetinfo in sheets.items():
         datasetinfo['sheet'] = sheetinfo['sheetname']
@@ -108,7 +111,7 @@ def get_access(configuration, admininfo, downloader, scraper=None):
             pcts = list()
             for text in sortedcounts[:3]:
                 texts.append(text)
-                pcts.append(get_percent(top3countssheet[text], nocountries))
+                pcts.append(get_percent(top3countssheet[text], nocountries_per_region[region]))
             if sheet == 'mitigation':
                 valuedicts[i * 2][region] = pcts[0]
             else:

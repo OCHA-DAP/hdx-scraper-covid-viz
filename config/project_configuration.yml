@@ -125,6 +125,7 @@ regional:
     "RequiredHRPCovidFunding": "sum"
     "HRPCovidFunding": "sum"
     "HRPCovidPercentFunded": "get_percent(HRPCovidFunding, RequiredHRPCovidFunding) if HRPCovidFunding is not None and RequiredHRPCovidFunding is not None else ''"
+    "HRPGBVFunding": "sum"
     "RequiredOtherPlansFunding": "sum"
     "OtherPlansFunding": "sum"
     "OtherPlansPercentFunded": "get_percent(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
@@ -150,6 +151,19 @@ tabular_national:
     hxltags:
       - "#affected+infected"
       - "#affected+killed"
+  inform_hazard:
+    format: "xlsx"
+    dataset: "inform-covid-19-risk-index-version-0-1-2"
+    sheet: "Hazard & Exposure"
+    headers: 1
+    adm_cols:
+      - "Iso3"
+    val_cols:
+      - "Covid-19 Hazard & Exposure"
+    columns:
+      - "Covid19HazardExposure"
+    hxltags:
+      - "#severity+hazard+inform+num"
   inform:
     format: "xlsx"
     dataset: "inform-covid-19-risk-index-version-0-1-2"
@@ -158,14 +172,20 @@ tabular_national:
     adm_cols:
       - "ISO3"
     val_cols:
+      - "LACK OF COPING CAPACITY"
+      - "VULNERABILITY"
       - "INFORM COVID-19 RISK"
       - "COVID-19 RISK CLASS"
     columns:
+      - "LackOfCopingCapacity"
+      - "Vulnerability"
       - "Risk"
       - "RiskClass"
     hxltags:
-      - "#severity+num"
-      - "#severity+type"
+      - "#severity+coping+inform+num"
+      - "#severity+inform+num+vulnerability"
+      - "#severity+inform+num"
+      - "#severity+inform+type"
   economicindex:
     format: "xlsx"
     dataset: "covid-19-economic-exposure-index"
