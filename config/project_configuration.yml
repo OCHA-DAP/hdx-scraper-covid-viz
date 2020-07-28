@@ -83,17 +83,12 @@ regional:
   iso3: "ISO3"
   region: "Regional_office"
   val_fns:
+    "Population": sum
 #    "NoCases": "sum"
 #    "NoDeaths": "sum"
 #    "Risk": "range"
 #    "RiskClass": "sum"
 #    "EconomicExposure": "range"
-#    "Population": "sum"
-#    "GDP Per Capita": "range"
-#    "Volume of remittances as a proportion of total GDP": "range"
-#    "Fuels, ores and metals exports": "range"
-#    "Tourism as percentage of GDP": "range"
-#    "General government gross debt": "range"
 #    "WB total": "sum"
 #    "IMF total": "sum"
 #    "AfDB total": "sum"
@@ -133,6 +128,23 @@ regional:
 
 # national
 tabular_national:
+  population:
+    source: "World Bank"
+    source_url: "https://data.humdata.org/organization/world-bank-group"
+    format: "xls"
+    url: "http://api.worldbank.org/v2/en/indicator/SP.POP.TOTL?downloadformat=excel&dataformat=list"
+    sheet: "Data"
+    headers: 3
+    adm_cols:
+      - "Country Code"
+    date_col: "Year"
+    date_type: "int"
+    val_cols:
+      - "Value"
+    columns:
+      - "Population"
+    hxltags:
+      - "#population"
   who_national:
     format: "csv"
     dataset: "coronavirus-covid-19-cases-and-deaths"
@@ -210,12 +222,6 @@ tabular_national:
     adm_cols:
       - "Countries"
     val_cols:
-      - "Population"
-      - "GDP per capita (current US$) 2018"
-      - "Volume of remittances (in USD) as a proportion of total GDP (%) 2014-18"
-      - "Fuels, ores and metals exports (% of total merchandise exports))"
-      - "Tourism as percentage of GDP"
-      - "General government gross debt (Percent of GDP) - 2019"
       - "WB Total"
       - "IMF Total"
       - "AfDB"
@@ -232,11 +238,6 @@ tabular_national:
       - "No data"
       - "x"
     val_fns:
-      "GDP per capita (current US$) 2018": "float(GDP per capita (current US$) 2018)"
-      "Volume of remittances (in USD) as a proportion of total GDP (%) 2014-18": "div_100(Volume of remittances (in USD) as a proportion of total GDP (%) 2014-18)"
-      "Fuels, ores and metals exports (% of total merchandise exports))": "div_100(Fuels, ores and metals exports (% of total merchandise exports)))"
-      "Tourism as percentage of GDP": "div_100(Tourism as percentage of GDP)"
-      "General government gross debt (Percent of GDP) - 2019": "div_100(General government gross debt (Percent of GDP) - 2019)"
       "WB Total": "float(WB Total) if WB Total else 0"
       "IMF Total": "float(IMF Total) if IMF Total else 0"
       "AfDB": "float(AfDB) if AfDB else 0"
@@ -250,12 +251,6 @@ tabular_national:
       "Total per capita (USD)": "float(Total per capita (USD)) if Total per capita (USD) else 0"
       "Total as percentage of GDP (%)": "float(Total as percentage of GDP (%)) if Total as percentage of GDP (%) else 0"
     eval_cols:
-      - "Population"
-      - "number_format(GDP per capita (current US$) 2018, format='%.0f')"
-      - "Volume of remittances (in USD) as a proportion of total GDP (%) 2014-18"
-      - "Fuels, ores and metals exports (% of total merchandise exports))"
-      - "Tourism as percentage of GDP"
-      - "General government gross debt (Percent of GDP) - 2019"
       - "number_format(WB Total * 1000000, format='%.0f')"
       - "number_format(IMF Total * 1000000, format='%.0f')"
       - "number_format(AfDB * 1000000, format='%.0f')"
@@ -269,12 +264,6 @@ tabular_national:
       - "number_format(Total per capita (USD))"
       - "number_format(Total as percentage of GDP (%))"
     columns:
-      - "Population"
-      - "GDP Per Capita"
-      - "Volume of remittances as a proportion of total GDP"
-      - "Fuels, ores and metals exports"
-      - "Tourism as percentage of GDP"
-      - "General government gross debt"
       - "WB total"
       - "IMF total"
       - "AfDB total"
@@ -288,12 +277,6 @@ tabular_national:
       - "IFI COVID19 total percap"
       - "IFI COVID19 total pcgdp"
     hxltags:
-      - "#population"
-      - "#value+gdp"
-      - "#value+pct+remittances"
-      - "#value+commodities+export+pct"
-      - "#value+pct+tourism"
-      - "#value+government+debt"
       - "#value+wb+total"
       - "#value+imf+total"
       - "#value+afdb+total"

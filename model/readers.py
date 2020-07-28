@@ -30,6 +30,9 @@ def read_tabular(downloader, datasetinfo, **kwargs):
     if isinstance(headers, list):
         kwargs['fill_merged_cells'] = True
     format = datasetinfo['format']
+    compression = datasetinfo.get('compression')
+    if compression:
+        kwargs['compression'] = compression
     return downloader.get_tabular_rows(url, sheet=sheet, headers=headers, dict_form=True, format=format, **kwargs)
 
 
