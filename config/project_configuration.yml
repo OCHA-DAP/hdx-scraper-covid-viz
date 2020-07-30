@@ -53,22 +53,25 @@ tabular_global:
         hxltags:
           - "#value+cerf+covid+funding+total+usd"
   ifi_global:
-    format: "xlsx"
+    format: "csv"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRx-USUBIVUcLq8N8ix48if9h4e4YZBg8x7DYT_Up7QdZtenN91DwdTlFB5BbTxkY88pv8cBl-dQGG7/pub?gid=2095204371&single=true&output=csv"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
     force_date_today: True
-    sheet: "Master"
-    headers: 2
+    headers: 1
     stop_row:
-      Countries: "Total"
+      "Country Code": ""
     adm_cols:
-      - "Countries"
+      - "Country Code"
     val_cols:
       - "Total (USD mn)"
+    ignore_vals:
+      - "N/A"
+      - "-"
     val_fns:
-      "Total (USD mn)": "float(Total (USD mn)) if Total (USD mn) else 0"
+      "Total (USD mn)": "float(Total (USD mn).replace(',', '')) if Total (USD mn) else 0"
     total_col:
       formula: "number_format(Total (USD mn) * 1000000, format='%.0f')"
-      mustbepopulated: False
+      mustbepopulated: True
     columns:
       - "IFI COVID19 global"
     hxltags:
@@ -89,8 +92,8 @@ regional:
 #    "Risk": "range"
 #    "RiskClass": "sum"
 #    "EconomicExposure": "range"
-#    "WB total": "sum"
-#    "IMF total": "sum"
+#    "World Bank": "sum"
+#    "IMF": "sum"
 #    "AfDB total": "sum"
 #    "ADB total": "sum"
 #    "IADB total": "sum"
@@ -212,67 +215,59 @@ tabular_national:
     hxltags:
       - "#severity+economic+num"
   ifi_national:
-    format: "xlsx"
+    format: "csv"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRx-USUBIVUcLq8N8ix48if9h4e4YZBg8x7DYT_Up7QdZtenN91DwdTlFB5BbTxkY88pv8cBl-dQGG7/pub?gid=2095204371&single=true&output=csv"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
     force_date_today: True
-    sheet: "Master"
-    headers: 2
+    headers: 1
     stop_row:
-      Countries: "Total"
+      "Country Code": ""
     adm_cols:
-      - "Countries"
+      - "Country Code"
     val_cols:
-      - "WB Total"
-      - "IMF Total"
+      - "World Bank"
+      - "IMF"
       - "AfDB"
       - "ADB"
       - "IDB"
-      - "EIB"
       - "ISDB"
       - "EC"
-      - "UN MPTF"
       - "Total (USD mn)"
-      - "Total per capita (USD)"
+      - "Total per capita (USD mn)"
       - "Total as percentage of GDP (%)"
     ignore_vals:
-      - "No data"
-      - "x"
+      - "N/A"
+      - "-"
     val_fns:
-      "WB Total": "float(WB Total) if WB Total else 0"
-      "IMF Total": "float(IMF Total) if IMF Total else 0"
-      "AfDB": "float(AfDB) if AfDB else 0"
-      "ADB": "float(ADB) if ADB else 0"
-      "IDB": "float(IDB) if IDB else 0"
-      "EIB": "float(EIB) if EIB else 0"
-      "ISDB": "float(ISDB) if ISDB else 0"
-      "EC": "float(EC) if EC else 0"
-      "UN MPTF": "float(UN MPTF) if UN MPTF else 0"
-      "Total (USD mn)": "float(Total (USD mn)) if Total (USD mn) else 0"
-      "Total per capita (USD)": "float(Total per capita (USD)) if Total per capita (USD) else 0"
-      "Total as percentage of GDP (%)": "float(Total as percentage of GDP (%)) if Total as percentage of GDP (%) else 0"
+      "World Bank": "float('World Bank'.replace(',', '')) if 'World Bank' else 0"
+      "IMF": "float('IMF'.replace(',', '')) if 'IMF' else 0"
+      "AfDB": "float('AfDB'.replace(',', '')) if 'AfDB' else 0"
+      "ADB": "float('ADB'.replace(',', '')) if 'ADB' else 0"
+      "IDB": "float('IDB'.replace(',', '')) if 'IDB' else 0"
+      "ISDB": "float('ISDB'.replace(',', '')) if 'ISDB' else 0"
+      "EC": "float('EC'.replace(',', '')) if 'EC' else 0"
+      "Total (USD mn)": "float('Total (USD mn)'.replace(',', '')) if 'Total (USD mn)' else 0"
+      "Total per capita (USD mn)": "float('Total per capita (USD mn)'.replace(',', '')) if 'Total per capita (USD mn)' else 0"
+      "Total as percentage of GDP (%)": "float('Total as percentage of GDP (%)'.replace('%', '')) / 100.0 if 'Total as percentage of GDP (%)' else 0"
     eval_cols:
-      - "number_format(WB Total * 1000000, format='%.0f')"
-      - "number_format(IMF Total * 1000000, format='%.0f')"
+      - "number_format(World Bank * 1000000, format='%.0f')"
+      - "number_format(IMF * 1000000, format='%.0f')"
       - "number_format(AfDB * 1000000, format='%.0f')"
       - "number_format(ADB * 1000000, format='%.0f')"
       - "number_format(IDB * 1000000, format='%.0f')"
-      - "number_format(EIB * 1000000, format='%.0f')"
       - "number_format(ISDB * 1000000, format='%.0f')"
       - "number_format(EC * 1000000, format='%.0f')"
-      - "number_format(UN MPTF * 1000000, format='%.0f')"
       - "number_format(Total (USD mn) * 1000000, format='%.0f')"
-      - "number_format(Total per capita (USD))"
+      - "number_format(Total per capita (USD mn))"
       - "number_format(Total as percentage of GDP (%))"
     columns:
-      - "WB total"
-      - "IMF total"
+      - "World Bank"
+      - "IMF"
       - "AfDB total"
       - "ADB total"
       - "IDB total"
-      - "EIB total"
       - "ISDB total"
       - "EC total"
-      - "UN MPTF total"
       - "IFI COVID19 total"
       - "IFI COVID19 total percap"
       - "IFI COVID19 total pcgdp"
@@ -282,10 +277,8 @@ tabular_national:
       - "#value+afdb+total"
       - "#value+adb+total"
       - "#value+idb+total"
-      - "#value+eib+total"
       - "#value+isdb+total"
       - "#value+ec+total"
-      - "#value+unmptf+total"
       - "#value+ifi+total"
       - "#value+ifi+percap"
       - "#value+gdp+ifi+pct"
@@ -474,9 +467,8 @@ fts:
 
 food_prices:
   format: "csv"
-  url: "https://drive.google.com/uc?export=download&id=1eSctTkAGxM_5dPOnsOBhJUw7Xy-rhdSc"
+  dataset: "wfp-food-prices-for-the-world"
   headers: 1
-  source: 'WFP'
 
 vaccination_campaigns:
   format: "csv"

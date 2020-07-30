@@ -70,8 +70,9 @@ class AdminInfo(object):
                     continue
                 regions.add(region)
                 dict_of_sets_add(iso3_to_regions, countryiso, region)
+        regions = sorted(list(regions))
         region = 'H25'
-        regions.add(region)
+        regions.insert(0, region)
         for countryiso in hrp_iso3s:
             dict_of_sets_add(iso3_to_regions, countryiso, region)
         return regions, iso3_to_regions
@@ -186,6 +187,9 @@ class AdminInfo(object):
 
     def get_adm(self, adms, i, scrapername):
         adm = adms[i]
+        if adm == '-':
+            adms[i] = None
+            return False
         if adm in self.adms[i]:
             exact = True
         else:

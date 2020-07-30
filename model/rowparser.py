@@ -83,7 +83,7 @@ class RowParser(object):
             adm = row[admcol]
             if not adm:
                 return False
-            adms[i] = row[admcol]
+            adms[i] = row[admcol].strip()
             return self.admininfo.get_adm(adms, i, scrapername)
 
         for i, admcol in enumerate(self.admcols):

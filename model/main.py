@@ -19,20 +19,19 @@ from model.whowhatwhere import get_whowhatwhere
 
 
 def extend_headers(headers, *args):
-    for i, header in enumerate(headers[:2]):
+    result = headers[:2]
+    for i, header in enumerate(result):
         for arg in args:
             if arg:
                 header.extend(arg[i])
-
-
-def extend_access_columns(rows, access_rcolumns):
-    for row in rows[2:]:
-        region = row[0]
-        for i, column in enumerate(access_rcolumns):
-            row.append(column[region])
+    return result
 
 
 def extend_columns(level, rows, adms, admininfo, *args):
+    columns = list()
+    for arg in args:
+        if arg:
+            columns.extend(arg)
     if adms is None:
         adms = ['global']
     for i, adm in enumerate(adms):
@@ -47,17 +46,22 @@ def extend_columns(level, rows, adms, admininfo, *args):
             countryname = Country.get_country_name_from_iso3(countryiso3)
             adm1_name = admininfo.pcode_to_name[adm]
             row = [countryiso3, countryname, adm, adm1_name]
-        for arg in args:
-            if arg:
-                for column in arg:
-                    row.append(column.get(adm))
+        for column in columns:
+            row.append(column.get(adm))
         rows.append(row)
+    return columns
 
 
 def extend_sources(sources, *args):
     for arg in args:
         if arg:
             sources.extend(arg)
+
+
+def add_population(population_lookup, headers, columns, ignore):
+    population_index = headers[1].index('#population')
+    if population_index != -1:
+        population_lookup.update(columns[population_index - ignore])
 
 
 def get_indicators(configuration, downloader, tabs, scraper=None):
@@ -72,34 +76,35 @@ def get_indicators(configuration, downloader, tabs, scraper=None):
     admininfo = AdminInfo.setup(downloader)
     countryiso3s = admininfo.countryiso3s
     pcodes = admininfo.pcodes
+    population_lookup = dict()
 
-    if 'world' in tabs or 'national' in tabs:
+    if 'national' in tabs:
         fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(configuration, countryiso3s, downloader, scraper)
         access_wheaders, access_wcolumns, access_wsources, access_rheaders, access_rcolumns, access_rsources, access_headers, access_columns, access_sources = get_access(configuration, admininfo, downloader, scraper)
+        food_headers, food_columns, food_sources = add_food_prices(configuration, countryiso3s, downloader, scraper)
+        campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, countryiso3s, downloader, json, scraper)
+        unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, countryiso3s, downloader, scraper)
+        tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'national', downloader, scraper)
+        copy_headers, copy_columns, copy_sources = get_copy(configuration, 'national', downloader, scraper)
+
+        national_headers = extend_headers(national, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, access_headers, copy_headers)
+        national_columns = extend_columns('national', national, countryiso3s, admininfo, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, access_columns, copy_columns)
+        extend_sources(sources, tabular_sources, food_sources, campaign_sources, fts_sources, unhcr_sources, access_sources, copy_sources)
+        add_population(population_lookup, national_headers, national_columns, 3)
 
         if 'world' in tabs:
+            population_lookup['h63'] = sum(population_lookup.values())
             tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'global', downloader, scraper)
-
-            extend_headers(world, fts_wheaders, access_wheaders, tabular_headers)
-            extend_columns('global', world, None, None, fts_wcolumns, access_wcolumns, tabular_columns)
+            extend_headers(world, [['Population'], ['#population']], fts_wheaders, access_wheaders, tabular_headers)
+            extend_columns('global', world, None, None, [{'global': population_lookup['h63']}], fts_wcolumns, access_wcolumns, tabular_columns)
             extend_sources(sources, fts_wsources, access_wsources, tabular_sources)
 
-        if 'national' in tabs:
-            food_headers, food_columns, food_sources = add_food_prices(configuration, countryiso3s, downloader, scraper)
-            campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, countryiso3s, downloader, json, scraper)
-            unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, countryiso3s, downloader, scraper)
-            tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'national', downloader, scraper)
-            copy_headers, copy_columns, copy_sources = get_copy(configuration, 'national', downloader, scraper)
-
-            extend_headers(national, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, access_headers, copy_headers)
-            extend_columns('national', national, countryiso3s, admininfo, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, access_columns, copy_columns)
-            extend_sources(sources, tabular_sources, food_sources, campaign_sources, fts_sources, unhcr_sources, access_sources, copy_sources)
-
-            if 'regional' in tabs:
-                regional = get_regional(configuration, national, admininfo)
-                extend_headers(regional, access_rheaders)
-                extend_access_columns(regional, access_rcolumns)
-                extend_sources(sources, access_rsources)
+        if 'regional' in tabs:
+            regional_headers, regional_columns = get_regional(configuration, national_headers, national_columns, admininfo)
+            extend_headers(regional, regional_headers, access_rheaders)
+            extend_columns('regional', regional, admininfo.regions, admininfo, regional_columns, access_rcolumns)
+            extend_sources(sources, access_rsources)
+            add_population(population_lookup, regional_headers, regional_columns, 1)
 
     if 'national_timeseries' in tabs:
         fx_sources = get_fx(nationaltimeseries, configuration, countryiso3s, downloader, scraper)

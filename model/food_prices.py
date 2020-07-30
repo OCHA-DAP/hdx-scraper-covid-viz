@@ -7,7 +7,7 @@ from os.path import join
 from hdx.location.country import Country
 
 from model import today_str, today, number_format, calculate_ratios
-from model.readers import read_tabular
+from model.readers import read_hdx
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ def add_food_prices(configuration, countryiso3s, downloader, scraper=None):
     if scraper and scraper != name:
         return list(), list(), list()
     datasetinfo = configuration[name]
-    headers, iterator = read_tabular(downloader, datasetinfo)
+    headers, iterator = read_hdx(downloader, datasetinfo)
     allowed_months = set()
     for i in range(1, 7, 1):
         month = today.month - i
@@ -41,4 +41,4 @@ def add_food_prices(configuration, countryiso3s, downloader, scraper=None):
     ratios = calculate_ratios(commods_per_country, affected_commods_per_country)
     hxltag = '#value+food+num+ratio'
     logger.info('Processed WFP')
-    return [['Food Prices Ratio'], [hxltag]], [ratios], [(hxltag, today_str, datasetinfo['source'], datasetinfo['url'])]
+    return [['Food Prices Ratio'], [hxltag]], [ratios], [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url'])]

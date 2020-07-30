@@ -2,8 +2,9 @@
 import logging
 import sys
 
+from hdx.utilities.dictandlist import dict_of_lists_add
+
 from model import number_format, get_percent, div_100
-from model.readers import read_hdx
 
 logger = logging.getLogger(__name__)
 
@@ -32,40 +33,29 @@ def get_numeric(valuestr):
     return valuestr
 
 
-def get_regional(configuration, national, admininfo):
+def get_regional(configuration, national_headers, national_columns, admininfo):
     regional_config = configuration['regional']
-    iso_index = national[1].index('#country+code')
-    regional = [['regionname'], ['#region+name']]
-    headers = national[0][2:]
     val_fns = regional_config['val_fns']
-    header_to_valfn = dict()
-    valfn_to_header = dict()
-    for i, header in enumerate(val_fns):
-        regional[0].append(header)
-        try:
-            index = headers.index(header)
-            header_to_valfn[index] = i + 1
-            valfn_to_header[i + 1] = index
-            regional[1].append(national[1][index + 2])
-        except ValueError:
-            regional[1].append('')
-    regions = sorted(list(admininfo.regions))
-    for region in regions:
-        regiondata = [region]
-        regiondata.extend([list() for _ in val_fns])
-        regional.append(regiondata)
-    for countrydata in national[2:]:
-        countryiso = countrydata[iso_index]
-        for region in admininfo.iso3_to_regions.get(countryiso, list()):
-            regiondata = regional[regions.index(region) + 2]
-            for i, value in enumerate(countrydata[2:]):
-                index = header_to_valfn.get(i)
-                if index is not None:
-                    regiondata[index].append(value)
-    for regiondata in regional[2:]:
-        for index, valuelist in enumerate(regiondata[1:]):
-            action = list(val_fns.values())[index]
-            if action == 'sum':
+    headers = val_fns.keys()
+    regional_headers = [list(), list()]
+    regional_columns = list()
+    for i, header in enumerate(national_headers[0][3:]):
+        if header not in headers:
+            continue
+        regional_headers[0].append(header)
+        regional_headers[1].append(national_headers[1][3+i])
+        regional_columns.append(national_columns[i])
+    valdicts = list()
+    for i, header in enumerate(regional_headers[0]):
+        valdict = dict()
+        valdicts.append(valdict)
+        action = val_fns[header]
+        column = regional_columns[i]
+        for countryiso in column:
+            for region in admininfo.iso3_to_regions[countryiso]:
+                dict_of_lists_add(valdict, region, column[countryiso])
+        if action == 'sum':
+            for region, valuelist in valdict.items():
                 total = ''
                 for valuestr in valuelist:
                     if valuestr:
@@ -76,10 +66,11 @@ def get_regional(configuration, national, admininfo):
                             else:
                                 total += value
                 if isinstance(total, float):
-                    regiondata[index + 1] = number_format(total)
+                    valdict[region] = number_format(total)
                 else:
-                    regiondata[index + 1] = total
-            elif action == 'range':
+                    valdict[region] = total
+        elif action == 'range':
+            for region, valuelist in valdict.items():
                 min = sys.maxsize
                 max = -min
                 for valuestr in valuelist:
@@ -90,18 +81,21 @@ def get_regional(configuration, national, admininfo):
                         if value < min:
                             min = value
                 if min == sys.maxsize or max == -sys.maxsize:
-                    regiondata[index + 1] = ''
+                    valdict[region] = ''
                 else:
                     if isinstance(max, float):
                         max = number_format(max)
                     if isinstance(min, float):
                         min = number_format(min)
-                    regiondata[index + 1] = '%s-%s' % (str(min), str(max))
-            else:
-                for i, header in enumerate(val_fns):
-                    value = regiondata[i + 1]
+                    valdict[region] = '%s-%s' % (str(min), str(max))
+        else:
+            for region, valuelist in valdict.items():
+                toeval = action
+                for j in range(i):
+                    value = valdicts[j].get(region, '')
                     if value == '':
                         value = None
-                    action = action.replace(header, str(value))
-                regiondata[index + 1] = eval(action)
-    return regional
+                    toeval = toeval.replace(regional_headers[0][j], str(value))
+                valdict[region] = eval(toeval)
+    logger.info('Processed regional')
+    return regional_headers, valdicts

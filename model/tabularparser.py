@@ -208,7 +208,7 @@ def get_tabular(configuration, level, downloader, scraper=None, **kwargs):
     retval = list()
     sources = list()
     for name in datasets:
-        if scraper and scraper not in name:
+        if scraper and scraper not in name and name != 'population':
             continue
         datasetinfo = datasets[name]
         format = datasetinfo['format']
@@ -230,5 +230,3 @@ def get_tabular(configuration, level, downloader, scraper=None, **kwargs):
             datasetinfo['date'] = today_str
         _get_tabular(level, name, datasetinfo, headers, iterator, retheaders, retval, sources)
     return retheaders, retval, sources
-
-

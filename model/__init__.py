@@ -45,7 +45,10 @@ def get_rowval(row, valcol):
             repvalcol = repvalcol.replace(template_string, replace_string)
         return eval(repvalcol)
     else:
-        return row[valcol]
+        result = row[valcol]
+        if isinstance(result, str):
+            return result.strip()
+        return result
 
 
 def get_date_from_dataset_date(dataset):
