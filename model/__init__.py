@@ -3,37 +3,13 @@ import re
 from datetime import datetime
 
 from hdx.data.dataset import Dataset
+from hdx.utilities.text import get_fraction_str
 
 logger = logging.getLogger(__name__)
 
 today = datetime.now()
 today_str = today.strftime('%Y-%m-%d')
 template = re.compile('{{.*?}}')
-
-
-def get_date_from_timestamp(date):
-    if date > today.timestamp():
-        date = date / 1000
-    return datetime.fromtimestamp(date)
-
-
-def number_format(val, format='%.4f'):
-    return format % val
-
-
-def get_percent(numerator, denominator=None, format='%.4f'):
-    if numerator:
-        numerator = float(numerator)
-        if denominator:
-            numerator /= float(denominator)
-        return number_format(numerator, format)
-    return ''
-
-
-def div_100(val, format='%.4f'):
-    if val:
-        return number_format(float(val) / 100, format)
-    return ''
 
 
 def get_rowval(row, valcol):
@@ -66,7 +42,7 @@ def calculate_ratios(items_per_country, affected_items_per_country):
     ratios = dict()
     for countryiso in items_per_country:
         if countryiso in affected_items_per_country:
-            ratios[countryiso] = number_format(affected_items_per_country[countryiso] / items_per_country[countryiso])
+            ratios[countryiso] = get_fraction_str(affected_items_per_country[countryiso], items_per_country[countryiso])
         else:
             ratios[countryiso] = '0.0'
     return ratios

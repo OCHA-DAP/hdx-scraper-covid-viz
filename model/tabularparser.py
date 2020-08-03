@@ -6,10 +6,12 @@ import regex
 from datetime import datetime
 from hdx.location.country import Country
 
-from hdx.utilities.dateparse import parse_date
-from hdx.utilities.dictandlist import dict_of_lists_add
 
-from model import today, today_str, number_format, get_percent, div_100, get_rowval, get_date_from_timestamp
+from hdx.utilities.dateparse import parse_date, get_datetime_from_timestamp
+from hdx.utilities.dictandlist import dict_of_lists_add
+from hdx.utilities.text import number_format, get_fraction_str, get_numeric_if_possible
+
+from model import today, today_str, get_rowval
 from model.rowparser import RowParser
 from model.readers import read_tabular, read_ole, read_json, read_hdx
 
@@ -96,7 +98,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
         if rowparser.datetype == 'date':
             date = parse_date(date)
         elif rowparser.datetype == 'int':
-            date = get_date_from_timestamp(date)
+            date = get_datetime_from_timestamp(date)
         else:
             raise ValueError('No date type specified!')
     date = date.strftime('%Y-%m-%d')
@@ -133,7 +135,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
                     else:
                         val_fn = val_fns.get(valcol)
                         if val_fn:
-                            val = eval(val_fn.replace(valcol, str(val)))
+                            val = eval(val_fn.replace(valcol, 'val'))
                         hasvalues = True
                     string = string.replace(valcol, str(val))
                 return string, hasvalues

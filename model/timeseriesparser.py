@@ -3,11 +3,12 @@ import copy
 import logging
 from datetime import datetime
 
-from hdx.utilities.dateparse import parse_date
+from hdx.utilities.dateparse import parse_date, get_datetime_from_timestamp
 from hdx.location.country import Country
+from hdx.utilities.text import number_format, get_fraction_str, get_numeric_if_possible
 
 
-from model import today, today_str, number_format, get_percent, div_100, get_rowval, get_date_from_timestamp
+from model import today, today_str, get_rowval
 from model.rowparser import RowParser
 from model.readers import read_tabular, read_ole, read_json, read_hdx
 
@@ -60,7 +61,7 @@ def _get_timeseries(timeseries, level, datasetinfo, headers, iterator, sources=l
         if rowparser.datetype == 'date':
             date = parse_date(date)
         elif rowparser.datetype == 'int':
-            date = get_date_from_timestamp(date)
+            date = get_datetime_from_timestamp(date)
         else:
             raise ValueError('No date type specified!')
     date = date.strftime('%Y-%m-%d')

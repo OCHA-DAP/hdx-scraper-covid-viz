@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
-import inspect
 import logging
-
-from os.path import join
 
 from hdx.location.country import Country
 
-from model import today_str, today, number_format, calculate_ratios
+from model import today, calculate_ratios
 from model.readers import read_hdx
 
 logger = logging.getLogger(__name__)

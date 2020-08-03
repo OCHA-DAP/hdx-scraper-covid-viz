@@ -3,7 +3,7 @@ import logging
 
 from hdx.utilities.dictandlist import dict_of_lists_add
 
-from model import number_format, calculate_ratios
+from model import calculate_ratios
 from model.readers import read_hdx
 
 logger = logging.getLogger(__name__)

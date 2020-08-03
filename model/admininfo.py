@@ -187,9 +187,6 @@ class AdminInfo(object):
 
     def get_adm(self, adms, i, scrapername):
         adm = adms[i]
-        if adm == '-':
-            adms[i] = None
-            return False
         if adm in self.adms[i]:
             exact = True
         else:

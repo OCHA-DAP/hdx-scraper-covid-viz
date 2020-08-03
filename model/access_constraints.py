@@ -4,8 +4,8 @@ import logging
 
 from hdx.location.country import Country
 from hdx.utilities.dictandlist import dict_of_lists_add
+from hdx.utilities.text import get_fraction_str
 
-from model import today_str, get_percent
 from model.readers import read_tabular, read_hdx
 
 logger = logging.getLogger(__name__)
@@ -111,7 +111,7 @@ def get_access(configuration, admininfo, downloader, scraper=None):
             pcts = list()
             for text in sortedcounts[:3]:
                 texts.append(text)
-                pcts.append(get_percent(top3countssheet[text], nocountries_per_region[region]))
+                pcts.append(get_fraction_str(top3countssheet[text], nocountries_per_region[region]))
             if sheet == 'mitigation':
                 valuedicts[i * 2][region] = pcts[0]
             else:

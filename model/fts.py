@@ -4,9 +4,9 @@ import logging
 import re
 
 from hdx.utilities.dictandlist import write_list_to_csv, dict_of_lists_add
-from hdx.utilities.text import multiple_replace
+from hdx.utilities.text import multiple_replace, get_fraction_str
 
-from model import get_percent, today_str, today
+from model import today_str, today
 
 logger = logging.getLogger(__name__)
 
@@ -260,7 +260,7 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
                 continue
             plan_type = plan['planType']['name'].lower()
             if funding:
-                allpct = get_percent(funding['progress'], 100)
+                allpct = get_fraction_str(funding['progress'], 100)
             else:
                 allpct = None
             if plan_type == 'humanitarian response plan':
@@ -277,7 +277,7 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
                     hrp_covid_requirements[countryiso] = None
                 if covidfund and covidreq:
                     hrp_covid_funding[countryiso] = covidfund
-                    hrp_covid_percentage[countryiso] = get_percent(covidfund, covidreq)
+                    hrp_covid_percentage[countryiso] = get_fraction_str(covidfund, covidreq)
                 if gbvfund:
                     hrp_gbv_funding[countryiso] = gbvfund
             else:
@@ -290,7 +290,7 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
                 allreq = allreqs[countryiso]
                 allfund = allfunds.get(countryiso)
                 if allfund:
-                    allpct = get_percent(allfund, allreq)
+                    allpct = get_fraction_str(allfund, allreq)
                 else:
                     allpct = None
                 add_other_requirements_and_funding(countryiso, planname, allreq, allfund, allpct)
@@ -311,8 +311,8 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
         other_percentage[countryiso] = create_output(other_percentage[countryiso])
     total_allreq = data['totals']['revisedRequirements']
     total_allfund = data['totals']['totalFunding']
-    total_allpercent = get_percent(data['totals']['progress'], 100)
-    total_covidpercent = get_percent(total_covidfund, total_covidreq)
+    total_allpercent = get_fraction_str(data['totals']['progress'], 100)
+    total_covidpercent = get_fraction_str(total_covidfund, total_covidreq)
     logger.info('Processed FTS')
     write_list_to_csv('ftscovid.csv', rows, ['Name', 'Requirements', 'Funding'])
     ghxltags = ['#value+funding+hrp+required+usd', '#value+funding+hrp+total+usd', '#value+funding+hrp+pct',

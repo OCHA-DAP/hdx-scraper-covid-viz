@@ -5,8 +5,9 @@ import logging
 from hdx.data.dataset import Dataset
 from hdx.location.country import Country
 from hdx.utilities.dictandlist import dict_of_lists_add
+from hdx.utilities.text import get_fraction_str
 
-from model import get_percent, get_date_from_dataset_date
+from model import get_date_from_dataset_date
 from model.readers import read_tabular
 
 logger = logging.getLogger(__name__)
@@ -68,7 +69,7 @@ def get_ipc(configuration, admininfo, downloader, scraper=None):
     for pcode in phasedict:
         percentages = phasedict[pcode]
         if len(percentages) == 1:
-            phasedict[pcode] = get_percent(percentages[0])
+            phasedict[pcode] = get_fraction_str(percentages[0])
         else:
             populations = popdict[pcode]
             numerator = 0
@@ -77,7 +78,7 @@ def get_ipc(configuration, admininfo, downloader, scraper=None):
                 population = populations[i]
                 numerator += population * percentage
                 denominator += population
-            phasedict[pcode] = get_percent(numerator, denominator)
+            phasedict[pcode] = get_fraction_str(numerator, denominator)
     logger.info('Processed IPC')
     dataset = Dataset.read_from_hdx(ipc_configuration['dataset'])
     date = get_date_from_dataset_date(dataset)

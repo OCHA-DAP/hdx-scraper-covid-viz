@@ -3,8 +3,7 @@ import logging
 import sys
 
 from hdx.utilities.dictandlist import dict_of_lists_add
-
-from model import number_format, get_percent, div_100
+from hdx.utilities.text import number_format, get_fraction_str, get_numeric_if_possible
 
 logger = logging.getLogger(__name__)
 

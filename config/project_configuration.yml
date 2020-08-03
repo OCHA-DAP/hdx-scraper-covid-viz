@@ -68,7 +68,7 @@ tabular_global:
       - "N/A"
       - "-"
     val_fns:
-      "Total (USD mn)": "float(Total (USD mn).replace(',', '')) if Total (USD mn) else 0"
+      "Total (USD mn)": "get_numeric_if_possible(Total (USD mn)) if Total (USD mn) else 0"
     total_col:
       formula: "number_format(Total (USD mn) * 1000000, format='%.0f')"
       mustbepopulated: True
@@ -119,14 +119,14 @@ regional:
     "CERFCovidFunding": "sum"
     "RequiredHRPFunding": "sum"
     "HRPFunding": "sum"
-    "HRPPercentFunded": "get_percent(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
+    "HRPPercentFunded": "get_fraction_str(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
     "RequiredHRPCovidFunding": "sum"
     "HRPCovidFunding": "sum"
-    "HRPCovidPercentFunded": "get_percent(HRPCovidFunding, RequiredHRPCovidFunding) if HRPCovidFunding is not None and RequiredHRPCovidFunding is not None else ''"
+    "HRPCovidPercentFunded": "get_fraction_str(HRPCovidFunding, RequiredHRPCovidFunding) if HRPCovidFunding is not None and RequiredHRPCovidFunding is not None else ''"
     "HRPGBVFunding": "sum"
     "RequiredOtherPlansFunding": "sum"
     "OtherPlansFunding": "sum"
-    "OtherPlansPercentFunded": "get_percent(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
+    "OtherPlansPercentFunded": "get_fraction_str(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
 #    "TotalRefugees": "sum"
 
 # national
@@ -239,16 +239,16 @@ tabular_national:
       - "N/A"
       - "-"
     val_fns:
-      "World Bank": "float('World Bank'.replace(',', '')) if 'World Bank' else 0"
-      "IMF": "float('IMF'.replace(',', '')) if 'IMF' else 0"
-      "AfDB": "float('AfDB'.replace(',', '')) if 'AfDB' else 0"
-      "ADB": "float('ADB'.replace(',', '')) if 'ADB' else 0"
-      "IDB": "float('IDB'.replace(',', '')) if 'IDB' else 0"
-      "ISDB": "float('ISDB'.replace(',', '')) if 'ISDB' else 0"
-      "EC": "float('EC'.replace(',', '')) if 'EC' else 0"
-      "Total (USD mn)": "float('Total (USD mn)'.replace(',', '')) if 'Total (USD mn)' else 0"
-      "Total per capita (USD mn)": "float('Total per capita (USD mn)'.replace(',', '')) if 'Total per capita (USD mn)' else 0"
-      "Total as percentage of GDP (%)": "float('Total as percentage of GDP (%)'.replace('%', '')) / 100.0 if 'Total as percentage of GDP (%)' else 0"
+      "World Bank": "get_numeric_if_possible(World Bank) if World Bank else 0"
+      "IMF": "get_numeric_if_possible(IMF) if IMF else 0"
+      "AfDB": "get_numeric_if_possible(AfDB) if AfDB else 0"
+      "ADB": "get_numeric_if_possible(ADB) if ADB else 0"
+      "IDB": "get_numeric_if_possible(IDB) if IDB else 0"
+      "ISDB": "get_numeric_if_possible(ISDB) if ISDB else 0"
+      "EC": "get_numeric_if_possible(EC) if EC else 0"
+      "Total (USD mn)": "get_numeric_if_possible(Total (USD mn)) if Total (USD mn) else 0"
+      "Total per capita (USD mn)": "get_numeric_if_possible(Total per capita (USD mn)) if Total per capita (USD mn) else 0"
+      "Total as percentage of GDP (%)": "get_numeric_if_possible(Total as percentage of GDP (%)) if Total as percentage of GDP (%) else 0"
     eval_cols:
       - "number_format(World Bank * 1000000, format='%.0f')"
       - "number_format(IMF * 1000000, format='%.0f')"
@@ -621,7 +621,7 @@ tabular_subnational:
           "phase35": "float(phase35)"
           "population": "float(population)"
         total_col:
-          formula: "get_percent(phase35, population)"
+          formula: "get_fraction_str(phase35, population)"
           mustbepopulated: True
         columns:
           - "FoodInsecurityCHP3+"
@@ -692,7 +692,7 @@ tabular_subnational:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
         total_col:
-          formula: "get_percent(Numerator, Denominator)"
+          formula: "get_fraction_str(Numerator, Denominator)"
           mustbepopulated: True
         columns:
           - "HepB1 Coverage"
@@ -709,7 +709,7 @@ tabular_subnational:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
         total_col:
-          formula: "get_percent(Numerator, Denominator)"
+          formula: "get_fraction_str(Numerator, Denominator)"
           mustbepopulated: True
         columns:
           - "HepB2 Coverage"
@@ -726,7 +726,7 @@ tabular_subnational:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
         total_col:
-          formula: "get_percent(Numerator, Denominator)"
+          formula: "get_fraction_str(Numerator, Denominator)"
           mustbepopulated: True
         columns:
           - "HepB3 Coverage"
@@ -743,7 +743,7 @@ tabular_subnational:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
         total_col:
-          formula: "get_percent(Numerator, Denominator)"
+          formula: "get_fraction_str(Numerator, Denominator)"
           mustbepopulated: True
         columns:
           - "IPV1 Coverage"
@@ -760,7 +760,7 @@ tabular_subnational:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
         total_col:
-          formula: "get_percent(Numerator, Denominator)"
+          formula: "get_fraction_str(Numerator, Denominator)"
           mustbepopulated: True
         columns:
           - "MCV1 Coverage"
@@ -777,7 +777,7 @@ tabular_subnational:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
         total_col:
-          formula: "get_percent(Numerator, Denominator)"
+          formula: "get_fraction_str(Numerator, Denominator)"
           mustbepopulated: True
         columns:
           - "MCV2 Coverage"
@@ -794,7 +794,7 @@ tabular_subnational:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
         total_col:
-          formula: "get_percent(Numerator, Denominator)"
+          formula: "get_fraction_str(Numerator, Denominator)"
           mustbepopulated: True
         columns:
           - "Pol1 Coverage"
@@ -811,7 +811,7 @@ tabular_subnational:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
         total_col:
-          formula: "get_percent(Numerator, Denominator)"
+          formula: "get_fraction_str(Numerator, Denominator)"
           mustbepopulated: True
         columns:
           - "Pol2 Coverage"
@@ -828,7 +828,7 @@ tabular_subnational:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
         total_col:
-          formula: "get_percent(Numerator, Denominator)"
+          formula: "get_fraction_str(Numerator, Denominator)"
           mustbepopulated: True
         columns:
           - "Pol3 Coverage"
