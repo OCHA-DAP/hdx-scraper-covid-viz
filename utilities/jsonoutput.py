@@ -39,7 +39,7 @@ class jsonoutput:
     def update_tab(self, tabname, values):
         if tabname not in self.updatetabs:
             return
-        self.generate_json('%s_data' % tabname, values)
+        self.generate_json(tabname, values)
 
     def add_additional_json(self, downloader):
         for datasetinfo in self.json_configuration.get('additional_json', list()):

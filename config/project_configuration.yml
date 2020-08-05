@@ -155,12 +155,12 @@ tabular_national:
     force_date_today: True
     headers: 1
     adm_cols:
-      - "ISO_3_CODE"
-    date_col: "date_epicrv"
+      - "Country_code"
+    date_col: "Date_reported"
     date_type: "date"
     val_cols:
-      - "CumCase"
-      - "CumDeath"
+      - "Cumulative_cases"
+      - "Cumulative_deaths"
     columns:
       - "NoCases"
       - "NoDeaths"

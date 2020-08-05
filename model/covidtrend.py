@@ -3,6 +3,8 @@ import numpy
 import pandas as pd
 
 # filename for shapefile and WHO input dataset
+from hdx.location.country import Country
+
 from model import today_str
 from utilities.readers import read_hdx_metadata
 
@@ -10,7 +12,12 @@ MIN_CUMULATIVE_CASES = 100
 
 
 def get_WHO_data(url, admininfo):
-    df = pd.read_csv(url, usecols=['date_epicrv', 'ISO_3_CODE', 'CumCase', 'NewCase', 'NewDeath', 'CumDeath'])
+    df = pd.read_csv(url, keep_default_na=False)
+    df.columns = df.columns.str.strip()
+    df = df[['Date_reported', 'Country_code', 'Cumulative_cases', 'New_cases', 'New_deaths', 'Cumulative_deaths']]
+    df['ISO_3_CODE'] = df['Country_code'].apply(Country.get_iso3_from_iso2)
+    df.drop(columns=['Country_code'])
+    df = df.rename(columns={'Date_reported': 'date_epicrv'})
     # get only HRP countries
     df = df.loc[df['ISO_3_CODE'].isin(admininfo.countryiso3s), :]
     df['date_epicrv'] = pd.to_datetime(df['date_epicrv'])
@@ -50,9 +57,9 @@ def get_covid_trend(configuration, gsheets, jsonout, admininfo, population_looku
     df_WHO = get_WHO_data(datasetinfo['url'], admininfo)
 
     # get weekly new cases
-    new_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='date_epicrv').sum()[['NewCase', 'NewDeath']]
-    cumulative_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='date_epicrv').min()[['CumCase', 'CumDeath']]
-    ndays_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='date_epicrv').count()['NewCase']
+    new_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='date_epicrv').sum()[['New_cases', 'New_deaths']]
+    cumulative_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='date_epicrv').min()[['Cumulative_cases', 'Cumulative_deaths']]
+    ndays_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='date_epicrv').count()['New_cases']
     ndays_w = ndays_w.rename('ndays')
 
     output_df = pd.merge(left=new_w, right=cumulative_w, left_index=True, right_index=True, how='inner')
@@ -60,17 +67,17 @@ def get_covid_trend(configuration, gsheets, jsonout, admininfo, population_looku
     output_df = output_df[output_df['ndays'] == 7]
     output_df = output_df.reset_index()
 
-    output_df['NewCase_PercentChange'] = output_df.groupby('ISO_3_CODE')['NewCase'].pct_change()
-    output_df['NewDeath_PercentChange'] = output_df.groupby('ISO_3_CODE')['NewDeath'].pct_change()
+    output_df['NewCase_PercentChange'] = output_df.groupby('ISO_3_CODE')['New_cases'].pct_change()
+    output_df['NewDeath_PercentChange'] = output_df.groupby('ISO_3_CODE')['New_deaths'].pct_change()
     # For percent change, if the diff is actually 0, change nan to 0
-    output_df['diff_cases'] = output_df.groupby('ISO_3_CODE')['NewCase'].diff()
+    output_df['diff_cases'] = output_df.groupby('ISO_3_CODE')['New_cases'].diff()
     output_df.loc[
         (output_df['NewCase_PercentChange'].isna()) & (output_df['diff_cases'] == 0), 'NewCase_PercentChange'] = 0.0
-    output_df['diff_deaths'] = output_df.groupby('ISO_3_CODE')['NewDeath'].diff()
+    output_df['diff_deaths'] = output_df.groupby('ISO_3_CODE')['New_deaths'].diff()
     output_df.loc[
         (output_df['NewDeath_PercentChange'].isna()) & (output_df['diff_deaths'] == 0), 'NewDeath_PercentChange'] = 0.0
 
-    output_df = output_df[output_df['CumCase'] > MIN_CUMULATIVE_CASES]
+    output_df = output_df[output_df['Cumulative_cases'] > MIN_CUMULATIVE_CASES]
 
     df_pop = pd.DataFrame.from_records(list(population_lookup.items()), columns=['Country Code', 'population'])
 
@@ -78,8 +85,8 @@ def get_covid_trend(configuration, gsheets, jsonout, admininfo, population_looku
     output_df = output_df.merge(df_pop, left_on='ISO_3_CODE', right_on='Country Code', how='left').drop(
         columns=['Country Code'])
     # Get cases per hundred thousand
-    output_df = output_df.rename(columns={'NewCase': 'weekly_new_cases', 'NewDeath': 'weekly_new_deaths',
-                                          'CumCase': 'cumulative_cases', 'CumDeath': 'cumulative_deaths'})
+    output_df = output_df.rename(columns={'New_cases': 'weekly_new_cases', 'New_deaths': 'weekly_new_deaths',
+                                          'Cumulative_cases': 'cumulative_cases', 'Cumulative_deaths': 'cumulative_deaths'})
     output_df['weekly_new_cases_per_ht'] = output_df['weekly_new_cases'] / output_df['population'] * 1E5
     output_df['weekly_new_deaths_per_ht'] = output_df['weekly_new_deaths'] / output_df['population'] * 1E5
     output_df['weekly_new_cases_pc_change'] = output_df['NewCase_PercentChange'] * 100
