@@ -17,19 +17,18 @@ def get_WHO_data(url, admininfo):
     df = df[['Date_reported', 'Country_code', 'Cumulative_cases', 'New_cases', 'New_deaths', 'Cumulative_deaths']]
     df['ISO_3_CODE'] = df['Country_code'].apply(Country.get_iso3_from_iso2)
     df.drop(columns=['Country_code'])
-    df = df.rename(columns={'Date_reported': 'date_epicrv'})
     # get only HRP countries
     df = df.loc[df['ISO_3_CODE'].isin(admininfo.countryiso3s), :]
-    df['date_epicrv'] = pd.to_datetime(df['date_epicrv'])
+    df['Date_reported'] = pd.to_datetime(df['Date_reported'])
 
     # adding global by date
-    df_H63 = df.groupby('date_epicrv').sum()
+    df_H63 = df.groupby('Date_reported').sum()
     df_H63['ISO_3_CODE'] = 'H63'
     df_H63 = df_H63.reset_index()
 
     # adding global H25 by date
     df_H25 = df.loc[df['ISO_3_CODE'].isin(admininfo.hrp_iso3s), :]
-    df_H25 = df_H25.groupby('date_epicrv').sum()
+    df_H25 = df_H25.groupby('Date_reported').sum()
     df_H25['ISO_3_CODE'] = 'H25'
     df_H25 = df_H25.reset_index()
 
@@ -37,7 +36,7 @@ def get_WHO_data(url, admininfo):
     dict_regions = pd.DataFrame(admininfo.iso3_to_region.items(), columns=['ISO3', 'Regional_office'])
     df = pd.merge(left=df, right=dict_regions, left_on='ISO_3_CODE', right_on='ISO3', how='left')
     df = df.drop(labels='ISO3', axis='columns')
-    df_regional = df.groupby(['date_epicrv', 'Regional_office']).sum().reset_index()
+    df_regional = df.groupby(['Date_reported', 'Regional_office']).sum().reset_index()
     df_regional = df_regional.rename(columns={'Regional_office': 'ISO_3_CODE'})
 
     df = df.append(df_H63)
@@ -57,9 +56,9 @@ def get_covid_trend(configuration, gsheets, jsonout, admininfo, population_looku
     df_WHO = get_WHO_data(datasetinfo['url'], admininfo)
 
     # get weekly new cases
-    new_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='date_epicrv').sum()[['New_cases', 'New_deaths']]
-    cumulative_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='date_epicrv').min()[['Cumulative_cases', 'Cumulative_deaths']]
-    ndays_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='date_epicrv').count()['New_cases']
+    new_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='Date_reported').sum()[['New_cases', 'New_deaths']]
+    cumulative_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='Date_reported').min()[['Cumulative_cases', 'Cumulative_deaths']]
+    ndays_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='Date_reported').count()['New_cases']
     ndays_w = ndays_w.rename('ndays')
 
     output_df = pd.merge(left=new_w, right=cumulative_w, left_index=True, right_index=True, how='inner')
@@ -93,7 +92,7 @@ def get_covid_trend(configuration, gsheets, jsonout, admininfo, population_looku
     output_df['weekly_new_deaths_pc_change'] = output_df['NewDeath_PercentChange'] * 100
 
     # Save as JSON
-    output_df['date_epicrv'] = output_df['date_epicrv'].apply(lambda x: x.strftime('%Y-%m-%d'))
+    output_df['Date_reported'] = output_df['Date_reported'].apply(lambda x: x.strftime('%Y-%m-%d'))
     output_df = output_df.drop(
         ['NewCase_PercentChange', 'NewDeath_PercentChange', 'ndays', 'diff_cases', 'diff_deaths'], axis=1)
     gsheets.update_tab(name, output_df)
