@@ -1,28 +1,23 @@
 # -*- coding: utf-8 -*-
 import argparse
-import json
 import logging
 from os import getenv
 from os.path import join, expanduser
 
-import pygsheets
-from google.oauth2 import service_account
-
 from hdx.facades.keyword_arguments import facade
 from hdx.hdx_configuration import Configuration
-from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.downloader import Download
 from hdx.utilities.easy_logging import setup_logging
-from hdx.utilities.saver import save_json
 
-from model.additional_json import add_additional_json
+from utilities.jsonoutput import jsonoutput
 from model.main import get_indicators
+from utilities.googlesheets import googlesheets
 
 setup_logging()
 logger = logging.getLogger()
 
 
-VERSION = 1.0
+VERSION = 2.0
 
 
 def parse_args():
@@ -32,94 +27,31 @@ def parse_args():
     parser.add_argument('-hs', '--hdx_site', default=None, help='HDX site to use')
     parser.add_argument('-gs', '--gsheet_auth', default=None, help='Credentials for accessing Google Sheets')
     parser.add_argument('-us', '--updatespreadsheets', default=None, help='Spreadsheets to update')
-    parser.add_argument('-sc', '--scraper', default=None, help='Scraper to run')
+    parser.add_argument('-sc', '--scrapers', default=None, help='Scrapers to run')
     parser.add_argument('-ut', '--updatetabs', default=None, help='Sheets to update')
     parser.add_argument('-nj', '--nojson', default=False, action='store_true', help='Do not update json')
     args = parser.parse_args()
     return args
 
 
-def generate_json(json, key, rows):
-    hxltags = rows[1]
-    for row in rows[2:]:
-        newrow = dict()
-        for i, hxltag in enumerate(hxltags):
-            value = row[i]
-            if value in [None, '']:
-                continue
-            newrow[hxltag] = str(value)
-        dict_of_lists_add(json, key, newrow)
-
-
-def write_json(configuration, downloader, updatetabs, world, regional, national, nationaltimeseries, subnational, sources, json):
-    logger.info('Writing JSON')
-
-    def update_json(tabname, values):
-        if tabname not in updatetabs:
-            return
-        generate_json(json, '%s_data' % tabname, values)
-
-    update_json('world', world)
-    update_json('regional', regional)
-    update_json('national', national)
-    update_json('national_timeseries', nationaltimeseries)
-    update_json('subnational', subnational)
-    update_json('sources', sources)
-    add_additional_json(configuration, downloader, json)
-    save_json(json, 'out.json')
-
-
-def write_to_gsheets(spreadsheets, updatesheets, tabs, updatetabs, world, regional, national, nationaltimeseries, subnational, sources):
-    # Write to gsheets
-    info = json.loads(gsheet_auth)
-    scopes = ['https://www.googleapis.com/auth/spreadsheets']
-    credentials = service_account.Credentials.from_service_account_info(info, scopes=scopes)
-    gc = pygsheets.authorize(custom_credentials=credentials)
-    for sheet in spreadsheets:
-        if sheet not in updatesheets:
-            continue
-        url = spreadsheets[sheet]
-        spreadsheet = gc.open_by_url(url)
-
-        def update_tab(tabname, values):
-            if tabname not in updatetabs:
-                return
-            tab = spreadsheet.worksheet_by_title(tabs[tabname])
-            tab.clear(fields='*')
-            tab.update_values('A1', values)
-
-        update_tab('world', world)
-        update_tab('regional', regional)
-        update_tab('national', national)
-        update_tab('national_timeseries', nationaltimeseries)
-        update_tab('subnational', subnational)
-        update_tab('sources', sources)
-
-
-def main(gsheet_auth, updatesheets, updatetabs, scraper, nojson, **ignore):
+def main(gsheet_auth, updatesheets, updatetabs, scrapers, nojson, **ignore):
     logger.info('##### hdx-scraper-covid-viz version %.1f ####' % VERSION)
     configuration = Configuration.read()
     with Download(extra_params_yaml=join(expanduser('~'), '.extraparams.yml'), extra_params_lookup='hdx-scraper-fts', rate_limit={'calls': 1, 'period': 1}) as downloader:
-        spreadsheets = configuration['spreadsheets']
-        if updatesheets is None:
-            updatesheets = spreadsheets.keys()
-            logger.info('Updating all spreadsheets')
-        else:
-            logger.info('Updating only these spreadsheets: %s' % updatesheets)
-
+        if scrapers:
+            logger.info('Updating only scrapers: %s' % scrapers)
         tabs = configuration['tabs']
         if updatetabs is None:
             updatetabs = list(tabs.keys())
-            updatetabs.remove('national_timeseries')  ## REMOVING TIMESERIES for now
             logger.info('Updating all tabs')
         else:
             logger.info('Updating only these tabs: %s' % updatetabs)
-        if scraper:
-            logger.info('Updating only scraper: %s' % scraper)
-        world, regional, national, nationaltimeseries, subnational, sources, json = get_indicators(configuration, downloader, updatetabs, scraper)
+        gsheets = googlesheets(configuration, gsheet_auth, updatesheets, tabs, updatetabs)
+        jsonout = jsonoutput(configuration, updatetabs)
+        get_indicators(configuration, downloader, gsheets, jsonout, updatetabs, scrapers)
         if not nojson:
-            write_json(configuration, downloader, updatetabs, world, regional, national, nationaltimeseries, subnational, sources, json)
-        write_to_gsheets(spreadsheets, updatesheets, tabs, updatetabs, world, regional, national, nationaltimeseries, subnational, sources)
+            jsonout.add_additional_json(downloader)
+            jsonout.save()
 
 
 if __name__ == '__main__':
@@ -149,6 +81,10 @@ if __name__ == '__main__':
         updatetabs = args.updatetabs.split(',')
     else:
         updatetabs = None
+    if args.scrapers:
+        scrapers = args.scrapers.split(',')
+    else:
+        scrapers = None
     facade(main, hdx_read_only=True, user_agent=user_agent, preprefix=preprefix, hdx_site=hdx_site,
            project_config_yaml=join('config', 'project_configuration.yml'), gsheet_auth=gsheet_auth,
-           updatesheets=updatesheets, updatetabs=updatetabs, scraper=args.scraper, nojson=args.nojson)
+           updatesheets=updatesheets, updatetabs=updatetabs, scrapers=scrapers, nojson=args.nojson)

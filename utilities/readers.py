@@ -7,7 +7,8 @@ from hdx.utilities.path import temp_dir
 from jsonpath_ng import parse
 from olefile import olefile
 
-from model import template, get_date_from_dataset_date
+from model import template
+from utilities import get_date_from_dataset_date
 
 logger = logging.getLogger(__name__)
 

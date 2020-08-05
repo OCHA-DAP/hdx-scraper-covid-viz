@@ -10,8 +10,9 @@ from model import today_str
 logger = logging.getLogger(__name__)
 
 
-def get_whowhatwhere(configuration, admininfo, downloader, scraper=None):
-    if scraper and scraper not in inspect.currentframe().f_code.co_name:
+def get_whowhatwhere(configuration, admininfo, downloader, scrapers=None):
+    name = inspect.currentframe().f_code.co_name
+    if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list()
     threew_url = configuration['3w_url']
     headers, iterator = downloader.get_tabular_rows(threew_url, headers=1, dict_form=True, format='csv')

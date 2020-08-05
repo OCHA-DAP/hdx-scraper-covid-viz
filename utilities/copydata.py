@@ -2,8 +2,8 @@
 import logging
 
 from model import today_str
-from model.rowparser import RowParser
-from model.readers import read_tabular, read_ole, read_hdx
+from utilities.rowparser import RowParser
+from utilities.readers import read_tabular, read_ole, read_hdx
 
 logger = logging.getLogger(__name__)
 
@@ -50,13 +50,13 @@ def _get_copy(level, name, datasetinfo, headers, iterator, retheaders=[list(), l
     return retheaders, retval, sources
 
 
-def get_copy(configuration, level, downloader, scraper=None, **kwargs):
+def get_copy(configuration, level, downloader, scrapers=None, **kwargs):
     datasets = configuration['copy_%s' % level]
     retheaders = [list(), list()]
     retval = list()
     sources = list()
     for name in datasets:
-        if scraper and scraper not in name:
+        if scrapers and not any(scraper in name for scraper in scrapers):
             continue
         datasetinfo = datasets[name]
         format = datasetinfo['format']

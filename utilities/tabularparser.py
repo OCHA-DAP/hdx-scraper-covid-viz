@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 import logging
-import re
 
 import regex
-from datetime import datetime
-from hdx.location.country import Country
-
 
 from hdx.utilities.dateparse import parse_date, get_datetime_from_timestamp
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.text import number_format, get_fraction_str, get_numeric_if_possible
 
-from model import today, today_str, get_rowval
-from model.rowparser import RowParser
-from model.readers import read_tabular, read_ole, read_json, read_hdx
+from model import today_str
+from utilities import get_rowval
+from utilities.rowparser import RowParser
+from utilities.readers import read_tabular, read_ole, read_json, read_hdx
 
 logger = logging.getLogger(__name__)
 
@@ -204,13 +201,13 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
     return retheaders, retval, sources
 
 
-def get_tabular(configuration, level, downloader, scraper=None, **kwargs):
+def get_tabular(configuration, level, downloader, scrapers=None, **kwargs):
     datasets = configuration['tabular_%s' % level]
     retheaders = [list(), list()]
     retval = list()
     sources = list()
     for name in datasets:
-        if scraper and scraper not in name and name != 'population':
+        if scrapers and not any(scraper in name for scraper in scrapers) and name != 'population':
             continue
         datasetinfo = datasets[name]
         format = datasetinfo['format']

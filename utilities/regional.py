@@ -51,7 +51,7 @@ def get_regional(configuration, national_headers, national_columns, admininfo):
         action = val_fns[header]
         column = regional_columns[i]
         for countryiso in column:
-            for region in admininfo.iso3_to_regions[countryiso]:
+            for region in admininfo.iso3_to_region_and_hrp[countryiso]:
                 dict_of_lists_add(valdict, region, column[countryiso])
         if action == 'sum':
             for region, valuelist in valdict.items():

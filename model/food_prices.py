@@ -4,14 +4,14 @@ import logging
 from hdx.location.country import Country
 
 from model import today, calculate_ratios
-from model.readers import read_hdx
+from utilities.readers import read_hdx
 
 logger = logging.getLogger(__name__)
 
 
-def add_food_prices(configuration, countryiso3s, downloader, scraper=None):
+def add_food_prices(configuration, countryiso3s, downloader, scrapers=None):
     name = 'food_prices'
-    if scraper and scraper != name:
+    if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list()
     datasetinfo = configuration[name]
     headers, iterator = read_hdx(downloader, datasetinfo)

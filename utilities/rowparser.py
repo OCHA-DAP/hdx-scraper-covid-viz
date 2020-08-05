@@ -2,11 +2,10 @@
 import copy
 from datetime import datetime
 
-from hdx.location.country import Country
 from hdx.utilities.dateparse import parse_date
 
 from model import template
-from model.admininfo import AdminInfo
+from utilities.admininfo import AdminInfo
 
 
 class RowParser(object):

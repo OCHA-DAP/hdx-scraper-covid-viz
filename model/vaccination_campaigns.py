@@ -4,14 +4,14 @@ import logging
 from hdx.utilities.dictandlist import dict_of_lists_add
 
 from model import calculate_ratios
-from model.readers import read_hdx
+from utilities.readers import read_hdx
 
 logger = logging.getLogger(__name__)
 
 
-def add_vaccination_campaigns(configuration, countryiso3s, downloader, json, scraper):
+def add_vaccination_campaigns(configuration, countryiso3s, downloader, jsonout, scrapers=None):
     name = 'vaccination_campaigns'
-    if scraper and scraper != name:
+    if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list()
     datasetinfo = configuration[name]
     headers, iterator = read_hdx(downloader, datasetinfo)
@@ -36,7 +36,7 @@ def add_vaccination_campaigns(configuration, countryiso3s, downloader, json, scr
                     if value != 'On track':
                         affected_campaigns_per_country[countryiso] = affected_campaigns_per_country.get(countryiso, 0) + 1
         if countryiso:
-            dict_of_lists_add(json, '%s_data' % name, newrow)
+            jsonout.add_data_row(name, newrow)
     ratios = calculate_ratios(campaigns_per_country, affected_campaigns_per_country)
     hxltag = '#vaccination+num+ratio'
     logger.info('Processed vaccination campaigns')

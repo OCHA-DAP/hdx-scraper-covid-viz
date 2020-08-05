@@ -7,8 +7,8 @@ from hdx.location.country import Country
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.text import get_fraction_str
 
-from model import get_date_from_dataset_date
-from model.readers import read_tabular
+from utilities import get_date_from_dataset_date
+from utilities.readers import read_tabular
 
 logger = logging.getLogger(__name__)
 
@@ -35,8 +35,9 @@ def get_data(downloader, url, countryiso2):
     return None, None
 
 
-def get_ipc(configuration, admininfo, downloader, scraper=None):
-    if scraper and scraper not in inspect.currentframe().f_code.co_name:
+def get_ipc(configuration, admininfo, downloader, scrapers=None):
+    name = inspect.currentframe().f_code.co_name
+    if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list()
     ipc_configuration = configuration['ipc']
     url = ipc_configuration['url']

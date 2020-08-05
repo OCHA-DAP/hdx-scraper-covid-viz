@@ -1,24 +1,25 @@
-spreadsheets:
-  prod: "https://docs.google.com/spreadsheets/d/1bbOp3N-pdW65HoxIYj1tVY4zLfTD4mbpaOZ5ZfrZE54/edit"
-  test: "https://docs.google.com/spreadsheets/d/1zS2gGeo5CHzucdKzyMYH_27dHlK2uyVqQwUDwlgfRlo/edit"
-  scratch: "https://docs.google.com/spreadsheets/d/1f9GpnTvgY6sTMYkj8ynctHTXezRKQk49udIoPQ5-3Hc/edit"
-
 tabs:
   world: "WorldData"
   regional: "RegionalData"
   national: "NationalData"
-  national_timeseries: "NationalTimeSeries"
   subnational: "SubnationalData"
+  covid_trend: "CovidTrend"
   sources: "Sources"
+
+
+googlesheets:
+  prod: "https://docs.google.com/spreadsheets/d/1bbOp3N-pdW65HoxIYj1tVY4zLfTD4mbpaOZ5ZfrZE54/edit"
+  test: "https://docs.google.com/spreadsheets/d/1zS2gGeo5CHzucdKzyMYH_27dHlK2uyVqQwUDwlgfRlo/edit"
+  scratch: "https://docs.google.com/spreadsheets/d/1f9GpnTvgY6sTMYkj8ynctHTXezRKQk49udIoPQ5-3Hc/edit"
+
+json:
+  filepath: "out.json"
 
 additional_sources:
   - indicator: "#food-prices"
     dataset: "wfp-food-prices"
   - indicator: "#vaccination-campaigns"
     dataset: "immunization-campaigns-impacted"
-  - indicator: "#covid+cases+per+capita"
-    dataset: "coronavirus-covid-19-cases-and-deaths"
-    force_date_today: True
 
 # global
 tabular_global:
@@ -478,6 +479,12 @@ vaccination_campaigns:
 unhcr:
   url: "https://data2.unhcr.org/api/population/get?population_collection=4&geo_id="
   source_url: "https://data2.unhcr.org/en/countries/"
+
+covid_trend:
+  format: "csv"
+  dataset: "coronavirus-covid-19-cases-and-deaths"
+  headers: 1
+  hxltag: "#covid+cases+per+capita"
 
 access_constraints:
   format: "xlsx"

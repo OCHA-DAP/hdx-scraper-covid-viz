@@ -6,7 +6,7 @@ from hdx.location.country import Country
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.text import get_fraction_str
 
-from model.readers import read_tabular, read_hdx
+from utilities.readers import read_tabular, read_hdx
 
 logger = logging.getLogger(__name__)
 
@@ -25,8 +25,9 @@ def process_range(ranges, score):
     raise ValueError('Score %s not found in ranges!' % score)
 
 
-def get_access(configuration, admininfo, downloader, scraper=None):
-    if scraper and scraper not in inspect.currentframe().f_code.co_name:
+def get_access(configuration, admininfo, downloader, scrapers=None):
+    name = inspect.currentframe().f_code.co_name
+    if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list(), list(), list(), list(), list(), list(), list()
     access_configuration = configuration['access_constraints']
     ranking_url = access_configuration['ranking_url']
@@ -41,7 +42,7 @@ def get_access(configuration, admininfo, downloader, scraper=None):
     for row in rows:
         countryiso = row['iso3']
         nocountries_per_region['global'] += 1
-        for region in admininfo.iso3_to_regions.get(countryiso, list()):
+        for region in admininfo.iso3_to_region_and_hrp.get(countryiso, list()):
             nocountries_per_region[region] += 1
         for sheet in sheets:
             if '%s_1' % sheet not in row:
@@ -69,7 +70,7 @@ def get_access(configuration, admininfo, downloader, scraper=None):
                 text = row[textcol]
                 dict_of_lists_add(countrydata, 'text', (newscore, text))
                 for region, top3countsregion in top3counts.items():
-                    if region != 'global' and region not in admininfo.iso3_to_regions.get(countryiso, list()):
+                    if region != 'global' and region not in admininfo.iso3_to_region_and_hrp.get(countryiso, list()):
                         continue
                     top3countssheet = top3countsregion.get(sheet, dict())
                     if sheet == 'impact':
@@ -88,7 +89,7 @@ def get_access(configuration, admininfo, downloader, scraper=None):
             else:
                 dict_of_lists_add(countrydata, 'text', (newscore, newscore))
                 for region, top3countsregion in top3counts.items():
-                    if region != 'global' and region not in admininfo.iso3_to_regions.get(countryiso, list()):
+                    if region != 'global' and region not in admininfo.iso3_to_region_and_hrp.get(countryiso, list()):
                         continue
                     top3countssheet = top3countsregion.get(sheet, dict())
                     if newscore == 'yes':

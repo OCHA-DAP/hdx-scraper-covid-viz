@@ -10,7 +10,7 @@ from hdx.utilities.text import multiple_replace
 import pyphonetics
 from unidecode import unidecode
 
-from model.readers import read_hdx
+from utilities.readers import read_hdx
 
 logger = logging.getLogger(__name__)
 
@@ -53,14 +53,15 @@ class AdminInfo(object):
         self.adms = [self.countryiso3s, self.pcodes]
         self.iso3s_no_pcodes = sorted(list(iso3s_no_pcodes))
         self.hrp_iso3s = sorted(list(self.name_to_pcode.keys()))
-        self.regions, self.iso3_to_regions = self.read_regional(configuration, self.countryiso3s, self.hrp_iso3s, downloader)
+        self.regions, self.iso3_to_region, self.iso3_to_region_and_hrp = self.read_regional(configuration, self.countryiso3s, self.hrp_iso3s, downloader)
         self.init_matches_errors()
 
     @staticmethod
     def read_regional(configuration, countryiso3s, hrp_iso3s, downloader):
         regional_config = configuration['regional']
         _, iterator = read_hdx(downloader, regional_config)
-        iso3_to_regions = dict()
+        iso3_to_region = dict()
+        iso3_to_region_and_hrp = dict()
         regions = set()
         for row in iterator:
             countryiso = row[regional_config['iso3']]
@@ -69,15 +70,16 @@ class AdminInfo(object):
                 if region == 'NO COVERAGE':
                     continue
                 regions.add(region)
-                dict_of_sets_add(iso3_to_regions, countryiso, region)
+                dict_of_sets_add(iso3_to_region_and_hrp, countryiso, region)
+                iso3_to_region[countryiso] = region
         regions = sorted(list(regions))
         region = 'H25'
         regions.insert(0, region)
         for countryiso in hrp_iso3s:
-            dict_of_sets_add(iso3_to_regions, countryiso, region)
-        return regions, iso3_to_regions
+            dict_of_sets_add(iso3_to_region_and_hrp, countryiso, region)
+        return regions, iso3_to_region, iso3_to_region_and_hrp
 
-    def init_matches_errors(self, scraper=None):
+    def init_matches_errors(self):
         self.matches = set()
         self.ignored = set()
         self.errors = set()

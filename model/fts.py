@@ -174,8 +174,9 @@ def map_planname(origname):
     return name
 
 
-def get_fts(configuration, countryiso3s, downloader, scraper=None):
-    if scraper and scraper not in inspect.currentframe().f_code.co_name:
+def get_fts(configuration, countryiso3s, downloader, scrapers=None):
+    name = inspect.currentframe().f_code.co_name
+    if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list(), list(), list(), list()
     hrp_requirements = dict()
     hrp_funding = dict()
@@ -218,12 +219,14 @@ def get_fts(configuration, countryiso3s, downloader, scraper=None):
             return
         if req or fund or gbvfund:
             rows.append([name, req, fund, gbvfund])
-            logger.info('%s: Requirements=%d, Funding=%d, GBV Funding=%d' % (name, req, fund, gbvfund))
             if req:
+                logger.info('%s: Requirements=%d' % (name, req))
                 total_covidreq += req
             if fund:
+                logger.info('%s: Funding=%d' % (name, fund))
                 total_covidfund += fund
             if gbvfund:
+                logger.info('%s: GBV Funding=%d' % (name, gbvfund))
                 total_gbvfund += gbvfund
 
     url = '%sfts/flow/plan/overview/progress/%d' % (v2_url, today.year)
