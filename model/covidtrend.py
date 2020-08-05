@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import numpy
 import pandas as pd
 
 # filename for shapefile and WHO input dataset
@@ -89,7 +90,7 @@ def get_covid_trend(configuration, gsheets, jsonout, admininfo, population_looku
     output_df = output_df.drop(
         ['NewCase_PercentChange', 'NewDeath_PercentChange', 'ndays', 'diff_cases', 'diff_deaths'], axis=1)
     gsheets.update_tab(name, output_df)
-    json_df = output_df.groupby('ISO_3_CODE').apply(lambda x: x.to_dict('r'))
+    json_df = output_df.replace([numpy.inf, -numpy.inf], '').groupby('ISO_3_CODE').apply(lambda x: x.to_dict('r'))
     for rows in json_df:
         countryiso = rows[0]['ISO_3_CODE']
         jsonout.add_data_rows_by_key(name, countryiso, rows)
