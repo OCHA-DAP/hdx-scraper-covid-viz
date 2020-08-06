@@ -152,12 +152,12 @@ tabular_national:
   who_national:
     format: "csv"
     dataset: "coronavirus-covid-19-cases-and-deaths"
-    force_date_today: True
     headers: 1
     adm_cols:
       - "Country_code"
     date_col: "Date_reported"
     date_type: "date"
+    use_date_from_date_col: True
     val_cols:
       - "Cumulative_cases"
       - "Cumulative_deaths"

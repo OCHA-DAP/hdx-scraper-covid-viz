@@ -54,6 +54,7 @@ def get_covid_trend(configuration, gsheets, jsonout, admininfo, population_looku
 
     # get WHO data and calculate sum as 'H63'
     df_WHO = get_WHO_data(datasetinfo['url'], admininfo)
+    source_date = max(df_WHO['Date_reported']).strftime('%Y-%m-%d')
 
     # get weekly new cases
     new_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='Date_reported').sum()[['New_cases', 'New_deaths']]
@@ -91,13 +92,13 @@ def get_covid_trend(configuration, gsheets, jsonout, admininfo, population_looku
     output_df['weekly_new_cases_pc_change'] = output_df['NewCase_PercentChange'] * 100
     output_df['weekly_new_deaths_pc_change'] = output_df['NewDeath_PercentChange'] * 100
 
-    # Save as JSON
     output_df['Date_reported'] = output_df['Date_reported'].apply(lambda x: x.strftime('%Y-%m-%d'))
     output_df = output_df.drop(
         ['NewCase_PercentChange', 'NewDeath_PercentChange', 'ndays', 'diff_cases', 'diff_deaths'], axis=1)
     gsheets.update_tab(name, output_df)
+    # Save as JSON
     json_df = output_df.replace([numpy.inf, -numpy.inf], '').groupby('ISO_3_CODE').apply(lambda x: x.to_dict('r'))
     for rows in json_df:
         countryiso = rows[0]['ISO_3_CODE']
         jsonout.add_data_rows_by_key(name, countryiso, rows)
-    return [(datasetinfo['hxltag'], today_str, datasetinfo['source'], datasetinfo['source_url'])]
+    return [(datasetinfo['hxltag'], source_date, datasetinfo['source'], datasetinfo['source_url'])]

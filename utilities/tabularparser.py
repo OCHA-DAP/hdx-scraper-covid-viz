@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+from datetime import datetime
 
 import regex
 
@@ -86,14 +87,16 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
             add_row(newrow)
 
     date = datasetinfo.get('date')
-    if date:
+    use_date_from_date_col = datasetinfo.get('use_date_from_date_col', False)
+    if date and not use_date_from_date_col:
         date = parse_date(date)
     else:
         date = rowparser.get_maxdate()
         if date == 0:
             raise ValueError('No date given in datasetinfo or as a column!')
         if rowparser.datetype == 'date':
-            date = parse_date(date)
+            if not isinstance(date, datetime):
+                date = parse_date(date)
         elif rowparser.datetype == 'int':
             date = get_datetime_from_timestamp(date)
         else:
