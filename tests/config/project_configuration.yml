@@ -50,7 +50,7 @@ tabular_global:
           - "#value+cerf+covid+funding+total+usd"
   ifi_global:
     format: "csv"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRx-USUBIVUcLq8N8ix48if9h4e4YZBg8x7DYT_Up7QdZtenN91DwdTlFB5BbTxkY88pv8cBl-dQGG7/pub?gid=2095204371&single=true&output=csv"
+    url: "tests/fixtures/Tracker COVID - Country Summary_HDX.csv"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
     force_date_today: True
     headers: 1
@@ -111,18 +111,18 @@ regional:
 #    "LSHTM: Total Cases(max)": "sum"
 #    "LSHTM: Total Deaths(min)": "sum"
 #    "LSHTM: Total Deaths(max)": "sum"
-    "CBPFCovidFunding": "sum"
-    "CERFCovidFunding": "sum"
-    "RequiredHRPFunding": "sum"
-    "HRPFunding": "sum"
-    "HRPPercentFunded": "get_fraction_str(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
-    "RequiredHRPCovidFunding": "sum"
-    "HRPCovidFunding": "sum"
-    "HRPCovidPercentFunded": "get_fraction_str(HRPCovidFunding, RequiredHRPCovidFunding) if HRPCovidFunding is not None and RequiredHRPCovidFunding is not None else ''"
-    "HRPGBVFunding": "sum"
-    "RequiredOtherPlansFunding": "sum"
-    "OtherPlansFunding": "sum"
-    "OtherPlansPercentFunded": "get_fraction_str(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
+#    "CBPFCovidFunding": "sum"
+#    "CERFCovidFunding": "sum"
+#    "RequiredHRPFunding": "sum"
+#    "HRPFunding": "sum"
+#    "HRPPercentFunded": "get_fraction_str(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
+#    "RequiredHRPCovidFunding": "sum"
+#    "HRPCovidFunding": "sum"
+#    "HRPCovidPercentFunded": "get_fraction_str(HRPCovidFunding, RequiredHRPCovidFunding) if HRPCovidFunding is not None and RequiredHRPCovidFunding is not None else ''"
+#    "HRPGBVFunding": "sum"
+#    "RequiredOtherPlansFunding": "sum"
+#    "OtherPlansFunding": "sum"
+#    "OtherPlansPercentFunded": "get_fraction_str(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
 #    "TotalRefugees": "sum"
 
 # national
@@ -131,7 +131,7 @@ tabular_national:
     source: "World Bank"
     source_url: "https://data.humdata.org/organization/world-bank-group"
     format: "xls"
-    url: "http://api.worldbank.org/v2/en/indicator/SP.POP.TOTL?downloadformat=excel&dataformat=list"
+    url: "tests/fixtures/API_SP.POP.TOTL_DS2_en_excel_v2_1302508_LIST.xls"
     sheet: "Data"
     headers: 3
     adm_cols:
@@ -147,6 +147,7 @@ tabular_national:
   who_national:
     format: "csv"
     dataset: "coronavirus-covid-19-cases-and-deaths"
+    url: "tests/fixtures/WHO-COVID-19-global-data.csv"
     headers: 1
     adm_cols:
       - "Country_code"
@@ -212,7 +213,7 @@ tabular_national:
       - "#severity+economic+num"
   ifi_national:
     format: "csv"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRx-USUBIVUcLq8N8ix48if9h4e4YZBg8x7DYT_Up7QdZtenN91DwdTlFB5BbTxkY88pv8cBl-dQGG7/pub?gid=2095204371&single=true&output=csv"
+    url: "tests/fixtures/Tracker COVID - Country Summary_HDX.csv"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
     force_date_today: True
     headers: 1
@@ -478,6 +479,7 @@ unhcr:
 covid_trend:
   format: "csv"
   dataset: "coronavirus-covid-19-cases-and-deaths"
+  url: "tests/fixtures/WHO-COVID-19-global-data.csv"
   headers: 1
   hxltag: "#covid+cases+per+capita"
 

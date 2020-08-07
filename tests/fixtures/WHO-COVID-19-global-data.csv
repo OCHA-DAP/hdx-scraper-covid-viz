@@ -1,0 +1,322 @@
+Date_reported, Country_code, Country, WHO_region, New_cases, Cumulative_cases, New_deaths, Cumulative_deaths
+2020-02-24,AF,Afghanistan,EMRO,5,5,0,0
+2020-02-25,AF,Afghanistan,EMRO,0,5,0,0
+2020-02-26,AF,Afghanistan,EMRO,0,5,0,0
+2020-02-27,AF,Afghanistan,EMRO,0,5,0,0
+2020-02-28,AF,Afghanistan,EMRO,0,5,0,0
+2020-02-29,AF,Afghanistan,EMRO,0,5,0,0
+2020-03-01,AF,Afghanistan,EMRO,0,5,0,0
+2020-03-02,AF,Afghanistan,EMRO,0,5,0,0
+2020-03-03,AF,Afghanistan,EMRO,0,5,0,0
+2020-03-04,AF,Afghanistan,EMRO,0,5,0,0
+2020-03-05,AF,Afghanistan,EMRO,0,5,0,0
+2020-03-06,AF,Afghanistan,EMRO,0,5,0,0
+2020-03-07,AF,Afghanistan,EMRO,3,8,0,0
+2020-03-08,AF,Afghanistan,EMRO,0,8,0,0
+2020-03-09,AF,Afghanistan,EMRO,0,8,0,0
+2020-03-10,AF,Afghanistan,EMRO,0,8,0,0
+2020-03-11,AF,Afghanistan,EMRO,3,11,0,0
+2020-03-12,AF,Afghanistan,EMRO,0,11,0,0
+2020-03-13,AF,Afghanistan,EMRO,0,11,0,0
+2020-03-14,AF,Afghanistan,EMRO,3,14,0,0
+2020-03-15,AF,Afghanistan,EMRO,6,20,0,0
+2020-03-16,AF,Afghanistan,EMRO,5,25,0,0
+2020-03-17,AF,Afghanistan,EMRO,1,26,0,0
+2020-03-18,AF,Afghanistan,EMRO,0,26,0,0
+2020-03-19,AF,Afghanistan,EMRO,0,26,0,0
+2020-03-20,AF,Afghanistan,EMRO,-2,24,0,0
+2020-03-21,AF,Afghanistan,EMRO,0,24,0,0
+2020-03-22,AF,Afghanistan,EMRO,10,34,0,0
+2020-03-23,AF,Afghanistan,EMRO,6,40,1,1
+2020-03-24,AF,Afghanistan,EMRO,2,42,0,1
+2020-03-25,AF,Afghanistan,EMRO,32,74,0,1
+2020-03-26,AF,Afghanistan,EMRO,6,80,1,2
+2020-03-27,AF,Afghanistan,EMRO,11,91,0,2
+2020-03-28,AF,Afghanistan,EMRO,15,106,1,3
+2020-03-29,AF,Afghanistan,EMRO,8,114,1,4
+2020-03-30,AF,Afghanistan,EMRO,0,114,0,4
+2020-03-31,AF,Afghanistan,EMRO,52,166,0,4
+2020-04-01,AF,Afghanistan,EMRO,26,192,0,4
+2020-04-02,AF,Afghanistan,EMRO,43,235,0,4
+2020-04-03,AF,Afghanistan,EMRO,34,269,1,5
+2020-04-04,AF,Afghanistan,EMRO,1,270,0,5
+2020-04-05,AF,Afghanistan,EMRO,29,299,2,7
+2020-04-06,AF,Afghanistan,EMRO,38,337,0,7
+2020-04-07,AF,Afghanistan,EMRO,30,367,4,11
+2020-04-08,AF,Afghanistan,EMRO,56,423,3,14
+2020-04-09,AF,Afghanistan,EMRO,61,484,1,15
+2020-04-10,AF,Afghanistan,EMRO,37,521,0,15
+2020-04-11,AF,Afghanistan,EMRO,0,521,0,15
+2020-04-12,AF,Afghanistan,EMRO,34,555,3,18
+2020-04-13,AF,Afghanistan,EMRO,110,665,3,21
+2020-04-14,AF,Afghanistan,EMRO,49,714,2,23
+2020-04-15,AF,Afghanistan,EMRO,70,784,2,25
+2020-04-16,AF,Afghanistan,EMRO,10,794,4,29
+2020-04-17,AF,Afghanistan,EMRO,51,845,1,30
+2020-04-18,AF,Afghanistan,EMRO,63,908,0,30
+2020-04-19,AF,Afghanistan,EMRO,88,996,3,33
+2020-04-20,AF,Afghanistan,EMRO,0,996,0,33
+2020-04-21,AF,Afghanistan,EMRO,96,1092,3,36
+2020-04-22,AF,Afghanistan,EMRO,84,1176,4,40
+2020-04-23,AF,Afghanistan,EMRO,0,1176,0,40
+2020-04-24,AF,Afghanistan,EMRO,50,1226,0,40
+2020-04-25,AF,Afghanistan,EMRO,237,1463,7,47
+2020-04-26,AF,Afghanistan,EMRO,0,1463,2,49
+2020-04-27,AF,Afghanistan,EMRO,240,1703,8,57
+2020-04-28,AF,Afghanistan,EMRO,124,1827,3,60
+2020-04-29,AF,Afghanistan,EMRO,0,1827,0,60
+2020-04-30,AF,Afghanistan,EMRO,344,2171,4,64
+2020-05-01,AF,Afghanistan,EMRO,0,2171,0,64
+2020-05-02,AF,Afghanistan,EMRO,298,2469,8,72
+2020-05-03,AF,Afghanistan,EMRO,0,2469,0,72
+2020-05-04,AF,Afghanistan,EMRO,0,2469,0,72
+2020-05-05,AF,Afghanistan,EMRO,755,3224,23,95
+2020-05-06,AF,Afghanistan,EMRO,168,3392,9,104
+2020-05-07,AF,Afghanistan,EMRO,171,3563,1,105
+2020-05-08,AF,Afghanistan,EMRO,0,3563,0,105
+2020-05-09,AF,Afghanistan,EMRO,478,4041,10,115
+2020-05-10,AF,Afghanistan,EMRO,361,4402,4,119
+2020-05-11,AF,Afghanistan,EMRO,262,4664,2,121
+2020-05-12,AF,Afghanistan,EMRO,303,4967,6,127
+2020-05-13,AF,Afghanistan,EMRO,259,5226,3,130
+2020-05-14,AF,Afghanistan,EMRO,113,5339,6,136
+2020-05-15,AF,Afghanistan,EMRO,714,6053,17,153
+2020-05-16,AF,Afghanistan,EMRO,349,6402,15,168
+2020-05-17,AF,Afghanistan,EMRO,262,6664,1,169
+2020-05-18,AF,Afghanistan,EMRO,408,7072,4,173
+2020-05-19,AF,Afghanistan,EMRO,583,7655,4,177
+2020-05-20,AF,Afghanistan,EMRO,490,8145,10,187
+2020-05-21,AF,Afghanistan,EMRO,531,8676,6,193
+2020-05-22,AF,Afghanistan,EMRO,540,9216,12,205
+2020-05-23,AF,Afghanistan,EMRO,650,9866,6,211
+2020-05-24,AF,Afghanistan,EMRO,716,10582,7,218
+2020-05-25,AF,Afghanistan,EMRO,512,11094,1,219
+2020-05-26,AF,Afghanistan,EMRO,737,11831,1,220
+2020-05-27,AF,Afghanistan,EMRO,548,12379,6,226
+2020-05-28,AF,Afghanistan,EMRO,637,13016,9,235
+2020-05-29,AF,Afghanistan,EMRO,643,13659,11,246
+2020-05-30,AF,Afghanistan,EMRO,784,14443,2,248
+2020-05-31,AF,Afghanistan,EMRO,651,15094,2,250
+2020-06-01,AF,Afghanistan,EMRO,656,15750,15,265
+2020-06-02,AF,Afghanistan,EMRO,742,16492,5,270
+2020-06-03,AF,Afghanistan,EMRO,775,17267,24,294
+2020-06-04,AF,Afghanistan,EMRO,624,17891,5,299
+2020-06-05,AF,Afghanistan,EMRO,1078,18969,10,309
+2020-06-06,AF,Afghanistan,EMRO,582,19551,18,327
+2020-06-07,AF,Afghanistan,EMRO,791,20342,30,357
+2020-06-08,AF,Afghanistan,EMRO,575,20917,12,369
+2020-06-09,AF,Afghanistan,EMRO,305,21222,7,376
+2020-06-10,AF,Afghanistan,EMRO,920,22142,29,405
+2020-06-11,AF,Afghanistan,EMRO,748,22890,21,426
+2020-06-12,AF,Afghanistan,EMRO,656,23546,20,446
+2020-06-13,AF,Afghanistan,EMRO,556,24102,5,451
+2020-06-14,AF,Afghanistan,EMRO,664,24766,20,471
+2020-06-15,AF,Afghanistan,EMRO,761,25527,5,476
+2020-06-16,AF,Afghanistan,EMRO,106,25633,8,484
+2020-06-17,AF,Afghanistan,EMRO,1241,26874,20,504
+2020-06-18,AF,Afghanistan,EMRO,463,27337,42,546
+2020-06-19,AF,Afghanistan,EMRO,541,27878,2,548
+2020-06-20,AF,Afghanistan,EMRO,419,28297,0,548
+2020-06-21,AF,Afghanistan,EMRO,536,28833,33,581
+2020-06-22,AF,Afghanistan,EMRO,310,29143,17,598
+2020-06-23,AF,Afghanistan,EMRO,338,29481,20,618
+2020-06-24,AF,Afghanistan,EMRO,159,29640,21,639
+2020-06-25,AF,Afghanistan,EMRO,535,30175,36,675
+2020-06-26,AF,Afghanistan,EMRO,85,30260,5,680
+2020-06-27,AF,Afghanistan,EMRO,356,30616,23,703
+2020-06-28,AF,Afghanistan,EMRO,351,30967,26,729
+2020-06-29,AF,Afghanistan,EMRO,271,31238,4,733
+2020-06-30,AF,Afghanistan,EMRO,0,31238,0,733
+2020-07-01,AF,Afghanistan,EMRO,524,31762,41,774
+2020-07-02,AF,Afghanistan,EMRO,260,32022,33,807
+2020-07-03,AF,Afghanistan,EMRO,302,32324,12,819
+2020-07-04,AF,Afghanistan,EMRO,348,32672,7,826
+2020-07-05,AF,Afghanistan,EMRO,279,32951,38,864
+2020-07-06,AF,Afghanistan,EMRO,113,33064,23,887
+2020-07-07,AF,Afghanistan,EMRO,320,33384,33,920
+2020-07-08,AF,Afghanistan,EMRO,210,33594,16,936
+2020-07-09,AF,Afghanistan,EMRO,59,33653,1,937
+2020-07-10,AF,Afghanistan,EMRO,541,34194,34,971
+2020-07-11,AF,Afghanistan,EMRO,157,34351,4,975
+2020-07-12,AF,Afghanistan,EMRO,100,34451,35,1010
+2020-07-13,AF,Afghanistan,EMRO,0,34451,0,1010
+2020-07-14,AF,Afghanistan,EMRO,289,34740,35,1045
+2020-07-15,AF,Afghanistan,EMRO,200,34940,49,1094
+2020-07-16,AF,Afghanistan,EMRO,130,35070,19,1113
+2020-07-17,AF,Afghanistan,EMRO,159,35229,34,1147
+2020-07-18,AF,Afghanistan,EMRO,60,35289,0,1147
+2020-07-19,AF,Afghanistan,EMRO,186,35475,34,1181
+2020-07-20,AF,Afghanistan,EMRO,34,35509,2,1183
+2020-07-21,AF,Afghanistan,EMRO,106,35615,1,1184
+2020-07-22,AF,Afghanistan,EMRO,112,35727,6,1190
+2020-07-23,AF,Afghanistan,EMRO,188,35915,21,1211
+2020-07-24,AF,Afghanistan,EMRO,66,35981,14,1225
+2020-07-25,AF,Afghanistan,EMRO,55,36036,21,1246
+2020-07-26,AF,Afghanistan,EMRO,121,36157,13,1259
+2020-07-27,AF,Afghanistan,EMRO,106,36263,10,1269
+2020-07-28,AF,Afghanistan,EMRO,105,36368,1,1270
+2020-07-29,AF,Afghanistan,EMRO,103,36471,1,1271
+2020-07-30,AF,Afghanistan,EMRO,71,36542,0,1271
+2020-07-31,AF,Afghanistan,EMRO,0,36542,0,1271
+2020-08-01,AF,Afghanistan,EMRO,168,36710,12,1283
+2020-08-02,AF,Afghanistan,EMRO,0,36710,0,1283
+2020-08-03,AF,Afghanistan,EMRO,0,36710,0,1283
+2020-08-04,AF,Afghanistan,EMRO,37,36747,5,1288
+2020-08-05,AF,Afghanistan,EMRO,82,36829,6,1294
+2020-08-06,AF,Afghanistan,EMRO,67,36896,4,1298
+2020-03-05,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,11,11,0,0
+2020-03-06,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,9,20,0,0
+2020-03-07,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,20,0,0
+2020-03-08,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,3,23,0,0
+2020-03-09,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,6,29,0,0
+2020-03-10,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,4,33,0,0
+2020-03-11,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,1,34,0,0
+2020-03-12,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,1,35,0,0
+2020-03-13,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,4,39,0,0
+2020-03-14,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,3,42,0,0
+2020-03-15,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,42,0,0
+2020-03-16,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,1,43,0,0
+2020-03-17,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,2,45,0,0
+2020-03-18,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,45,0,0
+2020-03-19,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,6,51,0,0
+2020-03-20,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,-3,48,0,0
+2020-03-21,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,4,52,0,0
+2020-03-22,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,7,59,0,0
+2020-03-23,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,59,0,0
+2020-03-24,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,1,60,0,0
+2020-03-25,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,2,62,0,0
+2020-03-26,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,22,84,1,1
+2020-03-27,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,7,91,0,1
+2020-03-28,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,6,97,0,1
+2020-03-29,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,9,106,0,1
+2020-03-30,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,9,115,0,1
+2020-03-31,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,2,117,0,1
+2020-04-01,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,17,134,0,1
+2020-04-02,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,21,155,0,1
+2020-04-03,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,16,171,0,1
+2020-04-04,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,34,205,0,1
+2020-04-05,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,12,217,0,1
+2020-04-06,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,36,253,0,1
+2020-04-07,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,1,254,0,1
+2020-04-08,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,9,263,0,1
+2020-04-09,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,263,0,1
+2020-04-10,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,3,266,1,2
+2020-04-11,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,2,268,0,2
+2020-04-12,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,268,0,2
+2020-04-13,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,5,273,0,2
+2020-04-14,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,14,287,0,2
+2020-04-15,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,4,291,0,2
+2020-04-16,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,3,294,0,2
+2020-04-17,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,13,307,0,2
+2020-04-18,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,6,313,0,2
+2020-04-19,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,9,322,0,2
+2020-04-20,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,7,329,0,2
+2020-04-21,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,329,0,2
+2020-04-22,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,6,335,0,2
+2020-04-23,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,1,336,0,2
+2020-04-24,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,4,340,0,2
+2020-04-25,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,2,342,0,2
+2020-04-26,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,342,0,2
+2020-04-27,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,342,0,2
+2020-04-28,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,1,343,0,2
+2020-04-29,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,343,0,2
+2020-04-30,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,1,344,0,2
+2020-05-01,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,9,353,0,2
+2020-05-02,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,353,0,2
+2020-05-03,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,353,0,2
+2020-05-04,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,171,524,2,4
+2020-05-05,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,14,538,0,4
+2020-05-06,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,8,546,0,4
+2020-05-07,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,1,547,0,4
+2020-05-08,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,547,0,4
+2020-05-09,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,547,0,4
+2020-05-10,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,547,0,4
+2020-05-11,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,547,0,4
+2020-05-12,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,547,0,4
+2020-05-13,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,1,548,0,4
+2020-05-14,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,548,0,4
+2020-05-15,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,6,554,0,4
+2020-05-16,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,554,0,4
+2020-05-17,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,6,560,0,4
+2020-05-18,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,560,0,4
+2020-05-19,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,7,567,0,4
+2020-05-20,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,10,577,0,4
+2020-05-21,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,19,596,0,4
+2020-05-22,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,12,608,0,4
+2020-05-23,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,-6,602,0,4
+2020-05-24,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,602,1,5
+2020-05-25,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,602,0,5
+2020-05-26,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,602,0,5
+2020-05-27,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,3,605,0,5
+2020-05-28,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,8,613,0,5
+2020-05-29,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,12,625,0,5
+2020-05-30,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,625,0,5
+2020-05-31,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,1,626,0,5
+2020-06-01,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,1,627,0,5
+2020-06-02,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,1,628,0,5
+2020-06-03,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,2,630,0,5
+2020-06-04,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,6,636,0,5
+2020-06-05,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,7,643,0,5
+2020-06-06,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,643,0,5
+2020-06-07,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,643,0,5
+2020-06-08,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,0,643,0,5
+2020-06-09,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,9,652,0,5
+2020-06-10,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,9,661,0,5
+2020-06-11,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,4,665,0,5
+2020-06-12,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,2,667,0,5
+2020-06-13,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,2,669,0,5
+2020-06-14,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,4,673,0,5
+2020-06-15,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,3,676,0,5
+2020-06-16,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,13,689,0,5
+2020-06-17,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,6,695,0,5
+2020-06-18,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,50,745,0,5
+2020-06-19,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,50,795,0,5
+2020-06-20,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,75,870,0,5
+2020-06-21,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,109,979,0,5
+2020-06-22,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,49,1028,0,5
+2020-06-23,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,168,1196,0,5
+2020-06-24,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,179,1375,0,5
+2020-06-25,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,159,1534,0,5
+2020-06-26,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,54,1588,0,5
+2020-06-27,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,207,1795,0,5
+2020-06-28,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,258,2053,2,7
+2020-06-29,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,195,2248,0,7
+2020-06-30,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,195,2443,1,8
+2020-07-01,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,322,2765,3,11
+2020-07-02,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,330,3095,0,11
+2020-07-03,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,322,3417,0,11
+2020-07-04,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,272,3689,4,15
+2020-07-05,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,561,4250,4,19
+2020-07-06,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,472,4722,1,20
+2020-07-07,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,64,4786,1,21
+2020-07-08,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,306,5092,1,22
+2020-07-09,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,475,5567,2,24
+2020-07-10,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,262,5829,3,27
+2020-07-11,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,396,6225,5,32
+2020-07-12,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,463,6688,0,32
+2020-07-13,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,349,7037,7,39
+2020-07-14,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,404,7441,2,41
+2020-07-15,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,293,7734,6,47
+2020-07-16,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,419,8153,0,47
+2020-07-17,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,463,8616,5,52
+2020-07-18,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,439,9055,5,57
+2020-07-19,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,532,9587,5,62
+2020-07-20,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,465,10052,3,65
+2020-07-21,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,468,10520,1,66
+2020-07-22,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,403,10923,1,67
+2020-07-23,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,356,11279,2,69
+2020-07-24,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,596,11875,1,70
+2020-07-25,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,537,12412,3,73
+2020-07-26,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,383,12795,5,78
+2020-07-27,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,330,13125,1,79
+2020-07-28,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,332,13457,1,80
+2020-07-29,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,481,13938,1,81
+2020-07-30,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,520,14458,2,83
+2020-07-31,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,380,14838,1,84
+2020-08-01,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,394,15232,1,85
+2020-08-02,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,323,15555,1,86
+2020-08-03,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,225,15780,1,87
+2020-08-04,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,244,16024,0,87
+2020-08-05,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,604,16628,2,89
+2020-08-06,PS,"occupied Palestinian territory, including east Jerusalem",EMRO,353,16981,4,93
+

@@ -37,9 +37,9 @@ class TestCovid:
         with temp_dir('TestCovidViz') as tempdir:
             with Download(user_agent='test') as downloader:
                 tabs = configuration['tabs']
-                updatetabs = ['subnational']
+                updatetabs = tabs
                 gsheets = t_googlesheets(updatetabs)
                 jsonout = jsonoutput(configuration, updatetabs)
-                get_indicators(configuration, downloader, gsheets, jsonout, tabs, scrapers=['who_subnational'])
+                get_indicators(configuration, downloader, gsheets, jsonout, tabs, scrapers=['ifi,who,covid_trend'])
                 filepath = jsonout.save(tempdir)
                 assert_files_same(filepath, join(folder, 'test_tabular.json'))
