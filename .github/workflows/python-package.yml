@@ -35,3 +35,4 @@ jobs:
       with:
         file_pattern: out.json
         commit_message: automatic - Data bundle updated
+        push_options: '--force'
