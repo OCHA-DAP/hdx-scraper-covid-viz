@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+from os.path import join
 
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.saver import save_json
@@ -66,6 +67,10 @@ class jsonoutput:
                         newrow[hxlrow[key]] = row[key]
                 self.add_data_row(name, newrow)
 
-    def save(self):
-        logger.info('Writing JSON')
-        save_json(self.json, self.json_configuration['filepath'])
+    def save(self, folder=None):
+        filepath = self.json_configuration['filepath']
+        if folder:
+            filepath = join(folder, filepath)
+        logger.info('Writing JSON to %s' % filepath)
+        save_json(self.json, filepath)
+        return filepath
