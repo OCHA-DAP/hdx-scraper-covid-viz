@@ -218,7 +218,6 @@ tabular_national:
     format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRx-USUBIVUcLq8N8ix48if9h4e4YZBg8x7DYT_Up7QdZtenN91DwdTlFB5BbTxkY88pv8cBl-dQGG7/pub?gid=2095204371&single=true&output=csv"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
-    force_date_today: True
     headers: 1
     stop_row:
       "Country Code": ""
