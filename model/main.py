@@ -64,7 +64,7 @@ def add_population(population_lookup, headers, columns):
         population_lookup.update(columns[population_index])
 
 
-def get_indicators(configuration, downloader, gsheets, jsonout, tabs, scrapers=None):
+def get_indicators(configuration, downloader, outputs, tabs, scrapers=None):
     world = [list(), list()]
     regional = [['regionnames'], ['#region+name']]
     national = [['iso3', 'countryname', 'region'], ['#country+code', '#country+name', '#region+name']]
@@ -77,14 +77,14 @@ def get_indicators(configuration, downloader, gsheets, jsonout, tabs, scrapers=N
     population_lookup = dict()
 
     def update_tab(name, data):
-        gsheets.update_tab(name, data)
-        jsonout.update_tab(name, data)
+        for output in outputs.values():
+            output.update_tab(name, data)
 
     if 'national' in tabs:
         fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(configuration, countryiso3s, downloader, scrapers)
         access_wheaders, access_wcolumns, access_wsources, access_rheaders, access_rcolumns, access_rsources, access_headers, access_columns, access_sources = get_access(configuration, admininfo, downloader, scrapers)
         food_headers, food_columns, food_sources = add_food_prices(configuration, countryiso3s, downloader, scrapers)
-        campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, countryiso3s, downloader, jsonout, scrapers)
+        campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, countryiso3s, downloader, outputs, scrapers)
         unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, countryiso3s, downloader, scrapers)
         tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'national', downloader, scrapers)
         copy_headers, copy_columns, copy_sources = get_copy(configuration, 'national', downloader, scrapers)
@@ -121,7 +121,7 @@ def get_indicators(configuration, downloader, gsheets, jsonout, tabs, scrapers=N
         extend_sources(sources, tabular_sources, ipc_sources, whowhatwhere_sources)
         update_tab('subnational', subnational)
 
-    covid_sources = get_covid_trend(configuration, gsheets, jsonout, admininfo, population_lookup, scrapers)
+    covid_sources = get_covid_trend(configuration, outputs, admininfo, population_lookup, scrapers)
     extend_sources(sources, covid_sources)
 
     admininfo.output_matches()

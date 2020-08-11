@@ -45,9 +45,9 @@ def get_WHO_data(url, admininfo):
     return df
 
 
-def get_covid_trend(configuration, gsheets, jsonout, admininfo, population_lookup, scrapers=None):
+def get_covid_trend(configuration, outputs, admininfo, population_lookup, scrapers=None):
     name = 'covid_trend'
-    if scrapers and not any(scraper in name for scraper in scrapers) and name not in gsheets.updatetabs:
+    if scrapers and not any(scraper in name for scraper in scrapers) and name not in outputs['gsheets'].updatetabs:
         return list()
     datasetinfo = configuration[name]
     read_hdx_metadata(datasetinfo)
@@ -95,10 +95,11 @@ def get_covid_trend(configuration, gsheets, jsonout, admininfo, population_looku
     output_df['Date_reported'] = output_df['Date_reported'].apply(lambda x: x.strftime('%Y-%m-%d'))
     output_df = output_df.drop(
         ['NewCase_PercentChange', 'NewDeath_PercentChange', 'ndays', 'diff_cases', 'diff_deaths'], axis=1)
-    gsheets.update_tab(name, output_df)
+    outputs['gsheets'].update_tab(name, output_df)
+    outputs['excel'].update_tab(name, output_df)
     # Save as JSON
     json_df = output_df.replace([numpy.inf, -numpy.inf], '').groupby('ISO_3_CODE').apply(lambda x: x.to_dict('r'))
     for rows in json_df:
         countryiso = rows[0]['ISO_3_CODE']
-        jsonout.add_data_rows_by_key(name, countryiso, rows)
+        outputs['json'].add_data_rows_by_key(name, countryiso, rows)
     return [(datasetinfo['hxltag'], source_date, datasetinfo['source'], datasetinfo['source_url'])]

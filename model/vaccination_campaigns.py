@@ -9,7 +9,7 @@ from utilities.readers import read_hdx
 logger = logging.getLogger(__name__)
 
 
-def add_vaccination_campaigns(configuration, countryiso3s, downloader, jsonout, scrapers=None):
+def add_vaccination_campaigns(configuration, countryiso3s, downloader, outputs, scrapers=None):
     name = 'vaccination_campaigns'
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list()
@@ -36,7 +36,7 @@ def add_vaccination_campaigns(configuration, countryiso3s, downloader, jsonout, 
                     if value != 'On track':
                         affected_campaigns_per_country[countryiso] = affected_campaigns_per_country.get(countryiso, 0) + 1
         if countryiso:
-            jsonout.add_data_row(name, newrow)
+            outputs['json'].add_data_row(name, newrow)
     ratios = calculate_ratios(campaigns_per_country, affected_campaigns_per_country)
     hxltag = '#vaccination+num+ratio'
     logger.info('Processed vaccination campaigns')

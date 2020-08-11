@@ -9,9 +9,11 @@ from hdx.hdx_configuration import Configuration
 from hdx.utilities.downloader import Download
 from hdx.utilities.easy_logging import setup_logging
 
+from utilities.exceloutput import exceloutput
 from utilities.jsonoutput import jsonoutput
 from model.main import get_indicators
 from utilities.googlesheets import googlesheets
+from utilities.nooutput import nooutput
 
 setup_logging()
 logger = logging.getLogger()
@@ -25,6 +27,7 @@ def parse_args():
     parser.add_argument('-ua', '--user_agent', default=None, help='user agent')
     parser.add_argument('-pp', '--preprefix', default=None, help='preprefix')
     parser.add_argument('-hs', '--hdx_site', default=None, help='HDX site to use')
+    parser.add_argument('-xl', '--excel_path', default=None, help='Path for Excel output')
     parser.add_argument('-gs', '--gsheet_auth', default=None, help='Credentials for accessing Google Sheets')
     parser.add_argument('-us', '--updatespreadsheets', default=None, help='Spreadsheets to update')
     parser.add_argument('-sc', '--scrapers', default=None, help='Scrapers to run')
@@ -34,7 +37,7 @@ def parse_args():
     return args
 
 
-def main(gsheet_auth, updatesheets, updatetabs, scrapers, nojson, **ignore):
+def main(excel_path, gsheet_auth, updatesheets, updatetabs, scrapers, nojson, **ignore):
     logger.info('##### hdx-scraper-covid-viz version %.1f ####' % VERSION)
     configuration = Configuration.read()
     with Download(extra_params_yaml=join(expanduser('~'), '.extraparams.yml'), extra_params_lookup='hdx-scraper-fts', rate_limit={'calls': 1, 'period': 1}) as downloader:
@@ -46,12 +49,24 @@ def main(gsheet_auth, updatesheets, updatetabs, scrapers, nojson, **ignore):
             logger.info('Updating all tabs')
         else:
             logger.info('Updating only these tabs: %s' % updatetabs)
-        gsheets = googlesheets(configuration, gsheet_auth, updatesheets, tabs, updatetabs)
-        jsonout = jsonoutput(configuration, updatetabs)
-        get_indicators(configuration, downloader, gsheets, jsonout, updatetabs, scrapers)
-        if not nojson:
-            jsonout.add_additional_json(downloader)
-            jsonout.save()
+        noout = nooutput(updatetabs)
+        if excel_path:
+            excelout = exceloutput(excel_path, tabs, updatetabs)
+        else:
+            excelout = noout
+        if gsheet_auth:
+            gsheets = googlesheets(configuration, gsheet_auth, updatesheets, tabs, updatetabs)
+        else:
+            gsheets = noout
+        if nojson:
+            jsonout = noout
+        else:
+            jsonout = jsonoutput(configuration, updatetabs)
+        outputs = {'gsheets': gsheets, 'excel': excelout, 'json': jsonout}
+        get_indicators(configuration, downloader, outputs, updatetabs, scrapers)
+        excelout.save()
+        jsonout.add_additional_json(downloader)
+        jsonout.save()
 
 
 if __name__ == '__main__':
@@ -86,5 +101,5 @@ if __name__ == '__main__':
     else:
         scrapers = None
     facade(main, hdx_read_only=True, user_agent=user_agent, preprefix=preprefix, hdx_site=hdx_site,
-           project_config_yaml=join('config', 'project_configuration.yml'), gsheet_auth=gsheet_auth,
-           updatesheets=updatesheets, updatetabs=updatetabs, scrapers=scrapers, nojson=args.nojson)
+           project_config_yaml=join('config', 'project_configuration.yml'), excel_path=args.excel_path,
+           gsheet_auth=gsheet_auth, updatesheets=updatesheets, updatetabs=updatetabs, scrapers=scrapers, nojson=args.nojson)
