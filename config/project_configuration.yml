@@ -475,7 +475,7 @@ vaccination_campaigns:
   headers: 1
 
 unhcr:
-  url: "https://data2.unhcr.org/api/population/get?population_collection=4&geo_id="
+  url: "https://data2.unhcr.org/population/?population_collection=4&geo_id="
   source_url: "https://data.humdata.org/organization/unhcr"
 
 covid_trend:
