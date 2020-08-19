@@ -47,7 +47,7 @@ def get_WHO_data(url, admininfo):
 
 def get_covid_trend(configuration, outputs, admininfo, population_lookup, scrapers=None):
     name = 'covid_trend'
-    if scrapers and not any(scraper in name for scraper in scrapers) and name not in outputs['gsheets'].updatetabs:
+    if scrapers and not any(scraper in name for scraper in scrapers) and not any(scraper in outputs['gsheets'].updatetabs for scraper in scrapers):
         return list()
     datasetinfo = configuration[name]
     read_hdx_metadata(datasetinfo)
