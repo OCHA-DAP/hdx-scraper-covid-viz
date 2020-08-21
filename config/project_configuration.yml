@@ -346,10 +346,10 @@ tabular_national:
       - "Imp: Total Deaths(min)"
       - "Imp: Total Deaths(max)"
     hxltags:
-      - "#affected+cases+infected+imperial+min"
-      - "#affected+cases+infected+imperial+max"
-      - "#affected+deaths+imperial+min"
-      - "#affected+deaths+imperial+max"
+      - "#affected+imperial+infected+min"
+      - "#affected+imperial+infected+max"
+      - "#affected+imperial+killed+min"
+      - "#affected+imperial+killed+max"
   lshtm:
     format: "xlsx"
     dataset: "lshtm-covid-19-projections"
@@ -362,10 +362,10 @@ tabular_national:
       - "LSHTM: Total Deaths(min)"
       - "LSHTM: Total Deaths(max)"
     hxltags:
-      - "#affected+cases+infected+lshtm+min"
-      - "#affected+cases+infected+lshtm+max"
-      - "#affected+deaths+lshtm+min"
-      - "#affected+deaths+lshtm+max"
+      - "#affected+infected+lshtm+min"
+      - "#affected+infected+lshtm+max"
+      - "#affected+killed+lshtm+min"
+      - "#affected+killed+lshtm+max"
   school:
     format: "csv"
     dataset: "global-school-closures-covid19"
@@ -452,10 +452,10 @@ tabular_national:
           - "number_format(#affected+infected+death+male+pct)"
           - "number_format(#affected+infected+death+female+pct)"
         hxltags:
-          - "#affected+infected+male+pct"
-          - "#affected+infected+female+pct"
-          - "#affected+killed+male+pct"
-          - "#affected+killed+female+pct"
+          - "#affected+infected+m+pct"
+          - "#affected+f+infected+pct"
+          - "#affected+killed+m+pct"
+          - "#affected+f+killed+pct"
 
 fts:
   v1_url: "https://api.hpc.tools/v1/public/"

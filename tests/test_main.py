@@ -10,14 +10,7 @@ from hdx.utilities.path import temp_dir
 
 from model.main import get_indicators
 from utilities.jsonoutput import jsonoutput
-
-
-class t_googlesheets:
-    def __init__(self, updatetabs):
-        self.updatetabs = updatetabs
-
-    def update_tab(self, tabname, values):
-        return
+from utilities.nooutput import nooutput
 
 
 class TestCovid:
@@ -37,9 +30,9 @@ class TestCovid:
         with temp_dir('TestCovidViz') as tempdir:
             with Download(user_agent='test') as downloader:
                 tabs = configuration['tabs']
-                updatetabs = tabs
-                gsheets = t_googlesheets(updatetabs)
-                jsonout = jsonoutput(configuration, updatetabs)
-                get_indicators(configuration, downloader, gsheets, jsonout, tabs, scrapers=['ifi', 'who', 'covid_trend'])
+                noout = nooutput(tabs)
+                jsonout = jsonoutput(configuration, tabs)
+                outputs = {'gsheets': noout, 'excel': noout, 'json': jsonout}
+                get_indicators(configuration, downloader, outputs, tabs, scrapers=['ifi', 'who', 'covid_trend'])
                 filepath = jsonout.save(tempdir)
                 assert_files_same(filepath, join(folder, 'test_tabular.json'))
