@@ -318,9 +318,8 @@ tabular_national:
   idmc:
     format: "csv"
     dataset: "idmc-internally-displaced-persons-idps"
-    headers: 2
-    adm_cols:
-      - "#country+code"
+    headers: 1
+    use_hxl: True
     date_col: "#date+year"
     date_type: "int"
     val_cols:
@@ -339,14 +338,8 @@ tabular_national:
     format: "xlsx"
     dataset: "imperial-college-covid-19-projections"
     sheet: 1
-    headers: 2
-    adm_cols:
-      - "#country+code"
-    val_cols:
-      - "#affected+infected+cases+min"
-      - "#affected+infected+cases+max"
-      - "#affected+deaths+min"
-      - "#affected+deaths+max"
+    headers: 1
+    use_hxl: True
     columns:
       - "Imp: Total Cases(min)"
       - "Imp: Total Cases(max)"
@@ -361,14 +354,8 @@ tabular_national:
     format: "xlsx"
     dataset: "lshtm-covid-19-projections"
     sheet: 1
-    headers: 2
-    adm_cols:
-      - "#country+code"
-    val_cols:
-      - "#affected+infected+cases+min"
-      - "#affected+infected+cases+max"
-      - "#affected+deaths+min"
-      - "#affected+deaths+max"
+    headers: 1
+    use_hxl: True
     columns:
       - "LSHTM: Total Cases(min)"
       - "LSHTM: Total Cases(max)"
@@ -444,13 +431,31 @@ tabular_national:
           - "CERFCovidFunding"
         hxltags:
           - "#value+cerf+covid+funding+total+usd"
-
-copy_national: {}
-#  humaccess:
-#    format: "xlsx"
-#    dataset: "constraints-faced-by-people-due-to-covid-19-outbreak"
-#    sheet: 1
-#    headers: 2
+  sadd:
+    format: "csv"
+    dataset: "covid-19-sex-disaggregated-data-tracker"
+    headers: 1
+    use_hxl: True
+    exclude_tags:
+      - "#date"
+      - "#meta+dataviz"
+    indicator_cols:
+      - filter_col: "#meta+dataviz=Yes"
+        val_fns:
+          "#affected+infected+male+pct": "get_numeric_if_possible(#affected+infected+male+pct)"
+          "#affected+infected+female+pct": "get_numeric_if_possible(#affected+infected+female+pct)"
+          "#affected+infected+death+male+pct": "get_numeric_if_possible(#affected+infected+death+male+pct)"
+          "#affected+infected+death+female+pct": "get_numeric_if_possible(#affected+infected+death+female+pct)"
+        eval_cols:
+          - "number_format(#affected+infected+male+pct)"
+          - "number_format(#affected+infected+female+pct)"
+          - "number_format(#affected+infected+death+male+pct)"
+          - "number_format(#affected+infected+death+female+pct)"
+        hxltags:
+          - "#affected+infected+male+pct"
+          - "#affected+infected+female+pct"
+          - "#affected+killed+male+pct"
+          - "#affected+killed+female+pct"
 
 fts:
   v1_url: "https://api.hpc.tools/v1/public/"

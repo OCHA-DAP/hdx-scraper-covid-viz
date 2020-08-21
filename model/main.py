@@ -9,7 +9,6 @@ from utilities.admininfo import AdminInfo
 from model.covidtrend import get_covid_trend
 from model.food_prices import add_food_prices
 from model.fts import get_fts
-from utilities.copydata import get_copy
 from model.ipc import get_ipc
 from utilities.regional import get_regional
 from utilities.tabularparser import get_tabular
@@ -87,11 +86,10 @@ def get_indicators(configuration, downloader, outputs, tabs, scrapers=None):
         campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, countryiso3s, downloader, outputs, scrapers)
         unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, countryiso3s, downloader, scrapers)
         tabular_headers, tabular_columns, tabular_sources = get_tabular(configuration, 'national', downloader, scrapers)
-        copy_headers, copy_columns, copy_sources = get_copy(configuration, 'national', downloader, scrapers)
 
-        national_headers = extend_headers(national, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, access_headers, copy_headers)
-        national_columns = extend_columns('national', national, countryiso3s, admininfo, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, access_columns, copy_columns)
-        extend_sources(sources, tabular_sources, food_sources, campaign_sources, fts_sources, unhcr_sources, access_sources, copy_sources)
+        national_headers = extend_headers(national, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, access_headers)
+        national_columns = extend_columns('national', national, countryiso3s, admininfo, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, access_columns)
+        extend_sources(sources, tabular_sources, food_sources, campaign_sources, fts_sources, unhcr_sources, access_sources)
         add_population(population_lookup, tabular_headers, tabular_columns)
         update_tab('national', national)
 

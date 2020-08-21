@@ -28,14 +28,60 @@ brackets = r'''
 
 
 def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list(), list()], retval=list(), sources=list()):
-    rowparser = RowParser(level, datasetinfo, headers)
     indicatorcols = datasetinfo.get('indicator_cols')
     if not indicatorcols:
-        indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo['val_cols'],
+        indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo.get('val_cols', list()),
                           'val_fns': datasetinfo.get('val_fns', dict()), 'eval_cols':  datasetinfo.get('eval_cols', list()),
                           'keep_cols': datasetinfo.get('keep_cols', list()), 'append_cols': datasetinfo.get('append_cols', list()),
                           'total_col': datasetinfo.get('total_col'), 'ignore_vals': datasetinfo.get('ignore_vals', list()),
-                          'columns': datasetinfo['columns'], 'hxltags': datasetinfo['hxltags']}]
+                          'columns': datasetinfo.get('columns', list()), 'hxltags': datasetinfo.get('hxltags', list())}]
+    use_hxl = datasetinfo.get('use_hxl', False)
+    if use_hxl:
+        hxlrow = next(iterator)
+        while not hxlrow:
+            hxlrow = next(iterator)
+        exclude_tags = datasetinfo.get('exclude_tags', list())
+        adm_cols = list()
+        val_cols = list()
+        columns = list()
+        for header in headers:
+            hxltag = hxlrow[header]
+            if not hxltag or hxltag in exclude_tags:
+                continue
+            if '#country' in hxltag:
+                if 'code' in hxltag:
+                    if len(adm_cols) == 0:
+                        adm_cols.append(hxltag)
+                    else:
+                        adm_cols[0] = hxltag
+                continue
+            if '#adm1' in hxltag:
+                if 'code' in hxltag:
+                    if len(adm_cols) == 0:
+                        adm_cols.append(None)
+                    if len(adm_cols) == 1:
+                        adm_cols.append(hxltag)
+                continue
+            val_cols.append(hxltag)
+            columns.append(header)
+        datasetinfo['adm_cols'] = adm_cols
+        for indicatorcol in indicatorcols:
+            orig_val_cols = indicatorcol.get('val_cols', list())
+            if not orig_val_cols:
+                orig_val_cols.extend(val_cols)
+            indicatorcol['val_cols'] = orig_val_cols
+            orig_columns = indicatorcol.get('columns', list())
+            if not orig_columns:
+                orig_columns.extend(columns)
+            indicatorcol['columns'] = orig_columns
+            orig_hxltags = indicatorcol.get('hxltags', list())
+            if not orig_hxltags:
+                orig_hxltags.extend(val_cols)
+            indicatorcol['hxltags'] = orig_hxltags
+    else:
+        hxlrow = None
+
+    rowparser = RowParser(level, datasetinfo, headers)
     valuedicts = dict()
     for indicatorcol in indicatorcols:
         for _ in indicatorcol['val_cols']:
@@ -80,6 +126,11 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
     for row in iterator:
         if not isinstance(row, dict):
             row = row.value
+        if hxlrow:
+            newrow = dict()
+            for header in row:
+                newrow[hxlrow[header]] = row[header]
+            row = newrow
         if stop_row:
             if all(row[key] == value for key, value in stop_row.items()):
                 break
@@ -109,7 +160,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
         retheaders[1].extend(hxltags)
         valdicts = valuedicts[indicatorcol['filter_col']]
         eval_cols = indicatorcol.get('eval_cols')
-        keep_cols = indicatorcol.get('keep_cols')
+        keep_cols = indicatorcol.get('keep_cols', list())
         total_col = indicatorcol.get('total_col')
         ignore_vals = indicatorcol.get('ignore_vals', list())
         val_fns = indicatorcol.get('val_fns', dict())
