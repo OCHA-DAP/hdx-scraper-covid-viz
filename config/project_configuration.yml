@@ -346,10 +346,10 @@ tabular_national:
       - "Imp: Total Deaths(min)"
       - "Imp: Total Deaths(max)"
     hxltags:
-      - "#affected+imperial+infected+min"
-      - "#affected+imperial+infected+max"
-      - "#affected+imperial+killed+min"
-      - "#affected+imperial+killed+max"
+      - "#affected+infected+min+imperial"
+      - "#affected+infected+max+imperial"
+      - "#affected+killed+min+imperial"
+      - "#affected+killed+max+imperial"
   lshtm:
     format: "xlsx"
     dataset: "lshtm-covid-19-projections"
@@ -362,10 +362,10 @@ tabular_national:
       - "LSHTM: Total Deaths(min)"
       - "LSHTM: Total Deaths(max)"
     hxltags:
-      - "#affected+infected+lshtm+min"
-      - "#affected+infected+lshtm+max"
-      - "#affected+killed+lshtm+min"
-      - "#affected+killed+lshtm+max"
+      - "#affected+infected+min+lshtm"
+      - "#affected+infected+max+lshtm"
+      - "#affected+killed+min+lshtm"
+      - "#affected+killed+max+lshtm"
   school:
     format: "csv"
     dataset: "global-school-closures-covid19"

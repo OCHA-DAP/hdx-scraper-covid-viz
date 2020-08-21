@@ -50,9 +50,8 @@ tabular_global:
           - "#value+cerf+covid+funding+total+usd"
   ifi_global:
     format: "csv"
-    url: "tests/fixtures/Tracker COVID - Country Summary_HDX.csv"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRx-USUBIVUcLq8N8ix48if9h4e4YZBg8x7DYT_Up7QdZtenN91DwdTlFB5BbTxkY88pv8cBl-dQGG7/pub?gid=2095204371&single=true&output=csv"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
-    force_date_today: True
     headers: 1
     stop_row:
       "Country Code": ""
@@ -111,18 +110,18 @@ regional:
 #    "LSHTM: Total Cases(max)": "sum"
 #    "LSHTM: Total Deaths(min)": "sum"
 #    "LSHTM: Total Deaths(max)": "sum"
-#    "CBPFCovidFunding": "sum"
-#    "CERFCovidFunding": "sum"
-#    "RequiredHRPFunding": "sum"
-#    "HRPFunding": "sum"
-#    "HRPPercentFunded": "get_fraction_str(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
-#    "RequiredHRPCovidFunding": "sum"
-#    "HRPCovidFunding": "sum"
-#    "HRPCovidPercentFunded": "get_fraction_str(HRPCovidFunding, RequiredHRPCovidFunding) if HRPCovidFunding is not None and RequiredHRPCovidFunding is not None else ''"
-#    "HRPGBVFunding": "sum"
-#    "RequiredOtherPlansFunding": "sum"
-#    "OtherPlansFunding": "sum"
-#    "OtherPlansPercentFunded": "get_fraction_str(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
+    "CBPFCovidFunding": "sum"
+    "CERFCovidFunding": "sum"
+    "RequiredHRPFunding": "sum"
+    "HRPFunding": "sum"
+    "HRPPercentFunded": "get_fraction_str(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
+    "RequiredHRPCovidFunding": "sum"
+    "HRPCovidFunding": "sum"
+    "HRPCovidPercentFunded": "get_fraction_str(HRPCovidFunding, RequiredHRPCovidFunding) if HRPCovidFunding is not None and RequiredHRPCovidFunding is not None else ''"
+    "HRPGBVFunding": "sum"
+    "RequiredOtherPlansFunding": "sum"
+    "OtherPlansFunding": "sum"
+    "OtherPlansPercentFunded": "get_fraction_str(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
 #    "TotalRefugees": "sum"
 
 # national
@@ -131,7 +130,7 @@ tabular_national:
     source: "World Bank"
     source_url: "https://data.humdata.org/organization/world-bank-group"
     format: "xls"
-    url: "tests/fixtures/API_SP.POP.TOTL_DS2_en_excel_v2_1302508_LIST.xls"
+    url: "http://api.worldbank.org/v2/en/indicator/SP.POP.TOTL?downloadformat=excel&dataformat=list"
     sheet: "Data"
     headers: 3
     adm_cols:
@@ -147,7 +146,6 @@ tabular_national:
   who_national:
     format: "csv"
     dataset: "coronavirus-covid-19-cases-and-deaths"
-    url: "tests/fixtures/WHO-COVID-19-global-data.csv"
     headers: 1
     adm_cols:
       - "Country_code"
@@ -213,9 +211,8 @@ tabular_national:
       - "#severity+economic+num"
   ifi_national:
     format: "csv"
-    url: "tests/fixtures/Tracker COVID - Country Summary_HDX.csv"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRx-USUBIVUcLq8N8ix48if9h4e4YZBg8x7DYT_Up7QdZtenN91DwdTlFB5BbTxkY88pv8cBl-dQGG7/pub?gid=2095204371&single=true&output=csv"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
-    force_date_today: True
     headers: 1
     stop_row:
       "Country Code": ""
@@ -306,26 +303,18 @@ tabular_national:
     date_col: "Year"
     date_type: "int"
     indicator_cols:
-      - filter_col: "Metric=People in need,Appeal Type=Humanitarian Response Plan (HRP)"
+      - filter_col: "Metric=People in need,PiN Value for Dataviz=yes"
         val_cols:
           - "Value"
         columns:
           - "PeopleInNeed"
         hxltags:
           - "#affected+inneed"
-      - filter_col: "Metric=Funding requirements,Appeal Type=Humanitarian Response Plan (HRP)"
-        val_cols:
-          - "Value"
-        columns:
-          - "RequiredFundingPreCovid"
-        hxltags:
-          - "#value+funding+required+precovid+usd"
   idmc:
     format: "csv"
     dataset: "idmc-internally-displaced-persons-idps"
-    headers: 2
-    adm_cols:
-      - "#country+code"
+    headers: 1
+    use_hxl: True
     date_col: "#date+year"
     date_type: "int"
     val_cols:
@@ -344,46 +333,34 @@ tabular_national:
     format: "xlsx"
     dataset: "imperial-college-covid-19-projections"
     sheet: 1
-    headers: 2
-    adm_cols:
-      - "#country+code"
-    val_cols:
-      - "#affected+infected+cases+min"
-      - "#affected+infected+cases+max"
-      - "#affected+deaths+min"
-      - "#affected+deaths+max"
+    headers: 1
+    use_hxl: True
     columns:
       - "Imp: Total Cases(min)"
       - "Imp: Total Cases(max)"
       - "Imp: Total Deaths(min)"
       - "Imp: Total Deaths(max)"
     hxltags:
-      - "#affected+cases+infected+imperial+min"
-      - "#affected+cases+infected+imperial+max"
-      - "#affected+deaths+imperial+min"
-      - "#affected+deaths+imperial+max"
+      - "#affected+imperial+infected+min"
+      - "#affected+imperial+infected+max"
+      - "#affected+imperial+killed+min"
+      - "#affected+imperial+killed+max"
   lshtm:
     format: "xlsx"
     dataset: "lshtm-covid-19-projections"
     sheet: 1
-    headers: 2
-    adm_cols:
-      - "#country+code"
-    val_cols:
-      - "#affected+infected+cases+min"
-      - "#affected+infected+cases+max"
-      - "#affected+deaths+min"
-      - "#affected+deaths+max"
+    headers: 1
+    use_hxl: True
     columns:
       - "LSHTM: Total Cases(min)"
       - "LSHTM: Total Cases(max)"
       - "LSHTM: Total Deaths(min)"
       - "LSHTM: Total Deaths(max)"
     hxltags:
-      - "#affected+cases+infected+lshtm+min"
-      - "#affected+cases+infected+lshtm+max"
-      - "#affected+deaths+lshtm+min"
-      - "#affected+deaths+lshtm+max"
+      - "#affected+infected+lshtm+min"
+      - "#affected+infected+lshtm+max"
+      - "#affected+killed+lshtm+min"
+      - "#affected+killed+lshtm+max"
   school:
     format: "csv"
     dataset: "global-school-closures-covid19"
@@ -449,13 +426,31 @@ tabular_national:
           - "CERFCovidFunding"
         hxltags:
           - "#value+cerf+covid+funding+total+usd"
-
-copy_national: {}
-#  humaccess:
-#    format: "xlsx"
-#    dataset: "constraints-faced-by-people-due-to-covid-19-outbreak"
-#    sheet: 1
-#    headers: 2
+  sadd:
+    format: "csv"
+    dataset: "covid-19-sex-disaggregated-data-tracker"
+    headers: 1
+    use_hxl: True
+    exclude_tags:
+      - "#date"
+      - "#meta+dataviz"
+    indicator_cols:
+      - filter_col: "#meta+dataviz=Yes"
+        val_fns:
+          "#affected+infected+male+pct": "get_numeric_if_possible(#affected+infected+male+pct)"
+          "#affected+infected+female+pct": "get_numeric_if_possible(#affected+infected+female+pct)"
+          "#affected+infected+death+male+pct": "get_numeric_if_possible(#affected+infected+death+male+pct)"
+          "#affected+infected+death+female+pct": "get_numeric_if_possible(#affected+infected+death+female+pct)"
+        eval_cols:
+          - "number_format(#affected+infected+male+pct)"
+          - "number_format(#affected+infected+female+pct)"
+          - "number_format(#affected+infected+death+male+pct)"
+          - "number_format(#affected+infected+death+female+pct)"
+        hxltags:
+          - "#affected+infected+m+pct"
+          - "#affected+f+infected+pct"
+          - "#affected+killed+m+pct"
+          - "#affected+f+killed+pct"
 
 fts:
   v1_url: "https://api.hpc.tools/v1/public/"
@@ -473,13 +468,12 @@ vaccination_campaigns:
   headers: 1
 
 unhcr:
-  url: "https://data2.unhcr.org/api/population/get?population_collection=4&geo_id="
-  source_url: "https://data2.unhcr.org/en/countries/"
+  url: "https://data2.unhcr.org/population/?population_collection=4&geo_id="
+  source_url: "https://data.humdata.org/organization/unhcr"
 
 covid_trend:
   format: "csv"
   dataset: "coronavirus-covid-19-cases-and-deaths"
-  url: "tests/fixtures/WHO-COVID-19-global-data.csv"
   headers: 1
   hxltag: "#covid+cases+per+capita"
 
@@ -677,7 +671,7 @@ tabular_subnational:
   who_subnational:
     source: "WHO"
     format: "csv"
-    url: "tests/fixtures/Vaccine coverage at subnational level - Data.csv"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRfjaIXE1hvEIXD66g6cuCbPrGdZkx6vLIgXO_znVbjQ-OgwfaI1kJPhxhgjw2Yg08CmtBuMLAZkTnu/pub?gid=337443769&single=true&output=csv"
     headers: 1
     adm_cols:
       - "iso"
