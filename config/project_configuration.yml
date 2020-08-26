@@ -632,6 +632,7 @@ tabular_subnational:
           - "#affected+ch+food+p3+pct"
   ghrp:
     source: "Multiple Sources"
+    source_url: "https://data.humdata.org/search?organization=worldpop&q=%22population%20counts%22"
     format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3_uBOV_uRDSxOggfBus_pkCs6Iw9lm0nAxzwG14YF_frpm13WPKiM1oNnQ9zrUA/pub?gid=1565793974&single=true&output=csv"
     dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
