@@ -28,12 +28,12 @@ class TestCovid:
         return join('tests', 'fixtures')
 
     def test_get_indicators(self, configuration, folder):
-        with temp_dir('TestCovidViz', delete_on_success=False, delete_on_failure=False) as tempdir:
+        with temp_dir('TestCovidViz') as tempdir:
             with Download(user_agent='test') as downloader:
                 tabs = configuration['tabs']
                 noout = nooutput(tabs)
                 jsonout = jsonoutput(configuration, tabs)
                 outputs = {'gsheets': noout, 'excel': noout, 'json': jsonout}
-                get_indicators(configuration, downloader, outputs, tabs, scrapers=['ifi', 'who_national', 'who_subnational', 'covid_trend'])
+                get_indicators(configuration, downloader, outputs, tabs, scrapers=['ifi', 'who_national', 'who_subnational', 'covid_trend', 'sadd'])
                 filepath = jsonout.save(tempdir)
                 assert filecmp.cmp(filepath, join(folder, 'test_tabular.json'))
