@@ -60,7 +60,7 @@ def get_gbv_funding(v1_url, plan_id, downloader):
     return gbvfund
 
 
-def get_requirements_and_funding(v1_url, v2_url, plan_id, downloader):
+def get_requirements_and_funding(v1_url, v2_url, plan_id, downloader, fundingobjects):
     url = '%spublic/governingEntity?planId=%d&scopes=governingEntityVersion' % (v2_url, plan_id)
     data = download_data(url, downloader)
     covid_ids = set()
@@ -83,28 +83,14 @@ def get_requirements_and_funding(v1_url, v2_url, plan_id, downloader):
                 covidreq += req
 
     covidfund = 0
-    fundingobjects = data['report3']['fundingTotals']['objects']
     if len(fundingobjects) != 0:
         singlefundingobjects = fundingobjects[0].get('singleFundingObjects')
         if singlefundingobjects:
             for fundobj in singlefundingobjects:
                 fund_id = fundobj.get('id')
                 fund = fundobj['totalFunding']
-                if fund_id and fund_id in covid_ids:
+                if fund_id and fund_id == plan_id:
                     covidfund += fund
-        sharedfundingobjects = fundingobjects[0].get('sharedFundingObjects')
-        if sharedfundingobjects:
-            for fundobj in sharedfundingobjects:
-                fund_ids = fundobj.get('id')
-                fund = fundobj['totalFunding']
-                if fund_ids:
-                    match = True
-                    for fund_id in fund_ids:
-                        if int(fund_id) not in covid_ids:
-                            match = False
-                            break
-                    if match:
-                        covidfund += fund
     return covidreq, covidfund
 
 
@@ -208,12 +194,11 @@ def get_fts(configuration, countryiso3s, downloader, scrapers=None):
     v2_url = fts_configuration['v2_url']
 
     total_covidreq = 0
-    total_covidfund = 0
     total_gbvfund = 0
     rows = list()
 
     def add_covid_gbv_requirements_and_funding(name, includetotals, req, fund, gbvfund=None):
-        nonlocal total_covidreq, total_covidfund, total_gbvfund
+        nonlocal total_covidreq, total_gbvfund
 
         if not includetotals:
             return
@@ -224,14 +209,20 @@ def get_fts(configuration, countryiso3s, downloader, scrapers=None):
                 total_covidreq += req
             if fund:
                 logger.info('%s: Funding=%d' % (name, fund))
-                total_covidfund += fund
             if gbvfund:
                 logger.info('%s: GBV Funding=%d' % (name, gbvfund))
                 total_gbvfund += gbvfund
 
     url = '%sfts/flow/plan/overview/progress/%d' % (v2_url, today.year)
     data = download_data(url, downloader)
-    for plan in data['plans']:
+    plans = data['plans']
+    plan_ids = ','.join([str(plan['id']) for plan in plans])
+    url = '%sfts/flow?emergencyid=911&planid=%s&groupby=plan' % (v1_url, plan_ids)
+    funding_data = download_data(url, downloader)
+    fundingtotals = funding_data['report3']['fundingTotals']
+    total_covidfund = fundingtotals['total']
+    fundingobjects = fundingtotals['objects']
+    for plan in plans:
         plan_id = plan['id']
         planname = plan['name']
         allreq = plan['requirements']['revisedRequirements']
@@ -245,7 +236,7 @@ def get_fts(configuration, countryiso3s, downloader, scrapers=None):
         if plan_id == 952:
             add_covid_gbv_requirements_and_funding(planname, includetotals, allreq, allfund, gbvfund)
             continue
-        covidreq, covidfund = get_requirements_and_funding(v1_url, v2_url, plan_id, downloader)
+        covidreq, covidfund = get_requirements_and_funding(v1_url, v2_url, plan_id, downloader, fundingobjects)
         add_covid_gbv_requirements_and_funding(planname, includetotals, covidreq, covidfund, gbvfund)
 
         countries = plan['countries']
