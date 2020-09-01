@@ -376,7 +376,7 @@ tabular_national:
     date_col: "Date"
     date_type: "date"
     val_cols:
-      - "Scale"
+      - "Status"
     columns:
       - "SchoolClosure"
     hxltags:
