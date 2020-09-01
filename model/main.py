@@ -127,18 +127,21 @@ def get_indicators(configuration, downloader, outputs, tabs, scrapers=None):
     admininfo.output_errors()
 
     for sourceinfo in configuration['additional_sources']:
+        date = sourceinfo.get('date')
+        if date is None:
+            if sourceinfo.get('force_date_today', False):
+                date = today_str
+        source = sourceinfo.get('source')
+        source_url = sourceinfo.get('source_url')
         dataset_name = sourceinfo.get('dataset')
         if dataset_name:
             dataset = Dataset.read_from_hdx(dataset_name)
-            date = get_date_from_dataset_date(dataset)
-            source = dataset['dataset_source']
-            source_url = dataset.get_hdx_url()
-        else:
-            date = sourceinfo['date']
-            source = sourceinfo['source']
-            source_url = sourceinfo['source_url']
-        if sourceinfo.get('force_date_today', False):
-            date = today_str
+            if date is None:
+                date = get_date_from_dataset_date(dataset)
+            if source is None:
+                source = dataset['dataset_source']
+            if source_url is None:
+                source_url = dataset.get_hdx_url()
         sources.append((sourceinfo['indicator'], date, source, source_url))
 
     sources = [list(elem) for elem in dict.fromkeys(sources)]

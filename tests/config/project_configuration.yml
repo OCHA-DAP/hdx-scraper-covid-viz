@@ -13,8 +13,10 @@ json:
 additional_sources:
   - indicator: "#food-prices"
     dataset: "wfp-food-prices"
+    date: "2020-08-15"
   - indicator: "#vaccination-campaigns"
     dataset: "immunization-campaigns-impacted"
+    date: "2020-08-24"
 
 # global
 tabular_global:
@@ -130,6 +132,7 @@ tabular_national:
   population:
     source: "World Bank"
     source_url: "https://data.humdata.org/organization/world-bank-group"
+    date: "2020-08-27"
     format: "xls"
     url: "tests/fixtures/API_SP.POP.TOTL_DS2_en_excel_v2_1302508_LIST.xls"
     sheet: "Data"
@@ -678,6 +681,7 @@ tabular_subnational:
     source: "WHO"
     format: "csv"
     url: "tests/fixtures/Vaccine coverage at subnational level - Data.csv"
+    date: "2020-08-27"
     headers: 1
     adm_cols:
       - "iso"
