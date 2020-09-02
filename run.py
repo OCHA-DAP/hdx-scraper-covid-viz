@@ -33,14 +33,15 @@ def parse_args():
     parser.add_argument('-sc', '--scrapers', default=None, help='Scrapers to run')
     parser.add_argument('-ut', '--updatetabs', default=None, help='Sheets to update')
     parser.add_argument('-nj', '--nojson', default=False, action='store_true', help='Do not update json')
+    parser.add_argument('-ba', '--basic_auths', default=None, help='Credentials for accessing scrper APIs')
     args = parser.parse_args()
     return args
 
 
-def main(excel_path, gsheet_auth, updatesheets, updatetabs, scrapers, nojson, **ignore):
+def main(excel_path, gsheet_auth, updatesheets, updatetabs, scrapers, basic_auths, nojson, **ignore):
     logger.info('##### hdx-scraper-covid-viz version %.1f ####' % VERSION)
     configuration = Configuration.read()
-    with Download(extra_params_yaml=join(expanduser('~'), '.extraparams.yml'), extra_params_lookup='hdx-scraper-fts', rate_limit={'calls': 1, 'period': 1}) as downloader:
+    with Download(rate_limit={'calls': 1, 'period': 0.1}) as downloader:
         if scrapers:
             logger.info('Updating only scrapers: %s' % scrapers)
         tabs = configuration['tabs']
@@ -63,7 +64,7 @@ def main(excel_path, gsheet_auth, updatesheets, updatetabs, scrapers, nojson, **
         else:
             jsonout = jsonoutput(configuration, updatetabs)
         outputs = {'gsheets': gsheets, 'excel': excelout, 'json': jsonout}
-        get_indicators(configuration, downloader, outputs, updatetabs, scrapers)
+        get_indicators(configuration, downloader, outputs, updatetabs, scrapers, basic_auths)
         excelout.save()
         jsonout.add_additional_json(downloader)
         jsonout.save()
@@ -100,6 +101,15 @@ if __name__ == '__main__':
         scrapers = args.scrapers.split(',')
     else:
         scrapers = None
+    basic_auths = dict()
+    ba = args.basic_auths
+    if ba is None:
+        ba = getenv('BASIC_AUTHS')
+    if ba:
+        for keyvalue in ba.split(','):
+            key, value = keyvalue.split(':')
+            basic_auths[key] = value
     facade(main, hdx_read_only=True, user_agent=user_agent, preprefix=preprefix, hdx_site=hdx_site,
            project_config_yaml=join('config', 'project_configuration.yml'), excel_path=args.excel_path,
-           gsheet_auth=gsheet_auth, updatesheets=updatesheets, updatetabs=updatetabs, scrapers=scrapers, nojson=args.nojson)
+           gsheet_auth=gsheet_auth, updatesheets=updatesheets, updatetabs=updatetabs, scrapers=scrapers,
+           basic_auths=basic_auths, nojson=args.nojson)

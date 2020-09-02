@@ -63,7 +63,7 @@ def add_population(population_lookup, headers, columns):
         population_lookup.update(columns[population_index])
 
 
-def get_indicators(configuration, downloader, outputs, tabs, scrapers=None):
+def get_indicators(configuration, downloader, outputs, tabs, scrapers=None, basic_auths=dict()):
     world = [list(), list()]
     regional = [['regionnames'], ['#region+name']]
     national = [['iso3', 'countryname', 'region'], ['#country+code', '#country+name', '#region+name']]
@@ -80,7 +80,7 @@ def get_indicators(configuration, downloader, outputs, tabs, scrapers=None):
             output.update_tab(name, data)
 
     if 'national' in tabs:
-        fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(configuration, countryiso3s, downloader, scrapers)
+        fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(basic_auths, configuration, countryiso3s, scrapers)
         access_wheaders, access_wcolumns, access_wsources, access_rheaders, access_rcolumns, access_rsources, access_headers, access_columns, access_sources = get_access(configuration, admininfo, downloader, scrapers)
         food_headers, food_columns, food_sources = add_food_prices(configuration, countryiso3s, downloader, scrapers)
         campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, countryiso3s, downloader, outputs, scrapers)
