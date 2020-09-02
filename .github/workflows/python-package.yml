@@ -27,8 +27,8 @@ jobs:
         HDX_KEY: ${{ secrets.HDX_KEY }}
         PREPREFIX: ${{ secrets.PREPREFIX }}
         GSHEET_AUTH: ${{ secrets.GSHEET_AUTH }}
-        BASIC_AUTH: ${{ secrets.BASIC_AUTH }}
         UPDATESHEETS: ${{ secrets.UPDATESHEETS }}
+        BASIC_AUTHS: ${{ secrets.BASIC_AUTHS }}
       run: |
         python run.py
     - uses: stefanzweifel/git-auto-commit-action@v4
