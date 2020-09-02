@@ -6,6 +6,7 @@ import regex
 
 from hdx.utilities.dateparse import parse_date, get_datetime_from_timestamp
 from hdx.utilities.dictandlist import dict_of_lists_add
+from hdx.utilities.downloader import Download
 from hdx.utilities.text import number_format, get_fraction_str, get_numeric_if_possible
 
 from model import today_str
@@ -255,7 +256,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
     return retheaders, retval, sources
 
 
-def get_tabular(configuration, level, downloader, scrapers=None, **kwargs):
+def get_tabular(basic_auths, configuration, level, maindownloader, scrapers=None, **kwargs):
     datasets = configuration['tabular_%s' % level]
     retheaders = [list(), list()]
     retval = list()
@@ -263,6 +264,11 @@ def get_tabular(configuration, level, downloader, scrapers=None, **kwargs):
     for name in datasets:
         if scrapers and not any(scraper in name for scraper in scrapers) and name != 'population':
             continue
+        basic_auth = basic_auths.get(name)
+        if basic_auth is None:
+            downloader = maindownloader
+        else:
+            downloader = Download(basic_auth=name, rate_limit={'calls': 1, 'period': 0.1})
         datasetinfo = datasets[name]
         format = datasetinfo['format']
         if format == 'json':
@@ -282,4 +288,6 @@ def get_tabular(configuration, level, downloader, scrapers=None, **kwargs):
         if 'date' not in datasetinfo or datasetinfo.get('force_date_today', False):
             datasetinfo['date'] = today_str
         _get_tabular(level, name, datasetinfo, headers, iterator, retheaders, retval, sources)
+        if downloader != maindownloader:
+            downloader.close()
     return retheaders, retval, sources
