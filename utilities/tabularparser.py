@@ -268,7 +268,7 @@ def get_tabular(basic_auths, configuration, level, maindownloader, scrapers=None
         if basic_auth is None:
             downloader = maindownloader
         else:
-            downloader = Download(basic_auth=name, rate_limit={'calls': 1, 'period': 0.1})
+            downloader = Download(basic_auth=basic_auth, rate_limit={'calls': 1, 'period': 0.1})
         datasetinfo = datasets[name]
         format = datasetinfo['format']
         if format == 'json':
