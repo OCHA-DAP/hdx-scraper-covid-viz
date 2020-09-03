@@ -309,7 +309,7 @@ tabular_national:
     date_col: "Year"
     date_type: "int"
     indicator_cols:
-      - filter_col: "Metric=People in need,PiN Value for Dataviz=yes"
+      - filter_col: "Metric=People in need|PiN Value for Dataviz=yes"
         val_cols:
           - "Value"
         columns:

@@ -95,7 +95,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
         for indicatorcol in indicatorcols:
             filtercol = indicatorcol['filter_col']
             if filtercol:
-                filtercols = filtercol.split(',')
+                filtercols = filtercol.split('|')
                 match = True
                 for filterstr in filtercols:
                     filter = filterstr.split('=')
