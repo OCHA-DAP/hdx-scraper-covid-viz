@@ -34,7 +34,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
         indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo.get('val_cols', list()),
                           'val_fns': datasetinfo.get('val_fns', dict()), 'eval_cols':  datasetinfo.get('eval_cols', list()),
                           'keep_cols': datasetinfo.get('keep_cols', list()), 'append_cols': datasetinfo.get('append_cols', list()),
-                          'total_col': datasetinfo.get('total_col'), 'ignore_vals': datasetinfo.get('ignore_vals', list()),
+                          'total_cols': datasetinfo.get('total_cols'), 'ignore_vals': datasetinfo.get('ignore_vals', list()),
                           'columns': datasetinfo.get('columns', list()), 'hxltags': datasetinfo.get('hxltags', list())}]
     use_hxl = datasetinfo.get('use_hxl', False)
     if use_hxl:
@@ -104,14 +104,14 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
                         break
                 if not match:
                     continue
-            total_col = indicatorcol.get('total_col')
+            total_cols = indicatorcol.get('total_cols')
             eval_cols = indicatorcol.get('eval_cols')
             append_cols = indicatorcol.get('append_cols', list())
             keep_cols = indicatorcol.get('keep_cols', list())
             for i, valcol in enumerate(indicatorcol['val_cols']):
                 valuedict = valuedicts[filtercol][i]
                 val = get_rowval(row, valcol)
-                if total_col or eval_cols:
+                if total_cols or eval_cols:
                     dict_of_lists_add(valuedict, adm, val)
                 else:
                     curval = valuedict.get(adm)
@@ -162,7 +162,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
         valdicts = valuedicts[indicatorcol['filter_col']]
         eval_cols = indicatorcol.get('eval_cols')
         keep_cols = indicatorcol.get('keep_cols', list())
-        total_col = indicatorcol.get('total_col')
+        total_cols = indicatorcol.get('total_cols')
         ignore_vals = indicatorcol.get('ignore_vals', list())
         val_fns = indicatorcol.get('val_fns', dict())
         valcols = indicatorcol['val_cols']
@@ -214,40 +214,41 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
                     else:
                         newvaldicts[i][adm] = ''
             retval.extend(newvaldicts)
-        elif total_col:
-            formula = total_col['formula']
-            mustbepopulated = total_col.get('mustbepopulated', False)
-            newvaldicts = [dict() for _ in valdicts]
-            valdict0 = valdicts[0]
-            for adm in valdict0:
-                for i, val in enumerate(valdict0[adm]):
-                    if not val or val in ignore_vals:
-                        exists = False
-                    else:
-                        exists = True
-                        for valdict in valdicts[1:]:
-                            val = valdict[adm]
-                            if not val or val in ignore_vals:
-                                exists = False
-                                break
-                    if mustbepopulated and not exists:
-                        continue
-                    for j, valdict in enumerate(valdicts):
-                        valcol = valcols[j]
-                        val_fn = val_fns.get(valcol)
-                        if not val_fn:
-                            val_fn = valcol
-                        newvaldicts[j][adm] = newvaldicts[j].get(adm, 0.0) + eval(val_fn.replace(valcol, 'valdict[adm][i]'))
-            for i, valcol in enumerate(valcols):
-                formula = formula.replace(valcol, 'newvaldicts[%d][adm]' % i)
-            newvaldict = dict()
-            for adm in valdicts[0].keys():
-                try:
-                    val = eval(formula)
-                except (ValueError, TypeError, KeyError):
-                    val = ''
-                newvaldict[adm] = val
-            retval.append(newvaldict)
+        elif total_cols:
+            for total_col in total_cols:
+                formula = total_col['formula']
+                mustbepopulated = total_col.get('mustbepopulated', False)
+                newvaldicts = [dict() for _ in valdicts]
+                valdict0 = valdicts[0]
+                for adm in valdict0:
+                    for i, val in enumerate(valdict0[adm]):
+                        if not val or val in ignore_vals:
+                            exists = False
+                        else:
+                            exists = True
+                            for valdict in valdicts[1:]:
+                                val = valdict[adm]
+                                if not val or val in ignore_vals:
+                                    exists = False
+                                    break
+                        if mustbepopulated and not exists:
+                            continue
+                        for j, valdict in enumerate(valdicts):
+                            valcol = valcols[j]
+                            val_fn = val_fns.get(valcol)
+                            if not val_fn:
+                                val_fn = valcol
+                            newvaldicts[j][adm] = newvaldicts[j].get(adm, 0.0) + eval(val_fn.replace(valcol, 'valdict[adm][i]'))
+                for i, valcol in enumerate(valcols):
+                    formula = formula.replace(valcol, 'newvaldicts[%d][adm]' % i)
+                newvaldict = dict()
+                for adm in valdicts[0].keys():
+                    try:
+                        val = eval(formula)
+                    except (ValueError, TypeError, KeyError):
+                        val = ''
+                    newvaldict[adm] = val
+                retval.append(newvaldict)
         else:
             retval.extend(valdicts)
 
