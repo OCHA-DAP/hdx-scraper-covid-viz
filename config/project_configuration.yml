@@ -25,36 +25,6 @@ additional_sources:
 tabular_global:
   cerf_global:
     format: "csv"
-    dataset: "cerf-covid-19-allocations"
-    force_date_today: True
-    headers: 1
-    indicator_cols:
-      - filter_col: "PFType=CBPF"
-        val_cols:
-          - "TargetAmt"
-        total_cols:
-          - formula: "TargetAmt"
-            mustbepopulated: False
-        val_fns:
-          TargetAmt: "float(TargetAmt)"
-        columns:
-          - "CBPFCovidFunding"
-        hxltags:
-          - "#value+cbpf+covid+funding+total+usd"
-      - filter_col: "PFType=CERF"
-        val_cols:
-          - "TargetAmt"
-        total_cols:
-          - formula: "TargetAmt"
-            mustbepopulated: False
-        val_fns:
-          TargetAmt: "float(TargetAmt)"
-        columns:
-          - "CERFCovidFunding"
-        hxltags:
-          - "#value+cerf+covid+funding+total+usd"
-  cerf_test_global:
-    format: "csv"
     url: "https://cbpfapi.unocha.org/vo2/odata/GlobalGenericDataExtractSecure?SPCode=TAG_PRJ&PoolfundCodeAbbrv=&$format=csv"
     dataset: "cerf-covid-19-allocations"
     force_date_today: True
@@ -67,12 +37,14 @@ tabular_global:
           - "ParticipatingBoys"
           - "ParticipatingGirls"
           - "ParticipatingTotalBeneficiary"
+          - "ParticipationBudget"
         val_fns:
           ParticipatingMen: "float(ParticipatingMen)"
           ParticipatingWomen: "float(ParticipatingWomen)"
           ParticipatingBoys: "float(ParticipatingBoys)"
           ParticipatingGirls: "float(ParticipatingGirls)"
           ParticipatingTotalBeneficiary: "float(ParticipatingTotalBeneficiary)"
+          ParticipationBudget: "float(ParticipationBudget)"
         total_cols:
           - formula: "ParticipatingMen"
             mustbepopulated: False
@@ -84,18 +56,22 @@ tabular_global:
             mustbepopulated: False
           - formula: "ParticipatingTotalBeneficiary"
             mustbepopulated: False
+          - formula: "ParticipationBudget"
+            mustbepopulated: False
         columns:
           - "CBPFCovidFundingMen"
           - "CBPFCovidFundingWomen"
           - "CBPFCovidFundingBoys"
           - "CBPFCovidFundingGirls"
           - "CBPFCovidFundingTotalBeneficiary"
+          - "CBPFCovidFunding"
         hxltags:
           - "#affected+cbpf+covid+funding+male"
           - "#affected+cbpf+covid+female+funding"
           - "#affected+boys+cbpf+covid+funding"
           - "#affected+cbpf+covid+funding+girls"
           - "#affected+cbpf+covid+funding+total"
+          - "#value+cbpf+covid+funding+total+usd"
       - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker="
         val_cols:
           - "ParticipationBudget"
@@ -168,6 +144,18 @@ tabular_global:
           - "CBPFCovidFundingGM4"
         hxltags:
           - "#value+cbpf+covid+funding+gm4+total+usd"
+      - filter_col: "IsApproved=True|SourceType=CERF"
+        val_cols:
+          - "ParticipationBudget"
+        val_fns:
+          ParticipationBudget: "float(ParticipationBudget)"
+        total_cols:
+          - formula: "ParticipationBudget"
+            mustbepopulated: False
+        columns:
+          - "CERFCovidFunding"
+        hxltags:
+          - "#value+cerf+covid+funding+total+usd"
       - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker="
         val_cols:
           - "ParticipationBudget"
@@ -302,12 +290,12 @@ regional:
 #    "LSHTM: Total Cases(max)": "sum"
 #    "LSHTM: Total Deaths(min)": "sum"
 #    "LSHTM: Total Deaths(max)": "sum"
-    "CBPFCovidFunding": "sum"
     "CBPFCovidFundingMen": "sum"
     "CBPFCovidFundingWomen": "sum"
     "CBPFCovidFundingBoys": "sum"
     "CBPFCovidFundingGirls": "sum"
     "CBPFCovidFundingTotalBeneficiary": "sum"
+    "CBPFCovidFunding": "sum"
     "CBPFCovidFundingGMEmpty": "sum"
     "CBPFCovidFundingGM0": "sum"
     "CBPFCovidFundingGM1": "sum"
@@ -605,38 +593,6 @@ tabular_national:
       - "#severity+date+travel"
   cerf_national:
     format: "csv"
-    dataset: "cerf-covid-19-allocations"
-    force_date_today: True
-    headers: 1
-    adm_cols:
-      - "ISO2Country"
-    indicator_cols:
-      - filter_col: "PFType=CBPF"
-        val_cols:
-          - "TargetAmt"
-        val_fns:
-          TargetAmt: "float(TargetAmt)"
-        total_cols:
-          - formula: "TargetAmt"
-            mustbepopulated: False
-        columns:
-          - "CBPFCovidFunding"
-        hxltags:
-          - "#value+cbpf+covid+funding+total+usd"
-      - filter_col: "PFType=CERF"
-        val_cols:
-          - "TargetAmt"
-        val_fns:
-          TargetAmt: "float(TargetAmt)"
-        total_cols:
-          - formula: "TargetAmt"
-            mustbepopulated: False
-        columns:
-          - "CERFCovidFunding"
-        hxltags:
-          - "#value+cerf+covid+funding+total+usd"
-  cerf_test_national:
-    format: "csv"
     url: "https://cbpfapi.unocha.org/vo2/odata/GlobalGenericDataExtractSecure?SPCode=TAG_PRJ&PoolfundCodeAbbrv=&$format=csv"
     dataset: "cerf-covid-19-allocations"
     force_date_today: True
@@ -651,12 +607,14 @@ tabular_national:
           - "ParticipatingBoys"
           - "ParticipatingGirls"
           - "ParticipatingTotalBeneficiary"
+          - "ParticipationBudget"
         val_fns:
           ParticipatingMen: "float(ParticipatingMen)"
           ParticipatingWomen: "float(ParticipatingWomen)"
           ParticipatingBoys: "float(ParticipatingBoys)"
           ParticipatingGirls: "float(ParticipatingGirls)"
           ParticipatingTotalBeneficiary: "float(ParticipatingTotalBeneficiary)"
+          ParticipationBudget: "float(ParticipationBudget)"
         total_cols:
           - formula: "ParticipatingMen"
             mustbepopulated: False
@@ -668,18 +626,22 @@ tabular_national:
             mustbepopulated: False
           - formula: "ParticipatingTotalBeneficiary"
             mustbepopulated: False
+          - formula: "ParticipationBudget"
+            mustbepopulated: False
         columns:
           - "CBPFCovidFundingMen"
           - "CBPFCovidFundingWomen"
           - "CBPFCovidFundingBoys"
           - "CBPFCovidFundingGirls"
           - "CBPFCovidFundingTotalBeneficiary"
+          - "CBPFCovidFunding"
         hxltags:
           - "#affected+cbpf+covid+funding+male"
           - "#affected+cbpf+covid+female+funding"
           - "#affected+boys+cbpf+covid+funding"
           - "#affected+cbpf+covid+funding+girls"
           - "#affected+cbpf+covid+funding+total"
+          - "#value+cbpf+covid+funding+total+usd"
       - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker="
         val_cols:
           - "ParticipationBudget"
@@ -752,6 +714,18 @@ tabular_national:
           - "CBPFCovidFundingGM4"
         hxltags:
           - "#value+cbpf+covid+funding+gm4+total+usd"
+      - filter_col: "IsApproved=True|SourceType=CERF"
+        val_cols:
+          - "ParticipationBudget"
+        val_fns:
+          ParticipationBudget: "float(ParticipationBudget)"
+        total_cols:
+          - formula: "ParticipationBudget"
+            mustbepopulated: False
+        columns:
+          - "CERFCovidFunding"
+        hxltags:
+          - "#value+cerf+covid+funding+total+usd"
       - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker="
         val_cols:
           - "ParticipationBudget"
