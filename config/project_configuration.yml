@@ -66,8 +66,8 @@ tabular_global:
           - "CBPFCovidFundingTotalBeneficiary"
           - "CBPFCovidFunding"
         hxltags:
-          - "#affected+cbpf+covid+funding+male"
-          - "#affected+cbpf+covid+female+funding"
+          - "#affected+cbpf+covid+funding+men"
+          - "#affected+cbpf+covid+funding+women"
           - "#affected+boys+cbpf+covid+funding"
           - "#affected+cbpf+covid+funding+girls"
           - "#affected+cbpf+covid+funding+total"
@@ -634,8 +634,8 @@ tabular_national:
           - "CBPFCovidFundingTotalBeneficiary"
           - "CBPFCovidFunding"
         hxltags:
-          - "#affected+cbpf+covid+funding+male"
-          - "#affected+cbpf+covid+female+funding"
+          - "#affected+cbpf+covid+funding+men"
+          - "#affected+cbpf+covid+funding+women"
           - "#affected+boys+cbpf+covid+funding"
           - "#affected+cbpf+covid+funding+girls"
           - "#affected+cbpf+covid+funding+total"
