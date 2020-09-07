@@ -29,9 +29,9 @@ tabular_global:
       - filter_col: "PFType=CBPF"
         val_cols:
           - "TargetAmt"
-        total_col:
-          formula: "TargetAmt"
-          mustbepopulated: False
+        total_cols:
+          - formula: "TargetAmt"
+            mustbepopulated: False
         val_fns:
           TargetAmt: "float(TargetAmt)"
         columns:
@@ -41,9 +41,9 @@ tabular_global:
       - filter_col: "PFType=CERF"
         val_cols:
           - "TargetAmt"
-        total_col:
-          formula: "TargetAmt"
-          mustbepopulated: False
+        total_cols:
+          - formula: "TargetAmt"
+            mustbepopulated: False
         val_fns:
           TargetAmt: "float(TargetAmt)"
         columns:
@@ -67,9 +67,9 @@ tabular_global:
       - "-"
     val_fns:
       "Total (USD mn)": "get_numeric_if_possible(Total (USD mn)) if Total (USD mn) else 0"
-    total_col:
-      formula: "number_format(Total (USD mn) * 1000000, format='%.0f')"
-      mustbepopulated: True
+    total_cols:
+      - formula: "number_format(Total (USD mn) * 1000000, format='%.0f')"
+        mustbepopulated: True
     columns:
       - "IFI COVID19 global"
     hxltags:
@@ -413,9 +413,9 @@ tabular_national:
           - "TargetAmt"
         val_fns:
           TargetAmt: "float(TargetAmt)"
-        total_col:
-          formula: "TargetAmt"
-          mustbepopulated: False
+        total_cols:
+          - formula: "TargetAmt"
+            mustbepopulated: False
         columns:
           - "CBPFCovidFunding"
         hxltags:
@@ -425,9 +425,9 @@ tabular_national:
           - "TargetAmt"
         val_fns:
           TargetAmt: "float(TargetAmt)"
-        total_col:
-          formula: "TargetAmt"
-          mustbepopulated: False
+        total_cols:
+          - formula: "TargetAmt"
+            mustbepopulated: False
         columns:
           - "CERFCovidFunding"
         hxltags:
@@ -627,9 +627,9 @@ tabular_subnational:
         val_fns:
           "phase35": "float(phase35)"
           "population": "float(population)"
-        total_col:
-          formula: "get_fraction_str(phase35, population)"
-          mustbepopulated: True
+        total_cols:
+          - formula: "get_fraction_str(phase35, population)"
+            mustbepopulated: True
         columns:
           - "FoodInsecurityCHP3+"
         hxltags:
@@ -699,9 +699,9 @@ tabular_subnational:
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
-        total_col:
-          formula: "get_fraction_str(Numerator, Denominator)"
-          mustbepopulated: True
+        total_cols:
+          - formula: "get_fraction_str(Numerator, Denominator)"
+            mustbepopulated: True
         columns:
           - "HepB1 Coverage"
         hxltags:
@@ -716,9 +716,9 @@ tabular_subnational:
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
-        total_col:
-          formula: "get_fraction_str(Numerator, Denominator)"
-          mustbepopulated: True
+        total_cols:
+          - formula: "get_fraction_str(Numerator, Denominator)"
+            mustbepopulated: True
         columns:
           - "HepB2 Coverage"
         hxltags:
@@ -733,9 +733,9 @@ tabular_subnational:
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
-        total_col:
-          formula: "get_fraction_str(Numerator, Denominator)"
-          mustbepopulated: True
+        total_cols:
+          - formula: "get_fraction_str(Numerator, Denominator)"
+            mustbepopulated: True
         columns:
           - "HepB3 Coverage"
         hxltags:
@@ -750,9 +750,9 @@ tabular_subnational:
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
-        total_col:
-          formula: "get_fraction_str(Numerator, Denominator)"
-          mustbepopulated: True
+        total_cols:
+          - formula: "get_fraction_str(Numerator, Denominator)"
+            mustbepopulated: True
         columns:
           - "IPV1 Coverage"
         hxltags:
@@ -767,9 +767,9 @@ tabular_subnational:
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
-        total_col:
-          formula: "get_fraction_str(Numerator, Denominator)"
-          mustbepopulated: True
+        total_cols:
+          - formula: "get_fraction_str(Numerator, Denominator)"
+            mustbepopulated: True
         columns:
           - "MCV1 Coverage"
         hxltags:
@@ -784,9 +784,9 @@ tabular_subnational:
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
-        total_col:
-          formula: "get_fraction_str(Numerator, Denominator)"
-          mustbepopulated: True
+        total_cols:
+          - formula: "get_fraction_str(Numerator, Denominator)"
+            mustbepopulated: True
         columns:
           - "MCV2 Coverage"
         hxltags:
@@ -801,9 +801,9 @@ tabular_subnational:
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
-        total_col:
-          formula: "get_fraction_str(Numerator, Denominator)"
-          mustbepopulated: True
+        total_cols:
+          - formula: "get_fraction_str(Numerator, Denominator)"
+            mustbepopulated: True
         columns:
           - "Pol1 Coverage"
         hxltags:
@@ -818,9 +818,9 @@ tabular_subnational:
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
-        total_col:
-          formula: "get_fraction_str(Numerator, Denominator)"
-          mustbepopulated: True
+        total_cols:
+          - formula: "get_fraction_str(Numerator, Denominator)"
+            mustbepopulated: True
         columns:
           - "Pol2 Coverage"
         hxltags:
@@ -835,9 +835,9 @@ tabular_subnational:
         val_fns:
           Numerator: "float(Numerator)"
           Denominator: "float(Denominator)"
-        total_col:
-          formula: "get_fraction_str(Numerator, Denominator)"
-          mustbepopulated: True
+        total_cols:
+          - formula: "get_fraction_str(Numerator, Denominator)"
+            mustbepopulated: True
         columns:
           - "Pol3 Coverage"
         hxltags:
