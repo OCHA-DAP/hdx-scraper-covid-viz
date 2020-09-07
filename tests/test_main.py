@@ -28,7 +28,7 @@ class TestCovid:
         return join('tests', 'fixtures')
 
     def test_get_indicators(self, configuration, folder):
-        with temp_dir('TestCovidViz') as tempdir:
+        with temp_dir('TestCovidViz', delete_on_success=False, delete_on_failure=False) as tempdir:
             with Download(user_agent='test') as downloader:
                 tabs = configuration['tabs']
                 noout = nooutput(tabs)

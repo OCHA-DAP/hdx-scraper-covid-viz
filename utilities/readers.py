@@ -76,7 +76,8 @@ def read_hdx_metadata(datasetinfo):
             logger.error('Cannot find %s resource in %s!' % (format, dataset_name))
             return None, None
         datasetinfo['url'] = url
-    datasetinfo['date'] = get_date_from_dataset_date(dataset)
+    if 'date' not in datasetinfo:
+        datasetinfo['date'] = get_date_from_dataset_date(dataset)
     if 'source' not in datasetinfo:
         datasetinfo['source'] = dataset['dataset_source']
     if 'source_url' not in datasetinfo:

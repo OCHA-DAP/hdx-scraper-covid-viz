@@ -108,7 +108,7 @@ tabular_global:
           - "CBPFCovidFundingGM1"
         hxltags:
           - "#value+cbpf+covid+funding+gm1+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=2-	Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
+      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=2- Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
         val_cols:
           - "ParticipationBudget"
         val_fns:
@@ -120,7 +120,7 @@ tabular_global:
           - "CBPFCovidFundingGM2"
         hxltags:
           - "#value+cbpf+covid+funding+gm2+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=3-	Likely to contribute to gender equality, but without attention to age groups"
+      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=3- Likely to contribute to gender equality, but without attention to age groups"
         val_cols:
           - "ParticipationBudget"
         val_fns:
@@ -132,7 +132,7 @@ tabular_global:
           - "CBPFCovidFundingGM3"
         hxltags:
           - "#value+cbpf+covid+funding+gm3+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=4-	Likely to contribute to gender equality, including across age groups"
+      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=4- Likely to contribute to gender equality, including across age groups"
         val_cols:
           - "ParticipationBudget"
         val_fns:
@@ -192,7 +192,7 @@ tabular_global:
           - "CERFCovidFundingGM1"
         hxltags:
           - "#value+cerf+covid+funding+gm1+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=2-	Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
+      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=2- Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
         val_cols:
           - "ParticipationBudget"
         val_fns:
@@ -204,7 +204,7 @@ tabular_global:
           - "CERFCovidFundingGM2"
         hxltags:
           - "#value+cerf+covid+funding+gm2+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=3-	Likely to contribute to gender equality, but without attention to age groups"
+      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=3- Likely to contribute to gender equality, but without attention to age groups"
         val_cols:
           - "ParticipationBudget"
         val_fns:
@@ -216,7 +216,7 @@ tabular_global:
           - "CERFCovidFundingGM3"
         hxltags:
           - "#value+cerf+covid+funding+gm3+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=4-	Likely to contribute to gender equality, including across age groups"
+      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=4- Likely to contribute to gender equality, including across age groups"
         val_cols:
           - "ParticipationBudget"
         val_fns:
@@ -676,7 +676,7 @@ tabular_national:
           - "CBPFCovidFundingGM1"
         hxltags:
           - "#value+cbpf+covid+funding+gm1+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=2-	Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
+      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=2- Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
         val_cols:
           - "ParticipationBudget"
         val_fns:
@@ -688,7 +688,7 @@ tabular_national:
           - "CBPFCovidFundingGM2"
         hxltags:
           - "#value+cbpf+covid+funding+gm2+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=3-	Likely to contribute to gender equality, but without attention to age groups"
+      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=3- Likely to contribute to gender equality, but without attention to age groups"
         val_cols:
           - "ParticipationBudget"
         val_fns:
@@ -700,7 +700,7 @@ tabular_national:
           - "CBPFCovidFundingGM3"
         hxltags:
           - "#value+cbpf+covid+funding+gm3+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=4-	Likely to contribute to gender equality, including across age groups"
+      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=4- Likely to contribute to gender equality, including across age groups"
         val_cols:
           - "ParticipationBudget"
         val_fns:
@@ -760,7 +760,7 @@ tabular_national:
           - "CERFCovidFundingGM1"
         hxltags:
           - "#value+cerf+covid+funding+gm1+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=2-	Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
+      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=2- Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
         val_cols:
           - "ParticipationBudget"
         val_fns:
@@ -772,7 +772,7 @@ tabular_national:
           - "CERFCovidFundingGM2"
         hxltags:
           - "#value+cerf+covid+funding+gm2+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=3-	Likely to contribute to gender equality, but without attention to age groups"
+      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=3- Likely to contribute to gender equality, but without attention to age groups"
         val_cols:
           - "ParticipationBudget"
         val_fns:
@@ -784,7 +784,7 @@ tabular_national:
           - "CERFCovidFundingGM3"
         hxltags:
           - "#value+cerf+covid+funding+gm3+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=4-	Likely to contribute to gender equality, including across age groups"
+      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=4- Likely to contribute to gender equality, including across age groups"
         val_cols:
           - "ParticipationBudget"
         val_fns:
