@@ -34,6 +34,6 @@ class TestCovid:
                 noout = nooutput(tabs)
                 jsonout = jsonoutput(configuration, tabs)
                 outputs = {'gsheets': noout, 'excel': noout, 'json': jsonout}
-                get_indicators(configuration, downloader, outputs, tabs, scrapers=['ifi', 'who_national', 'who_subnational', 'covid_trend', 'sadd'])
+                get_indicators(configuration, downloader, outputs, tabs, scrapers=['ifi', 'who_global', 'who_national', 'who_subnational', 'covid_trend', 'sadd'])
                 filepath = jsonout.save(tempdir)
                 assert filecmp.cmp(filepath, join(folder, 'test_tabular.json'))

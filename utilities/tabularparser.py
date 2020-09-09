@@ -9,7 +9,7 @@ from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.downloader import Download
 from hdx.utilities.text import number_format, get_fraction_str, get_numeric_if_possible
 
-from model import today_str
+from model import today_str, add_population
 from utilities import get_rowval
 from utilities.rowparser import RowParser
 from utilities.readers import read_tabular, read_ole, read_json, read_hdx
@@ -28,7 +28,7 @@ brackets = r'''
 )'''
 
 
-def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list(), list()], retval=list(), sources=list()):
+def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup, retheaders=[list(), list()], retval=list(), sources=list()):
     indicatorcols = datasetinfo.get('indicator_cols')
     if not indicatorcols:
         indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo.get('val_cols', list()),
@@ -206,9 +206,10 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
                                 hasvalues = False
                                 break
                     if hasvalues:
-                        newvaldicts[i][adm], hasvalues_t = text_replacement(eval_col, adm)
+                        formula, hasvalues_t = text_replacement(eval_col, adm)
                         if hasvalues_t:
-                            newvaldicts[i][adm] = eval(newvaldicts[i][adm])
+                            formula = formula.replace('#population', 'population_lookup[adm]')
+                            newvaldicts[i][adm] = eval(formula)
                         else:
                             newvaldicts[i][adm] = ''
                     else:
@@ -238,9 +239,10 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
                             val_fn = val_fns.get(valcol)
                             if not val_fn:
                                 val_fn = valcol
-                            newvaldicts[j][adm] = newvaldicts[j].get(adm, 0.0) + eval(val_fn.replace(valcol, 'valdict[adm][i]'))
+                            newvaldicts[j][adm] = newvaldicts[j].get(adm, 0.0) + eval(val_fn.replace(valcol, 'get_numeric_if_possible(valdict[adm][i])'))
                 for i, valcol in enumerate(valcols):
                     formula = formula.replace(valcol, 'newvaldicts[%d][adm]' % i)
+                formula = formula.replace('#population', 'population_lookup[adm]')
                 newvaldict = dict()
                 for adm in valdicts[0].keys():
                     try:
@@ -257,7 +259,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, retheaders=[list()
     return retheaders, retval, sources
 
 
-def get_tabular(basic_auths, configuration, level, maindownloader, scrapers=None, **kwargs):
+def get_tabular(basic_auths, configuration, level, maindownloader, scrapers=None, population_lookup=None, **kwargs):
     datasets = configuration['tabular_%s' % level]
     retheaders = [list(), list()]
     retval = list()
@@ -288,7 +290,9 @@ def get_tabular(basic_auths, configuration, level, maindownloader, scrapers=None
             datasetinfo['source_url'] = datasetinfo['url']
         if 'date' not in datasetinfo or datasetinfo.get('force_date_today', False):
             datasetinfo['date'] = today_str
-        _get_tabular(level, name, datasetinfo, headers, iterator, retheaders, retval, sources)
+        _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup, retheaders, retval, sources)
         if downloader != maindownloader:
             downloader.close()
+        if name == 'population':
+            add_population(population_lookup, retheaders, retval)
     return retheaders, retval, sources

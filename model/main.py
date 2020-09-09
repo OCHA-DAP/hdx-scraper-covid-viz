@@ -57,12 +57,6 @@ def extend_sources(sources, *args):
             sources.extend(arg)
 
 
-def add_population(population_lookup, headers, columns):
-    population_index = headers[1].index('#population')
-    if population_index != -1:
-        population_lookup.update(columns[population_index])
-
-
 def get_indicators(configuration, downloader, outputs, tabs, scrapers=None, basic_auths=dict()):
     world = [list(), list()]
     regional = [['regionnames'], ['#region+name']]
@@ -85,28 +79,27 @@ def get_indicators(configuration, downloader, outputs, tabs, scrapers=None, basi
         food_headers, food_columns, food_sources = add_food_prices(configuration, countryiso3s, downloader, scrapers)
         campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, countryiso3s, downloader, outputs, scrapers)
         unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, countryiso3s, downloader, scrapers)
-        tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'national', downloader, scrapers)
+        tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'national', downloader, scrapers, population_lookup)
 
         national_headers = extend_headers(national, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, access_headers)
         national_columns = extend_columns('national', national, countryiso3s, admininfo, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, access_columns)
         extend_sources(sources, tabular_sources, food_sources, campaign_sources, fts_sources, unhcr_sources, access_sources)
-        add_population(population_lookup, tabular_headers, tabular_columns)
         update_tab('national', national)
 
         if 'world' in tabs:
             population_lookup['H63'] = sum(population_lookup.values())
-            tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'global', downloader, scrapers)
+            population_lookup['global'] = population_lookup['H63']
+            tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'global', downloader, scrapers, population_lookup)
             extend_headers(world, [['Population'], ['#population']], fts_wheaders, access_wheaders, tabular_headers)
             extend_columns('global', world, None, None, [{'global': population_lookup['H63']}], fts_wcolumns, access_wcolumns, tabular_columns)
             extend_sources(sources, fts_wsources, access_wsources, tabular_sources)
             update_tab('world', world)
 
         if 'regional' in tabs:
-            regional_headers, regional_columns = get_regional(configuration, national_headers, national_columns, admininfo)
+            regional_headers, regional_columns = get_regional(configuration, national_headers, national_columns, admininfo, population_lookup)
             extend_headers(regional, regional_headers, access_rheaders)
             extend_columns('regional', regional, admininfo.regions, admininfo, regional_columns, access_rcolumns)
             extend_sources(sources, access_rsources)
-            add_population(population_lookup, regional_headers, regional_columns)
             update_tab('regional', regional)
 
     if 'subnational' in tabs:

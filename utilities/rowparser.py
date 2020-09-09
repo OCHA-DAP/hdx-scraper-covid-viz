@@ -69,7 +69,10 @@ class RowParser(object):
             yield newrow
 
     def get_maxdate(self):
-        return max(self.maxdates.values())
+        if self.level is None:
+            return self.maxdate
+        else:
+            return max(self.maxdates.values())
 
     def do_set_value(self, row, scrapername=None):
         adms = [None for _ in range(len(self.admcols))]

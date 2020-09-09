@@ -20,3 +20,11 @@ def calculate_ratios(items_per_country, affected_items_per_country):
         else:
             ratios[countryiso] = '0.0'
     return ratios
+
+
+def add_population(population_lookup, headers, columns):
+    if population_lookup is None:
+        return
+    population_index = headers[1].index('#population')
+    if population_index != -1:
+        population_lookup.update(columns[population_index])

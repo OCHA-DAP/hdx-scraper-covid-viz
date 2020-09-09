@@ -160,12 +160,48 @@ tabular_national:
     val_cols:
       - "Cumulative_cases"
       - "Cumulative_deaths"
+    eval_cols:
+      - "number_format(Cumulative_cases, format='%.0f')"
+      - "number_format(Cumulative_deaths, format='%.0f')"
+      - "number_format(Cumulative_cases / #population * 100000, format='%.2f')"
+      - "number_format(Cumulative_deaths / #population * 100000, format='%.2f')"
     columns:
       - "NoCases"
       - "NoDeaths"
+      - "CasesPer100000"
+      - "DeathsPer100000"
     hxltags:
       - "#affected+infected"
       - "#affected+killed"
+      - "#affected+infected+per100000"
+      - "#affected+killed+per100000"
+# A fake one where we sum all values in cumulative column across dates which in practice makes no sense
+  who_national2:
+    format: "csv"
+    dataset: "coronavirus-covid-19-cases-and-deaths"
+    url: "tests/fixtures/WHO-COVID-19-global-data.csv"
+    headers: 1
+    adm_cols:
+      - "Country_code"
+    date_col: "Date_reported"
+    date_type: "date"
+    use_date_from_date_col: True
+    indicator_cols:
+      - filter_col: "Date_reported=2020-08-06"
+        val_cols:
+          - "Cumulative_cases"
+          - "Cumulative_deaths"
+        total_cols:
+          - formula: "number_format(Cumulative_cases / #population * 100000, format='%.2f')"
+            mustbepopulated: True
+          - formula: "number_format(Cumulative_deaths / #population * 100000, format='%.2f')"
+            mustbepopulated: True
+        columns:
+          - "Cases2Per100000"
+          - "Deaths2Per100000"
+        hxltags:
+          - "#affected+infected+2+per100000"
+          - "#affected+killed+2+per100000"
   inform_hazard:
     format: "xlsx"
     dataset: "inform-covid-19-risk-index-version-0-1-2"

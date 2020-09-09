@@ -5,6 +5,8 @@ import sys
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.text import number_format, get_fraction_str, get_numeric_if_possible
 
+from model import add_population
+
 logger = logging.getLogger(__name__)
 
 
@@ -32,7 +34,7 @@ def get_numeric(valuestr):
     return valuestr
 
 
-def get_regional(configuration, national_headers, national_columns, admininfo):
+def get_regional(configuration, national_headers, national_columns, admininfo, population_lookup=None):
     regional_config = configuration['regional']
     val_fns = regional_config['val_fns']
     headers = val_fns.keys()
@@ -96,5 +98,6 @@ def get_regional(configuration, national_headers, national_columns, admininfo):
                         value = None
                     toeval = toeval.replace(regional_headers[0][j], str(value))
                 valdict[region] = eval(toeval)
+    add_population(population_lookup, regional_headers, valdicts)
     logger.info('Processed regional')
     return regional_headers, valdicts
