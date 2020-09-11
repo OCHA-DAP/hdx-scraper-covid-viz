@@ -20,10 +20,23 @@ class jsonoutput:
     def add_data_row(self, name, row):
         dict_of_lists_add(self.json, '%s_data' % name, row)
 
-    def add_data_rows_by_key(self, name, countryiso, rows):
+    def add_dataframe_rows(self, name, df, hxltags=None):
+        if hxltags:
+            df = df.rename(columns=hxltags)
+        self.json['%s_data' % name] = df.to_dict(orient='records')
+
+    def add_data_rows_by_key(self, name, countryiso, rows, hxltags=None):
         fullname = '%s_data' % name
         jsondict = self.json.get(fullname, dict())
-        jsondict[countryiso] = rows
+        jsondict[countryiso] = list()
+        for row in rows:
+            if hxltags:
+                newrow = dict()
+                for header, hxltag in hxltags.items():
+                    newrow[hxltag] = row[header]
+            else:
+                newrow = row
+            jsondict[countryiso].append(newrow)
         self.json[fullname] = jsondict
 
     def generate_json(self, key, rows):

@@ -3,6 +3,7 @@ tabs:
   regional: "RegionalData"
   national: "NationalData"
   subnational: "SubnationalData"
+  covid_series: "CovidSeries"
   covid_trend: "CovidTrend"
   sources: "Sources"
 

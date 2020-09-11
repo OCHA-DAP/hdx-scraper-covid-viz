@@ -2,7 +2,7 @@
 import argparse
 import logging
 from os import getenv
-from os.path import join, expanduser
+from os.path import join
 
 from hdx.facades.keyword_arguments import facade
 from hdx.hdx_configuration import Configuration

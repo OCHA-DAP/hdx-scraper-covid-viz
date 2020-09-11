@@ -14,7 +14,7 @@ class exceloutput:
         self.tabs = tabs
         self.updatetabs = updatetabs
 
-    def update_tab(self, tabname, values):
+    def update_tab(self, tabname, values, hxltags=None):
         if tabname not in self.updatetabs:
             return
         sheetname = self.tabs[tabname]
@@ -28,7 +28,11 @@ class exceloutput:
                 for j, value in enumerate(row):
                     tab.cell(row=i+1, column=j+1, value=value)
         else:
-            for r in dataframe_to_rows(values, index=True, header=True):
+            headers = list(values.columns.values)
+            tab.append(headers)
+            if hxltags:
+                tab.append([hxltags.get(header, '') for header in headers])
+            for r in dataframe_to_rows(values, index=False, header=False):
                 tab.append(r)
 
     def save(self):
