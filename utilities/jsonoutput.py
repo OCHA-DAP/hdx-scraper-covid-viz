@@ -86,4 +86,10 @@ class jsonoutput:
             filepath = join(folder, filepath)
         logger.info('Writing JSON to %s' % filepath)
         save_json(self.json, filepath)
+        additional = self.json_configuration.get('additional', list())
+        for filedetails in additional:
+            filedetailspath = filedetails['filepath']
+            if folder:
+                filedetailspath = join(folder, filepath)
+            save_json(self.json['%s_data' % filedetails['key']], filedetailspath)
         return filepath

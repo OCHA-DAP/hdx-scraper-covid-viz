@@ -15,6 +15,9 @@ googlesheets:
 
 json:
   filepath: "out.json"
+  additional:
+    - filepath: "out_covidseries.json"
+      key: "covid_series"
 
 additional_sources:
   - indicator: "#food-prices"
