@@ -39,10 +39,10 @@ def extend_columns(level, rows, adms, admininfo, *args):
         elif level == 'regional':
             row = [adm]
         elif level == 'national':
-            row = [adm, Country.get_country_name_from_iso3(adm), '|'.join(sorted(list(admininfo.iso3_to_region_and_hrp[adm])))]
+            row = [adm, admininfo.get_country_name_from_iso3(adm), '|'.join(sorted(list(admininfo.iso3_to_region_and_hrp[adm])))]
         elif level == 'subnational':
             countryiso3 = admininfo.pcode_to_iso3[adm]
-            countryname = Country.get_country_name_from_iso3(countryiso3)
+            countryname = admininfo.get_country_name_from_iso3(countryiso3)
             adm1_name = admininfo.pcode_to_name[adm]
             row = [countryiso3, countryname, adm, adm1_name]
         for column in columns:

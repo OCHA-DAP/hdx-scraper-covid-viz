@@ -19,6 +19,7 @@ def get_WHO_data(url, admininfo):
     df = df.drop(columns=['Country_code'])
     # get only HRP countries
     df = df.loc[df['ISO_3_CODE'].isin(admininfo.countryiso3s), :]
+    df_series = df.copy(deep=True)
     df['Date_reported'] = pd.to_datetime(df['Date_reported'])
 
     # adding global by date
@@ -42,7 +43,7 @@ def get_WHO_data(url, admininfo):
     df = df.append(df_H63)
     df = df.append(df_H25)
     df = df.append(df_regional)
-    return df
+    return df, df_series
 
 
 def get_covid_trend(configuration, outputs, admininfo, population_lookup, scrapers=None):
@@ -53,20 +54,20 @@ def get_covid_trend(configuration, outputs, admininfo, population_lookup, scrape
     read_hdx_metadata(datasetinfo)
 
     # get WHO data and calculate sum as 'H63'
-    df_WHO = get_WHO_data(datasetinfo['url'], admininfo)
+    df_WHO, df_series = get_WHO_data(datasetinfo['url'], admininfo)
 
     # output time series
-    df_series = df_WHO.drop(columns=['New_cases', 'New_deaths', 'Regional_office'])
-    df_series['Date_reported'] = df_series['Date_reported'].apply(lambda x: x.strftime('%Y-%m-%d'))
-    hxltags = {'ISO_3_CODE': '#country+code', 'Date_reported': '#date+reported', 'Cumulative_cases': '#affected+infected', 'Cumulative_deaths': '#affected+killed'}
+    df_series = df_series.drop(columns=['New_cases', 'New_deaths'])
+    df_series['CountryName'] = df_series['ISO_3_CODE'].apply(admininfo.get_country_name_from_iso3)
+    series_hxltags = {'ISO_3_CODE': '#country+code', 'CountryName': '#country+name', 'Date_reported': '#date+reported', 'Cumulative_cases': '#affected+infected', 'Cumulative_deaths': '#affected+killed'}
     series_name = 'covid_series'
-    outputs['gsheets'].update_tab(series_name, df_series, hxltags, 1000)  # 1000 rows in gsheets!
-    outputs['excel'].update_tab(series_name, df_series, hxltags)
-    json_df = df_series.groupby('ISO_3_CODE').apply(lambda x: x.to_dict('r'))
-    del hxltags['ISO_3_CODE']
+    outputs['gsheets'].update_tab(series_name, df_series, series_hxltags, 1000)  # 1000 rows in gsheets!
+    outputs['excel'].update_tab(series_name, df_series, series_hxltags)
+    json_df = df_series.groupby('CountryName').apply(lambda x: x.to_dict('r'))
+    del series_hxltags['CountryName']
     for rows in json_df:
-        countryiso = rows[0]['ISO_3_CODE']
-        outputs['json'].add_data_rows_by_key(series_name, countryiso, rows, hxltags)
+        countryiso = rows[0]['CountryName']
+        outputs['json'].add_data_rows_by_key(series_name, countryiso, rows, series_hxltags)
 
     source_date = max(df_WHO['Date_reported']).strftime('%Y-%m-%d')
 
@@ -109,13 +110,16 @@ def get_covid_trend(configuration, outputs, admininfo, population_lookup, scrape
     output_df['Date_reported'] = output_df['Date_reported'].apply(lambda x: x.strftime('%Y-%m-%d'))
     output_df = output_df.drop(
         ['NewCase_PercentChange', 'NewDeath_PercentChange', 'ndays', 'diff_cases', 'diff_deaths'], axis=1)
-    hxltags = {'ISO_3_CODE': '#country+code', 'Date_reported': '#date+reported', 'weekly_new_cases': '#affected+infected+new+weekly', 'weekly_new_deaths': '#affected+killed+new+weekly', 'weekly_new_cases_per_ht': '#affected+infected+new+per100000+weekly', 'weekly_new_cases_pc_change': '#affected+infected+new+pct+weekly'}
-    outputs['gsheets'].update_tab(name, output_df, hxltags)
-    outputs['excel'].update_tab(name, output_df, hxltags)
+    trend_hxltags = {'ISO_3_CODE': '#country+code', 'Date_reported': '#date+reported', 'weekly_new_cases': '#affected+infected+new+weekly', 'weekly_new_deaths': '#affected+killed+new+weekly', 'weekly_new_cases_per_ht': '#affected+infected+new+per100000+weekly', 'weekly_new_cases_pc_change': '#affected+infected+new+pct+weekly'}
+    outputs['gsheets'].update_tab(name, output_df, trend_hxltags)
+    outputs['excel'].update_tab(name, output_df, trend_hxltags)
     # Save as JSON
     json_df = output_df.replace([numpy.inf, -numpy.inf], '').groupby('ISO_3_CODE').apply(lambda x: x.to_dict('r'))
-    del hxltags['ISO_3_CODE']
+    del trend_hxltags['ISO_3_CODE']
     for rows in json_df:
         countryiso = rows[0]['ISO_3_CODE']
-        outputs['json'].add_data_rows_by_key(name, countryiso, rows, hxltags)
-    return [(datasetinfo['hxltag'], source_date, datasetinfo['source'], datasetinfo['source_url'])]
+        outputs['json'].add_data_rows_by_key(name, countryiso, rows, trend_hxltags)
+    hxltags = set(series_hxltags.values()) | set(trend_hxltags.values())
+    hxltags.remove('#country+code')
+    hxltags.remove('#date+reported')
+    return [(x, source_date, datasetinfo['source'], datasetinfo['source_url']) for x in hxltags]

@@ -88,8 +88,11 @@ class jsonoutput:
         save_json(self.json, filepath)
         additional = self.json_configuration.get('additional', list())
         for filedetails in additional:
+            json = self.json.get('%s_data' % filedetails['key'])
+            if not json:
+                continue
             filedetailspath = filedetails['filepath']
             if folder:
                 filedetailspath = join(folder, filepath)
-            save_json(self.json['%s_data' % filedetails['key']], filedetailspath)
+            save_json(json, filedetailspath)
         return filepath

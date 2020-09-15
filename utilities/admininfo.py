@@ -29,6 +29,7 @@ class AdminInfo(object):
     def __init__(self, downloader):
         configuration = Configuration.read()
         admin_info = configuration['admin_info']
+        self.country_name_mappings = configuration['country_name_mappings']
         self.adm1_name_replacements = configuration['adm1_name_replacements']
         self.adm1_fuzzy_ignore = configuration['adm1_fuzzy_ignore']
         self.adm_mappings = configuration.get('adm_mappings', [dict(), dict()])
@@ -83,6 +84,13 @@ class AdminInfo(object):
         self.matches = set()
         self.ignored = set()
         self.errors = set()
+
+    def get_country_name_from_iso3(self, countryiso):
+        countryname = self.country_name_mappings.get(countryiso)
+        if countryname:
+            return countryname
+        else:
+            return Country.get_country_name_from_iso3(countryiso)
 
     def convert_pcode_length(self, countryiso3, adm1_pcode, scrapername):
         if adm1_pcode in self.pcodes:
