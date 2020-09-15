@@ -17,7 +17,16 @@ json:
   filepath: "out.json"
   additional:
     - filepath: "out_covidseries.json"
-      key: "covid_series"
+      keys:
+        - name: "covid_series"
+          newname: "timeseries"
+        - name: "national"
+          newname: "cumulative"
+          hxltags:
+            - "#country+code"
+            - "#country+name"
+            - "#affected+infected"
+            - "#affected+killed"
 
 additional_sources:
   - indicator: "#food-prices"

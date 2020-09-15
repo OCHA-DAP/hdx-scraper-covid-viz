@@ -88,7 +88,20 @@ class jsonoutput:
         save_json(self.json, filepath)
         additional = self.json_configuration.get('additional', list())
         for filedetails in additional:
-            json = self.json.get('%s_data' % filedetails['key'])
+            json = dict()
+            for key in filedetails['keys']:
+                newjson = self.json.get('%s_data' % key['name'])
+                hxltags = key.get('hxltags')
+                if hxltags:
+                    rows = list()
+                    for row in newjson:
+                        newrow = dict()
+                        for hxltag in hxltags:
+                            if hxltag in row:
+                                newrow[hxltag] = row[hxltag]
+                        rows.append(newrow)
+                    newjson = rows
+                json[key['newname']] = newjson
             if not json:
                 continue
             filedetailspath = filedetails['filepath']
