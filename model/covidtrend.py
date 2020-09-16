@@ -5,7 +5,6 @@ import pandas as pd
 # filename for shapefile and WHO input dataset
 from hdx.location.country import Country
 
-from model import today_str
 from utilities.readers import read_hdx_metadata
 
 MIN_CUMULATIVE_CASES = 100
@@ -20,6 +19,9 @@ def get_WHO_data(url, admininfo):
     # get only HRP countries
     df = df.loc[df['ISO_3_CODE'].isin(admininfo.countryiso3s), :]
     df_series = df.copy(deep=True)
+    df_series = df_series.loc[df['ISO_3_CODE'].isin(admininfo.hrp_iso3s), :]
+    df_series = df_series.drop(columns=['New_cases', 'New_deaths'])
+    df_series['CountryName'] = df_series['ISO_3_CODE'].apply(admininfo.get_country_name_from_iso3)
     df['Date_reported'] = pd.to_datetime(df['Date_reported'])
 
     # adding global by date
@@ -57,8 +59,6 @@ def get_covid_trend(configuration, outputs, admininfo, population_lookup, scrape
     df_WHO, df_series = get_WHO_data(datasetinfo['url'], admininfo)
 
     # output time series
-    df_series = df_series.drop(columns=['New_cases', 'New_deaths'])
-    df_series['CountryName'] = df_series['ISO_3_CODE'].apply(admininfo.get_country_name_from_iso3)
     series_hxltags = {'ISO_3_CODE': '#country+code', 'CountryName': '#country+name', 'Date_reported': '#date+reported', 'Cumulative_cases': '#affected+infected', 'Cumulative_deaths': '#affected+killed'}
     series_name = 'covid_series'
     outputs['gsheets'].update_tab(series_name, df_series, series_hxltags, 1000)  # 1000 rows in gsheets!

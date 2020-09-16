@@ -57,14 +57,13 @@ def extend_sources(sources, *args):
             sources.extend(arg)
 
 
-def get_indicators(configuration, downloader, outputs, tabs, scrapers=None, basic_auths=dict()):
+def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers=None, basic_auths=dict()):
     world = [list(), list()]
     regional = [['regionnames'], ['#region+name']]
     national = [['iso3', 'countryname', 'region'], ['#country+code', '#country+name', '#region+name']]
     subnational = [['iso3', 'countryname', 'adm1_pcode', 'adm1_name'], ['#country+code', '#country+name', '#adm1+code', '#adm1+name']]
     sources = [('Indicator', 'Date', 'Source', 'Url'), ('#indicator+name', '#date', '#meta+source', '#meta+url')]
 
-    admininfo = AdminInfo.setup(downloader)
     countryiso3s = admininfo.countryiso3s
     pcodes = admininfo.pcodes
     population_lookup = dict()

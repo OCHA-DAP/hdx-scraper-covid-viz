@@ -80,7 +80,7 @@ class jsonoutput:
                         newrow[hxlrow[key]] = row[key]
                 self.add_data_row(name, newrow)
 
-    def save(self, folder=None):
+    def save(self, folder=None, hrp_iso3s=list()):
         filepath = self.json_configuration['filepath']
         if folder:
             filepath = join(folder, filepath)
@@ -91,14 +91,22 @@ class jsonoutput:
             json = dict()
             for key in filedetails['keys']:
                 newjson = self.json.get('%s_data' % key['name'])
+                countries = key.get('countries')
                 hxltags = key.get('hxltags')
-                if hxltags:
+                if (countries or hxltags) and isinstance(newjson, list):
                     rows = list()
                     for row in newjson:
-                        newrow = dict()
-                        for hxltag in hxltags:
-                            if hxltag in row:
-                                newrow[hxltag] = row[hxltag]
+                        if countries == 'hrp_iso3s':
+                            countryiso = row.get('#country+code')
+                            if countryiso and countryiso not in hrp_iso3s:
+                                continue
+                        if hxltags is None:
+                            newrow = row
+                        else:
+                            newrow = dict()
+                            for hxltag in hxltags:
+                                if hxltag in row:
+                                    newrow[hxltag] = row[hxltag]
                         rows.append(newrow)
                     newjson = rows
                 json[key['newname']] = newjson

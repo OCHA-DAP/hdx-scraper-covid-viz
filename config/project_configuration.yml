@@ -22,6 +22,7 @@ json:
           newname: "timeseries"
         - name: "national"
           newname: "cumulative"
+          countries: "hrp_iso3s"
           hxltags:
             - "#country+code"
             - "#country+name"
@@ -810,35 +811,30 @@ tabular_national:
         hxltags:
           - "#value+cerf+covid+funding+gm4+total+usd"
   sadd:
-    url: "https://api.globalhealth5050.org/api/v1/summary"
-    format: "json"
-    jsonpath: "data[*].*"
-    #dataset: "covid-19-sex-disaggregated-data-tracker"
-    source: "globalhealth5050"
-    date_col: "date"
-    date_type: "date"
-    adm_cols:
-      - "country_code"
-    val_cols:
-      - "cases_male_pct"
-      - "cases_female_pct"
-      - "deaths_male_pct"
-      - "deaths_female_pct"
-    val_fns:
-      cases_male_pct: "get_numeric_if_possible(cases_male_pct)"
-      cases_female_pct: "get_numeric_if_possible(cases_female_pct)"
-      deaths_male_pct: "get_numeric_if_possible(deaths_male_pct)"
-      deaths_female_pct: "get_numeric_if_possible(deaths_female_pct)"
-    eval_cols:
-      - "number_format(cases_male_pct)"
-      - "number_format(cases_female_pct)"
-      - "number_format(deaths_male_pct)"
-      - "number_format(deaths_female_pct)"
-    hxltags:
-      - "#affected+infected+m+pct"
-      - "#affected+f+infected+pct"
-      - "#affected+killed+m+pct"
-      - "#affected+f+killed+pct"
+    format: "csv"
+    dataset: "covid-19-sex-disaggregated-data-tracker"
+    headers: 1
+    use_hxl: True
+    exclude_tags:
+      - "#date"
+      - "#meta+dataviz"
+    indicator_cols:
+      - filter_col: "#meta+dataviz=Yes"
+        val_fns:
+          "#affected+infected+male+pct": "get_numeric_if_possible(#affected+infected+male+pct)"
+          "#affected+infected+female+pct": "get_numeric_if_possible(#affected+infected+female+pct)"
+          "#affected+infected+death+male+pct": "get_numeric_if_possible(#affected+infected+death+male+pct)"
+          "#affected+infected+death+female+pct": "get_numeric_if_possible(#affected+infected+death+female+pct)"
+        eval_cols:
+          - "number_format(#affected+infected+male+pct)"
+          - "number_format(#affected+infected+female+pct)"
+          - "number_format(#affected+infected+death+male+pct)"
+          - "number_format(#affected+infected+death+female+pct)"
+        hxltags:
+          - "#affected+infected+m+pct"
+          - "#affected+f+infected+pct"
+          - "#affected+killed+m+pct"
+          - "#affected+f+killed+pct"
 
 fts:
   v1_url: "https://api.hpc.tools/v1/public/"
