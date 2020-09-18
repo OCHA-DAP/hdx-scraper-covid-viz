@@ -4,6 +4,7 @@ from os.path import join
 
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.saver import save_json
+from hdx.utilities.text import get_numeric_if_possible
 
 from utilities.readers import read_json, read_ole, read_hdx, read_tabular
 
@@ -93,8 +94,14 @@ class jsonoutput:
                 newjson = self.json.get('%s_data' % key['name'])
                 countries = key.get('countries')
                 hxltags = key.get('hxltags')
+                include_sum = key.get('include_sum', None)
+                if include_sum:
+                    sum_cols = include_sum['sum_cols']
+                else:
+                    sum_cols = None
                 if (countries or hxltags) and isinstance(newjson, list):
                     rows = list()
+                    sums = {hxltag: 0 for hxltag in sum_cols}
                     for row in newjson:
                         if countries == 'hrp_iso3s':
                             countryiso = row.get('#country+code')
@@ -107,7 +114,14 @@ class jsonoutput:
                             for hxltag in hxltags:
                                 if hxltag in row:
                                     newrow[hxltag] = row[hxltag]
+                        for hxltag in sum_cols:
+                            sums[hxltag] = sums[hxltag] + get_numeric_if_possible(newrow[hxltag])
                         rows.append(newrow)
+                    if include_sum:
+                        row = {include_sum['name_col']: include_sum['value']}
+                        for hxltag in sum_cols:
+                            row[hxltag] = sum_cols[hxltag]
+                        rows.append(row)
                     newjson = rows
                 json[key['newname']] = newjson
             if not json:
