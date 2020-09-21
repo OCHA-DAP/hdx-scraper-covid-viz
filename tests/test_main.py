@@ -10,6 +10,7 @@ from hdx.utilities.downloader import Download
 from hdx.utilities.path import temp_dir
 
 from model.main import get_indicators
+from utilities.admininfo import AdminInfo
 from utilities.jsonoutput import jsonoutput
 from utilities.nooutput import nooutput
 
@@ -34,6 +35,7 @@ class TestCovid:
                 noout = nooutput(tabs)
                 jsonout = jsonoutput(configuration, tabs)
                 outputs = {'gsheets': noout, 'excel': noout, 'json': jsonout}
-                get_indicators(configuration, downloader, outputs, tabs, scrapers=['ifi', 'who_global', 'who_national', 'who_subnational', 'covid_trend', 'sadd'])
+                admininfo = AdminInfo.setup(downloader)
+                get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers=['ifi', 'who_global', 'who_national', 'who_subnational', 'covid_trend', 'sadd'])
                 filepath = jsonout.save(tempdir)
                 assert filecmp.cmp(filepath, join(folder, 'test_tabular.json'))
