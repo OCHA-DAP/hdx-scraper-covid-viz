@@ -10,30 +10,40 @@ from utilities.readers import read_hdx_metadata
 MIN_CUMULATIVE_CASES = 100
 
 
-def get_WHO_data(url, admininfo):
+def get_who_data(url, admininfo):
     df = pd.read_csv(url, keep_default_na=False)
     df.columns = df.columns.str.strip()
     df = df[['Date_reported', 'Country_code', 'Cumulative_cases', 'New_cases', 'New_deaths', 'Cumulative_deaths']]
     df.insert(1, 'ISO_3_CODE', df['Country_code'].apply(Country.get_iso3_from_iso2))
     df = df.drop(columns=['Country_code'])
+    source_date = df['Date_reported'].max()
+
+    # cumulative
+    df_cumulative = df.loc[df['Date_reported'] == source_date]
+    df_cumulative = df_cumulative.drop(columns=['Date_reported', 'New_cases', 'New_deaths'])
+    df_world = df_cumulative.sum()
+    df_cumulative = df_cumulative.loc[df['ISO_3_CODE'].isin(admininfo.countryiso3s), :]
+    df_h63 = df_cumulative.sum()
+
     # get only HRP countries
     df = df.loc[df['ISO_3_CODE'].isin(admininfo.countryiso3s), :]
-    df_series = df.copy(deep=True)
-    df_series = df_series.loc[df['ISO_3_CODE'].isin(admininfo.hrp_iso3s), :]
+
+    df_series = df.loc[df['ISO_3_CODE'].isin(admininfo.hrp_iso3s), :]
     df_series = df_series.drop(columns=['New_cases', 'New_deaths'])
     df_series['CountryName'] = df_series['ISO_3_CODE'].apply(admininfo.get_country_name_from_iso3)
+
     df['Date_reported'] = pd.to_datetime(df['Date_reported'])
 
-    # adding global by date
-    df_H63 = df.groupby('Date_reported').sum()
-    df_H63['ISO_3_CODE'] = 'H63'
-    df_H63 = df_H63.reset_index()
+    # adding global H63 by date
+    df_h63_all = df.groupby('Date_reported').sum()
+    df_h63_all['ISO_3_CODE'] = 'H63'
+    df_h63_all = df_h63_all.reset_index()
 
     # adding global H25 by date
-    df_H25 = df.loc[df['ISO_3_CODE'].isin(admininfo.hrp_iso3s), :]
-    df_H25 = df_H25.groupby('Date_reported').sum()
-    df_H25['ISO_3_CODE'] = 'H25'
-    df_H25 = df_H25.reset_index()
+    df_h25_all = df.loc[df['ISO_3_CODE'].isin(admininfo.hrp_iso3s), :]
+    df_h25_all = df_h25_all.groupby('Date_reported').sum()
+    df_h25_all['ISO_3_CODE'] = 'H25'
+    df_h25_all = df_h25_all.reset_index()
 
     # adding regional by date
     dict_regions = pd.DataFrame(admininfo.iso3_to_region.items(), columns=['ISO3', 'Regional_office'])
@@ -42,21 +52,22 @@ def get_WHO_data(url, admininfo):
     df_regional = df.groupby(['Date_reported', 'Regional_office']).sum().reset_index()
     df_regional = df_regional.rename(columns={'Regional_office': 'ISO_3_CODE'})
 
-    df = df.append(df_H63)
-    df = df.append(df_H25)
+    df = df.append(df_h63_all)
+    df = df.append(df_h25_all)
     df = df.append(df_regional)
-    return df, df_series
+
+    return source_date, df_world, df_h63, df_cumulative, df_series, df
 
 
-def get_covid_trend(configuration, outputs, admininfo, population_lookup, scrapers=None):
-    name = 'covid_trend'
+def get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers=None):
+    name = 'who_covid'
     if scrapers and not any(scraper in name for scraper in scrapers) and not any(scraper in outputs['gsheets'].updatetabs for scraper in scrapers):
         return list()
     datasetinfo = configuration[name]
     read_hdx_metadata(datasetinfo)
 
-    # get WHO data and calculate sum as 'H63'
-    df_WHO, df_series = get_WHO_data(datasetinfo['url'], admininfo)
+    # get WHO data
+    source_date, df_world, df_h63, df_cumulative, df_series, df_WHO = get_who_data(datasetinfo['url'], admininfo)
 
     # output time series
     series_hxltags = {'ISO_3_CODE': '#country+code', 'CountryName': '#country+name', 'Date_reported': '#date+reported', 'Cumulative_cases': '#affected+infected', 'Cumulative_deaths': '#affected+killed'}
@@ -68,8 +79,6 @@ def get_covid_trend(configuration, outputs, admininfo, population_lookup, scrape
     for rows in json_df:
         countryiso = rows[0]['CountryName']
         outputs['json'].add_data_rows_by_key(series_name, countryiso, rows, series_hxltags)
-
-    source_date = max(df_WHO['Date_reported']).strftime('%Y-%m-%d')
 
     # get weekly new cases
     new_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='Date_reported').sum()[['New_cases', 'New_deaths']]
@@ -122,4 +131,17 @@ def get_covid_trend(configuration, outputs, admininfo, population_lookup, scrape
     hxltags = set(series_hxltags.values()) | set(trend_hxltags.values())
     hxltags.remove('#country+code')
     hxltags.remove('#date+reported')
-    return [(x, source_date, datasetinfo['source'], datasetinfo['source_url']) for x in hxltags]
+    dssource = datasetinfo['source']
+    dssourceurl = datasetinfo['source_url']
+    sources = [(hxltag, source_date, dssource, dssourceurl) for hxltag in hxltags]
+
+    hxltags = ['#affected+infected', '#affected+killed']
+    headers = [['Covid Cases', 'Covid Deaths'], hxltags]
+    global_cases = {'global': int(df_world['Cumulative_cases'])}
+    global_deaths = {'global': int(df_world['Cumulative_deaths'])}
+    h63_cases = {'global': int(df_h63['Cumulative_cases'])}
+    h63_deaths = {'global': int(df_h63['Cumulative_deaths'])}
+    national_cases = dict(zip(df_cumulative['ISO_3_CODE'], df_cumulative['Cumulative_cases'].astype(int)))
+    national_deaths = dict(zip(df_cumulative['ISO_3_CODE'], df_cumulative['Cumulative_deaths'].astype(int)))
+    sources.extend([(hxltag, source_date, dssource, dssourceurl) for hxltag in hxltags])
+    return headers, [global_cases, global_deaths], [h63_cases, h63_deaths], [national_cases, national_deaths], sources

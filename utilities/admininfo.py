@@ -78,6 +78,10 @@ class AdminInfo(object):
         regions.insert(0, region)
         for countryiso in hrp_iso3s:
             dict_of_sets_add(iso3_to_region_and_hrp, countryiso, region)
+        region = 'H63'
+        regions.insert(0, region)
+        for countryiso in countryiso3s:
+            dict_of_sets_add(iso3_to_region_and_hrp, countryiso, region)
         return regions, iso3_to_region, iso3_to_region_and_hrp
 
     def init_matches_errors(self):

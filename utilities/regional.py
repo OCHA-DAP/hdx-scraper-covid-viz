@@ -34,17 +34,20 @@ def get_numeric(valuestr):
     return valuestr
 
 
-def get_regional(configuration, national_headers, national_columns, admininfo, population_lookup=None):
+def get_regional(configuration, admininfo, national_headers, national_columns, population_lookup=None, *args):
     regional_config = configuration['regional']
-    val_fns = regional_config['val_fns']
+    if population_lookup is None:
+        val_fns = regional_config['val_fns']
+    else:
+        val_fns = {'Population': 'sum'}
     headers = val_fns.keys()
     regional_headers = [list(), list()]
     regional_columns = list()
-    for i, header in enumerate(national_headers[0][3:]):
+    for i, header in enumerate(national_headers[0]):
         if header not in headers:
             continue
         regional_headers[0].append(header)
-        regional_headers[1].append(national_headers[1][3+i])
+        regional_headers[1].append(national_headers[1][i])
         regional_columns.append(national_columns[i])
     valdicts = list()
     for i, header in enumerate(regional_headers[0]):
@@ -98,6 +101,16 @@ def get_regional(configuration, national_headers, national_columns, admininfo, p
                         value = None
                     toeval = toeval.replace(regional_headers[0][j], str(value))
                 valdict[region] = eval(toeval)
+    for arg in args:
+        gheaders, gvaldicts = arg
+        if gheaders:
+            for i, header in enumerate(gheaders[1]):
+                try:
+                    j = regional_headers[1].index(header)
+                except ValueError:
+                    continue
+                valdicts[j].update(gvaldicts[i])
+
     add_population(population_lookup, regional_headers, valdicts)
     logger.info('Processed regional')
     return regional_headers, valdicts

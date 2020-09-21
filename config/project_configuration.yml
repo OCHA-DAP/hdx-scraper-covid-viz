@@ -22,10 +22,17 @@ json:
           newname: "timeseries"
         - name: "national"
           newname: "cumulative"
-          countries: "hrp_iso3s"
+          filter: "hrp_iso3s"
           hxltags:
             - "#country+code"
             - "#country+name"
+            - "#affected+infected"
+            - "#affected+killed"
+        - name: "regional"
+          newname: "global"
+          filter: "global"
+          hxltags:
+            - "#region+name"
             - "#affected+infected"
             - "#affected+killed"
 
@@ -274,35 +281,9 @@ regional:
   iso3: "ISO3"
   region: "Regional_office"
   val_fns:
-    "Population": sum
-#    "NoCases": "sum"
-#    "NoDeaths": "sum"
-#    "Risk": "range"
-#    "RiskClass": "sum"
-#    "EconomicExposure": "range"
-#    "World Bank": "sum"
-#    "IMF": "sum"
-#    "AfDB total": "sum"
-#    "ADB total": "sum"
-#    "IADB total": "sum"
-#    "EIB total": "sum"
-#    "ISDB total": "sum"
-#    "DevCO total": "sum"
-#    "UN MPTF total": "sum"
+    "Covid Cases": "sum"
+    "Covid Deaths": "sum"
     "IFI COVID19 total": "sum"
-#    "IFI COVID19 total percap": "range"
-#    "IFI COVID19 total pcgdp": "range"
-#    "PeopleInNeed": "sum"
-#    "RequiredFundingPreCovid": "sum"
-#    "TotalIDPs": "sum"
-#    "Imp: Total Cases(min)": "sum"
-#    "Imp: Total Cases(max)": "sum"
-#    "Imp: Total Deaths(min)": "sum"
-#    "Imp: Total Deaths(max)": "sum"
-#    "LSHTM: Total Cases(min)": "sum"
-#    "LSHTM: Total Cases(max)": "sum"
-#    "LSHTM: Total Deaths(min)": "sum"
-#    "LSHTM: Total Deaths(max)": "sum"
     "CBPFCovidFundingMen": "sum"
     "CBPFCovidFundingWomen": "sum"
     "CBPFCovidFundingBoys": "sum"
@@ -332,7 +313,6 @@ regional:
     "RequiredOtherPlansFunding": "sum"
     "OtherPlansFunding": "sum"
     "OtherPlansPercentFunded": "get_fraction_str(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
-#    "TotalRefugees": "sum"
 
 # national
 tabular_national:
@@ -353,24 +333,6 @@ tabular_national:
       - "Population"
     hxltags:
       - "#population"
-  who_national:
-    format: "csv"
-    dataset: "coronavirus-covid-19-cases-and-deaths"
-    headers: 1
-    adm_cols:
-      - "Country_code"
-    date_col: "Date_reported"
-    date_type: "date"
-    use_date_from_date_col: True
-    val_cols:
-      - "Cumulative_cases"
-      - "Cumulative_deaths"
-    columns:
-      - "NoCases"
-      - "NoDeaths"
-    hxltags:
-      - "#affected+infected"
-      - "#affected+killed"
   inform_hazard:
     format: "xlsx"
     dataset: "inform-covid-19-risk-index-version-0-1-2"
@@ -855,7 +817,7 @@ unhcr:
   url: "https://data2.unhcr.org/population/?population_collection=4&geo_id="
   source_url: "https://data.humdata.org/organization/unhcr"
 
-covid_trend:
+who_covid:
   format: "csv"
   dataset: "coronavirus-covid-19-cases-and-deaths"
   headers: 1

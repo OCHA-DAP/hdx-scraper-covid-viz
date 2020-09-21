@@ -265,8 +265,15 @@ def get_tabular(basic_auths, configuration, level, maindownloader, scrapers=None
     retval = list()
     sources = list()
     for name in datasets:
-        if scrapers and not any(scraper in name for scraper in scrapers) and name != 'population':
-            continue
+        if population_lookup is None:
+            if name == 'population':
+                continue
+            if scrapers and not any(scraper in name for scraper in scrapers):
+                continue
+        else:
+            if name != 'population':
+                continue
+        logger.info('Processing %s' % name)
         basic_auth = basic_auths.get(name)
         if basic_auth is None:
             downloader = maindownloader
@@ -293,6 +300,6 @@ def get_tabular(basic_auths, configuration, level, maindownloader, scrapers=None
         _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup, retheaders, retval, sources)
         if downloader != maindownloader:
             downloader.close()
-        if name == 'population':
+        if population_lookup is not None:
             add_population(population_lookup, retheaders, retval)
     return retheaders, retval, sources
