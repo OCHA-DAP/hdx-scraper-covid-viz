@@ -19,7 +19,7 @@ def get_who_data(url, admininfo):
     source_date = df['Date_reported'].max()
 
     # cumulative
-    df_cumulative = df.loc[df['Date_reported'] == source_date]
+    df_cumulative = df.sort_values(by=['Date_reported']).drop_duplicates(subset='ISO_3_CODE', keep='last')
     df_cumulative = df_cumulative.drop(columns=['Date_reported', 'New_cases', 'New_deaths'])
     df_world = df_cumulative.sum()
     df_cumulative = df_cumulative.loc[df['ISO_3_CODE'].isin(admininfo.countryiso3s), :]
@@ -62,7 +62,7 @@ def get_who_data(url, admininfo):
 def get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers=None):
     name = 'who_covid'
     if scrapers and not any(scraper in name for scraper in scrapers) and not any(scraper in outputs['gsheets'].updatetabs for scraper in scrapers):
-        return list()
+        return list(), list(), list(), list(), list()
     datasetinfo = configuration[name]
     read_hdx_metadata(datasetinfo)
 

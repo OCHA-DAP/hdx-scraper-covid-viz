@@ -2,7 +2,9 @@
 import copy
 from datetime import datetime
 
+import hxl
 from hdx.utilities.dateparse import parse_date
+from hdx.utilities.dictandlist import dict_of_lists_add
 
 from model import template
 from utilities.admininfo import AdminInfo
@@ -39,6 +41,19 @@ class RowParser(object):
         self.maxdateonly = maxdateonly
         self.flatteninfo = datasetinfo.get('flatten')
         self.headers = headers
+        self.filters = dict()
+        self.get_external_filter(datasetinfo)
+
+    def get_external_filter(self, datasetinfo):
+        external_filter = datasetinfo.get('external_filter')
+        if not external_filter:
+            return
+        hxltags = external_filter['hxltags']
+        data = hxl.data(external_filter['url'])
+        for row in data:
+            for hxltag in data.columns:
+                if hxltag.display_tag in hxltags:
+                    dict_of_lists_add(self.filters, hxltag.header, row.get('#country+code'))
 
     def flatten(self, row):
         if not self.flatteninfo:
@@ -74,7 +89,18 @@ class RowParser(object):
         else:
             return max(self.maxdates.values())
 
+    def filtered(self, row):
+        for header in self.filters:
+            if header not in row:
+                continue
+            if row[header] not in self.filters[header]:
+                return True
+        return False
+
     def do_set_value(self, row, scrapername=None):
+        if self.filtered(row):
+            return None, None
+
         adms = [None for _ in range(len(self.admcols))]
 
         def get_adm(admcol, i):
