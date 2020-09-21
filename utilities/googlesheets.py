@@ -24,7 +24,7 @@ class googlesheets:
         self.tabs = tabs
         self.updatetabs = updatetabs
 
-    def update_tab(self, tabname, values):
+    def update_tab(self, tabname, values, hxltags=None, limit=None):
         if tabname not in self.updatetabs:
             return
         for sheet in self.googlesheets:
@@ -38,4 +38,13 @@ class googlesheets:
             if isinstance(values, list):
                 tab.update_values('A1', values)
             else:
-                tab.set_dataframe(values, (1, 1))
+                headers = list(values.columns.values)
+                tab.update_row(1, headers)
+                if hxltags:
+                    tab.update_row(2, [hxltags.get(header, '') for header in headers])
+                    start = 3
+                else:
+                    start = 2
+                if limit is not None:
+                    values = values.head(limit)
+                tab.set_dataframe(values, (start, 1), copy_head=False)

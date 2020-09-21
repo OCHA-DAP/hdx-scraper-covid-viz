@@ -4,6 +4,7 @@ from os.path import join
 
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.saver import save_json
+from hdx.utilities.text import get_numeric_if_possible
 
 from utilities.readers import read_json, read_ole, read_hdx, read_tabular
 
@@ -20,10 +21,23 @@ class jsonoutput:
     def add_data_row(self, name, row):
         dict_of_lists_add(self.json, '%s_data' % name, row)
 
-    def add_data_rows_by_key(self, name, countryiso, rows):
+    def add_dataframe_rows(self, name, df, hxltags=None):
+        if hxltags:
+            df = df.rename(columns=hxltags)
+        self.json['%s_data' % name] = df.to_dict(orient='records')
+
+    def add_data_rows_by_key(self, name, countryiso, rows, hxltags=None):
         fullname = '%s_data' % name
         jsondict = self.json.get(fullname, dict())
-        jsondict[countryiso] = rows
+        jsondict[countryiso] = list()
+        for row in rows:
+            if hxltags:
+                newrow = dict()
+                for header, hxltag in hxltags.items():
+                    newrow[hxltag] = row[header]
+            else:
+                newrow = row
+            jsondict[countryiso].append(newrow)
         self.json[fullname] = jsondict
 
     def generate_json(self, key, rows):
@@ -67,10 +81,44 @@ class jsonoutput:
                         newrow[hxlrow[key]] = row[key]
                 self.add_data_row(name, newrow)
 
-    def save(self, folder=None):
+    def save(self, folder=None, hrp_iso3s=list()):
         filepath = self.json_configuration['filepath']
         if folder:
             filepath = join(folder, filepath)
         logger.info('Writing JSON to %s' % filepath)
         save_json(self.json, filepath)
+        additional = self.json_configuration.get('additional', list())
+        for filedetails in additional:
+            json = dict()
+            for key in filedetails['keys']:
+                newjson = self.json.get('%s_data' % key['name'])
+                filter = key.get('filter')
+                hxltags = key.get('hxltags')
+                if (filter or hxltags) and isinstance(newjson, list):
+                    rows = list()
+                    for row in newjson:
+                        if filter == 'hrp_iso3s':
+                            countryiso = row.get('#country+code')
+                            if countryiso and countryiso not in hrp_iso3s:
+                                continue
+                        elif filter == 'global':
+                            region = row.get('#region+name')
+                            if region and region != filter:
+                                continue
+                        if hxltags is None:
+                            newrow = row
+                        else:
+                            newrow = dict()
+                            for hxltag in hxltags:
+                                if hxltag in row:
+                                    newrow[hxltag] = row[hxltag]
+                        rows.append(newrow)
+                    newjson = rows
+                json[key['newname']] = newjson
+            if not json:
+                continue
+            filedetailspath = filedetails['filepath']
+            if folder:
+                filedetailspath = join(folder, filepath)
+            save_json(json, filedetailspath)
         return filepath
