@@ -265,13 +265,11 @@ def get_tabular(basic_auths, configuration, level, maindownloader, scrapers=None
     retval = list()
     sources = list()
     for name in datasets:
-        if population_lookup is None:
-            if name == 'population':
-                continue
-            if scrapers and not any(scraper in name for scraper in scrapers):
+        if scrapers:
+            if not any(scraper in name for scraper in scrapers):
                 continue
         else:
-            if name != 'population':
+            if name == 'population':
                 continue
         logger.info('Processing %s' % name)
         basic_auth = basic_auths.get(name)

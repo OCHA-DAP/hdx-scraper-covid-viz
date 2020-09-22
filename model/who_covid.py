@@ -133,7 +133,7 @@ def get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers
     hxltags.remove('#date+reported')
     dssource = datasetinfo['source']
     dssourceurl = datasetinfo['source_url']
-    sources = [(hxltag, source_date, dssource, dssourceurl) for hxltag in hxltags]
+    sources = [(hxltag, source_date, dssource, dssourceurl) for hxltag in sorted(hxltags)]
 
     hxltags = ['#affected+infected', '#affected+killed']
     headers = [['Covid Cases', 'Covid Deaths'], hxltags]

@@ -1,168 +1,175 @@
-ISO3,Country Code,Country,Sex-disaggregated? ,Date,Cases where sex-disaggregated data is available,Cases (% male),Cases (% female),Deaths where sex-disaggregated data is available,deaths (% male),deaths (% female),Proportion of deaths in confirmed cases (total),Proportion of deaths in confirmed cases (male),Proportion of deaths in confirmed cases (female),Proportion of deaths in confirmed cases (Male:female ratio),Source,Available on COVID Map Explorer Dataviz
-#country+code,,#country+name,,#date,,#affected+infected+male+pct,#affected+infected+female+pct,,#affected+infected+death+male+pct,#affected+infected+death+female+pct,,,,,,#meta+dataviz
-AFG,AF,Afghanistan,Yes,04-Aug,34259,71.10%,28.90%,931,76.60%,23.40%,2.70%,2.90%,2.20%,1.33,http://covid.moph-dw.org/#/,Yes
-ALB,AL,Albania,Yes,03-Aug,5620,47.00%,53.00%,166,66.00%,34.00%,3.00%,4.20%,1.90%,2.19,https://coronavirus.al/statistika/,
-DZA,DZ,Algeria,Partial,03-Aug,31972,54.30%,45.70%,,,,,,,,https://covid19.cdta.dz/dashboard/production/index.php,
-AND,AD,Andorra,No,,,,,,,,,,,,https://www.govern.ad/coronavirus,
-AGO,AO,Angola,No,,,,,,,,,,,,https://www.minsa.gov.ao/VerNoticia.aspx?id=50753,
-ARG,AR,Argentina,Yes,04-Aug,"212,769",50.80%,49.20%,3950,56.60%,43.40%,1.90%,2.10%,1.60%,1.26,https://www.argentina.gob.ar/salud/coronavirus-COVID-19/sala-situacion,
-ARM,AM,Armenia,Partial,,,,,770,56.10%,43.90%,,,,,https://ampop.am/covid19-coronavirus-dynamic-statistics-in-armenia/,
-AUS,AU,Australia,Yes,04-Aug,18188,50.00%,50.00%,221,56.10%,43.90%,1.20%,1.40%,1.10%,1.28,https://www.health.gov.au/news/health-alerts/novel-coronavirus-2019-ncov-health-alert/coronavirus-covid-19-current-situation-and-case-numbers#cases-and-deaths-by-age-and-sex http://www9.health.gov.au/cda/source/rpt_5.cfm,
-AUT,AT,Austria,Yes,03-Aug,21427,50.00%,50.00%,700,56.00%,44.00%,3.30%,3.70%,2.90%,1.27,https://www.sozialministerium.at/Informationen-zum-Coronavirus/Neuartiges-Coronavirus-(2019-nCov).html,
-AZE,AZ,Azerbaijan,Partial,26-Jul,30858,46.00%,54.00%,,,,,,,,https://koronavirusinfo.az/az/page/statistika/azerbaycanda-cari-veziyyet,
-BHR,BH,Bahrain,Partial,06-Jul,6081,88.40%,11.60%,,,,,,,,https://www.moh.gov.bh/Covid19/ContactsTracing,
-BGD,BD,Bangladesh,Yes,03-Aug,242102,71.00%,29.00%,3184,77.00%,23.00%,1.30%,1.40%,1.00%,1.37,https://www.iedcr.gov.bd/index.php/component/content/article/73-ncov-2019,Yes
-BLR,BY,Belarus,No,,,,,,,,,,,,http://stopcovid.belta.by/,
-BEL,BE,Belgium,Yes,03-Aug,70114,38.80%,61.30%,7181,50.30%,49.70%,10.20%,13.30%,8.30%,1.6,https://epistat.wiv-isp.be/Covid/covid-19.html,
-BEN,BJ,Benin,No,,,,,,,,,,,,https://app.powerbi.com/view?r=eyJrIjoiN2FlZDA2ZmEtYjkwYi00YWM2LWE1OGMtYjIyYjU5NjM1MDJkIiwidCI6IjcyNzMzOWQxLTE2ZWMtNDNjYi1iNmMzLTUwMDFmZWM1ZTkwNyIsImMiOjl9,
-BTN,BT,Bhutan,Yes,04-Aug,103,47.60%,52.40%,0,0.00%,0.00%,0.00%,0.00%,0.00%,1,https://www.facebook.com/MoHBhutan,
-BOL,BO,Bolivia,No,,,,,,,,,,,,https://www.boliviasegura.gob.bo/,
-BIH,BA,Bosnia and Herzegovina,Yes,21-Jul,4892,50.30%,49.80%,109,64.20%,35.80%,2.20%,2.90%,1.60%,1.78,https://covid-19.ba/,
-BWA,BW,Botswana,Yes,17-Jul,48,83.30%,16.70%,1,0.00%,100.00%,2.10%,0.00%,12.50%,0,https://covid19portal.gov.bw/data-dashboard?v=202005211151,
-BRA,BR,Brazil,Partial,27-Jul,,,,"83,941",58.20%,41.80%,,,,,https://www.saude.gov.br/images/pdf/2020/July/30/Boletim-epidemiologico-COVID-24.pdf,
-BGR,BG,Bulgaria,Partial,25-May,2443,49.00%,51.00%,,,,,,,, https://coronavirus.bg/bg/briefings/117,
-BFA,BF,Burkina Faso,Yes,01-Aug,1153,65.00%,35.00%,51,74.50%,25.50%,4.40%,5.10%,3.20%,1.58,https://lefaso.net/spip.php?article98443,Yes
-BDI,BI,Burundi,No,,,,,,,,,,,,https://twitter.com/mspls_bdi/status/1289588185496989697,
-CPV,CV,Cabo Verde,Yes,21-Jul,"2,107",49.90%,50.10%,21,52.40%,47.60%,1.00%,1.10%,1.00%,1.1,https://covid19.cv/,
-KHM,KH,Cambodia,Yes,27-Jul,225,80.00%,20.00%,0,,,0.00%,0.00%,0.00%,1,http://www.cdcmoh.gov.kh/images/Document/Coronaviruses/COVID-19/WHO-MOH_SITREP/COVID_19_JointWHO-MOH_SITREP_4_20200727.pdf,
-CMR,CM,Cameroon,No,,,,,,,,,,,,http://covid19.minsante.cm/,
-CAN,CA,Canada,Yes,03-Aug,115235,44.70%,55.30%,"8,896",45.70%,54.30%,7.70%,7.90%,7.60%,1.04,https://health-infobase.canada.ca/covid-19/epidemiological-summary-covid-19-cases.html#a7,
-CAF,CF,Central African Republic,Partial,02-Aug,4614,73.20%,26.80%,,,,,,,,https://twitter.com/MSPCentrafrique,Yes
-TCD,TD,Chad,Partial,02-Aug,936,75.50%,24.50%,,,,,,,,https://sante-tchad.org/communique-la-situation-epidemiologique-du-covid-19-au-tchad-du-06-juillet-2020/,Yes
-CHL,CL,Chile,Yes,07-May,25952,52.60%,47.40%,294,60.00%,40.00%,1.10%,1.30%,1.00%,1.32,https://www.minsal.cl/wp-content/uploads/2020/08/Informe-Epidemiologico-39-MINSAL.pdf,
-CHN,CN,China,Yes,28-Feb,55924,51.10%,48.90%,2114,63.50%,36.20%,3.80%,4.70%,2.80%,1.68,http://www.nhc.gov.cn/xcs/yqtb/202008/be103a4ba8c242c49c0b4d0b0eb68a87.shtml,
-COL,CO,Colombia,Yes,04-Aug,334979,52.90%,47.10%,11315,63.80%,36.20%,3.40%,4.10%,2.60%,1.57,https://www.ins.gov.co/Noticias/Paginas/Coronavirus.aspx,
-COG,CG,Congo,No,,,,,,,,,,,,https://www.stopcoronavirusrdc.info/,
-CRI,CR,Costa Rica,Yes,03-Aug,19402,54.50%,45.50%,171,63.20%,36.80%,0.90%,1.00%,0.70%,1.43,https://www.ministeriodesalud.go.cr/index.php/centro-de-prensa/noticias/741-noticias-2020/1725-situacion-nacional-covid-19,
-CIV,CI,Cote d'Ivoire,No,,,,,,,,,,,,https://www.facebook.com/Mshpci/photos/a.134263566739346/1659609177538103/?type=3&theater,
-HRV,HR,Croatia,Partial,03-Aug,5307,48.70%,51.30%,,,,,,,,https://koronavirus.hr/podaci/489,
-CUB,CU,Cuba,Partial,03-Aug,2701,50.90%,49.10%,,,,,,,,https://salud.msp.gob.cu/,
-CYP,CY,Cyprus,Partial,04-Aug,1155,51.90%,48.10%,,,,,,,,https://covid19.ucy.ac.cy/,
-,CZ,Czech Republic,Yes,04-Aug,16051,53.40%,46.60%,371,57.70%,42.30%,2.30%,2.50%,2.10%,1.19,https://onemocneni-aktualne.mzcr.cz/covid-19,
-COD,CD,DRC,No,,,,,,,,,,,,https://www.stopcoronavirusrdc.info/,
-DNK,DK,Denmark,Yes,04-Aug,14073,43.60%,56.40%,616,56.50%,43.50%,4.40%,5.70%,3.40%,1.68,https://www.ssi.dk/sygdomme-beredskab-og-forskning/sygdomsovervaagning/c/covid19-overvaagning,
-DJI,DJ,Djibouti,Partial,02-Jun,3779,68.00%,32.00%,,,,,,,,https://covid19.gouv.dj/,Yes
-DOM,DO,Dominican Republic,Yes,02-Aug,73117,52.00%,48.00%,1183,66.50%,33.50%,1.60%,2.10%,1.10%,1.83,https://www.msp.gob.do/web/?page_id=6948#1586785071781-f0e8c057-f5f4,
-ECU,EC,Ecuador,Yes,29-May,29615,55.50%,44.50%,3334,66.40%,33.60%,11.30%,13.50%,8.50%,1.58,https://www.salud.gob.ec/el-ministerio-de-salud-publica-del-ecuador-msp-informa-situacion-coronavirus/,
-EGY,EG,Egypt,No,,,,,,,,,,,,https://www.facebook.com/egypt.mohp/photos/a.123442675873020/169728257911128/?type=3&theater,
-SLV,SV,El Salvador,Partial,03-Aug,18262,55.50%,44.60%,,,,,,,,https://covid19.gob.sv/,
-,,England,Yes,27-Jul,255518,43.40%,56.60%,41271,56.60%,43.40%,16.20%,21.10%,12.40%,1.7,https://www.gov.uk/government/news/weekly-covid-19-surveillance-report-published,
-GNQ,GQ,Equatorial Guinea,No,,,,,,,,,,,,https://ahoraeg.com/salud/2020/07/31/covid-19-4-821-casos-positivos-de-coronavirus-desde-la-aparicion-de-la-pandemia-en-guinea-ecuatorial/,
-ERI,ER,Eritrea,No,,,,,,,,,,,,http://www.shabait.com/news/local-news/30887-announcement-from-the-ministry-of-health,
-EST,EE,Estonia,Yes,04-Aug,2075,44.30%,55.70%,69,46.40%,53.60%,3.30%,3.50%,3.20%,1.09,https://koroonakaart.ee/en,
-SWZ,SZ,Eswatini,Yes,16-Jul,1552,49.10%,50.90%,21,61.90%,38.10%,1.40%,1.70%,1.00%,1.68,https://datastudio.google.com/embed/u/0/reporting/b847a713-0793-40ce-8196-e37d1cc9d720/page/2a0LB,
-ETH,ET,Ethiopia,Partial,29-Jun,5846,61.20%,38.80%,,,,,,,,https://tena.et/update,Yes
-FIN,FI,Finland,Yes,02-Aug,7466,49.60%,50.40%,329,48.00%,52.00%,4.40%,4.30%,4.60%,0.94,https://thl.fi/fi/web/infektiotaudit-ja-rokotukset/ajankohtaista/ajankohtaista-koronaviruksesta-covid-19/tilannekatsaus-koronaviruksesta,
-FRA,FR,France,Partial,26-Jul,,,,"19,505.00",58.80%,41.00%,,,,,https://dc-covid.site.ined.fr/en/data/france/,
-GAB,GA,Gabon,No,,,,,,,,,,,,https://infocovid.ga/cartographie-epidemiologique/,
-GMB,GM,Gambia,Partial,03-Aug,498,61.50%,38.60%,,,,,,,,http://www.moh.gov.gm/wp-content/uploads/2020/07/Gambia_The_COVID-19_Sitreps-29-07-2020.pdf,
-GEO,GE,Georgia,No,,,,,,,,,,,,https://stopcov.ge/en/,
-DEU,DE,Germany,Yes,04-Aug,210812,48.60%,51.40%,9151,55.40%,44.70%,4.30%,4.90%,3.80%,1.31,https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/2020-08-04-de.pdf?__blob=publicationFile,
-GHA,GH,Ghana,Partial,03-Aug,37812,60.00%,40.00%,,,,,,,,https://ghanahealthservice.org/covid19/,
-GRC,GR,Greece,Yes,03-Aug,4439,54.50%,45.60%,209,67.90%,32.10%,4.70%,5.90%,3.30%,1.77,https://eody.gov.gr/wp-content/uploads/2020/08/covid-gr-daily-report-20200803.pdf,
-GRL,GL,Greenland,No,,,,,,,,,,,,https://nun.gl/,
-GTM,GT,Guatemala,Yes,03-Aug,50741,61.10%,38.90%,1962,74.20%,25.80%,3.90%,4.70%,2.60%,1.83,https://tablerocovid.mspas.gob.gt/,
-GIN,GN,Guinea,Partial,23-Jul,7364,67.90%,30.70%,,,,,,,,https://anss-guinee.org/assets/document/DOC_159593586011431343165f200c746756e.pdf,
-GNB,GW,Guinea-Bissau,No,,,,,,,,,,,,https://covid19gb.com/,
-GUY,GY,Guyana,No,,,,,,,,,,,,https://www.health.gov.gy/,
-HTI,HT,Haiti,Yes,02-Aug,7511,58.70%,41.30%,166,63.30%,36.80%,2.20%,2.40%,2.00%,1.21,https://mspp.gouv.ht/site/downloads/38%20nouvo%20ka%20COVID-19%20konfime%20nan%20dat%205%20jiy%C3%A8%202020%20an%20nan%20peyi%20Dayiti.pdf,Yes
-HND,HN,Honduras,Partial,03-Aug,"43,794",53.50%,46.50%,,,,,,,,https://covid19honduras.org/,
-HKG,HK,Hong Kong,Partial,04-Aug,3670,49.90%,50.10%,,,,,,,,https://chp-dashboard.geodata.gov.hk/covid-19/en.html,
-HUN,HU,Hungary,Partial,,,,,597,49.10%,50.90%,,,,,https://koronavirus.gov.hu/elhunytak,
-ISL,IS,Iceland,Partial,21-Jun,1823,49.80%,50.30%,,,,,,,,https://www.covid.is/data,
-IND,IN,India,Yes,06-Apr,4065,76.00%,24.00%,111,73.00%,27.00%,2.70%,2.60%,3.10%,0.85,https://ncdc.gov.in/dashboard.php,
-IDN,ID,Indonesia,Yes,02-Aug,115056,52.00%,48.00%,5388,59.50%,40.50%,4.70%,5.40%,4.00%,1.36,https://www.covid19.go.id,
-IRN,IR,Iran,Yes,17-Mar,14991,57.00%,43.00%,853,59.00%,41.00%,5.70%,5.90%,5.40%,1.09,http://corona.behdasht.gov.ir/,
-IRQ,IQ,Iraq,No,,,,,,,,,,,,https://www.facebook.com/MOH.GOV.IQ/?__tn__=kC-R&eid=ARAV4tdO9NktuqsH-bOfB7XQXK_xQv-4TLxL_aOUxDKw_1liGYqb6AiKaRhG1ZTx5pVeq_yju2TL5A28&hc_ref=ARTOdBOi9cQ1xhCGZp2Xz9dcsYT1WYg0m9zm7sBayUmSiWsSliBV1C8WcaUKfRBkaTM&fref=nf&__xts__[0]=68.ARBTd2Ak2L-9Vx4uCEXp0MRWcOcsaOPCt1HhsvL5oTVnMMvbplQvJia9PxcO-D-rx1Hfsxr9YBUvUyuESnZfwNKFtrKnxTHYA3t6UgCBJX1m8R8fay2WaoYkCLcewPVJ4S-GbDopf0PDzBK_-er1-n2ei2Zeidqw0NDkIrMfK6xzWZ-xfpsUhchxQLb-DLhgt1IJTQDvw9uFvu5nY8tdgpyH2kkyOvC9i4XgzAwQdGSBWg_tMep9XlBhbUSuN323h2G_P3twqFGHuntqhqDC9WZLxszX74W7OZGpdC6L3wY7aGqqtC_3mQPJ0AbvWU_BhqXNHhu97ApDKOdeYG_OGVCrTQ,
-ISR,IL,Israel,Yes,04-Aug,75083,51.40%,46.90%,499,53.30%,46.70%,0.70%,0.70%,0.70%,1.04,https://datadashboard.health.gov.il/COVID-19/?utm_source=go.gov.il&utm_medium=referral,
-ITA,IT,Italy,Yes,28-Jul,246409,46.10%,54.00%,34211,57.60%,42.40%,13.90%,17.40%,10.90%,1.59,https://www.epicentro.iss.it/coronavirus/bollettino/Bollettino-sorveglianza-integrata-COVID-19_28-luglio-2020.pdf,
-JAM,JM,Jamaica,Yes,28-Jul,855,43.40%,56.60%,10,60.00%,40.00%,1.20%,1.60%,0.80%,1.96,https://jamcovid19.moh.gov.jm/,
-JPN,JP,Japan,Partial,22-Jun,17301,55.10%,44.90%,,,,,,,,https://mhlw-gis.maps.arcgis.com/apps/opsdashboard/index.html#/0c5d0502bbb54f9a8dddebca003631b8,
-JOR,JO,Jordan,No,,,,,,,,,,,,https://corona.moh.gov.jo/en,
-KAZ,KZ,Kazakhstan,Partial,08-Jun,9452,61.00%,39.00%,,,,,,,,https://hls.kz/,
-KEN,KE,Kenya,Yes,27-Jul,17975,65.50%,34.60%,285,74.70%,25.30%,1.60%,1.80%,1.20%,1.56,https://www.health.go.ke/wp-content/uploads/2020/07/Kenya-COVID-19-SITREP-132-27-Jul-2020.pdf,Yes
-KWT,KW,Kuwait,No,,,,,,,,,,,,https://corona.e.gov.kw/en,
-KGZ,KG,Kyrgyzstan,Yes,16-Jul,12498,47.10%,52.90%,155,61.90%,38.10%,1.20%,1.60%,0.90%,1.83,http://www.med.kg/en/informatsii-2/2095-statistics-on-covid-19-in-kyrgyzstan-as-of-july-6-2020.html,
-LVA,LV,Latvia,Yes,23-Jul,1249,51.40%,48.60%,32,65.60%,34.40%,2.60%,3.30%,1.80%,1.8,https://spkc.gov.lv/lv/tavai-veselibai/aktualitate-par-jauno-koronavi,
-LBN,LB,Lebanon,Partial,03-Aug,5062,60.00%,40.00%,,,,,,,,https://www.moph.gov.lb/maps/covid19.php,Yes
-LSO,LS,Lesotho,No,,,,,,,,,,,,https://nacosec.org.ls/,
-LBR,LR,Liberia,Yes,04-Aug,1216,65.50%,34.50%,78,65.40%,34.60%,6.40%,6.40%,6.40%,1,https://www.facebook.com/164280647325112/photos/a.347331779019997/1054377388315429/?type=3&theater,Yes
-LBY,LY,Libya,No,,,,,,,,,,,,https://ncdc.org.ly/Ar/libyan-covid-19-dashboard/,
-LTU,LT,Lithuania,Partial,04-Aug,2137,44.00%,56.00%,,,,,,,,https://registrucentras.maps.arcgis.com/apps/opsdashboard/index.html#/becd01f2fade4149ba7a9e5baaddcd8d,
-LUX,LU,Luxembourg,Yes,03-Aug,6917,52.00%,48.00%,118,45.00%,55.00%,1.70%,1.50%,2.00%,0.76,https://msan.gouvernement.lu/en/dossiers/2020/corona-virus.html,
-MDG,MG,Madagascar,No,,,,,,,,,,,,https://www.facebook.com/orangeactu/photos/a.1380589932211150/2657471894522941/?type=3&theater,
-MWI,MW,Malawi,No,,,,,,,,,,,,https://covid19.health.gov.mw/?fbclid=IwAR3o91QivQRRhVl4Ra2dcvTU3moeeJAJFqfCtnFr3kqQP4C4BTv1-xSZweo,
-MYS,MY,Malaysia,Partial,,,,,121,76.00%,24.00%,,,,,https://ukkdosm.github.io/covid-19,
-MDV,MV,Maldives,Yes,04-Aug,4279,77.00%,23.00%,18,61.10%,38.90%,0.40%,0.30%,0.70%,0.47,https://covid19.health.gov.mv/dashboard/,
-MLI,ML,Mali,Partial,27-Jul,2510,67.40%,32.60%,,,,,,,,https://www.humanitarianresponse.info/sites/www.humanitarianresponse.info/files/documents/files/mali_sitrep_covid-19_n107_26_juillet_2020.pdf,Yes
-MLT,MT,Malta,Partial,22-Jul,674,60.20%,39.80%,,,,,,,,http://geosys-mt.maps.arcgis.com/apps/opsdashboard/index.html#/c17848aba0f94d79a4f57a7a584c4e8e,
-MRT,MR,Mauritania,No,,,,,,,,,,,,https://alakhbar.info/?q=node/27166,
-MEX,MX,Mexico,Yes,04-Aug,449961,53.10%,46.90%,48869,64.80%,35.20%,10.90%,13.30%,8.20%,1.63,https://coronavirus.gob.mx/datos/,
-MDA,MD,Moldova,Yes,02-Aug,25482,41.20%,58.80%,800,52.60%,47.40%,3.10%,4.00%,2.50%,1.59,http://gismoldova.maps.arcgis.com/apps/opsdashboard/index.html#/d274da857ed345efa66e1fbc959b021b,
-MNG,MN,Mongolia,Yes,04-Aug,293,70.30%,29.70%,0,0.00%,0.00%,0.00%,0.00%,0.00%,1,https://covid19.mohs.mn/p/cat/post/57/,
-MAR,MA,Morocco,Yes,18-Jul,17015,53.00%,47.00%,401,67.00%,33.00%,2.40%,3.00%,1.70%,1.8,https://2m.ma/fr/news/coronavirus-le-ministere-de-la-sante-fait-le-point-sur-la-situation-epidemiologique-du-royaume-video-20200718/,
-MOZ,MZ,Mozambique,Partial,03-Aug,1973,63.70%,36.30%,,,,,,,,https://covid19.ins.gov.mz/wp-content/uploads/2020/08/Boletim-Diario-Covid-N%C2%BA139.pdf,Yes
-NAM,NA,Namibia,No,,,,,,,,,,,,https://www.facebook.com/MoHSSNamibia/photos/a.500031154003226/577110516295289/?type=3&theater,
-NPL,NP,Nepal,Yes,28-Jul,19061,85.50%,14.50%,49,81.60%,18.40%,0.30%,0.30%,0.30%,0.75,https://www.who.int/nepal/news/detail/01-07-2020-who-nepal-situation-update,
-NLD,NL,Netherlands,Yes,27-Jul,55864,38.70%,61.30%,6150,55.00%,45.00%,11.00%,15.60%,8.10%,1.93,https://www.rivm.nl/documenten/wekelijkse-update-epidemiologische-situatie-covid-19-in-nederland,
-NZL,NZ,New Zealand,Partial,03-Aug,1567,44.80%,55.20%,,,,,,,,https://www.health.govt.nz/our-work/diseases-and-conditions/covid-19-novel-coronavirus/covid-19-current-situation/covid-19-current-cases#gender,
-NIC,NI,Nicaragua,No,,,,,,,,,,,,https://www.el19digital.com/Coronavirus/articulo/titulo:104282-conozca-el-informe-actualizado-de-la-situacion-de-la-covid-19-en-nicaragua,
-NER,NE,Niger,No,,,,,,,,,,,,https://coronavirus.ne/,
-NGA,NG,Nigeria,Partial,04-Aug,44433,64.60%,35.40%,,,,,,,,https://ncdc.gov.ng/diseases/sitreps/?cat=14&name=An%20update%20of%20COVID-19%20outbreak%20in%20Nigeria,
-MKD,MK,North Macedonia,Yes,04-Aug,10600,49.80%,50.30%,482,63.70%,36.30%,4.60%,5.80%,3.30%,1.77,https://gdi-sk.maps.arcgis.com/apps/opsdashboard/index.html?fbclid=IwAR0Dd9MY7njiNtDkPpPt8R2SeD4pW_6TO12axwKrT4CcegckY4P4Ezt43f4#/2096bd4b051b42948ac3f5747e80c3a5,
-,,Northern Ireland,Yes,04-Aug,5987,40.50%,59.50%,555,52.40%,47.60%,9.30%,12.00%,7.40%,1.62,https://app.powerbi.com/view?r=eyJrIjoiZGYxNjYzNmUtOTlmZS00ODAxLWE1YTEtMjA0NjZhMzlmN2JmIiwidCI6IjljOWEzMGRlLWQ4ZDctNGFhNC05NjAwLTRiZTc2MjVmZjZjNSIsImMiOjh9,
-NOR,NO,Norway,Yes,04-Aug,9333,50.10%,49.90%,256,53.10%,46.90%,2.70%,2.90%,2.60%,1.13,https://www.fhi.no/en/id/infectious-diseases/coronavirus/daily-reports/daily-reports-COVID19/,
-OMN,OM,Oman,No,,,,,,,,,,,,https://covid19.moh.gov.om/#/home,
-PAK,PK,Pakistan,Yes,04-Aug,280461,74.00%,26.00%,5999,74.20%,25.90%,2.10%,2.10%,2.10%,1.01,http://covid.gov.pk/stats/pakistan,Yes
-PSE,PS,Palestine,No,,,,,,,,,,,,https://corona.ps/,
-PAN,PA,Panama,Yes,05-Jun,"15,463",58.60%,41.40%,373,67.60%,32.40%,2.40%,2.80%,1.90%,1.47,http://minsa.b-cdn.net/sites/default/files/publicacion-general,
-PNG,PG,Papua New Guinea,No,,,,,,,,,,,,https://covid19.papua.go.id/#monitor,
-PRY,PY,Paraguay,Partial,03-Aug,5724,62.70%,37.30%,,,,,,,,https://www.mspbs.gov.py/reporte-covid19.html,Yes
-PER,PE,Peru,Yes,04-Aug,439890,55.90%,44.10%,20007,70.80%,29.20%,4.60%,5.80%,3.00%,1.91,https://covid19.minsa.gob.pe/sala_situacional.asp,Yes
-PHL,PH,Philippines,Yes,03-Aug,106330,56.00%,44.10%,2104,62.00%,38.00%,2.00%,2.20%,1.70%,1.28,https://ncovtracker.doh.gov.ph/,
-POL,PL,Poland,Partial,,,,,1739,52.70%,47.30%,,,,,https://docs.google.com/spreadsheets/d/1ierEhD6gcq51HAm433knjnVwey4ZE5DCnu1bW7PRG3E/htmlview?fbclid=IwAR3diFvPqpkq0Kam18jvA9Y2uxq8ihE0DGeynwPJSlwtOeTCcWgGHgK47AM#,
-PRT,PT,Portugal,Yes,03-Aug,51681,44.70%,55.30%,1739,50.00%,50.00%,3.40%,3.80%,3.00%,1.24,https://covid19.min-saude.pt/wp-content/uploads/2020/08/155_DGS_boletim_20200804.pdf,
-QAT,QA,Qatar,Partial,28-Apr,12156,91.00%,9.00%,,,,,,,,https://www.wgoqatar.com/2020/04/daily-covid-19-stats-by-qatar-cdc/,
-IRL,IE,Republic of Ireland,Yes,29-Jul,25999,43.00%,57.00%,1763,49.20%,50.80%,6.80%,7.80%,6.00%,1.29,https://www.hpsc.ie/a-z/respiratory/coronavirus/novelcoronavirus/casesinireland/epidemiologyofcovid-19inireland/COVID-19_Daily_epidemiology_report_(NPHET)_31072020%20-%20Website.pdf,
-ROU,RO,Romania,Yes,02-Aug,52111,45.90%,54.10%,2379,59.30%,40.70%,4.60%,5.90%,3.40%,1.72,https://www.cnscbt.ro/index.php/analiza-cazuri-confirmate-covid19/1905-raport-saptamanal-episaptamana30/file,
-RUS,RU,Russia,No,,,,,,,,,,,,https://xn--80aesfpebagmfblc0a.xn--p1ai/,
-RWA,RW,Rwanda,Partial,02-Aug,2062,75.20%,24.80%,,,,,,,,https://gis.rbc.gov.rw/portal/apps/opsdashboard/index.html#/59872985985446bbaf8c394ad857c5cd,Yes
-SMR,SM,San Marino,No,,,,,,,,,,,,http://www.iss.sm/on-line/home/articolo49014634.html,
-SAU,SA,Saudi Arabia,Partial,26-May,"76,726",75.00%,25.00%,,,,,,,,https://twitter.com/SaudiMOH/status/1265019310826827777,
-,,Scotland,Yes,03-Aug,18562,38.00%,62.10%,4208,49.70%,50.30%,22.70%,29.70%,18.40%,1.61,https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/,
-SEN,SN,Senegal,Partial,17-Jul,736,52.20%,47.80%,,,,,,,,http://www.sante.gouv.sn/publication,
-SRB,RS,Serbia,Partial,,,,,193,61.70%,38.30%,,,,,https://covid19.data.gov.rs/,
-SLE,SL,Sierra Leone,Partial,03-Aug,1835,52.70%,47.30%,,,,,,,,http://dhse.gov.sl/,Yes
-SGP,SG,Singapore,Partial,05-May,6530,88.90%,11.10%,,,,,,,,https://co.vid19.sg/singapore/,
-SVK,SK,Slovakia,Partial,28-May,1491,50.00%,50.00%,,,,,,,,https://korona.gov.sk/wp-content/uploads/2020/07/analyza_covid_21072020.pdf,
-SVN,SI,Slovenia,Yes,03-Aug,2190,47.10%,52.90%,118,41.50%,58.50%,5.40%,4.80%,6.00%,0.8,https://www.nijz.si/sl/dnevno-spremljanje-okuzb-s-sars-cov-2-covid-19,
-SOM,SO,Somalia,Partial,04-Aug,3220,74.00%,26.00%,,,,,,,,http://moh.gov.so/en/covid19/,Yes
-ZAF,ZA,South Africa,Yes,01-Jul,158234,42.80%,57.20%,2745,52.60%,47.40%,1.70%,2.10%,1.40%,1.48,https://www.nicd.ac.za/diseases-a-z-index/covid-19/surveillance-reports/,
-KOR,KR,South Korea,Yes,04-Aug,"14,423",45.40%,54.60%,301,53.20%,46.80%,2.10%,2.40%,1.80%,1.37,http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=1&brdGubun=11&ncvContSeq=&contSeq=&board_id=&gubun=,
-SSD,SS,South Sudan,No,,,,,,,,,,,,https://twitter.com/WaniMichael57/status/1278335964079939585,
-ESP,ES,Spain,Yes,21-May,248335,43.00%,57.00%,20518,56.60%,43.40%,8.30%,10.90%,6.30%,1.73,https://www.isciii.es/QueHacemos/Servicios/VigilanciaSaludPublicaRENAVE/EnfermedadesTransmisibles/Documents/INFORMES/Informes%20COVID-19/Informe%20n%C2%BA%2037.Situaci%C3%B3n%20de%20COVID-19%20en%20Espa%C3%B1a%20a%2030%20de%20julio%20de%202020.pdf,
-LKA,LK,Sri Lanka,No,,,,,,,,,,,,https://hpb.health.gov.lk/covid19-dashboard/,
-SDN,SD,Sudan,No,,,,,,,,,,,,http://www.fmoh.gov.sd/index.php,
-SUR,SR,Suriname,No,,,,,,,,,,,,https://covid-19.sr/,
-SWE,SE,Sweden,Yes,04-Aug,81181,41.60%,58.40%,5747,54.70%,45.30%,7.10%,9.30%,5.50%,1.7,https://fohm.maps.arcgis.com/apps/opsdashboard/index.html#/68d4537bf2714e63b646c37f152f1392,
-CHE,CH,Switzerland,Yes,04-Aug,35720,46.70%,53.30%,1706,57.60%,42.40%,4.80%,5.90%,3.80%,1.55,https://www.bag.admin.ch/bag/fr/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/situation-schweiz-und-international.html#1164290551,
-SYR,SY,Syria,No,,,,,,,,,,,,https://app.powerbi.com/view?r=eyJrIjoiNTA0NWMxZmYtMDJiMC00ZWU0LTllNTktZTViZjYwYThjZmUzIiwidCI6ImY2MTBjMGI3LWJkMjQtNGIzOS04MTBiLTNkYzI4MGFmYjU5MCIsImMiOjh9,
-TWN,TW,Taiwan,Partial,22-Apr,418,48.80%,51.20%,,,,,,,,https://data.cdc.gov.tw/en/dataset/agstable-19cov,
-TJK,TJ,Tajikistan,No,,,,,,,,,,,,https://covid.tj/#charts,
-TZA,TZ,Tanzania,No,,,,,,,,,,,,https://covid19.who.int/region/afro/country/tz,
-THA,TH,Thailand,Yes,01-Aug,3312,55.70%,44.40%,58,76.00%,24.00%,1.80%,2.40%,1.00%,2.52,https://ddc.moph.go.th/viralpneumonia/eng/file/situation/situation-no184-070763.pdf,
-TGO,TG,Togo,No,,,,,,,,,,,,https://covid19.gouv.tg/situation-au-togo/,
-TUN,TN,Tunisia,Partial,09-Jul,1231,52.00%,48.00%,,,,,,,,http://www.onmne.tn/fr/images/COVID-19-dernier-bulletin.pdf,
-TUR,TR,Turkey,Yes,02-Aug,233860,52.00%,48.00%,5728,62.20%,37.80%,2.50%,2.90%,1.90%,1.52,"https://dosyamerkez.saglik.gov.tr/Eklenti/38021,covid-19-weekly-situation-report---29-weekpdf.pdf?0&_tag1=44DBE7E25D380A645A4780C04D8C19C0EF692249",Yes
-ARE,AE,UAE,No,,,,,,,,,,,,https://covid19.ncema.gov.ae/en,
-USA,US,USA,Yes,03-Aug,3404410,48.40%,51.60%,118145,53.90%,46.10%,3.50%,3.90%,3.10%,1.25,https://www.cdc.gov/covid-data-tracker/index.html#demographics,
-UGA,UG,Uganda,Yes,02-Aug,1115,85.20%,14.80%,5,20.00%,80.00%,0.50%,0.10%,2.40%,0.04,https://covid19.gou.go.ug/statistics.html,Yes
-UKR,UA,Ukraine,Yes,04-Aug,40612,41.20%,58.80%,1764,53.70%,46.30%,4.30%,5.70%,3.40%,1.66,https://phc.org.ua/kontrol-zakhvoryuvan/inshi-infekciyni-zakhvoryuvannya/koronavirusna-infekciya-covid-19,Yes
-URY,UY,Uruguay,No,,,,,,,,,,,,https://www.gub.uy/sistema-nacional-emergencias/comunicacion/noticias/informacion-interes-actualizada-sobre-coronavirus-covid-19-uruguay,
-UZB,UZ,Uzbekistan,No,,,,,,,,,,,,https://coronavirus.uz/en,
-VEN,VE,Venezuela,Partial,03-Aug,20206,60.40%,39.60%,,,,,,,,https://covid19.patria.org.ve/estadisticas-venezuela/,
-VNM,VN,Vietnam,Yes,04-Aug,670,51.50%,48.50%,8,37.50%,62.50%,1.20%,0.90%,1.50%,0.57,https://ncov.moh.gov.vn/,
-,,Wales,Yes,03-Aug,17240,37.40%,62.60%,1566,55.90%,44.10%,9.10%,13.60%,6.40%,2.12,https://public.tableau.com/profile/public.health.wales.health.protection#!/vizhome/RapidCOVID-19virology-Public/Headlinesummary,
-YEM,YE,Yemen,Partial,04-Aug,1897,73.20%,26.80%,,,,,,,,https://app.powerbi.com/view?r=eyJrIjoiZjE2NzJjZDItNDgyZi00NDFkLWFlMjItNjA2MjIwMWYzODJkIiwidCI6ImY2MTBjMGI3LWJkMjQtNGIzOS04MTBiLTNkYzI4MGFmYjU5MCIsImMiOjh9,Yes
-ZMB,ZM,Zambia,No,,,,,,,,,,,,https://www.facebook.com/mohzambia/photos/a.773733439467982/1661490794025571/?type=3&theater,
-ZWE,ZW,Zimbabwe,No,,,,,,,,,,,,https://twitter.com/MoHCCZim/status/1290379694043541508,
+﻿"Country code",Country,"Case & death data by sex?","Cases date","Cases where sex-disaggregated data is available","Cases (% male)","Cases (% female)","Deaths date","Deaths where sex-disaggregated data is available","Deaths (% male)","Deaths (% female)","Deaths in confirmed cases date","Proportion of deaths in confirmed cases (male)","Proportion of deaths in confirmed cases (female)","Proportion of deaths in confirmed cases (Male:female ratio)",Source
+AF,Afghanistan,Yes,2020/09/01,36332,70.44%,29.56%,2020/09/01,1099,74.98%,25.02%,2020/09/01,3.22%,2.56%,1.26,http://covid.moph-dw.org/#/
+AL,Albania,Yes,2020/09/01,9513,48%,52%,2020/09/01,284,67%,33%,2020/09/01,4.17%,1.89%,2.2,https://coronavirus.al/statistika/
+DZ,Algeria,Partial,2020/08/31,44136,54.13%,45.87%,,,,,,,,,https://covid19.cdta.dz/dashboard/production/index.php
+AD,Andorra,No,,,,,,,,,,,,,https://www.govern.ad/coronavirus
+AO,Angola,No,,,,,,,,,,,,,https://www.minsa.gov.ao/VerNoticia.aspx?id=50753
+AR,Argentina,Yes,2020/09/02,417735,53.37%,51.41%,2020/08/31,8597,57.4%,42.6%,2020/08/31,2.21%,1.71%,1.3,https://www.argentina.gob.ar/salud/coronavirus-COVID-19/sala-situacion
+AM,Armenia,Partial,,,,,2020/09/01,887,55.24%,44.76%,,,,,https://ampop.am/covid19-coronavirus-dynamic-statistics-in-armenia/
+AW,Aruba,No,,,,,,,,,,,,,https://www.arubacovid19.org/
+AU,Australia,Yes,2020/09/08,26234,48.59%,51.41%,2020/09/08,636,49.53%,50.47%,2020/08/03,2.47%,2.38%,1.04,"https://www.health.gov.au/news/health-alerts/novel-coronavirus-2019-ncov-health-alert/coronavirus-covid-19-current-situation-and-case-numbers#cases-and-deaths-by-age-and-sex http://www9.health.gov.au/cda/source/rpt_5.cfm"
+AT,Austria,Yes,2020/08/31,27450,51%,49%,2020/08/31,735,57%,43%,2020/08/31,2.96%,2.32%,1.27,https://www.sozialministerium.at/Informationen-zum-Coronavirus/Neuartiges-Coronavirus-(2019-nCov).html
+AZ,Azerbaijan,Partial,2020/09/01,35844,46%,54%,,,,,,,,,https://koronavirusinfo.az/az/page/statistika/azerbaycanda-cari-veziyyet
+BH,Bahrain,Partial,2020/07/06,6081,88.42%,11.58%,,,,,,,,,https://www.moh.gov.bh/Covid19/ContactsTracing
+BD,Bangladesh,Yes,2020/08/17,279144,71%,29%,2020/08/17,3694,77%,23%,2020/08/17,1.44%,1.05%,1.37,https://www.iedcr.gov.bd/index.php/component/content/article/73-ncov-2019
+BY,Belarus,No,,,,,,,,,,,,,http://stopcovid.belta.by/
+BE,Belgium,Yes,2020/08/30,84896,40.72%,59.28%,2020/08/30,9870,47.18%,52.82%,2020/08/30,13.47%,10.36%,1.3,https://epistat.wiv-isp.be/Covid/covid-19.html
+BJ,Benin,No,,,,,,,,,,,,,https://app.powerbi.com/view?r=eyJrIjoiN2FlZDA2ZmEtYjkwYi00YWM2LWE1OGMtYjIyYjU5NjM1MDJkIiwidCI6IjcyNzMzOWQxLTE2ZWMtNDNjYi1iNmMzLTUwMDFmZWM1ZTkwNyIsImMiOjl9
+BT,Bhutan,Yes,2020/09/01,225,65.78%,34.22%,2020/08/04,,0%,0%,2020/08/04,,,1,https://www.facebook.com/MoHBhutan
+BO,Bolivia,No,,,,,,,,,,,,,https://www.boliviasegura.gob.bo/
+BA,"Bosnia and Herzegovina",Yes,2020/09/01,12710,51.6%,48.4%,2020/09/01,354,65.54%,34.46%,2020/09/01,3.54%,1.98%,1.78,https://covid-19.ba/
+BW,Botswana,Partial,2020/07/17,48,83.33%,16.67%,2020/08/31,4,25%,75%,,,,,https://datastudio.google.com/u/0/reporting/0f498d3b-2d44-4893-92cd-dd373f0a3f73/page/wI9JB
+BR,Brazil,Partial,2020/05/12,114617,45.75%,54.25%,2020/07/27,83941,58.22%,41.78%,,,,,https://www.saude.gov.br/images/pdf/2020/August/31/Boletim-epidemiologico-SVS-34.pdf
+BG,Bulgaria,Partial,2020/05/25,2443,49%,51%,,,,,,,,,https://coronavirus.bg/bg/news/424
+BF,"Burkina Faso",Yes,2020/08/25,1352,65.53%,34.47%,2020/08/25,55,74.51%,25.49%,2020/08/25,4.63%,3.01%,1.54,https://www.sante.gov.bf/accueil
+BI,Burundi,No,,,,,,,,,,,,,https://twitter.com/mspls_bdi/status/1299755326426820608/photo/1
+CV,"Cabo Verde",Yes,2020/08/31,3884,49.49%,50.51%,2020/08/31,40,65%,35%,2020/08/31,1.35%,0.71%,1.9,https://covid19.cv/
+KH,Cambodia,Yes,2020/08/10,250,80.8%,19.2%,2020/08/10,,0%,0%,2020/08/10,,,1,http://www.cdcmoh.gov.kh/images/Document/Coronaviruses/COVID-19/WHO-MOH_SITREP/6.SITREP_COVID-19_WHO-CDC_03.08_FINAL.pdf
+CM,Cameroon,No,,,,,,,,,,,,,http://covid19.minsante.cm/
+CA,Canada,Yes,2020/09/01,123917,45.09%,54.91%,2020/09/01,8998,45.79%,54.21%,2020/09/01,7.37%,7.17%,1.03,https://health-infobase.canada.ca/covid-19/epidemiological-summary-covid-19-cases.html#a7
+CF,"Central African Republic",Partial,2020/08/30,4711,73.15%,26.85%,,,,,,,,,https://twitter.com/MSPCentrafrique
+TD,Chad,Partial,2020/08/27,1008,74.6%,25.4%,,,,,,,,,https://sante-tchad.org/communique-la-situation-epidemiologique-du-covid-19-au-tchad-du-06-juillet-2020/
+CL,Chile,Yes,2020/08/27,438224,51.19%,48.81%,2020/05/07,294,60%,40%,2020/05/07,1.28%,0.97%,1.32,https://www.minsal.cl/wp-content/uploads/2020/08/Informe-Epidemiologico-39-MINSAL.pdf
+CN,China,Yes,2020/02/28,55924,51.1%,48.9%,2020/02/28,2114,63.54%,36.23%,2020/02/28,4.7%,2.8%,1.68,http://www.nhc.gov.cn/xcs/yqtb/202009/170661a5589542c497b5822270d8eb7c.shtml
+CO,Colombia,Yes,2020/08/04,334979,52.91%,47.09%,2020/08/04,11315,63.77%,36.23%,2020/08/04,4.07%,2.6%,1.57,https://www.ins.gov.co/Noticias/Paginas/Coronavirus.aspx
+CG,Congo,No,,,,,,,,,,,,,https://www.stopcoronavirusrdc.info/
+CR,"Costa Rica",Yes,2020/08/31,41287,53.32%,46.68%,2020/08/31,436,61.24%,38.76%,2020/08/31,1.21%,0.88%,1.38,https://www.ministeriodesalud.go.cr/index.php/centro-de-prensa/noticias/741-noticias-2020/1725-situacion-nacional-covid-19
+CI,"Cote d'Ivoire",No,,,,,,,,,,,,,https://www.facebook.com/Mshpci/photos/a.270240923141609/1683118158520538/
+HR,Croatia,Partial,2020/08/31,10251,51.22%,48.78%,,,,,,,,,https://koronavirus.hr/podaci/489
+CU,Cuba,Partial,2020/08/30,4032,50.99%,49.01%,,,,,,,,,https://salud.msp.gob.cu/
+CW,Curaçao,No,,,,,,,,,,,,,https://web.facebook.com/pg/GobiernuKorsou/posts/?ref=page_internal
+CY,Cyprus,Partial,2020/09/01,1488,51.4%,48.6%,,,,,,,,,https://covid19.ucy.ac.cy/
+CZ,"Czech Republic",Yes,2020/09/01,23102,53.22%,46.78%,2020/09/01,414,57.49%,42.51%,2020/09/01,1.94%,1.63%,1.19,https://onemocneni-aktualne.mzcr.cz/covid-19
+CD,DRC,No,,,,,,,,,,,,,https://reliefweb.int/report/djibouti/republic-djibouti-covid-19-situation-report-9-17-may-2-june-2020
+KP,"Dem. People's Republic of Korea",No,,,,,,,,,,,,,
+DK,Denmark,Yes,2020/09/01,17084,45.56%,54.44%,2020/09/01,625,56.32%,43.68%,2020/09/01,4.52%,2.94%,1.54,https://www.ssi.dk/sygdomme-beredskab-og-forskning/sygdomsovervaagning/c/covid19-overvaagning
+DJ,Djibouti,Partial,2020/06/02,3779,68%,32%,,,,,,,,,https://covid19.gouv.dj/
+DO,"Dominican Republic",Yes,2020/08/28,93732,51.02%,48.98%,2020/08/30,1710,66.2%,33.8%,2020/08/28,2.37%,1.26%,1.88,https://www.msp.gob.do/web/?page_id=6948#1586785071781-f0e8c057-f5f4
+EC,Ecuador,Yes,2020/08/31,113767,53.5%,46.5%,2020/05/29,3334,66.41%,33.59%,2020/05/29,13.46%,8.51%,1.58,https://www.salud.gob.ec/el-ministerio-de-salud-publica-del-ecuador-msp-informa-situacion-coronavirus/
+EG,Egypt,No,,,,,,,,,,,,,https://www.facebook.com/egypt.mohp/photos/a.123442675873020/169728257911128/?type=3&theater
+SV,"El Salvador",Partial,2020/08/31,25820,53.21%,46.79%,,,,,,,,,https://covid19.gob.sv/
+,England,Yes,2020/08/25,279527,43.68%,56.32%,2020/08/25,17581,56.58%,43.42%,2020/07/27,21.07%,12.38%,1.7,https://www.gov.uk/government/news/weekly-covid-19-surveillance-report-published
+GQ,"Equatorial Guinea",Partial,2020/09/01,4103,58.27%,41.73%,,,,,,,,,https://guineasalud.org/estadisticas/
+ER,Eritrea,No,,,,,,,,,,,,,https://shabait.com/2020/08/31/announcement-from-the-ministry-of-health-58/
+EE,Estonia,Yes,2020/09/01,2360,45.85%,54.15%,2020/08/04,69,46.38%,53.62%,2020/08/04,3.48%,3.2%,1.09,https://koroonakaart.ee/en
+SZ,Eswatini,Yes,2020/08/31,4384,47.08%,52.92%,2020/08/31,90,62.22%,37.78%,2020/08/31,2.71%,1.47%,1.85,https://datastudio.google.com/embed/u/0/reporting/b847a713-0793-40ce-8196-e37d1cc9d720/page/2a0LB
+ET,Ethiopia,Partial,2020/06/29,5846,61.2%,38.8%,,,,,,,,,https://tena.et/update
+FI,Finland,Yes,2020/08/31,8086,49.49%,50.51%,2020/08/30,336,48%,52%,2020/08/31,4.03%,4.28%,0.94,https://thl.fi/fi/web/infektiotaudit-ja-rokotukset/ajankohtaista/ajankohtaista-koronaviruksesta-covid-19/tilannekatsaus-koronaviruksesta
+FR,France,Yes,2020/03/15,6378,47.4%,52.6%,2020/08/25,20038,59%,41%,2020/03/15,3.1%,2%,1.55,https://www.santepubliquefrance.fr/maladies-et-traumatismes/maladies-et-infections-respiratoires/infection-a-coronavirus/documents/bulletin-national/covid-19-point-epidemiologique-du-27-aout-2020
+GA,Gabon,Partial,2020/08/26,8409,40%,60%,,,,,,,,,https://reliefweb.int/report/gabon/unicef-gabon-covid-19-situation-report-no-8-22-july-26-august-2020
+GM,Gambia,Partial,2020/08/30,3002,58.09%,41.91%,,,,,,,,,http://www.moh.gov.gm/wp-content/uploads/2020/08/Gambia_The_COVID-19_Sitrep-14-August-2020.pdf
+GE,Georgia,No,,,,,,,,,,,,,https://stopcov.ge/en/
+DE,Germany,Yes,2020/09/01,243599,49%,51%,2020/09/01,9298,55.45%,44.55%,2020/09/01,4.32%,3.33%,1.3,https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Sept_2020/2020-09-01-en.pdf?__blob=publicationFile
+GH,Ghana,Partial,2020/09/01,44658,58%,42%,,,,,,,,,https://ghanahealthservice.org/covid19/
+GR,Greece,Yes,2020/09/01,9940,55.54%,44.46%,2020/09/01,271,64.58%,35.42%,2020/09/01,3.17%,2.17%,1.46,https://eody.gov.gr/wp-content/uploads/2020/09/covid-gr-daily-report-20200901.pdf
+GL,Greenland,No,,,,,,,,,,,,,https://nun.gl/
+GT,Guatemala,Yes,2020/08/31,72115,59.75%,40.25%,2020/09/01,2700,72.74%,27.26%,2020/08/31,4.56%,2.54%,1.8,https://tablerocovid.mspas.gob.gt/
+GN,Guinea,Partial,2020/08/30,9380.773,68.71%,31.29%,,,,,,,,,https://anss-guinee.org/assets/document/DOC_15989463971196010925f4dfc5d0a706.pdf
+GW,Guinea-Bissau,No,,,,,,,,,,,,,https://covid19gb.com/
+GY,Guyana,Partial,2020/08/31,1306,49.46%,50.54%,,,,,,,,,https://www.health.gov.gy/
+HT,Haiti,Yes,2020/08/30,8230,58.3%,41.7%,2020/08/02,166,63.25%,36.75%,2020/08/02,2.38%,1.97%,1.21,https://mspp.gouv.ht/site/downloads/Sitrep%20COVID-19_30-08-2020.pdf
+HN,Honduras,Partial,2020/08/31,60174,52.53%,47.47%,,,,,,,,,https://covid19honduras.org/
+HK,"Hong Kong",Partial,2020/09/01,4724,49.94%,50.06%,,,,,,,,,https://chp-dashboard.geodata.gov.hk/covid-19/en.html
+HU,Hungary,Partial,,,,,2020/08/04,597,49.08%,50.92%,,,,,https://koronavirus.gov.hu/elhunytak
+IS,Iceland,Partial,2020/06/21,1823,49.75%,50.25%,,,,,,,,,https://www.covid.is/data
+IN,India,Yes,2020/09/01,2877791,64.56%,35.44%,2020/05/21,3711,64%,36%,2020/04/06,2.62%,3.07%,0.85,https://ncdc.gov.in/dashboard.php
+ID,Indonesia,Yes,2020/09/01,177571,51.7%,48.3%,2020/09/01,7505,58.4%,41.6%,2020/09/01,4.77%,3.64%,1.31,https://www.covid19.go.id
+IR,Iran,Yes,2020/03/17,14991,57%,43%,2020/03/17,853,59%,41%,2020/03/17,5.9%,5.4%,1.09,http://corona.behdasht.gov.ir/
+IQ,Iraq,No,,,,,,,,,,,,,https://www.facebook.com/MOH.GOV.IQ/?__tn__=kC-R&eid=ARAV4tdO9NktuqsH-bOfB7XQXK_xQv-4TLxL_aOUxDKw_1liGYqb6AiKaRhG1ZTx5pVeq_yju2TL5A28&hc_ref=ARTOdBOi9cQ1xhCGZp2Xz9dcsYT1WYg0m9zm7sBayUmSiWsSliBV1C8WcaUKfRBkaTM&fref=nf&__xts__[0]=68.ARBTd2Ak2L-9Vx4uCEXp0MRWcOcsaOPCt1HhsvL5oTVnMMvbplQvJia9PxcO-D-rx1Hfsxr9YBUvUyuESnZfwNKFtrKnxTHYA3t6UgCBJX1m8R8fay2WaoYkCLcewPVJ4S-GbDopf0PDzBK_-er1-n2ei2Zeidqw0NDkIrMfK6xzWZ-xfpsUhchxQLb-DLhgt1IJTQDvw9uFvu5nY8tdgpyH2kkyOvC9i4XgzAwQdGSBWg_tMep9XlBhbUSuN323h2G_P3twqFGHuntqhqDC9WZLxszX74W7OZGpdC6L3wY7aGqqtC_3mQPJ0AbvWU_BhqXNHhu97ApDKOdeYG_OGVCrTQ
+IL,Israel,Yes,2020/09/01,115325,50.64%,49.36%,2020/08/30,883,53.11%,46.89%,2020/08/30,0.8%,0.73%,1.1,https://datadashboard.health.gov.il/COVID-19/?utm_source=go.gov.il&utm_medium=referral
+IT,Italy,Yes,2020/08/25,260288,46.65%,53.35%,2020/08/25,35912,57.19%,42.81%,2020/08/25,16.91%,11.07%,1.53,https://www.epicentro.iss.it/coronavirus/bollettino/Bollettino-sorveglianza-integrata-COVID-19_25-agosto-2020.pdf
+JM,Jamaica,Yes,2020/09/01,2453,44.84%,55.16%,2020/09/01,19,52.63%,47.37%,2020/09/01,0.91%,0.67%,1.37,https://jamcovid19.moh.gov.jm/
+JP,Japan,Partial,2020/06/22,17301,55.07%,44.93%,,,,,,,,,https://mhlw-gis.maps.arcgis.com/apps/opsdashboard/index.html#/0c5d0502bbb54f9a8dddebca003631b8
+JO,Jordan,No,,,,,,,,,,,,,https://corona.moh.gov.jo/en
+KZ,Kazakhstan,Partial,2020/06/08,9452,61.03%,38.97%,,,,,,,,,https://hls.kz/
+KE,Kenya,Yes,2020/07/27,17975,65.45%,34.55%,2020/07/27,285,74.74%,25.26%,2020/07/27,1.81%,1.16%,1.56,https://www.health.go.ke/wp-content/uploads/2020/07/Kenya-COVID-19-SITREP-132-27-Jul-2020.pdf
+KW,Kuwait,No,,,,,,,,,,,,,https://corona.e.gov.kw/en
+KG,Kyrgyzstan,Yes,2020/07/16,12498,47.12%,52.88%,2020/07/16,155,61.94%,38.06%,2020/07/16,1.63%,0.89%,1.83,http://www.med.kg/en/informatsii-2/2095-statistics-on-covid-19-in-kyrgyzstan-as-of-july-6-2020.html
+LV,Latvia,Yes,2020/09/01,1388,51.01%,48.99%,2020/09/01,34,64.71%,35.29%,2020/09/01,3.11%,1.76%,1.76,https://spkc.gov.lv/lv/tavai-veselibai/aktualitate-par-jauno-koronavi
+LB,Lebanon,Partial,2020/08/31,17777,60.3%,39.7%,,,,,,,,,https://www.moph.gov.lb/maps/covid19.php
+LS,Lesotho,No,,,,,,,,,,,,,https://nacosec.org.ls/
+LR,Liberia,Yes,2020/08/31,1305,65.29%,34.71%,2020/08/31,82,64.63%,35.37%,2020/08/31,6.22%,6.4%,0.97,https://www.facebook.com/164280647325112/photos/a.347331779019997/1076547442765090/
+LY,Libya,No,,,,,,,,,,,,,https://ncdc.org.ly/Ar/libyan-covid-19-dashboard/
+LT,Lithuania,Partial,2020/09/01,2929,45.61%,54.32%,2020/06/01,70,47.14%,52.86%,,,,,https://registrucentras.maps.arcgis.com/apps/opsdashboard/index.html#/becd01f2fade4149ba7a9e5baaddcd8d
+LU,Luxembourg,Yes,2020/09/01,6702,51%,49%,2020/09/01,124,54%,46%,2020/09/01,1.96%,1.74%,1.13,https://msan.gouvernement.lu/en/dossiers/2020/corona-virus.html
+MG,Madagascar,No,,,,,,,,,,,,,https://www.facebook.com/orangeactu/photos/a.1380589932211150/2684257685177695/?type=3&theater
+MW,Malawi,Yes,2020/08/28,5515,68.54%,31.46%,2020/08/28,174,77.01%,22.99%,2020/08/28,3.55%,2.31%,1.54,https://malawipublichealth.org/index.php/resources/COVID-19%20SitRep%20Updates/August%202020/20200828_Malawi%20COVID-19%20situation%20report.pdf/detail
+MY,Malaysia,Partial,,,,,2020/08/20,125,76%,24%,,,,,https://ukkdosm.github.io/covid-19
+MV,Maldives,Yes,2020/08/31,7784,70.7%,29.3%,2020/08/31,25,52%,48%,2020/08/31,0.24%,0.53%,0.45,https://covid19.health.gov.mv/dashboard/
+ML,Mali,Partial,2020/08/30,2773,67.4%,32.6%,,,,,,,,,https://www.humanitarianresponse.info/en/op%C3%A9rations/mali/document/sitrep-n%C2%B0117-covid-19
+MT,Malta,Partial,2020/07/22,674,60.24%,39.76%,,,,,,,,,https://deputyprimeminister.gov.mt/en/health-promotion/covid-19/Pages/covid-19-infographics.aspx
+MR,Mauritania,No,,,,,,,,,,,,,https://essahraa.net/node/19428
+MU,Mauritius,No,,,,,,,,,,,,,https://covid19.mu/
+MX,Mexico,Yes,2020/08/31,599465,52.47%,47.53%,2020/08/31,64332,64.46%,35.54%,2020/08/31,13.18%,8.02%,1.64,https://coronavirus.gob.mx/datos/
+MD,Moldova,Yes,2020/08/30,36920,41.18%,58.82%,2020/08/30,995,51.16%,48.84%,2020/08/30,3.35%,2.24%,1.5,http://gismoldova.maps.arcgis.com/apps/opsdashboard/index.html#/d274da857ed345efa66e1fbc959b021b
+MN,Mongolia,Yes,2020/08/31,301,69.77%,43.33%,2020/08/04,,0%,0%,2020/08/04,,,1,https://covid19.mohs.mn/p/2020-%D0%BE%D0%BD%D1%8B-08-%D0%B4%D1%83%D0%B3%D0%B0%D0%B0%D1%80-%D1%81%D0%B0%D1%80%D1%8B%D0%BD-31-%D3%A9%D0%B4%D1%80%D0%B8%D0%B9%D0%BD-%D0%BD%D3%A9%D1%85%D1%86%D3%A9%D0%BB-%D0%B1%D0%B0%D0%B9%D0%B4%D0%BB%D1%8B%D0%BD-%D0%BC%D1%8D%D0%B4%D1%8D%D1%8D/826/
+MA,Morocco,Yes,2020/07/18,17015,53%,47%,2020/07/18,401,67%,33%,2020/07/18,2.98%,1.65%,1.8,https://2m.ma/fr/news/coronavirus-le-ministere-de-la-sante-fait-le-point-sur-la-situation-epidemiologique-du-royaume-video-20200718/
+MZ,Mozambique,Partial,2020/08/28,3697,60.18%,39.82%,,,,,,,,,http://www.misau.gov.mz/index.php/covid-19-boletins-diarios#
+MM,Myanmar,Yes,2020/09/01,882,56.58%,43.42%,2020/09/01,6,83.33%,16.67%,2020/09/01,1%,0.26%,3.84,https://datastudio.google.com/u/0/reporting/445c1281-c6ea-45e4-9bc0-5d561c511354/page/I44CB
+NA,Namibia,No,,,,,,,,,,,,,https://www.facebook.com/MoHSSNamibia/photos/a.500006330672375/595805294425811/
+NP,Nepal,Yes,2020/08/25,32464,80.23%,19.77%,2020/08/29,207,73.91%,26.09%,2020/08/13,0.35%,0.55%,0.64,https://twitter.com/mohpnep?ref_src=twsrc%5Etfw%7Ctwcamp%5Eembeddedtimeline&ref_url=https%3A%2F%2Fcovid19.mohp.gov.np%2F%23%2F
+NL,Netherlands,Yes,2020/09/01,71038,40.69%,59.31%,2020/09/01,6230,54.88%,45.12%,2020/09/01,11.83%,6.67%,1.77,https://www.rivm.nl/documenten/wekelijkse-update-epidemiologische-situatie-covid-19-in-nederland
+NZ,"New Zealand",Partial,2020/08/31,1752,45.15%,54.85%,,,,,,,,,https://www.health.govt.nz/our-work/diseases-and-conditions/covid-19-novel-coronavirus/covid-19-current-situation/covid-19-current-cases#gender
+NI,Nicaragua,No,,,,,,,,,,,,,https://www.el19digital.com/Coronavirus/articulo/titulo:104282-conozca-el-informe-actualizado-de-la-situacion-de-la-covid-19-en-nicaragua
+NE,Niger,No,,,,,,,,,,,,,https://coronavirus.ne/
+NG,Nigeria,Partial,2020/08/30,53865,63.58%,36.42%,,,,,,,,,https://ncdc.gov.ng/diseases/sitreps
+MK,"North Macedonia",Yes,2020/08/31,13700,50.24%,49.76%,2020/08/31,602,64.78%,35.22%,2020/08/31,5.65%,3.12%,1.81,https://gdi-sk.maps.arcgis.com/apps/opsdashboard/index.html?fbclid=IwAR0Dd9MY7njiNtDkPpPt8R2SeD4pW_6TO12axwKrT4CcegckY4P4Ezt43f4#/2096bd4b051b42948ac3f5747e80c3a5
+,"Northern Ireland",Yes,2020/09/01,7284,42.41%,57.59%,2020/09/01,559,52.42%,47.59%,2020/09/01,9.49%,6.34%,1.5,https://app.powerbi.com/view?r=eyJrIjoiZGYxNjYzNmUtOTlmZS00ODAxLWE1YTEtMjA0NjZhMzlmN2JmIiwidCI6IjljOWEzMGRlLWQ4ZDctNGFhNC05NjAwLTRiZTc2MjVmZjZjNSIsImMiOjh9
+NO,Norway,Yes,2020/09/01,10783,50.95%,49.05%,2020/09/01,264,53.03%,46.97%,2020/09/01,2.55%,2.34%,1.09,https://www.fhi.no/en/id/infectious-diseases/coronavirus/daily-reports/daily-reports-COVID19/
+OM,Oman,No,,,,,,,,,,,,,https://covid19.moh.gov.om/#/home
+PK,Pakistan,Yes,2020/08/18,289832,73.98%,26.02%,2020/08/18,6190,74.15%,25.85%,2020/08/18,2.14%,2.12%,1.01,http://covid.gov.pk/stats/pakistan
+PS,Palestine,No,,,,,,,,,,,,,https://corona.ps/
+PA,Panama,Yes,2020/08/30,79402,54.19%,45.81%,2020/06/05,373,67.56%,32.44%,2020/06/05,2.78%,1.89%,1.47,http://minsa.b-cdn.net/sites/default/files/publicacion-general
+PG,"Papua New Guinea",No,,,,,,,,,,,,,https://covid19.papua.go.id/#monitor
+PY,Paraguay,Partial,2020/08/31,17105,56.57%,43.43%,,,,,,,,,https://www.mspbs.gov.py/reporte-covid19.html
+PE,Peru,Yes,2020/08/04,439890,55.9%,44.1%,2020/08/30,28788,70.31%,29.69%,2020/08/04,5.76%,3.02%,1.91,https://covid19.minsa.gob.pe/sala_situacional.asp
+PH,Philippines,Yes,2020/09/01,194842,54.9%,45.1%,2020/09/01,3483,60.49%,39.51%,2020/09/01,1.97%,1.57%,1.26,https://ncovtracker.doh.gov.ph/
+PL,Poland,Partial,,,,,2020/09/01,2060,53.45%,46.55%,,,,,https://docs.google.com/spreadsheets/d/1ierEhD6gcq51HAm433knjnVwey4ZE5DCnu1bW7PRG3E/htmlview?fbclid=IwAR3diFvPqpkq0Kam18jvA9Y2uxq8ihE0DGeynwPJSlwtOeTCcWgGHgK47AM#
+PT,Portugal,Yes,2020/08/31,58012,44.96%,55.04%,2020/08/31,1822,50.38%,49.62%,2020/08/31,3.52%,2.83%,1.24,https://covid19.min-saude.pt/wp-content/uploads/2020/08/182_DGS_boletim_20200831.pdf
+QA,Qatar,Partial,2020/04/28,12156,91%,9%,,,,,,,,,https://www.wgoqatar.com/2020/04/daily-covid-19-stats-by-qatar-cdc/
+IE,"Republic of Ireland",Yes,2020/08/30,28780,43.89%,56.11%,2020/08/30,1777,49.24%,50.76%,2020/08/30,6.93%,5.59%,1.24,https://www.hpsc.ie/a-z/respiratory/coronavirus/novelcoronavirus/casesinireland/epidemiologyofcovid-19inireland/COVID-19_Daily_epidemiology_report_(NPHET)_20200901_website.pdf
+RO,Romania,Yes,2020/09/01,87540,46.39%,53.61%,2020/09/01,3621,59.73%,40.27%,2020/09/01,5.33%,3.11%,1.71,https://www.cnscbt.ro/index.php/analiza-cazuri-confirmate-covid19/1952-raport-saptamanal-episaptamana34/file
+RU,Russia,No,,,,,,,,,,,,,https://xn--80aesfpebagmfblc0a.xn--p1ai/
+RW,Rwanda,Partial,2020/08/30,4063,64.78%,35.22%,,,,,,,,,https://gis.rbc.gov.rw/portal/apps/opsdashboard/index.html#/59872985985446bbaf8c394ad857c5cd
+SM,"San Marino",No,,,,,,,,,,,,,http://www.iss.sm/on-line/home/articolo49014694.html
+ST,"Sao Tome and Principe",No,,,,,,,,,,,,,https://www.facebook.com/MSaudeSTeP/
+SA,"Saudi Arabia",Partial,2020/05/26,76726,75%,25%,,,,,,,,,https://twitter.com/SaudiMOH/status/1265019310826827777
+,Scotland,Yes,2020/08/30,20346,39.21%,60.79%,2020/08/09,4303,48.59%,51.41%,2020/08/02,29.68%,18.38%,1.61,https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/
+SN,Senegal,Partial,2020/07/17,736,52.17%,47.83%,,,,,,,,,http://www.sante.gouv.sn/sites/default/files/Communiqu%C3%A9%20170%20du%2018%20Aout%202020%20%282%29.pdf
+RS,Serbia,Partial,,,,,2020/05/03,193,61.66%,38.34%,,,,,https://covid19.data.gov.rs/
+SC,Seychelles,No,,,,,,,,,,,,,https://www.facebook.com/mohseychellesofficial/
+SL,"Sierra Leone",Partial,2020/08/31,1969,52.62%,47.38%,,,,,,,,,http://dhse.gov.sl/
+SG,Singapore,Partial,2020/05/05,6530,88.93%,11.07%,,,,,,,,,https://co.vid19.sg/singapore/
+SK,Slovakia,Partial,2020/05/28,1491,50.03%,49.97%,,,,,,,,,https://korona.gov.sk/wp-content/uploads/2020/08/analyza_covid_jul.pdf
+SI,Slovenia,Yes,2020/09/01,2979,49.51%,50.49%,2020/09/01,128,39.06%,60.94%,2020/09/01,3.39%,5.19%,0.65,https://www.nijz.si/sl/dnevno-spremljanje-okuzb-s-sars-cov-2-covid-19
+SO,Somalia,Partial,2020/09/01,3310,74%,26%,,,,,,,,,http://moh.gov.so/en/covid19/
+ZA,"South Africa",Yes,2020/09/01,622854,41.69%,58.31%,2020/07/01,2745,52.61%,47.4%,2020/07/01,2.13%,1.44%,1.48,https://www.nicd.ac.za/diseases-a-z-index/covid-19/surveillance-reports/
+KR,"South Korea",Yes,2020/09/01,20182,45.28%,54.72%,2020/09/01,324,53.09%,46.91%,2020/08/04,1.88%,1.38%,1.37,http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=1&brdGubun=11&ncvContSeq=&contSeq=&board_id=&gubun=
+SS,"South Sudan",No,,,,,,,,,,,,,https://twitter.com/WaniMichael57/status/1278335964079939585
+ES,Spain,Yes,2020/08/27,424370,45.78%,54.22%,2020/05/21,20518,56.56%,43.44%,2020/05/21,10.87%,6.3%,1.73,https://www.isciii.es/QueHacemos/Servicios/VigilanciaSaludPublicaRENAVE/EnfermedadesTransmisibles/Documents/INFORMES/Informes%20COVID-19/Informe%20COVID-19.%20N%C2%BA%2041_27agosto2020_ISCIII.pdf
+LK,"Sri Lanka",No,,,,,,,,,,,,,https://hpb.health.gov.lk/covid19-dashboard/
+SD,Sudan,No,,,,,,,,,,,,,http://www.fmoh.gov.sd/index.php
+SR,Suriname,No,,,,,,,,,,,,,https://covid-19.sr/
+SE,Sweden,Yes,2020/09/01,84521,42.79%,57.21%,2020/09/01,5813,54.74%,45.26%,2020/09/01,8.8%,5.44%,1.62,https://fohm.maps.arcgis.com/apps/opsdashboard/index.html#/68d4537bf2714e63b646c37f152f1392
+CH,Switzerland,Yes,2020/09/01,42363,47.57%,52.43%,2020/09/01,1726,57.65%,42.35%,2020/09/01,4.94%,3.29%,1.5,https://www.bag.admin.ch/bag/fr/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/situation-schweiz-und-international.html#1164290551
+SY,Syria,No,,,,,,,,,,,,,https://app.powerbi.com/view?r=eyJrIjoiNTA0NWMxZmYtMDJiMC00ZWU0LTllNTktZTViZjYwYThjZmUzIiwidCI6ImY2MTBjMGI3LWJkMjQtNGIzOS04MTBiLTNkYzI4MGFmYjU5MCIsImMiOjh9
+TW,Taiwan,Partial,2020/09/01,488,48.77%,51.23%,,,,,,,,,https://data.cdc.gov.tw/en/dataset/agstable-19cov
+TJ,Tajikistan,No,,,,,,,,,,,,,https://covid.tj/#charts
+TZ,Tanzania,No,,,,,,,,,,,,,https://covid19.who.int/region/afro/country/tz
+TH,Thailand,Yes,2020/08/25,3402,55.97%,44.03%,2020/08/01,58,76%,24%,2020/08/01,2.39%,0.95%,2.52,https://ddc.moph.go.th/viralpneumonia/eng/file/situation/situation-no184-070763.pdf
+TG,Togo,No,,,,,,,,,,,,,https://covid19.gouv.tg/situation-au-togo/
+TT,"Trinidad and Tobago",No,,,,,,,,,,,,,https://www.covid19.gov.tt/trinidad-and-tobago-covid-19-novel-coronavirus-update-431/
+TN,Tunisia,Partial,2020/07/09,1231,52%,48%,,,,,,,,,http://www.onmne.tn/fr/images/COVID-19-dernier-bulletin.pdf
+TR,Turkey,Yes,2020/08/23,259253,51%,49%,2020/08/23,6121,62.13%,37.87%,2020/08/23,2.88%,1.82%,1.58,https://dosyamerkez.saglik.gov.tr/Eklenti/38428covid-19-weekly-situation-report---34-weekpdf.pdf?0&_tag1=992AA33321CDB20392D27AF3B930161EA16EB4A4
+AE,UAE,No,,,,,,,,,,,,,https://covid19.ncema.gov.ae/en
+US,USA,Yes,2020/09/01,4418258,48.27%,51.73%,2020/09/01,136583,54%,46%,2020/09/01,3.46%,2.75%,1.26,https://www.cdc.gov/covid-data-tracker/index.html#demographics
+UG,Uganda,Yes,2020/08/02,1115,85.2%,14.8%,2020/09/01,26,65.39%,34.62%,2020/08/02,0.11%,2.42%,0.04,https://covid19.gou.go.ug/statistics.html
+UA,Ukraine,Yes,2020/09/01,123294,41.24%,58.76%,2020/09/01,2649,54.21%,45.79%,2020/09/01,5.92%,3.51%,1.69,https://phc.org.ua/kontrol-zakhvoryuvan/inshi-infekciyni-zakhvoryuvannya/koronavirusna-infekciya-covid-19
+UY,Uruguay,No,,,,,,,,,,,,,https://www.gub.uy/sistema-nacional-emergencias/comunicacion/noticias/informacion-interes-actualizada-sobre-coronavirus-covid-19-uruguay
+UZ,Uzbekistan,No,,,,,,,,,,,,,https://coronavirus.uz/en
+VE,Venezuela,Partial,2020/08/31,45868,58.33%,41.67%,,,,,,,,,https://covid19.patria.org.ve/estadisticas-venezuela/
+VN,Vietnam,Yes,2020/08/04,670,51.49%,48.51%,2020/08/04,8,37.5%,62.5%,2020/08/04,0.87%,1.54%,0.57,https://ncov.moh.gov.vn/en/web/guest/trang-chu
+,Wales,Yes,2020/08/31,17941,37.75%,62.25%,2020/08/03,1566,55.88%,44.13%,2020/08/03,13.58%,6.4%,2.12,https://public.tableau.com/profile/public.health.wales.health.protection#!/vizhome/RapidCOVID-19virology-Public/Headlinesummary
+YE,Yemen,Partial,2020/07/21,1897,73.17%,26.83%,,,,,,,,,https://app.powerbi.com/view?r=eyJrIjoiZjE2NzJjZDItNDgyZi00NDFkLWFlMjItNjA2MjIwMWYzODJkIiwidCI6ImY2MTBjMGI3LWJkMjQtNGIzOS04MTBiLTNkYzI4MGFmYjU5MCIsImMiOjh9
+ZM,Zambia,No,,,,,,,,,,,,,https://www.facebook.com/mohzambia/photos/a.773733439467982/1687339664774017/
+ZW,Zimbabwe,No,,,,,,,,,,,,,https://twitter.com/MoHCCZim/status/1300484332474298368/photo/1

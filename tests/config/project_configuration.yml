@@ -3,12 +3,33 @@ tabs:
   regional: "RegionalData"
   national: "NationalData"
   subnational: "SubnationalData"
+  covid_series: "CovidSeries"
   covid_trend: "CovidTrend"
   sources: "Sources"
 
 
 json:
   filepath: "test_tabular.json"
+  additional:
+    - filepath: "test_tabular_covidseries.json"
+      keys:
+        - name: "covid_series"
+          newname: "timeseries"
+        - name: "national"
+          newname: "cumulative"
+          filter: "hrp_iso3s"
+          hxltags:
+            - "#country+code"
+            - "#country+name"
+            - "#affected+infected"
+            - "#affected+killed"
+        - name: "regional"
+          newname: "global"
+          filter: "global"
+          hxltags:
+            - "#region+name"
+            - "#affected+infected"
+            - "#affected+killed"
 
 additional_sources:
   - indicator: "#food-prices"
@@ -84,35 +105,9 @@ regional:
   iso3: "ISO3"
   region: "Regional_office"
   val_fns:
-    "Population": sum
-#    "NoCases": "sum"
-#    "NoDeaths": "sum"
-#    "Risk": "range"
-#    "RiskClass": "sum"
-#    "EconomicExposure": "range"
-#    "World Bank": "sum"
-#    "IMF": "sum"
-#    "AfDB total": "sum"
-#    "ADB total": "sum"
-#    "IADB total": "sum"
-#    "EIB total": "sum"
-#    "ISDB total": "sum"
-#    "DevCO total": "sum"
-#    "UN MPTF total": "sum"
+    "Covid Cases": "sum"
+    "Covid Deaths": "sum"
     "IFI COVID19 total": "sum"
-#    "IFI COVID19 total percap": "range"
-#    "IFI COVID19 total pcgdp": "range"
-#    "PeopleInNeed": "sum"
-#    "RequiredFundingPreCovid": "sum"
-#    "TotalIDPs": "sum"
-#    "Imp: Total Cases(min)": "sum"
-#    "Imp: Total Cases(max)": "sum"
-#    "Imp: Total Deaths(min)": "sum"
-#    "Imp: Total Deaths(max)": "sum"
-#    "LSHTM: Total Cases(min)": "sum"
-#    "LSHTM: Total Cases(max)": "sum"
-#    "LSHTM: Total Deaths(min)": "sum"
-#    "LSHTM: Total Deaths(max)": "sum"
     "CBPFCovidFunding": "sum"
     "CERFCovidFunding": "sum"
     "RequiredHRPFunding": "sum"
@@ -147,6 +142,7 @@ tabular_national:
       - "Population"
     hxltags:
       - "#population"
+# only for testing dividing by population
   who_national:
     format: "csv"
     dataset: "coronavirus-covid-19-cases-and-deaths"
@@ -161,18 +157,12 @@ tabular_national:
       - "Cumulative_cases"
       - "Cumulative_deaths"
     eval_cols:
-      - "number_format(Cumulative_cases, format='%.0f')"
-      - "number_format(Cumulative_deaths, format='%.0f')"
       - "number_format(Cumulative_cases / #population * 100000, format='%.2f')"
       - "number_format(Cumulative_deaths / #population * 100000, format='%.2f')"
     columns:
-      - "NoCases"
-      - "NoDeaths"
       - "CasesPer100000"
       - "DeathsPer100000"
     hxltags:
-      - "#affected+infected"
-      - "#affected+killed"
       - "#affected+infected+per100000"
       - "#affected+killed+per100000"
 # A fake one where we sum all values in cumulative column across dates which in practice makes no sense
@@ -472,29 +462,39 @@ tabular_national:
     format: "csv"
     url: "tests/fixtures/covid-19-sex-disaggregated-data.csv"
     dataset: "covid-19-sex-disaggregated-data-tracker"
-    date: "2020-08-07"
     headers: 1
-    use_hxl: True
-    exclude_tags:
-      - "#date"
-      - "#meta+dataviz"
-    indicator_cols:
-      - filter_col: "#meta+dataviz=Yes"
-        val_fns:
-          "#affected+infected+male+pct": "get_numeric_if_possible(#affected+infected+male+pct)"
-          "#affected+infected+female+pct": "get_numeric_if_possible(#affected+infected+female+pct)"
-          "#affected+infected+death+male+pct": "get_numeric_if_possible(#affected+infected+death+male+pct)"
-          "#affected+infected+death+female+pct": "get_numeric_if_possible(#affected+infected+death+female+pct)"
-        eval_cols:
-          - "number_format(#affected+infected+male+pct)"
-          - "number_format(#affected+infected+female+pct)"
-          - "number_format(#affected+infected+death+male+pct)"
-          - "number_format(#affected+infected+death+female+pct)"
-        hxltags:
-          - "#affected+infected+m+pct"
-          - "#affected+f+infected+pct"
-          - "#affected+killed+m+pct"
-          - "#affected+f+killed+pct"
+    date: "2020-08-07"
+    external_filter:
+      url: "https://github.com/OCHA-DAP/hdx-scraper-covid-viz/raw/master/tests/fixtures/sadd-countries-to-include.csv"
+      hxltags:
+        - "#country+code+v_iso2"
+    adm_cols:
+      - "Country code"
+    val_cols:
+      - "Cases (% male)"
+      - "Cases (% female)"
+      - "Deaths (% male)"
+      - "Deaths (% female)"
+    val_fns:
+      "Cases (% male)": "get_numeric_if_possible(Cases (% male))"
+      "Cases (% female)": "get_numeric_if_possible(Cases (% female))"
+      "Deaths (% male)": "get_numeric_if_possible(Deaths (% male))"
+      "Deaths (% female)": "get_numeric_if_possible(Deaths (% female))"
+    eval_cols:
+      - "number_format(Cases (% male))"
+      - "number_format(Cases (% female))"
+      - "number_format(Deaths (% male))"
+      - "number_format(Deaths (% female))"
+    columns:
+      - "Cases (% male)"
+      - "Cases (% female)"
+      - "Deaths (% male)"
+      - "Deaths (% female)"
+    hxltags:
+      - "#affected+infected+m+pct"
+      - "#affected+f+infected+pct"
+      - "#affected+killed+m+pct"
+      - "#affected+f+killed+pct"
 
 fts:
   v1_url: "https://api.hpc.tools/v1/public/"
@@ -515,12 +515,11 @@ unhcr:
   url: "https://data2.unhcr.org/population/?population_collection=4&geo_id="
   source_url: "https://data.humdata.org/organization/unhcr"
 
-covid_trend:
+who_covid:
   format: "csv"
   dataset: "coronavirus-covid-19-cases-and-deaths"
   url: "tests/fixtures/WHO-COVID-19-global-data.csv"
   headers: 1
-  hxltag: "#covid+cases+per+capita"
 
 access_constraints:
   format: "xlsx"
@@ -909,6 +908,10 @@ health_facilities_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlK
 idps_locations_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=725426850&single=true&output=csv"
 
 3w_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=1662282962&single=true&output=csv"
+
+country_name_mappings:
+  PSE: "occupied Palestinian territory"
+  BOL: "Bolivia"
 
 admin_info:
   - {ADM1_PCODE: AF01, ADM1_REF: Kabul, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}

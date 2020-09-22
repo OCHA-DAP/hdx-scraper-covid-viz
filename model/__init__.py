@@ -25,6 +25,8 @@ def calculate_ratios(items_per_country, affected_items_per_country):
 def add_population(population_lookup, headers, columns):
     if population_lookup is None:
         return
-    population_index = headers[1].index('#population')
-    if population_index != -1:
+    try:
+        population_index = headers[1].index('#population')
         population_lookup.update(columns[population_index])
+    except ValueError:
+        pass

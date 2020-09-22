@@ -96,7 +96,7 @@ def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers
         for output in outputs.values():
             output.update_tab(name, data)
 
-    population_headers, population_columns, population_sources = get_tabular(basic_auths, configuration, 'national', downloader, population_lookup=population_lookup)
+    population_headers, population_columns, population_sources = get_tabular(basic_auths, configuration, 'national', downloader, scrapers=['population'], population_lookup=population_lookup)
     national_headers = extend_headers(national, population_headers)
     national_columns = extend_columns('national', national, countryiso3s, admininfo, national_headers, population_columns)
     extend_sources(sources, population_sources)
@@ -114,7 +114,7 @@ def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers
         food_headers, food_columns, food_sources = add_food_prices(configuration, countryiso3s, downloader, scrapers)
         campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, countryiso3s, downloader, outputs, scrapers)
         unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, countryiso3s, downloader, scrapers)
-        tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'national', downloader, scrapers=scrapers)
+        tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'national', downloader, scrapers=scrapers, population_lookup=population_lookup)
 
         national_headers = extend_headers(national, covid_headers, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, access_headers)
         national_columns = extend_columns('national', national, countryiso3s, admininfo, national_headers, covid_columns, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, access_columns)
@@ -122,7 +122,7 @@ def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers
         update_tab('national', national)
 
         if 'world' in tabs:
-            tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'global', downloader, scrapers=scrapers)
+            tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'global', downloader, scrapers=scrapers, population_lookup=population_lookup)
             world_headers = extend_headers(world, covid_headers, fts_wheaders, access_wheaders, tabular_headers)
             extend_columns('global', world, None, None, world_headers, covid_h63columns, fts_wcolumns, access_wcolumns, tabular_columns)
             extend_sources(sources, fts_wsources, access_wsources, tabular_sources)
@@ -140,7 +140,7 @@ def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers
     if 'subnational' in tabs:
         ipc_headers, ipc_columns, ipc_sources = get_ipc(configuration, admininfo, downloader, scrapers)
         whowhatwhere_headers, whowhatwhere_columns, whowhatwhere_sources = get_whowhatwhere(configuration, admininfo, downloader, scrapers)
-        tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'subnational', downloader, scrapers=scrapers)
+        tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'subnational', downloader, scrapers=scrapers, population_lookup=population_lookup)
 
         subnational_headers = extend_headers(subnational, ipc_headers, tabular_headers, whowhatwhere_headers)
         extend_columns('subnational', subnational, pcodes, admininfo, subnational_headers, ipc_columns, tabular_columns, whowhatwhere_columns)

@@ -82,11 +82,13 @@ class jsonoutput:
                 self.add_data_row(name, newrow)
 
     def save(self, folder=None, hrp_iso3s=list()):
+        filepaths = list()
         filepath = self.json_configuration['filepath']
         if folder:
             filepath = join(folder, filepath)
         logger.info('Writing JSON to %s' % filepath)
         save_json(self.json, filepath)
+        filepaths.append(filepath)
         additional = self.json_configuration.get('additional', list())
         for filedetails in additional:
             json = dict()
@@ -119,6 +121,8 @@ class jsonoutput:
                 continue
             filedetailspath = filedetails['filepath']
             if folder:
-                filedetailspath = join(folder, filepath)
+                filedetailspath = join(folder, filedetailspath)
+            logger.info('Writing JSON to %s' % filedetailspath)
             save_json(json, filedetailspath)
-        return filepath
+            filepaths.append(filedetailspath)
+        return filepaths
