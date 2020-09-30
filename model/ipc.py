@@ -2,44 +2,22 @@
 import inspect
 import logging
 
-import numpy
-import pandas
 from hdx.data.dataset import Dataset
 from hdx.location.country import Country
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.text import get_fraction_str
 
 from utilities import get_date_from_dataset_date
+from utilities.readers import read_tabular
 
 logger = logging.getLogger(__name__)
 
 
-def get_from_pandas(url, countryiso3):
-    try:
-        df = pandas.read_excel(url, header=[9, 10, 11])
-    except AttributeError:
-        logger.info('No IPC data for %s!' % countryiso3)
-        return None
-    headers = list()
-    for col in list(df.columns):
-        colstrs = list()
-        for subcol in col:
-            if 'Unnamed' in subcol:
-                continue
-            colstrs.append(subcol)
-        column = ' '.join(colstrs)
-        headers.append(column)
-    df.columns = headers
-    df.replace(numpy.nan, '', regex=True, inplace=True)
-    return df.to_dict('records')
-
-
-def get_data(url, countryiso3):
-    countryiso2 = Country.get_iso2_from_iso3(countryiso3)
+def get_data(downloader, url, countryiso2):
     for page in range(1, 3):
-        data = get_from_pandas(url % (page, countryiso2), countryiso3)
-        if data is None:
-            continue
+        _, data = read_tabular(downloader, {'url': url % (page, countryiso2), 'sheet': 'IPC', 'headers': [4, 6],
+                                            'format': 'xlsx'}, fill_merged_cells=True)
+        data = list(data)
         adm1_names = set()
         percentages = list()
         for row in data:
@@ -57,7 +35,7 @@ def get_data(url, countryiso3):
     return None, None
 
 
-def get_ipc(configuration, admininfo, scrapers=None):
+def get_ipc(configuration, admininfo, downloader, scrapers=None):
     name = inspect.currentframe().f_code.co_name
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list()
@@ -66,7 +44,8 @@ def get_ipc(configuration, admininfo, scrapers=None):
     phasedict = dict()
     popdict = dict()
     for countryiso3 in admininfo.countryiso3s:
-        data, adm1_names = get_data(url, countryiso3)
+        countryiso2 = Country.get_iso2_from_iso3(countryiso3)
+        data, adm1_names = get_data(downloader, url, countryiso2)
         if not data:
             continue
         for row in data:
