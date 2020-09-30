@@ -138,7 +138,7 @@ def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers
             update_tab('regional', regional)
 
     if 'subnational' in tabs:
-        ipc_headers, ipc_columns, ipc_sources = get_ipc(configuration, admininfo, downloader, scrapers)
+        ipc_headers, ipc_columns, ipc_sources = get_ipc(configuration, admininfo, scrapers)
         whowhatwhere_headers, whowhatwhere_columns, whowhatwhere_sources = get_whowhatwhere(configuration, admininfo, downloader, scrapers)
         tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'subnational', downloader, scrapers=scrapers, population_lookup=population_lookup)
 
