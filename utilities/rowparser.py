@@ -29,6 +29,11 @@ class RowParser(object):
                 date = 0
         else:
             date = 0
+        date_condition = datasetinfo.get('date_condition')
+        if date_condition is not None:
+            for col in datasetinfo['val_cols']:
+                date_condition = date_condition.replace(col, f"row['{col}']")
+        self.date_condition = date_condition
         self.admininfo = AdminInfo.get()
         self.admcols = datasetinfo.get('adm_cols', list())
         if self.level is None:
@@ -133,6 +138,9 @@ class RowParser(object):
                 if not isinstance(date, datetime):
                     date = parse_date(date)
                 date = date.replace(tzinfo=None)
+            if self.date_condition:
+                if eval(self.date_condition) is False:
+                    return None, None
             if self.level is None:
                 if self.maxdateonly:
                     if date < self.maxdate:

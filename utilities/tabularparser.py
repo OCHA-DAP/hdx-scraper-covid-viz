@@ -63,6 +63,8 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
                     if len(adm_cols) == 1:
                         adm_cols.append(hxltag)
                 continue
+            if hxltag == datasetinfo.get('date_col') and datasetinfo.get('include_date', False) is False:
+                continue
             val_cols.append(hxltag)
             columns.append(header)
         datasetinfo['adm_cols'] = adm_cols

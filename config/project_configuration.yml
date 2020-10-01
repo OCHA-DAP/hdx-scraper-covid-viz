@@ -807,6 +807,32 @@ tabular_national:
       - "#affected+f+infected+pct"
       - "#affected+killed+m+pct"
       - "#affected+f+killed+pct"
+  oxcgrt:
+    format: "csv"
+    dataset: "oxford-covid-19-government-response-tracker"
+    headers: 1
+    use_hxl: True
+    date_col: "#date"
+    date_type: "int"
+  covidtests:
+    format: "xlsx"
+    dataset: "total-covid-19-tests-performed-by-country"
+    headers: 1
+    sheet: 1
+    date_col: "date"
+    date_type: "date"
+    date_condition: "total_tests is not None and total_tests > 0"
+    adm_cols:
+      - "iso_code"
+    val_cols:
+      - "total_tests"
+      - "total_tests_per_thousand"
+    columns:
+      - "Total Tests"
+      - "Tests Per Thousand"
+    hxltags:
+      - "#affected+tested"
+      - "#affected+tested+per1000"
 
 fts:
   v1_url: "https://api.hpc.tools/v1/public/"
