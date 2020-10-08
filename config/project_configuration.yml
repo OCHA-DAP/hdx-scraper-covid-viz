@@ -327,6 +327,7 @@ tabular_national:
       - "Country Code"
     date_col: "Year"
     date_type: "int"
+    date_condition: "Value != ''"
     val_cols:
       - "Value"
     columns:
