@@ -460,10 +460,10 @@ tabular_national:
           - "#value+cerf+covid+funding+total+usd"
   sadd:
     format: "csv"
-    url: "tests/fixtures/covid-19-sex-disaggregated-data.csv"
     dataset: "covid-19-sex-disaggregated-data-tracker"
-    headers: 1
     date: "2020-08-07"
+    url: "tests/fixtures/covid-19-sex-disaggregated-data.csv"
+    headers: 1
     external_filter:
       url: "https://github.com/OCHA-DAP/hdx-scraper-covid-viz/raw/master/tests/fixtures/sadd-countries-to-include.csv"
       hxltags:
@@ -498,6 +498,7 @@ tabular_national:
   covidtests:
     format: "xlsx"
     dataset: "total-covid-19-tests-performed-by-country"
+    date: "2020-10-01"
     url: "tests/fixtures/owid-covid-data.xlsx"
     headers: 1
     sheet: 1

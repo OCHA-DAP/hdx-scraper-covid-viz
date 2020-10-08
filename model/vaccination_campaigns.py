@@ -33,7 +33,8 @@ def add_vaccination_campaigns(configuration, countryiso3s, downloader, outputs, 
                         break
                     campaigns_per_country[countryiso] = campaigns_per_country.get(countryiso, 0) + 1
                 if hxltag == '#status+name':
-                    if value != 'On track':
+                    value = value.lower()
+                    if value != 'on track' and 'reinstated' not in value:
                         affected_campaigns_per_country[countryiso] = affected_campaigns_per_country.get(countryiso, 0) + 1
         if countryiso:
             outputs['json'].add_data_row(name, newrow)
