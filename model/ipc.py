@@ -38,17 +38,22 @@ def get_data(downloader, url, countryiso2):
 def get_ipc(configuration, admininfo, downloader, scrapers=None):
     name = inspect.currentframe().f_code.co_name
     if scrapers and not any(scraper in name for scraper in scrapers):
-        return list(), list(), list()
+        return list(), list(), list(), list(), list()
     ipc_configuration = configuration['ipc']
     url = ipc_configuration['url']
-    phasedict = dict()
-    popdict = dict()
+    national_phases = dict()
+    national_analysed = dict()
+    subnational_phases = dict()
+    subnational_populations = dict()
     for countryiso3 in admininfo.countryiso3s:
         countryiso2 = Country.get_iso2_from_iso3(countryiso3)
         data, adm1_names = get_data(downloader, url, countryiso2)
         if not data:
             continue
-        for row in data:
+        row = data[0]
+        national_phases[countryiso3] = row['Current Phase P3+ %']
+        national_analysed[countryiso3] = f'{row["Current Population Analysed % of total county Pop"]:.03f}'
+        for row in data[1:]:
             country = row['Country']
             if adm1_names:
                 if country not in adm1_names:
@@ -63,26 +68,28 @@ def get_ipc(configuration, admininfo, downloader, scrapers=None):
                 continue
             population = row['Current Phase P3+ #']
             if population:
-                dict_of_lists_add(popdict, pcode, population)
+                dict_of_lists_add(subnational_populations, pcode, population)
             percentage = row['Current Phase P3+ %']
             if percentage:
-                dict_of_lists_add(phasedict, pcode, percentage)
-    for pcode in phasedict:
-        percentages = phasedict[pcode]
+                dict_of_lists_add(subnational_phases, pcode, percentage)
+    for pcode in subnational_phases:
+        percentages = subnational_phases[pcode]
         if len(percentages) == 1:
-            phasedict[pcode] = get_fraction_str(percentages[0])
+            subnational_phases[pcode] = get_fraction_str(percentages[0])
         else:
-            populations = popdict[pcode]
+            populations = subnational_populations[pcode]
             numerator = 0
             denominator = 0
             for i, percentage in enumerate(percentages):
                 population = populations[i]
                 numerator += population * percentage
                 denominator += population
-            phasedict[pcode] = get_fraction_str(numerator, denominator)
+            subnational_phases[pcode] = get_fraction_str(numerator, denominator)
     logger.info('Processed IPC')
     dataset = Dataset.read_from_hdx(ipc_configuration['dataset'])
     date = get_date_from_dataset_date(dataset)
-    hxltag = '#affected+food+ipc+p3+pct'
-    return [['FoodInsecurityIPCP3+'], [hxltag]], [phasedict], \
-           [(hxltag, date, dataset['dataset_source'], dataset.get_hdx_url())]
+    headers = ['FoodInsecurityIPCP3+', 'FoodInsecurityIPCAnalysed']
+    hxltags = ['#affected+food+ipc+p3+pct', '#affected+food+ipc+analysed+pct']
+    return [headers, hxltags], [national_phases, national_analysed], \
+           [headers[0], [hxltags[0]]], [subnational_phases], \
+           [(hxltag, date, dataset['dataset_source'], dataset.get_hdx_url()) for hxltag in hxltags]

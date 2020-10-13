@@ -336,7 +336,7 @@ tabular_national:
       - "#population"
   inform_hazard:
     format: "xlsx"
-    dataset: "inform-covid-19-risk-index-version-0-1-2"
+    dataset: "inform-covid-19-risk-index-version-0-1-4"
     sheet: "Hazard & Exposure"
     headers: 1
     adm_cols:
@@ -349,7 +349,7 @@ tabular_national:
       - "#severity+hazard+inform+num"
   inform:
     format: "xlsx"
-    dataset: "inform-covid-19-risk-index-version-0-1-2"
+    dataset: "inform-covid-19-risk-index-version-0-1-4"
     sheet: "INFORM COVID-19 RISK 2020 (a-z)"
     headers: 1
     adm_cols:
