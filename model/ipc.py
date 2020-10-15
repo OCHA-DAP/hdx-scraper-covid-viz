@@ -41,17 +41,19 @@ def get_ipc(configuration, admininfo, downloader, scrapers=None):
         return list(), list(), list(), list(), list()
     ipc_configuration = configuration['ipc']
     url = ipc_configuration['url']
-    national_phases = dict()
+    phases = ['3', '4', '5', 'P3+']
+    national_phases = {phase: dict() for phase in phases}
     national_analysed = dict()
-    subnational_phases = dict()
-    subnational_populations = dict()
+    subnational_phases = {phase: dict() for phase in phases}
+    subnational_populations = {phase: dict() for phase in phases}
     for countryiso3 in admininfo.countryiso3s:
         countryiso2 = Country.get_iso2_from_iso3(countryiso3)
         data, adm1_names = get_data(downloader, url, countryiso2)
         if not data:
             continue
         row = data[0]
-        national_phases[countryiso3] = row['Current Phase P3+ %']
+        for phase in phases:
+            national_phases[phase][countryiso3] = row[f'Current Phase {phase} %']
         national_analysed[countryiso3] = f'{row["Current Population Analysed % of total county Pop"]:.03f}'
         for row in data[1:]:
             country = row['Country']
@@ -66,30 +68,38 @@ def get_ipc(configuration, admininfo, downloader, scrapers=None):
             pcode, _ = admininfo.get_pcode(countryiso3, adm1_name, 'IPC')
             if not pcode:
                 continue
-            population = row['Current Phase P3+ #']
-            if population:
-                dict_of_lists_add(subnational_populations, pcode, population)
-            percentage = row['Current Phase P3+ %']
-            if percentage:
-                dict_of_lists_add(subnational_phases, pcode, percentage)
-    for pcode in subnational_phases:
-        percentages = subnational_phases[pcode]
-        if len(percentages) == 1:
-            subnational_phases[pcode] = get_fraction_str(percentages[0])
-        else:
-            populations = subnational_populations[pcode]
-            numerator = 0
-            denominator = 0
-            for i, percentage in enumerate(percentages):
-                population = populations[i]
-                numerator += population * percentage
-                denominator += population
-            subnational_phases[pcode] = get_fraction_str(numerator, denominator)
+            for phase in phases:
+                population = row[f'Current Phase {phase} #']
+                if population:
+                    dict_of_lists_add(subnational_populations[phase], pcode, population)
+                percentage = row[f'Current Phase {phase} %']
+                if percentage:
+                    dict_of_lists_add(subnational_phases[phase], pcode, percentage)
+    for phase in phases:
+        subnational_phase = subnational_phases[phase]
+        for pcode in subnational_phase:
+            percentages = subnational_phase[pcode]
+            if len(percentages) == 1:
+                subnational_phase[pcode] = get_fraction_str(percentages[0])
+            else:
+                populations = subnational_populations[phase][pcode]
+                numerator = 0
+                denominator = 0
+                for i, percentage in enumerate(percentages):
+                    population = populations[i]
+                    numerator += population * percentage
+                    denominator += population
+                subnational_phase[pcode] = get_fraction_str(numerator, denominator)
     logger.info('Processed IPC')
     dataset = Dataset.read_from_hdx(ipc_configuration['dataset'])
     date = get_date_from_dataset_date(dataset)
-    headers = ['FoodInsecurityIPCP3+', 'FoodInsecurityIPCAnalysed']
-    hxltags = ['#affected+food+ipc+p3+pct', '#affected+food+ipc+analysed+pct']
-    return [headers, hxltags], [national_phases, national_analysed], \
-           [headers[0], [hxltags[0]]], [subnational_phases], \
+    headers = [f'FoodInsecurityIPC{phase}' for phase in phases]
+    headers.append('FoodInsecurityIPCAnalysed')
+    hxltags = [f'#affected+food+ipc+p{phase}+pct' for phase in phases[:-1]]
+    hxltags.append('#affected+food+ipc+p3plus+pct')
+    hxltags.append('#affected+food+ipc+analysed+pct')
+    national_outputs = [national_phases[phase] for phase in phases]
+    national_outputs.append(national_analysed)
+    subnational_outputs = [subnational_phases[phase] for phase in phases]
+    return [headers, hxltags], national_outputs, [headers[:-1], hxltags[:-1]], subnational_outputs, \
            [(hxltag, date, dataset['dataset_source'], dataset.get_hdx_url()) for hxltag in hxltags]

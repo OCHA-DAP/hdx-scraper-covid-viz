@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 from datetime import datetime
+from operator import itemgetter
 
 import regex
 
@@ -84,28 +85,20 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
     else:
         hxlrow = None
 
-    rowparser = RowParser(level, datasetinfo, headers)
+    rowparser = RowParser(level, datasetinfo, headers, indicatorcols)
     valuedicts = dict()
     for indicatorcol in indicatorcols:
         for _ in indicatorcol['val_cols']:
             dict_of_lists_add(valuedicts, indicatorcol['filter_col'], dict())
 
     def add_row(row):
-        adm, _ = rowparser.do_set_value(row, name)
+        adm, indicators_process = rowparser.do_set_value(row, name)
         if not adm:
             return
-        for indicatorcol in indicatorcols:
+        for i, indicatorcol in enumerate(indicatorcols):
+            if not indicators_process[i]:
+                continue
             filtercol = indicatorcol['filter_col']
-            if filtercol:
-                filtercols = filtercol.split('|')
-                match = True
-                for filterstr in filtercols:
-                    filter = filterstr.split('=')
-                    if row[filter[0]] != filter[1]:
-                        match = False
-                        break
-                if not match:
-                    continue
             total_cols = indicatorcol.get('total_cols')
             eval_cols = indicatorcol.get('eval_cols')
             append_cols = indicatorcol.get('append_cols', list())
@@ -174,6 +167,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
             newvaldicts = [dict() for _ in eval_cols]
 
             def text_replacement(string, adm):
+                string = string.replace('#population', '#pzbgvjh')
                 hasvalues = False
                 for j in sorted_len_indices:
                     valcol = valcols[j]
@@ -192,6 +186,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
                             val = eval(val_fn.replace(valcol, 'val'))
                         hasvalues = True
                     string = string.replace(valcol, str(val))
+                string = string.replace('#pzbgvjh', '#population')
                 return string, hasvalues
 
             for i, eval_col in enumerate(eval_cols):
@@ -242,9 +237,10 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
                             if not val_fn:
                                 val_fn = valcol
                             newvaldicts[j][adm] = newvaldicts[j].get(adm, 0.0) + eval(val_fn.replace(valcol, 'get_numeric_if_possible(valdict[adm][i])'))
-                for i, valcol in enumerate(valcols):
-                    formula = formula.replace(valcol, 'newvaldicts[%d][adm]' % i)
-                formula = formula.replace('#population', 'population_lookup[adm]')
+                formula = formula.replace('#population', '#pzbgvjh')
+                for i in sorted_len_indices:
+                    formula = formula.replace(valcols[i], 'newvaldicts[%d][adm]' % i)
+                formula = formula.replace('#pzbgvjh', 'population_lookup[adm]')
                 newvaldict = dict()
                 for adm in valdicts[0].keys():
                     try:
@@ -297,6 +293,11 @@ def get_tabular(basic_auths, configuration, level, maindownloader, scrapers=None
             datasetinfo['source_url'] = datasetinfo['url']
         if 'date' not in datasetinfo or datasetinfo.get('force_date_today', False):
             datasetinfo['date'] = today_str
+        sort = datasetinfo.get('sort')
+        if sort:
+            keys = sort['keys']
+            reverse = sort.get('reverse', False)
+            iterator = sorted(list(iterator), key=itemgetter(*keys), reverse=reverse)
         _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup, retheaders, retval, sources)
         if downloader != maindownloader:
             downloader.close()
