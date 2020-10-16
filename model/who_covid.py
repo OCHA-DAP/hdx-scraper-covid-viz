@@ -120,8 +120,9 @@ def get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers
     output_df = output_df.drop(
         ['NewCase_PercentChange', 'NewDeath_PercentChange', 'ndays', 'diff_cases', 'diff_deaths'], axis=1)
     trend_hxltags = {'ISO_3_CODE': '#country+code', 'Date_reported': '#date+reported', 'weekly_new_cases': '#affected+infected+new+weekly', 'weekly_new_deaths': '#affected+killed+new+weekly', 'weekly_new_cases_per_ht': '#affected+infected+new+per100000+weekly', 'weekly_new_cases_pc_change': '#affected+infected+new+pct+weekly'}
-    outputs['gsheets'].update_tab(name, output_df, trend_hxltags)
-    outputs['excel'].update_tab(name, output_df, trend_hxltags)
+    trend_name = 'covid_trend'
+    outputs['gsheets'].update_tab(trend_name, output_df, trend_hxltags)
+    outputs['excel'].update_tab(trend_name, output_df, trend_hxltags)
     # Save as JSON
     json_df = output_df.replace([numpy.inf, -numpy.inf], '').groupby('ISO_3_CODE').apply(lambda x: x.to_dict('r'))
     del trend_hxltags['ISO_3_CODE']
