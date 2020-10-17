@@ -822,15 +822,15 @@ tabular_national:
     sheet: 1
     date_col: "date"
     date_type: "date"
-    date_condition: "total_tests is not None and total_tests > 0"
+    date_condition: "new_tests is not None and new_tests > 0"
     adm_cols:
       - "iso_code"
     val_cols:
-      - "total_tests"
-      - "total_tests_per_thousand"
+      - "new_tests"
+      - "new_tests_per_thousand"
     columns:
-      - "Total Tests"
-      - "Tests Per Thousand"
+      - "New Tests"
+      - "New Tests Per Thousand"
     hxltags:
       - "#affected+tested"
       - "#affected+tested+per1000"
