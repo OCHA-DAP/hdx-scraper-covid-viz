@@ -28,8 +28,7 @@ def get_who_data(url, admininfo):
     # get only HRP countries
     df = df.loc[df['ISO_3_CODE'].isin(admininfo.countryiso3s), :]
 
-    df_series = df.loc[df['ISO_3_CODE'].isin(admininfo.hrp_iso3s), :]
-    df_series = df_series.drop(columns=['New_cases', 'New_deaths'])
+    df_series = df.loc[df['ISO_3_CODE'].isin(admininfo.countryiso3s), :]
     df_series['CountryName'] = df_series['ISO_3_CODE'].apply(admininfo.get_country_name_from_iso3)
 
     df['Date_reported'] = pd.to_datetime(df['Date_reported'])
@@ -68,10 +67,16 @@ def get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers
 
     # get WHO data
     source_date, df_world, df_h63, df_cumulative, df_series, df_WHO = get_who_data(datasetinfo['url'], admininfo)
+    df_pop = pd.DataFrame.from_records(list(population_lookup.items()), columns=['Country Code', 'population'])
 
     # output time series
-    series_hxltags = {'ISO_3_CODE': '#country+code', 'CountryName': '#country+name', 'Date_reported': '#date+reported', 'Cumulative_cases': '#affected+infected', 'Cumulative_deaths': '#affected+killed'}
+    series_hxltags = {'ISO_3_CODE': '#country+code', 'CountryName': '#country+name', 'Date_reported': '#date+reported', 'Cumulative_cases': '#affected+infected', 'Cumulative_deaths': '#affected+killed', 'Average_cases_7_days': '#affected+infected+avg', 'Average_deaths_7_days': '#affected+killed+avg', 'Average_cases_7_days_per_100000': '#affected+infected+avg+per100000'}
     series_name = 'covid_series'
+    df_series['Average_cases_7_days'] = df_series.groupby('ISO_3_CODE')['New_cases'].rolling(window=7).mean().reset_index(0, drop=True)
+    df_series['Average_deaths_7_days'] = df_series.groupby('ISO_3_CODE')['New_deaths'].rolling(window=7).mean().reset_index(0, drop=True)
+    df_series = df_series.merge(df_pop, left_on='ISO_3_CODE', right_on='Country Code', how='left').drop(columns=['Country Code'])
+    df_series['Average_cases_7_days_per_100000'] = df_series['Average_cases_7_days'] / df_series['population'] * 1E5
+    df_series = df_series.drop(['New_cases', 'New_deaths', 'population'], axis=1)
     outputs['gsheets'].update_tab(series_name, df_series, series_hxltags, 1000)  # 1000 rows in gsheets!
     outputs['excel'].update_tab(series_name, df_series, series_hxltags)
     json_df = df_series.groupby('CountryName').apply(lambda x: x.to_dict('r'))
@@ -102,8 +107,6 @@ def get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers
         (output_df['NewDeath_PercentChange'].isna()) & (output_df['diff_deaths'] == 0), 'NewDeath_PercentChange'] = 0.0
 
     output_df = output_df[output_df['Cumulative_cases'] > MIN_CUMULATIVE_CASES]
-
-    df_pop = pd.DataFrame.from_records(list(population_lookup.items()), columns=['Country Code', 'population'])
 
     # Add pop to output df
     output_df = output_df.merge(df_pop, left_on='ISO_3_CODE', right_on='Country Code', how='left').drop(
