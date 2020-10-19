@@ -199,25 +199,28 @@ class AdminInfo(object):
             exact = False
         return adm, exact
 
-    def get_adm(self, adms, i, scrapername):
+    def get_adm(self, adms, admexact, i, scrapername):
         adm = adms[i]
         if adm in self.adms[i]:
             exact = True
         else:
             exact = False
-            if i == 0:
-                mappingadm = self.adm_mappings[0].get(adm)
-                if mappingadm:
-                    adms[i] = mappingadm
-                    return True
-                adms[i], _ = Country.get_iso3_country_code_fuzzy(adm)
-                exact = False
-            elif i == 1:
-                adms[i], exact = self.get_pcode(adms[0], adm, scrapername)
+            if admexact:
+                adms[i] = None
             else:
-                adms[i] = None
-            if adms[i] not in self.adms[i]:
-                adms[i] = None
+                if i == 0:
+                    mappingadm = self.adm_mappings[0].get(adm)
+                    if mappingadm:
+                        adms[i] = mappingadm
+                        return True
+                    adms[i], _ = Country.get_iso3_country_code_fuzzy(adm)
+                    exact = False
+                elif i == 1:
+                    adms[i], exact = self.get_pcode(adms[0], adm, scrapername)
+                else:
+                    adms[i] = None
+                if adms[i] not in self.adms[i]:
+                    adms[i] = None
         return exact
 
     def output_matches(self):

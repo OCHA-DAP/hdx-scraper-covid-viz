@@ -134,6 +134,7 @@ tabular_national:
     headers: 3
     adm_cols:
       - "Country Code"
+    adm_exact: True
     date_col: "Year"
     date_type: "int"
     val_cols:
