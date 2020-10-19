@@ -37,6 +37,7 @@ class RowParser(object):
         self.date_condition = date_condition
         self.admininfo = AdminInfo.get()
         self.admcols = datasetinfo.get('adm_cols', list())
+        self.admexact = datasetinfo.get('adm_exact', False)
         self.indicatorcols = indicatorcols
         if self.level is None:
             self.maxdates = {i: date for i, _ in enumerate(indicatorcols)}
@@ -116,7 +117,7 @@ class RowParser(object):
             if not adm:
                 return False
             adms[i] = row[admcol].strip()
-            return self.admininfo.get_adm(adms, i, scrapername)
+            return self.admininfo.get_adm(adms, self.admexact, i, scrapername)
 
         for i, admcol in enumerate(self.admcols):
             if admcol is None:
