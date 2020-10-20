@@ -950,71 +950,71 @@ access_constraints:
       isocol: "Admin0 Code"
       scorecol: "Mitigation Ind."
 
-timeseries_national:
-  imf:
-    source: "IMF"
-    format: "ole"
-    url: "https://www.imf.org/external/datamapper/export/excel.php?indicator=%s"
-    headers: 1
-    sheet: 1
-    flatten:
-      - original: "{{2000}}"
-        new: "Value"
-        extracol: "Year"
-    indicators:
-      - url: "NGDP_RPCH"
-        name: "Real GDP growth"
-      - url: "PCPIPCH"
-        name: "Inflation rate, Consumer Prices"
-      - url: "BCA_NGDPD"
-        name: "Current account balance"
-      - url: "GGXCNL_NGDP"
-        name: "General government net lending/borrowing"
-    adm_cols:
-      - "{{0}}"
-    date_col: "Year"
-    date_type: "int"
-    val_col: "Value"
-    ignore_vals:
-      - "no data"
-  worldbank:
-    source: "World Bank"
-    source_url: "https://data.humdata.org/organization/world-bank-group"
-    format: "json"
-    url: "http://api.worldbank.org/v2/country/{{';'.join(countryiso3s)}}/indicator/%s?format=json&per_page=10000"
-    jsonpath: "[1][*]"
-    indicators:
-      - url: "SH.MED.BEDS.ZS"
-        name: "Hospital beds (per 1,000 people)"
-      - url: "SH.MED.NUMW.P3"
-        name: "Nurses and midwives (per 1,000 people)"
-      - url: "SH.MED.PHYS.ZS"
-        name: "Physicians (per 1,000 people)"
-      - url: "SH.DYN.NCOM.ZS"
-        name: "Mortality from CVD, cancer, diabetes or CRD between exact ages 30 and 70"
-      - url: "SH.STA.DIAB.ZS"
-        name: "Diabetes prevalence (% of population ages 20 to 79)"
-      - url: "SH.PRV.SMOK"
-        name: "Smoking prevalence, total, ages 15+"
-      - url: "SH.STA.HYGN.ZS"
-        name: "People with basic handwashing facilities including soap and water (% of population)"
-      - url: "SP.POP.65UP.FE.ZS"
-        name: "Population ages 65 and above, female (% of population)"
-      - url: "SI.POV.DDAY"
-        name: "Poverty headcount ratio at $1.90 a day (2011 PPP)"
-      - url: "SI.POV.LMIC"
-        name: "Poverty headcount ratio at $3.20 a day (2011 PPP)"
-      - url: "SI.POV.UMIC"
-        name: "Poverty headcount ratio at $5.50 a day (2011 PPP)"
-      - url: "BX.TRF.PWKR.DT.GD.ZS"
-        name: "Personal remittances, received"
-    adm_cols:
-      - "countryiso3code"
-    date_col: "date"
-    date_type: "int"
-    val_col: "value"
-    ignore_vals:
-      - ~
+#timeseries_national:
+#  imf:
+#    source: "IMF"
+#    format: "ole"
+#    url: "https://www.imf.org/external/datamapper/export/excel.php?indicator=%s"
+#    headers: 1
+#    sheet: 1
+#    flatten:
+#      - original: "{{2000}}"
+#        new: "Value"
+#        extracol: "Year"
+#    indicators:
+#      - url: "NGDP_RPCH"
+#        name: "Real GDP growth"
+#      - url: "PCPIPCH"
+#        name: "Inflation rate, Consumer Prices"
+#      - url: "BCA_NGDPD"
+#        name: "Current account balance"
+#      - url: "GGXCNL_NGDP"
+#        name: "General government net lending/borrowing"
+#    adm_cols:
+#      - "{{0}}"
+#    date_col: "Year"
+#    date_type: "int"
+#    val_col: "Value"
+#    ignore_vals:
+#      - "no data"
+#  worldbank:
+#    source: "World Bank"
+#    source_url: "https://data.humdata.org/organization/world-bank-group"
+#    format: "json"
+#    url: "http://api.worldbank.org/v2/country/{{';'.join(countryiso3s)}}/indicator/%s?format=json&per_page=10000"
+#    jsonpath: "[1][*]"
+#    indicators:
+#      - url: "SH.MED.BEDS.ZS"
+#        name: "Hospital beds (per 1,000 people)"
+#      - url: "SH.MED.NUMW.P3"
+#        name: "Nurses and midwives (per 1,000 people)"
+#      - url: "SH.MED.PHYS.ZS"
+#        name: "Physicians (per 1,000 people)"
+#      - url: "SH.DYN.NCOM.ZS"
+#        name: "Mortality from CVD, cancer, diabetes or CRD between exact ages 30 and 70"
+#      - url: "SH.STA.DIAB.ZS"
+#        name: "Diabetes prevalence (% of population ages 20 to 79)"
+#      - url: "SH.PRV.SMOK"
+#        name: "Smoking prevalence, total, ages 15+"
+#      - url: "SH.STA.HYGN.ZS"
+#        name: "People with basic handwashing facilities including soap and water (% of population)"
+#      - url: "SP.POP.65UP.FE.ZS"
+#        name: "Population ages 65 and above, female (% of population)"
+#      - url: "SI.POV.DDAY"
+#        name: "Poverty headcount ratio at $1.90 a day (2011 PPP)"
+#      - url: "SI.POV.LMIC"
+#        name: "Poverty headcount ratio at $3.20 a day (2011 PPP)"
+#      - url: "SI.POV.UMIC"
+#        name: "Poverty headcount ratio at $5.50 a day (2011 PPP)"
+#      - url: "BX.TRF.PWKR.DT.GD.ZS"
+#        name: "Personal remittances, received"
+#    adm_cols:
+#      - "countryiso3code"
+#    date_col: "date"
+#    date_type: "int"
+#    val_col: "value"
+#    ignore_vals:
+#      - ~
 #  imf:
 #    source: "IMF"
 #    format: "json"
@@ -1026,8 +1026,8 @@ timeseries_national:
 #    adm_cols:
 
 
-country_currency_url: "https://www.currency-iso.org/dam/downloads/lists/list_one.xls"
-alphavantage_url: "https://www.alphavantage.co/query?function=FX_MONTHLY&from_symbol=USD&to_symbol=%s&apikey=YHFVGAV55LIXK1TR&datatype=csv"
+#country_currency_url: "https://www.currency-iso.org/dam/downloads/lists/list_one.xls"
+#alphavantage_url: "https://www.alphavantage.co/query?function=FX_MONTHLY&from_symbol=USD&to_symbol=%s&apikey=YHFVGAV55LIXK1TR&datatype=csv"
 
 # subnational
 ipc:
