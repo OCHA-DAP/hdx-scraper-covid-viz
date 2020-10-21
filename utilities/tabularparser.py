@@ -99,6 +99,8 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
             if not indicators_process[i]:
                 continue
             filtercol = indicatorcol['filter_col']
+            ignore_vals = indicatorcol.get('ignore_vals', list())
+            val_fns = indicatorcol.get('val_fns', dict())
             total_cols = indicatorcol.get('total_cols')
             eval_cols = indicatorcol.get('eval_cols')
             append_cols = indicatorcol.get('append_cols', list())
@@ -106,6 +108,9 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
             for i, valcol in enumerate(indicatorcol['val_cols']):
                 valuedict = valuedicts[filtercol][i]
                 val = get_rowval(row, valcol)
+                val_fn = val_fns.get(valcol)
+                if val_fn and val not in ignore_vals:
+                    val = eval(val_fn.replace(valcol, 'val'))
                 if total_cols or eval_cols:
                     dict_of_lists_add(valuedict, adm, val)
                 else:
@@ -159,7 +164,6 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
         keep_cols = indicatorcol.get('keep_cols', list())
         total_cols = indicatorcol.get('total_cols')
         ignore_vals = indicatorcol.get('ignore_vals', list())
-        val_fns = indicatorcol.get('val_fns', dict())
         valcols = indicatorcol['val_cols']
         # Indices of list sorted by length
         sorted_len_indices = sorted(range(len(valcols)), key=lambda k: len(valcols[k]), reverse=True)
@@ -178,12 +182,9 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
                     else:
                         keep_col_index = -1
                     val = valdicts[j][adm][keep_col_index]
-                    if not val or val in ignore_vals:
+                    if val is None or val == '' or val in ignore_vals:
                         val = 0
                     else:
-                        val_fn = val_fns.get(valcol)
-                        if val_fn:
-                            val = eval(val_fn.replace(valcol, 'val'))
                         hasvalues = True
                     string = string.replace(valcol, str(val))
                 string = string.replace('#pzbgvjh', '#population')
@@ -225,18 +226,14 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
                         else:
                             exists = True
                             for valdict in valdicts[1:]:
-                                val = valdict[adm]
+                                val = valdict[adm][i]
                                 if not val or val in ignore_vals:
                                     exists = False
                                     break
                         if mustbepopulated and not exists:
                             continue
                         for j, valdict in enumerate(valdicts):
-                            valcol = valcols[j]
-                            val_fn = val_fns.get(valcol)
-                            if not val_fn:
-                                val_fn = valcol
-                            newvaldicts[j][adm] = newvaldicts[j].get(adm, 0.0) + eval(val_fn.replace(valcol, 'get_numeric_if_possible(valdict[adm][i])'))
+                            newvaldicts[j][adm] = eval(f'newvaldicts[j].get(adm, 0.0) + {str(valdict[adm][i])}')
                 formula = formula.replace('#population', '#pzbgvjh')
                 for i in sorted_len_indices:
                     formula = formula.replace(valcols[i], 'newvaldicts[%d][adm]' % i)

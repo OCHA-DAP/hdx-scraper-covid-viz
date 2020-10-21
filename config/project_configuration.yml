@@ -835,7 +835,7 @@ tabular_national:
     hxltags:
       - "#affected+tested"
       - "#affected+tested+per1000"
-  fsnwg:
+  cadre_harmonise:
     format: "xlsx"
     dataset: "cadre-harmonise"
     headers: 1
@@ -860,11 +860,11 @@ tabular_national:
           - "phase35"
           - "population"
         val_fns:
-          "phase3": "float(phase3)"
-          "phase4": "float(phase4)"
-          "phase5": "float(phase5)"
-          "phase35": "float(phase35)"
-          "population": "float(population)"
+          "phase3": "get_numeric_if_possible(phase3)"
+          "phase4": "get_numeric_if_possible(phase4)"
+          "phase5": "get_numeric_if_possible(phase5)"
+          "phase35": "get_numeric_if_possible(phase35)"
+          "population": "get_numeric_if_possible(population)"
         total_cols:
           - formula: "get_fraction_str(phase3, population)"
             mustbepopulated: True
@@ -1035,7 +1035,25 @@ ipc:
   dataset: "ipc-country-data"
 
 tabular_subnational:
-  fsnwg:
+  population:
+    source: "Multiple Sources"
+    source_url: "https://data.humdata.org/search?organization=worldpop&q=%22population%20counts%22"
+    format: "csv"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3_uBOV_uRDSxOggfBus_pkCs6Iw9lm0nAxzwG14YF_frpm13WPKiM1oNnQ9zrUA/pub?gid=1565793974&single=true&output=csv"
+    dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
+    headers: 1
+    adm_cols:
+      - "alpha_3"
+      - "ADM1_PCODE"
+    val_cols:
+      - "POPULATION"
+    val_fns:
+      "POPULATION": "get_numeric_if_possible(POPULATION)"
+    columns:
+      - "Population"
+    hxltags:
+      - "#population"
+  cadre_harmonise:
     format: "xlsx"
     dataset: "cadre-harmonise"
     headers: 1
@@ -1063,11 +1081,11 @@ tabular_subnational:
           - "phase35"
           - "population"
         val_fns:
-          "phase3": "float(phase3)"
-          "phase4": "float(phase4)"
-          "phase5": "float(phase5)"
-          "phase35": "float(phase35)"
-          "population": "float(population)"
+          "phase3": "get_numeric_if_possible(phase3)"
+          "phase4": "get_numeric_if_possible(phase4)"
+          "phase5": "get_numeric_if_possible(phase5)"
+          "phase35": "get_numeric_if_possible(phase35)"
+          "population": "get_numeric_if_possible(population)"
         total_cols:
           - formula: "get_fraction_str(phase3, population)"
             mustbepopulated: True
@@ -1091,22 +1109,6 @@ tabular_subnational:
           - "#affected+ch+food+p5+pct"
           - "#affected+ch+food+p3plus+pct"
           - "#affected+ch+food+analysed+pct"
-  ghrp:
-    source: "Multiple Sources"
-    source_url: "https://data.humdata.org/search?organization=worldpop&q=%22population%20counts%22"
-    format: "csv"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3_uBOV_uRDSxOggfBus_pkCs6Iw9lm0nAxzwG14YF_frpm13WPKiM1oNnQ9zrUA/pub?gid=1565793974&single=true&output=csv"
-    dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
-    headers: 1
-    adm_cols:
-      - "alpha_3"
-      - "ADM1_PCODE"
-    val_cols:
-      - "POPULATION"
-    columns:
-      - "Population"
-    hxltags:
-      - "#population"
   healthfac:
     source: "HOT"
     format: "csv"
@@ -1154,8 +1156,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -1171,8 +1173,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -1188,8 +1190,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -1205,8 +1207,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -1222,8 +1224,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -1239,8 +1241,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -1256,8 +1258,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -1273,8 +1275,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -1290,8 +1292,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True

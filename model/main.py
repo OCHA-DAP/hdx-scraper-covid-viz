@@ -105,6 +105,9 @@ def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers
                                                           population_lookup=population_lookup)
     regional_headers = extend_headers(regional, population_headers)
     extend_columns('regional', regional, admininfo.regions, admininfo, regional_headers, population_columns)
+    population_headers, population_columns, population_sources = get_tabular(basic_auths, configuration, 'subnational', downloader, scrapers=['population'], population_lookup=population_lookup)
+    subnational_headers = extend_headers(subnational, population_headers)
+    extend_columns('subnational', subnational, pcodes, admininfo, subnational_headers, population_columns)
     covid_headers, covid_wcolumns, covid_h63columns, covid_columns, covid_sources = get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers)
     extend_sources(sources, covid_sources)
 
