@@ -28,7 +28,7 @@ json:
         - name: "vaccination_campaigns"
           newname: "vaccination_campaigns_data"
         - name: "world"
-          newname: "world_data_data"
+          newname: "world_data"
         - name: "regional"
           newname: "regional_data"
         - name: "subnational"
