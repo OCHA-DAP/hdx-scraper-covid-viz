@@ -40,7 +40,7 @@ class jsonoutput:
             jsondict[countryiso].append(newrow)
         self.json[fullname] = jsondict
 
-    def generate_json(self, key, rows):
+    def generate_json_from_list(self, key, rows):
         hxltags = rows[1]
         for row in rows[2:]:
             newrow = dict()
@@ -51,10 +51,25 @@ class jsonoutput:
                 newrow[hxltag] = str(value)
             self.add_data_row(key, newrow)
 
-    def update_tab(self, tabname, values):
+    def generate_json_from_df(self, key, rows, hxltags):
+        for i,row in rows.iterrows():
+            newrow = dict()
+            row = row.to_dict()
+            for i,hxltag in enumerate(hxltags):
+                value = row.get(hxltag)
+                if value in [None, '']:
+                    value = None
+                newrow[hxltags.get(hxltag)] = value
+            self.add_data_row(key, newrow)
+
+    def update_tab(self, tabname, values, hxltags=None):
         if tabname not in self.updatetabs:
             return
-        self.generate_json(tabname, values)
+        if isinstance(values, list):
+            self.generate_json_from_list(tabname, values)
+        else:
+            # isinstance(values, DataFrame)
+            self.generate_json_from_df(tabname, values, hxltags)
 
     def add_additional_json(self, downloader):
         for datasetinfo in self.json_configuration.get('additional_json', list()):

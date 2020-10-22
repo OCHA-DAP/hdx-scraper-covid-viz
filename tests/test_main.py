@@ -29,7 +29,7 @@ class TestCovid:
         return join('tests', 'fixtures')
 
     def test_get_indicators(self, configuration, folder):
-        with temp_dir('TestCovidViz', delete_on_success=True, delete_on_failure=False) as tempdir:
+        with temp_dir('TestCovidViz', delete_on_success=True, delete_on_failure=False, tempdir='C:/Users/Hendrix/Google Drive/Work/OCHA/Projects/DAP/COVID-19 Dashboard/testing_outputs') as tempdir:
             with Download(user_agent='test') as downloader:
                 tabs = configuration['tabs']
                 noout = nooutput(tabs)
@@ -38,5 +38,7 @@ class TestCovid:
                 admininfo = AdminInfo.setup(downloader)
                 get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers=['ifi', 'who_global', 'who_national', 'who_subnational', 'who_covid', 'sadd', 'covidtests'])
                 filepaths = jsonout.save(tempdir, hrp_iso3s=admininfo.hrp_iso3s)
-                assert filecmp.cmp(filepaths[0], join(folder, 'test_tabular.json'))
-                assert filecmp.cmp(filepaths[1], join(folder, 'test_tabular_covidseries.json'))
+                assert filecmp.cmp(filepaths[0], join(folder, 'test_tabular_all.json'))
+                assert filecmp.cmp(filepaths[1], join(folder, 'test_tabular.json'))
+                assert filecmp.cmp(filepaths[2], join(folder, 'test_tabular_daily.json'))
+                assert filecmp.cmp(filepaths[3], join(folder, 'test_tabular_covidseries.json'))

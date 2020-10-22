@@ -4,13 +4,46 @@ tabs:
   national: "NationalData"
   subnational: "SubnationalData"
   covid_series: "CovidSeries"
+  covid_series_flat: "CovidSeriesFlat"
   covid_trend: "CovidTrend"
   sources: "Sources"
 
 
 json:
-  filepath: "test_tabular.json"
+  filepath: "test_tabular_all.json"
   additional:
+    - filepath: "test_tabular.json" # used by the covid viz and doesn't include unneeded timeseries
+      keys:
+        - name: "covid_series"
+          newname: "covid_series"
+        - name: "national"
+          newname: "national"
+        - name: "who_covid"
+          newname: "who_covid"
+        - name: "vaccination_campaigns"
+          newname: "vaccination_campaigns"
+        - name: "world"
+          newname: "world"
+        - name: "regional"
+          newname: "regional"
+        - name: "subnational"
+          newname: "subnational"
+        - name: "sources"
+          newname: "sources"
+    - filepath: "test_tabular_daily.json"
+      keys:
+        - name: "covid_series_flat"
+          newname: "timeseries"
+        - name: "national"
+          newname: "cumulative"
+          hxltags:
+            - "#country+code"
+            - "#country+name"
+            - "#affected+infected"
+            - "#affected+killed"
+            - "#value+covid+funding+hrp+pct"
+            - "#affected+inneed"
+            - "#affected+tested+positive+pct"
     - filepath: "test_tabular_covidseries.json"
       keys:
         - name: "covid_series"
@@ -504,18 +537,24 @@ tabular_national:
     sheet: 1
     date_col: "date"
     date_type: "date"
-    date_condition: "total_tests is not None and total_tests > 0"
+    date_condition: "new_tests is not None and new_tests > 0"
     adm_cols:
       - "iso_code"
     val_cols:
-      - "total_tests"
-      - "total_tests_per_thousand"
+      - "new_tests"
+      - "new_tests_per_thousand"
+      - "new_tests_smoothed_per_thousand"
+      - "positive_rate"
     columns:
-      - "Total Tests"
-      - "Tests Per Thousand"
+      - "New Tests"
+      - "New Tests Per Thousand"
+      - "New Tests Per Thousand (7-day)"
+      - "Positive Test Rate"
     hxltags:
       - "#affected+tested"
       - "#affected+tested+per1000"
+      - "#affected+tested+avg+per1000"
+      - "#affected+tested+positive+pct"
 
 fts:
   v1_url: "https://api.hpc.tools/v1/public/"

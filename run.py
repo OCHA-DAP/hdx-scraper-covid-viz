@@ -67,10 +67,9 @@ def main(excel_path, gsheet_auth, updatesheets, updatetabs, scrapers, basic_auth
         outputs = {'gsheets': gsheets, 'excel': excelout, 'json': jsonout}
         admininfo = AdminInfo.setup(downloader)
         get_indicators(configuration, downloader, admininfo, outputs, updatetabs, scrapers, basic_auths)
-        excelout.save()
         jsonout.add_additional_json(downloader)
         jsonout.save(hrp_iso3s=admininfo.hrp_iso3s)
-
+        excelout.save()
 
 if __name__ == '__main__':
     args = parse_args()
