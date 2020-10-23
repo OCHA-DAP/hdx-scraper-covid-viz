@@ -49,6 +49,8 @@ json:
             - "#value+covid+funding+hrp+pct"
             - "#affected+inneed"
             - "#affected+tested+positive+pct"
+            - "#vaccination+num+ratio"
+            - "#value+food+num+ratio"
     - filepath: "out_covidseries.json" # used by old covid viz
       keys:
         - name: "covid_series"
