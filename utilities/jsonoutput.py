@@ -107,11 +107,21 @@ class jsonoutput:
         additional = self.json_configuration.get('additional', list())
         for filedetails in additional:
             json = dict()
-            for key in filedetails['keys']:
-                newjson = self.json.get('%s_data' % key['name'])
-                filter = key.get('filter')
-                hxltags = key.get('hxltags')
-                if (filter or hxltags) and isinstance(newjson, list):
+            remove = filedetails.get('remove')
+            if remove is None:
+                tabs = filedetails['tabs']
+            else:
+                tabs = list()
+                for key in self.json.keys():
+                    tab = key.replace('_data', '')
+                    if tab not in remove:
+                        tabs.append({'tab': tab})
+            for tabdetails in tabs:
+                key = f'{tabdetails["tab"]}_data'
+                newjson = self.json.get(key)
+                filter = tabdetails.get('filter')
+                hxltags = tabdetails.get('hxltags')
+                if (filter or hxltags or remove) and isinstance(newjson, list):
                     rows = list()
                     for row in newjson:
                         if filter == 'hrp_iso3s':
@@ -131,7 +141,8 @@ class jsonoutput:
                                     newrow[hxltag] = row[hxltag]
                         rows.append(newrow)
                     newjson = rows
-                json[key['newname']] = newjson
+                newkey = tabdetails.get('key', key)
+                json[newkey] = newjson
             if not json:
                 continue
             filedetailspath = filedetails['filepath']

@@ -42,9 +42,10 @@ def extend_columns(level, rows, adms, admininfo, headers, *args):
         elif level == 'regional':
             row = [adm]
         elif level == 'national':
+            ishrp = 'Y' if adm in admininfo.hrp_iso3s else 'N'
             regions = sorted(list(admininfo.iso3_to_region_and_hrp[adm]))
             regions.remove('H63')
-            row = [adm, admininfo.get_country_name_from_iso3(adm), '|'.join(regions)]
+            row = [adm, admininfo.get_country_name_from_iso3(adm), ishrp, '|'.join(regions)]
         elif level == 'subnational':
             countryiso3 = admininfo.pcode_to_iso3[adm]
             countryname = admininfo.get_country_name_from_iso3(countryiso3)
@@ -83,7 +84,7 @@ def extend_sources(sources, *args):
 def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers=None, basic_auths=dict()):
     world = [list(), list()]
     regional = [['regionnames'], ['#region+name']]
-    national = [['iso3', 'countryname', 'region'], ['#country+code', '#country+name', '#region+name']]
+    national = [['iso3', 'countryname', 'ishrp', 'region'], ['#country+code', '#country+name', '#meta+ishrp', '#region+name']]
     subnational = [['iso3', 'countryname', 'adm1_pcode', 'adm1_name'], ['#country+code', '#country+name', '#adm1+code', '#adm1+name']]
     sources = [('Indicator', 'Date', 'Source', 'Url'), ('#indicator+name', '#date', '#meta+source', '#meta+url')]
 

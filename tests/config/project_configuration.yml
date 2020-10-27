@@ -13,29 +13,14 @@ json:
   filepath: "test_tabular_all.json"
   additional:
     - filepath: "test_tabular.json" # used by the covid viz and doesn't include unneeded timeseries
-      keys:
-        - name: "covid_series"
-          newname: "covid_series_data"
-        - name: "national"
-          newname: "national_data"
-        - name: "who_covid"
-          newname: "who_covid_data"
-        - name: "vaccination_campaigns"
-          newname: "vaccination_campaigns_data"
-        - name: "world"
-          newname: "world_data"
-        - name: "regional"
-          newname: "regional_data"
-        - name: "subnational"
-          newname: "subnational_data"
-        - name: "sources"
-          newname: "sources_data"
+      remove:
+        - "covid_series_flat"
     - filepath: "test_tabular_daily.json"
-      keys:
-        - name: "covid_series_flat"
-          newname: "timeseries"
-        - name: "national"
-          newname: "cumulative"
+      tabs:
+        - tab: "covid_series_flat"
+          key: "timeseries"
+        - tab: "national"
+          key: "cumulative"
           hxltags:
             - "#country+code"
             - "#country+name"
@@ -47,19 +32,19 @@ json:
             - "#vaccination+num+ratio"
             - "#value+food+num+ratio"
     - filepath: "test_tabular_covidseries.json"
-      keys:
-        - name: "covid_series"
-          newname: "timeseries"
-        - name: "national"
-          newname: "cumulative"
+      tabs:
+        - tab: "covid_series"
+          key: "timeseries"
+        - tab: "national"
+          key: "cumulative"
           filter: "hrp_iso3s"
           hxltags:
             - "#country+code"
             - "#country+name"
             - "#affected+infected"
             - "#affected+killed"
-        - name: "regional"
-          newname: "global"
+        - tab: "regional"
+          key: "global"
           filter: "global"
           hxltags:
             - "#region+name"

@@ -18,29 +18,14 @@ json:
   filepath: "all.json"
   additional:
     - filepath: "out.json" # used by the covid viz and doesn't include unneeded timeseries
-      keys:
-        - name: "covid_series"
-          newname: "covid_series_data"
-        - name: "national"
-          newname: "national_data"
-        - name: "who_covid"
-          newname: "who_covid_data"
-        - name: "vaccination_campaigns"
-          newname: "vaccination_campaigns_data"
-        - name: "world"
-          newname: "world_data"
-        - name: "regional"
-          newname: "regional_data"
-        - name: "subnational"
-          newname: "subnational_data"
-        - name: "sources"
-          newname: "sources_data"
+      remove:
+        - "covid_series_flat"
     - filepath: "out_daily.json" # used by pdf report
-      keys:
-        - name: "covid_series_flat"
-          newname: "timeseries"
-        - name: "national"
-          newname: "cumulative"
+      tabs:
+        - tab: "covid_series_flat"
+          key: "timeseries"
+        - tab: "national"
+          key: "cumulative"
           hxltags: # controls which fields are included
             - "#country+code"
             - "#country+name"
@@ -52,19 +37,19 @@ json:
             - "#vaccination+num+ratio"
             - "#value+food+num+ratio"
     - filepath: "out_covidseries.json" # used by old covid viz
-      keys:
-        - name: "covid_series"
-          newname: "timeseries"
-        - name: "national"
-          newname: "cumulative"
+      tabs:
+        - tab: "covid_series"
+          key: "timeseries"
+        - tab: "national"
+          key: "cumulative"
           filter: "hrp_iso3s"
           hxltags:
             - "#country+code"
             - "#country+name"
             - "#affected+infected"
             - "#affected+killed"
-        - name: "regional"
-          newname: "global"
+        - tab: "regional"
+          key: "global"
           filter: "global"
           hxltags:
             - "#region+name"
@@ -883,7 +868,7 @@ tabular_national:
     sheet: 1
     sort:
       reverse: True
-      keys:
+      tabs:
         - "reference_year"
         - "reference_code"
     adm_cols:
@@ -1083,7 +1068,7 @@ tabular_subnational:
     sheet: 1
     sort:
       reverse: True
-      keys:
+      tabs:
         - "reference_year"
         - "reference_code"
     adm_cols:

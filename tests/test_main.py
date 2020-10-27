@@ -29,7 +29,7 @@ class TestCovid:
         return join('tests', 'fixtures')
 
     def test_get_indicators(self, configuration, folder):
-        with temp_dir('TestCovidViz', delete_on_success=True, delete_on_failure=False, tempdir='C:/Users/Hendrix/Google Drive/Work/OCHA/Projects/DAP/COVID-19 Dashboard/testing_outputs') as tempdir:
+        with temp_dir('TestCovidViz', delete_on_success=True, delete_on_failure=False) as tempdir:
             with Download(user_agent='test') as downloader:
                 tabs = configuration['tabs']
                 noout = nooutput(tabs)
