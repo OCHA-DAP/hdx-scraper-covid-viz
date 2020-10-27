@@ -57,7 +57,7 @@ def get_who_data(url, admininfo):
     df = df.append(df_h25_all)
     df = df.append(df_regional)
 
-    return source_date, df_world, df_h63, df_cumulative, df_series, df
+    return source_date, df_world, df_h63, df_series, df
 
 
 def get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers=None):
@@ -68,48 +68,61 @@ def get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers
     read_hdx_metadata(datasetinfo)
 
     # get WHO data
-    source_date, df_world, df_h63, df_cumulative, df_series, df_WHO = get_who_data(datasetinfo['url'], admininfo)
+    source_date, df_world, df_h63, df_series, df_WHO = get_who_data(datasetinfo['url'], admininfo)
     df_pop = pd.DataFrame.from_records(list(population_lookup.items()), columns=['Country Code', 'population'])
 
     # output time series
-    series_hxltags = {'ISO_3_CODE': '#country+code',
-                      'CountryName': '#country+name',
-                      'Date_reported': '#date+reported',
-                      'Cumulative_cases': '#affected+infected',
-                      'Cumulative_deaths': '#affected+killed',
-                      'Average_cases_7_days': '#affected+infected+avg',
-                      'Average_deaths_7_days': '#affected+killed+avg',
-                      'Average_cases_7_days_per_100000': '#affected+infected+avg+per100000',
-                      'Average_cases_7_days_per_100000_pc_change': '#affected+infected+avg+per100000+pct+change',
-                      'Average_deaths_7_days_pc_change': '#affected+killed+avg+pct+change'}
+    series_headers = ['Cumulative_cases', 'Average_cases_7_days', 'Average_cases_7_days_per_100000',
+                      'Average_cases_7_days_per_100000_pc_change', 'Cumulative_deaths', 'Average_deaths_7_days',
+                      'Average_deaths_7_days_pc_change']
+    series_hxltags = ['#affected+infected', '#affected+infected+avg', '#affected+infected+avg+per100000',
+                      '#affected+infected+avg+per100000+pct+change', '#affected+killed', '#affected+killed+avg',
+                      '#affected+killed+avg+pct+change']
+    series_headers_hxltags = {'ISO_3_CODE': '#country+code',
+                              'CountryName': '#country+name',
+                              'Date_reported': '#date+reported'}
+    for i, header in enumerate(series_headers):
+        series_headers_hxltags[header] = series_hxltags[i]
     series_name = 'covid_series'
-    df_series['Average_cases_7_days'] = df_series.groupby('ISO_3_CODE')['New_cases'].rolling(window=7,min_periods=1).mean().reset_index(0, drop=True)
-    df_series['Average_deaths_7_days'] = df_series.groupby('ISO_3_CODE')['New_deaths'].rolling(window=7,min_periods=1).mean().reset_index(0, drop=True)
+    df_series['Average_cases_7_days'] = df_series.groupby('ISO_3_CODE')['New_cases'].rolling(window=7, min_periods=1).mean().reset_index(0, drop=True)
+    df_series['Average_deaths_7_days'] = df_series.groupby('ISO_3_CODE')['New_deaths'].rolling(window=7, min_periods=1).mean().reset_index(0, drop=True)
     df_series = df_series.merge(df_pop, left_on='ISO_3_CODE', right_on='Country Code', how='left').drop(columns=['Country Code'])
     df_series['Average_cases_7_days_per_100000'] = df_series['Average_cases_7_days'] / df_series['population'] * 100000
     df_series = df_series.drop(['New_cases', 'New_deaths', 'population'], axis=1)
 
     # get daily trends in cases (per 100k, 7 day avg) and deaths (7 day average); added for trend arrows in PDF
     df_series['Average_cases_7_days_per_100000_pc_change'] = df_series.groupby('ISO_3_CODE')[
-        'Average_cases_7_days_per_100000'].pct_change()*100
-    df_series['Average_cases_7_days_per_100000_pc_change'].fillna(value=0,inplace=True)  # nan values are handled, but inf values remain in output
-    df_series['Average_cases_7_days_per_100000_pc_change'] = df_series['Average_cases_7_days_per_100000_pc_change'].replace([numpy.inf,-numpy.inf],'inf')
+        'Average_cases_7_days_per_100000'].pct_change() * 100
+    df_series['Average_cases_7_days_per_100000_pc_change'].fillna(value=0, inplace=True)  # nan values are handled, but inf values remain in output
+    df_series['Average_cases_7_days_per_100000_pc_change'] = df_series['Average_cases_7_days_per_100000_pc_change'].replace([numpy.inf, -numpy.inf],'inf')
     df_series['Average_deaths_7_days_pc_change'] = df_series.groupby('ISO_3_CODE')[
-        'Average_deaths_7_days'].pct_change()*100
+        'Average_deaths_7_days'].pct_change() * 100
     df_series['Average_deaths_7_days_pc_change'].fillna(value=0, inplace=True)
     df_series['Average_deaths_7_days_pc_change'] = df_series['Average_deaths_7_days_pc_change'].replace([numpy.inf, -numpy.inf], 'inf')
 
-    outputs['gsheets'].update_tab(series_name, df_series, series_hxltags, 1000)  # 1000 rows in gsheets!/;
-    outputs['excel'].update_tab(series_name, df_series, series_hxltags)
-    outputs['json'].update_tab('covid_series_flat', df_series, series_hxltags)
+    outputs['gsheets'].update_tab(series_name, df_series, series_headers_hxltags, 1000)  # 1000 rows in gsheets!/;
+    outputs['excel'].update_tab(series_name, df_series, series_headers_hxltags)
+    outputs['json'].update_tab('covid_series_flat', df_series, series_headers_hxltags)
     json_df = df_series.groupby('CountryName').apply(lambda x: x.to_dict('r'))
-    del series_hxltags['CountryName']  # prevents it from being output as it is already the key
+    del series_headers_hxltags['CountryName']  # prevents it from being output as it is already the key
     for rows in json_df:
         countryname = rows[0]['CountryName']
-        outputs['json'].add_data_rows_by_key(series_name, countryname, rows, series_hxltags)
+        outputs['json'].add_data_rows_by_key(series_name, countryname, rows, series_headers_hxltags)
 
+    df_cumulative = df_series.sort_values(by=['Date_reported']).drop_duplicates(subset='ISO_3_CODE', keep='last')
+    national_columns = list()
+    for header in series_headers:
+        if 'Cumulative' in header:
+            format = '%.0f'
+        else:
+            format = '%.4f'
 
+        def format_number(x):
+            if isinstance(x, str):
+                return x
+            return format % x
 
+        national_columns.append(dict(zip(df_cumulative['ISO_3_CODE'], df_cumulative[header].map(format_number))))
 
     # get weekly new cases - for old covid viz output
     new_w = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='Date_reported').sum()[['New_cases', 'New_deaths']]
@@ -158,21 +171,19 @@ def get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers
     for rows in json_df:
         countryiso = rows[0]['ISO_3_CODE']
         outputs['json'].add_data_rows_by_key(name, countryiso, rows, trend_hxltags)
-    hxltags = set(series_hxltags.values()) | set(trend_hxltags.values())
-    hxltags.remove('#country+code')
+    hxltags = set(series_hxltags) | set(trend_hxltags.values())
     hxltags.remove('#date+reported')
     dssource = datasetinfo['source']
     dssourceurl = datasetinfo['source_url']
     sources = [(hxltag, source_date, dssource, dssourceurl) for hxltag in sorted(hxltags)]
 
-    hxltags = ['#affected+infected', '#affected+killed']
-    headers = [['Covid Cases', 'Covid Deaths'], hxltags]
+    headers = [['Cumulative_cases', 'Cumulative_deaths'], ['#affected+infected', '#affected+killed']]
+    national_headers = [series_headers, series_hxltags]
     global_cases = {'global': int(df_world['Cumulative_cases'])}
     global_deaths = {'global': int(df_world['Cumulative_deaths'])}
     h63_cases = {'global': int(df_h63['Cumulative_cases'])}
     h63_deaths = {'global': int(df_h63['Cumulative_deaths'])}
-    national_cases = dict(zip(df_cumulative['ISO_3_CODE'], df_cumulative['Cumulative_cases'].astype(int)))
-    national_deaths = dict(zip(df_cumulative['ISO_3_CODE'], df_cumulative['Cumulative_deaths'].astype(int)))
-    sources.extend([(hxltag, source_date, dssource, dssourceurl) for hxltag in hxltags])
-    return headers, [global_cases, global_deaths], [h63_cases, h63_deaths], [national_cases, national_deaths], sources
+    sources.extend([(hxltag, source_date, dssource, dssourceurl) for hxltag in series_hxltags])
+    return headers, [global_cases, global_deaths], [h63_cases, h63_deaths], \
+           national_headers, national_columns, sources
 

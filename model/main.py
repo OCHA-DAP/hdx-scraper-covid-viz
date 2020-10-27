@@ -106,7 +106,7 @@ def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers
                                                           population_lookup=population_lookup)
     regional_headers = extend_headers(regional, population_headers)
     extend_columns('regional', regional, admininfo.regions, admininfo, regional_headers, population_columns)
-    covid_headers, covid_wcolumns, covid_h63columns, covid_columns, covid_sources = get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers)
+    covid_wheaders, covid_wcolumns, covid_h63columns, covid_headers, covid_columns, covid_sources = get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers)
     extend_sources(sources, covid_sources)
 
     ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(configuration, admininfo, downloader, scrapers)
@@ -125,14 +125,14 @@ def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers
 
         if 'world' in tabs:
             tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'global', downloader, scrapers=scrapers, population_lookup=population_lookup)
-            world_headers = extend_headers(world, covid_headers, fts_wheaders, access_wheaders, tabular_headers)
+            world_headers = extend_headers(world, covid_wheaders, fts_wheaders, access_wheaders, tabular_headers)
             extend_columns('global', world, None, None, world_headers, covid_h63columns, fts_wcolumns, access_wcolumns, tabular_columns)
             extend_sources(sources, fts_wsources, access_wsources, tabular_sources)
             update_tab('world', world)
 
         if 'regional' in tabs:
             regional_headers, regional_columns = get_regional(configuration, admininfo, national_headers,
-                                                              national_columns, None, (covid_headers, covid_wcolumns),
+                                                              national_columns, None, (covid_wheaders, covid_wcolumns),
                                                               (fts_wheaders, fts_wcolumns))
             regional_headers = extend_headers(regional, regional_headers, access_rheaders)
             extend_columns('regional', regional, admininfo.regions + ['global'], admininfo, regional_headers, regional_columns, access_rcolumns)
