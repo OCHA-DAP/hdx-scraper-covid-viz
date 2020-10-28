@@ -17,8 +17,6 @@ json:
         - "covid_series_flat"
     - filepath: "test_tabular_daily.json"
       tabs:
-        - tab: "covid_series_flat"
-          key: "timeseries"
         - tab: "national"
           key: "cumulative"
           hxltags:

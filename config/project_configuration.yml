@@ -871,7 +871,7 @@ tabular_national:
     sheet: 1
     sort:
       reverse: True
-      tabs:
+      keys:
         - "reference_year"
         - "reference_code"
     adm_cols:
@@ -1071,7 +1071,7 @@ tabular_subnational:
     sheet: 1
     sort:
       reverse: True
-      tabs:
+      keys:
         - "reference_year"
         - "reference_code"
     adm_cols:
