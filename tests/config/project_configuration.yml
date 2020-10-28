@@ -962,8 +962,9 @@ idps_locations_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZ
 3w_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=1662282962&single=true&output=csv"
 
 country_name_mappings:
-  PSE: "occupied Palestinian territory"
+  PSE: "oPt"
   BOL: "Bolivia"
+  VEN: "Venezuela"
 
 admin_info:
   - {ADM1_PCODE: AF01, ADM1_REF: Kabul, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
