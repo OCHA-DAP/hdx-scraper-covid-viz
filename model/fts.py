@@ -242,7 +242,7 @@ def get_fts(basic_auths, configuration, countryiso3s, scrapers=None):
                 allfund = None
             includetotals = plan['planType']['includeTotals']
             gbvfund = get_gbv_funding(v1_url, plan_id, downloader)
-            if plan_id == 952:
+            if plan.get('customLocationCode') == 'COVD':
                 add_covid_gbv_requirements_and_funding(planname, includetotals, allreq, allfund, gbvfund)
                 continue
             covidreq, covidfund = get_requirements_and_funding(v1_url, v2_url, plan_id, downloader, fundingobjects)
