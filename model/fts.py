@@ -95,13 +95,15 @@ def get_requirements_and_funding(v1_url, v2_url, plan_id, downloader, fundingobj
     return covidreq, covidfund
 
 
-def get_requirements_and_funding_location(v1_url, plan_id, countryid_iso3mapping, countryiso3s, downloader):
+def get_requirements_and_funding_location(v1_url, plan, countryid_iso3mapping, countryiso3s, downloader):
     allreqs, allfunds = dict(), dict()
-    if plan_id in [1006, 1007]:
-        return allreqs, allfunds
+    plan_id = plan['id']
     url = '%sfts/flow?planid=%d&groupby=location' % (v1_url, plan_id)
     data = download_data(url, downloader)
-    for reqobj in data['requirements']['objects']:
+    requirements = data['requirements']
+    totalreq = requirements['totalRevisedReqs']
+    countryreq_is_totalreq = True
+    for reqobj in requirements['objects']:
         countryid = reqobj.get('id')
         if not countryid:
             continue
@@ -113,6 +115,11 @@ def get_requirements_and_funding_location(v1_url, plan_id, countryid_iso3mapping
         req = reqobj.get('revisedRequirements')
         if req:
             allreqs[countryiso] = req
+            if req != totalreq:
+                countryreq_is_totalreq = False
+    if countryreq_is_totalreq:
+        logger.info('%s has same country requirements as total requirements!' % plan_id)
+        return dict(), dict()
 
     fundingobjects = data['report3']['fundingTotals']['objects']
     if len(fundingobjects) != 0:
@@ -235,7 +242,7 @@ def get_fts(basic_auths, configuration, countryiso3s, scrapers=None):
                 allfund = None
             includetotals = plan['planType']['includeTotals']
             gbvfund = get_gbv_funding(v1_url, plan_id, downloader)
-            if plan_id == 952:
+            if plan.get('customLocationCode') == 'COVD':
                 add_covid_gbv_requirements_and_funding(planname, includetotals, allreq, allfund, gbvfund)
                 continue
             covidreq, covidfund = get_requirements_and_funding(v1_url, v2_url, plan_id, downloader, fundingobjects)
@@ -280,7 +287,7 @@ def get_fts(basic_auths, configuration, countryiso3s, scrapers=None):
                     planname = map_planname(planname)
                     add_other_requirements_and_funding(countryiso, planname, allreq, allfund, allpct)
             else:
-                allreqs, allfunds = get_requirements_and_funding_location(v1_url, plan_id, countryid_iso3mapping, countryiso3s, downloader)
+                allreqs, allfunds = get_requirements_and_funding_location(v1_url, plan, countryid_iso3mapping, countryiso3s, downloader)
                 planname = map_planname(planname)
                 for countryiso in allreqs:
                     allreq = allreqs[countryiso]

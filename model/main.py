@@ -42,9 +42,10 @@ def extend_columns(level, rows, adms, admininfo, headers, *args):
         elif level == 'regional':
             row = [adm]
         elif level == 'national':
+            ishrp = 'Y' if adm in admininfo.hrp_iso3s else 'N'
             regions = sorted(list(admininfo.iso3_to_region_and_hrp[adm]))
             regions.remove('H63')
-            row = [adm, admininfo.get_country_name_from_iso3(adm), '|'.join(regions)]
+            row = [adm, admininfo.get_country_name_from_iso3(adm), ishrp, '|'.join(regions)]
         elif level == 'subnational':
             countryiso3 = admininfo.pcode_to_iso3[adm]
             countryname = admininfo.get_country_name_from_iso3(countryiso3)
@@ -83,7 +84,7 @@ def extend_sources(sources, *args):
 def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers=None, basic_auths=dict()):
     world = [list(), list()]
     regional = [['regionnames'], ['#region+name']]
-    national = [['iso3', 'countryname', 'region'], ['#country+code', '#country+name', '#region+name']]
+    national = [['iso3', 'countryname', 'ishrp', 'region'], ['#country+code', '#country+name', '#meta+ishrp', '#region+name']]
     subnational = [['iso3', 'countryname', 'adm1_pcode', 'adm1_name'], ['#country+code', '#country+name', '#adm1+code', '#adm1+name']]
     sources = [('Indicator', 'Date', 'Source', 'Url'), ('#indicator+name', '#date', '#meta+source', '#meta+url')]
 
@@ -127,14 +128,14 @@ def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers
 
         if 'world' in tabs:
             tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'global', downloader, scrapers=scrapers, population_lookup=population_lookup)
-            world_headers = extend_headers(world, covid_headers, fts_wheaders, access_wheaders, tabular_headers)
+            world_headers = extend_headers(world, covid_wheaders, fts_wheaders, access_wheaders, tabular_headers)
             extend_columns('global', world, None, None, world_headers, covid_h63columns, fts_wcolumns, access_wcolumns, tabular_columns)
             extend_sources(sources, fts_wsources, access_wsources, tabular_sources)
             update_tab('world', world)
 
         if 'regional' in tabs:
             regional_headers, regional_columns = get_regional(configuration, admininfo, national_headers,
-                                                              national_columns, None, (covid_headers, covid_wcolumns),
+                                                              national_columns, None, (covid_wheaders, covid_wcolumns),
                                                               (fts_wheaders, fts_wcolumns))
             regional_headers = extend_headers(regional, regional_headers, access_rheaders)
             extend_columns('regional', regional, admininfo.regions + ['global'], admininfo, regional_headers, regional_columns, access_rcolumns)

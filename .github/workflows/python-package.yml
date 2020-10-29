@@ -3,7 +3,7 @@
 name: Python package
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # add run button in github
   schedule:
     - cron: "30 14 * * *"
 

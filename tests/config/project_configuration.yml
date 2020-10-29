@@ -4,27 +4,51 @@ tabs:
   national: "NationalData"
   subnational: "SubnationalData"
   covid_series: "CovidSeries"
+  covid_series_flat: "CovidSeriesFlat"
   covid_trend: "CovidTrend"
   sources: "Sources"
 
 
 json:
-  filepath: "test_tabular.json"
+  filepath: "test_tabular_all.json"
   additional:
+    - filepath: "test_tabular.json" # used by the covid viz and doesn't include unneeded timeseries
+      remove:
+        - "covid_series_flat"
+    - filepath: "test_tabular_daily.json"
+      tabs:
+        - tab: "national"
+          key: "cumulative"
+          hxltags:
+            - "#country+code"
+            - "#country+name"
+            - "#meta+ishrp"
+            - "#affected+infected"
+            - "#affected+infected+avg"
+            - "#affected+infected+avg+per100000"
+            - "#affected+infected+avg+per100000+pct+change"
+            - "#affected+killed"
+            - "#affected+killed+avg"
+            - "#affected+killed+avg+pct+change"
+            - "#value+covid+funding+hrp+pct"
+            - "#affected+inneed"
+            - "#affected+tested+positive+pct"
+            - "#vaccination+num+ratio"
+            - "#value+food+num+ratio"
     - filepath: "test_tabular_covidseries.json"
-      keys:
-        - name: "covid_series"
-          newname: "timeseries"
-        - name: "national"
-          newname: "cumulative"
+      tabs:
+        - tab: "covid_series"
+          key: "timeseries"
+        - tab: "national"
+          key: "cumulative"
           filter: "hrp_iso3s"
           hxltags:
             - "#country+code"
             - "#country+name"
             - "#affected+infected"
             - "#affected+killed"
-        - name: "regional"
-          newname: "global"
+        - tab: "regional"
+          key: "global"
           filter: "global"
           hxltags:
             - "#region+name"
@@ -105,8 +129,8 @@ regional:
   iso3: "ISO3"
   region: "Regional_office"
   val_fns:
-    "Covid Cases": "sum"
-    "Covid Deaths": "sum"
+    "Cumulative_cases": "sum"
+    "Cumulative_deaths": "sum"
     "IFI COVID19 total": "sum"
     "CBPFCovidFunding": "sum"
     "CERFCovidFunding": "sum"
@@ -505,18 +529,24 @@ tabular_national:
     sheet: 1
     date_col: "date"
     date_type: "date"
-    date_condition: "total_tests is not None and total_tests > 0"
+    date_condition: "new_tests is not None and new_tests > 0"
     adm_cols:
       - "iso_code"
     val_cols:
-      - "total_tests"
-      - "total_tests_per_thousand"
+      - "new_tests"
+      - "new_tests_per_thousand"
+      - "new_tests_smoothed_per_thousand"
+      - "positive_rate"
     columns:
-      - "Total Tests"
-      - "Tests Per Thousand"
+      - "New Tests"
+      - "New Tests Per Thousand"
+      - "New Tests Per Thousand (7-day)"
+      - "Positive Test Rate"
     hxltags:
       - "#affected+tested"
       - "#affected+tested+per1000"
+      - "#affected+tested+avg+per1000"
+      - "#affected+tested+positive+pct"
 
 fts:
   v1_url: "https://api.hpc.tools/v1/public/"
@@ -932,8 +962,9 @@ idps_locations_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZ
 3w_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=1662282962&single=true&output=csv"
 
 country_name_mappings:
-  PSE: "occupied Palestinian territory"
+  PSE: "oPt"
   BOL: "Bolivia"
+  VEN: "Venezuela"
 
 admin_info:
   - {ADM1_PCODE: AF01, ADM1_REF: Kabul, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
