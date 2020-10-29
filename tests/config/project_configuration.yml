@@ -694,7 +694,7 @@ ipc:
   dataset: "ipc-country-data"
 
 tabular_subnational:
-  fsnwg:
+  cadre_harmonise:
     format: "xlsx"
     dataset: "cadre-harmonise"
     headers: 1

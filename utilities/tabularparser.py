@@ -227,7 +227,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
                             exists = True
                             for valdict in valdicts[1:]:
                                 val = valdict[adm][i]
-                                if not val or val in ignore_vals:
+                                if val is None or val == '' or val in ignore_vals:
                                     exists = False
                                     break
                         if mustbepopulated and not exists:
@@ -281,7 +281,7 @@ def get_tabular(basic_auths, configuration, level, maindownloader, scrapers=None
             headers, iterator = read_ole(downloader, datasetinfo, **kwargs)
         elif format in ['csv', 'xls', 'xlsx']:
             if 'dataset' in datasetinfo:
-                headers, iterator = read_hdx(downloader, datasetinfo, **kwargs)
+                headers, iterator = read_hdx(downloader, datasetinfo)
             else:
                 headers, iterator = read_tabular(downloader, datasetinfo, **kwargs)
         else:
