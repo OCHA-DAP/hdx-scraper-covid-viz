@@ -27,6 +27,12 @@ def add_population(population_lookup, headers, columns):
         return
     try:
         population_index = headers[1].index('#population')
-        population_lookup.update(columns[population_index])
     except ValueError:
-        pass
+        population_index = None
+    if population_index is not None:
+        for key, value in columns[population_index].items():
+            try:
+                valint = int(value)
+                population_lookup[key] = valint
+            except ValueError:
+                pass
