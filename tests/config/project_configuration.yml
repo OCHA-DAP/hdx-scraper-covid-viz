@@ -547,6 +547,62 @@ tabular_national:
       - "#affected+tested+per1000"
       - "#affected+tested+avg+per1000"
       - "#affected+tested+positive+pct"
+  cadre_harmonise:
+    format: "xlsx"
+    dataset: "cadre-harmonise"
+    url: "tests/fixtures/cadre_harmonise_caf_ipc.xlsx"
+    date: "2020-10-01"
+    headers: 1
+    sheet: 1
+    sort:
+      reverse: True
+      keys:
+        - "reference_year"
+        - "reference_code"
+    adm_cols:
+      - "adm0_pcod3"
+    date_col:
+      - "reference_year"
+      - "reference_code"
+    date_type: "int"
+    indicator_cols:
+      - filter_col: "chtype=current"
+        val_cols:
+          - "phase3"
+          - "phase4"
+          - "phase5"
+          - "phase35"
+          - "population"
+        val_fns:
+          "phase3": "float(phase3)"
+          "phase4": "float(phase4)"
+          "phase5": "float(phase5)"
+          "phase35": "float(phase35)"
+          "population": "float(population)"
+        total_cols:
+          - formula: "get_fraction_str(phase3, population)"
+            mustbepopulated: True
+          - formula: "get_fraction_str(phase4, population)"
+            mustbepopulated: True
+          - formula: "get_fraction_str(phase5, population)"
+            mustbepopulated: True
+          - formula: "get_fraction_str(phase35, population)"
+            mustbepopulated: True
+          - formula: "get_fraction_str(population, #population)"
+            mustbepopulated: True
+        columns:
+          - "FoodInsecurityCHP3"
+          - "FoodInsecurityCHP4"
+          - "FoodInsecurityCHP5"
+          - "FoodInsecurityCHP3+"
+          - "FoodInsecurityCHAnalysed"
+        hxltags:
+          - "#affected+ch+food+p3+pct"
+          - "#affected+ch+food+p4+pct"
+          - "#affected+ch+food+p5+pct"
+          - "#affected+ch+food+p3plus+pct"
+          - "#affected+ch+food+analysed+pct"
+
 
 fts:
   v1_url: "https://api.hpc.tools/v1/public/"
@@ -697,30 +753,61 @@ tabular_subnational:
   cadre_harmonise:
     format: "xlsx"
     dataset: "cadre-harmonise"
+    url: "tests/fixtures/cadre_harmonise_caf_ipc.xlsx"
+    date: "2020-10-01"
     headers: 1
     sheet: 1
+    sort:
+      reverse: True
+      keys:
+        - "reference_year"
+        - "reference_code"
     adm_cols:
       - "adm0_pcod3"
       - - "adm1_pcod2"
         - "adm1_pcod3"
         - "adm1_name"
-    date_col: "reference_year"
+    date_col:
+      - "reference_year"
+      - "reference_code"
     date_type: "int"
     indicator_cols:
       - filter_col: "chtype=current"
         val_cols:
+          - "phase3"
+          - "phase4"
+          - "phase5"
           - "phase35"
           - "population"
         val_fns:
+          "phase3": "float(phase3)"
+          "phase4": "float(phase4)"
+          "phase5": "float(phase5)"
           "phase35": "float(phase35)"
           "population": "float(population)"
         total_cols:
+          - formula: "get_fraction_str(phase3, population)"
+            mustbepopulated: True
+          - formula: "get_fraction_str(phase4, population)"
+            mustbepopulated: True
+          - formula: "get_fraction_str(phase5, population)"
+            mustbepopulated: True
           - formula: "get_fraction_str(phase35, population)"
             mustbepopulated: True
+          - formula: "get_fraction_str(population, #population)"
+            mustbepopulated: True
         columns:
+          - "FoodInsecurityCHP3"
+          - "FoodInsecurityCHP4"
+          - "FoodInsecurityCHP5"
           - "FoodInsecurityCHP3+"
+          - "FoodInsecurityCHAnalysed"
         hxltags:
           - "#affected+ch+food+p3+pct"
+          - "#affected+ch+food+p4+pct"
+          - "#affected+ch+food+p5+pct"
+          - "#affected+ch+food+p3plus+pct"
+          - "#affected+ch+food+analysed+pct"
   ghrp:
     source: "Multiple Sources"
     format: "csv"
