@@ -865,7 +865,7 @@ tabular_national:
       - "#affected+tested+per1000"
       - "#affected+tested+avg+per1000"
       - "#affected+tested+positive+pct"
-  fsnwg:
+  cadre_harmonise:
     format: "xlsx"
     dataset: "cadre-harmonise"
     headers: 1
@@ -1065,7 +1065,7 @@ ipc:
   dataset: "ipc-country-data"
 
 tabular_subnational:
-  fsnwg:
+  cadre_harmonise:
     format: "xlsx"
     dataset: "cadre-harmonise"
     headers: 1
