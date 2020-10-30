@@ -871,8 +871,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -888,8 +888,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -905,8 +905,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -922,8 +922,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -939,8 +939,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -956,8 +956,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -973,8 +973,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -990,8 +990,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
@@ -1007,8 +1007,8 @@ tabular_subnational:
           - "-2222"
           - "-4444"
         val_fns:
-          Numerator: "float(Numerator)"
-          Denominator: "float(Denominator)"
+          Numerator: "get_numeric_if_possible(Numerator)"
+          Denominator: "get_numeric_if_possible(Denominator)"
         total_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
