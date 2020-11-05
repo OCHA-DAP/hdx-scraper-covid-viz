@@ -25,7 +25,8 @@ def get_data(downloader, url, countryiso2):
         found_data = False
         for row in data:
             area = row['Area']
-            if any(v is not None for v in [row['Current Phase P3+ %'],row['First Projection Phase P3+ %'],row['Second Projection Phase P3+ %']]):
+            if any(v is not None for v in [row['Current Phase P3+ %'], row['First Projection Phase P3+ %'],
+                                           row['Second Projection Phase P3+ %']]):
                 found_data = True
             if not area or area == row['Country']:
                 continue
@@ -39,7 +40,7 @@ def get_data(downloader, url, countryiso2):
 
 def get_period(row, projections):
     today = datetime.today().date()
-    desired_analysis_period = ''
+    analysis_period = ''
     for projection in projections:
         current_period = row[f'{projection} Analysis Period']
         if current_period == '':
@@ -48,14 +49,14 @@ def get_period(row, projections):
         end = datetime.strptime(current_period[11:19], '%b %Y').date()
         end = end + relativedelta(day=31)
         if today < end:
-            desired_analysis_period = projection
-    if desired_analysis_period == '':
-        rev_projections = projections.copy()
-        rev_projections.reverse()
-        for projection in rev_projections:
+            analysis_period = projection
+            break
+    if analysis_period == '':
+        for projection in reversed(projections):
             if row[f'{projection} Analysis Period'] != '':
-                desired_analysis_period = projection
-    return desired_analysis_period
+                analysis_period = projection
+                break
+    return analysis_period, start.strftime('%Y-%m-%d'), end.strftime('%Y-%m-%d')
 
 
 def get_ipc(configuration, admininfo, downloader, scrapers=None):
@@ -68,6 +69,9 @@ def get_ipc(configuration, admininfo, downloader, scrapers=None):
     projections = ['Current', 'First Projection', 'Second Projection']
     national_phases = {phase: dict() for phase in phases}
     national_analysed = dict()
+    national_period = dict()
+    national_start = dict()
+    national_end = dict()
     subnational_phases = {phase: dict() for phase in phases}
     subnational_populations = {phase: dict() for phase in phases}
     for countryiso3 in admininfo.countryiso3s:
@@ -76,10 +80,13 @@ def get_ipc(configuration, admininfo, downloader, scrapers=None):
         if not data:
             continue
         row = data[0]
-        analysis_period = get_period(row,projections)
+        analysis_period, start, end = get_period(row, projections)
         for phase in phases:
             national_phases[phase][countryiso3] = row[f'{analysis_period} Phase {phase} %']
         national_analysed[countryiso3] = f'{row["Current Population Analysed % of total county Pop"]:.03f}'
+        national_period[countryiso3] = analysis_period
+        national_start[countryiso3] = start
+        national_end[countryiso3] = end
         for row in data[1:]:
             country = row['Country']
             if adm1_names:
@@ -120,12 +127,21 @@ def get_ipc(configuration, admininfo, downloader, scrapers=None):
     date = get_date_from_dataset_date(dataset)
     headers = [f'FoodInsecurityIPC{phase}' for phase in phases]
     headers.append('FoodInsecurityIPCAnalysed')
+    headers.append('FoodInsecurityIPCAnalysisPeriod')
+    headers.append('FoodInsecurityIPCAnalysisPeriodStart')
+    headers.append('FoodInsecurityIPCAnalysisPeriodEnd')
     hxltags = [f'#affected+food+ipc+p{phase}+pct' for phase in phases[:-1]]
     hxltags.append('#affected+food+ipc+p3plus+pct')
     hxltags.append('#affected+food+ipc+analysed+pct')
+    hxltags.append('#date+ipc+period')
+    hxltags.append('#date+ipc+start')
+    hxltags.append('#date+ipc+end')
     national_outputs = [national_phases[phase] for phase in phases]
     national_outputs.append(national_analysed)
+    national_outputs.append(national_period)
+    national_outputs.append(national_start)
+    national_outputs.append(national_end)
     subnational_outputs = [subnational_phases[phase] for phase in phases]
-    return [headers, hxltags], national_outputs, [headers[:-1], hxltags[:-1]], subnational_outputs, \
+    return [headers, hxltags], national_outputs, [headers[:-4], hxltags[:-4]], subnational_outputs, \
            [(hxltag, date, dataset['dataset_source'], dataset.get_hdx_url()) for hxltag in hxltags]
 
