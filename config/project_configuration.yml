@@ -337,6 +337,10 @@ regional:
     "RequiredOtherPlansFunding": "sum"
     "OtherPlansFunding": "sum"
     "OtherPlansPercentFunded": "get_fraction_str(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
+    "Number of incidents reported in previous year": "sum"
+    "Number of incidents reported since start of year": "sum"
+    "Number of incidents reported since start of previous year": "sum"
+    "Number of learners enrolled from pre-primary to tertiary education": "sum"
 
 # national
 tabular_national:
@@ -924,6 +928,10 @@ tabular_national:
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
     headers: 1
     use_hxl: True
+    val_fns:
+      "#activity+cerf+project+insecurity+pct": "get_numeric_if_possible(#activity+cerf+project+insecurity+pct)"
+      "#activity+cbpf+project+insecurity+pct": "get_numeric_if_possible(#activity+cbpf+project+insecurity+pct)"
+      "#population+education": "get_numeric_if_possible(#population+education)"
 
 fts:
   v1_url: "https://api.hpc.tools/v1/public/"
