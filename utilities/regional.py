@@ -58,17 +58,26 @@ def get_regional(configuration, admininfo, national_headers, national_columns, p
         for countryiso in column:
             for region in admininfo.iso3_to_region_and_hrp[countryiso]:
                 dict_of_lists_add(valdict, region, column[countryiso])
-        if action == 'sum':
+        if action == 'sum' or action == 'mean':
             for region, valuelist in valdict.items():
                 total = ''
+                novals = 0
                 for valuestr in valuelist:
-                    if valuestr:
-                        value = get_numeric(valuestr)
-                        if value:
-                            if total == '':
-                                total = value
-                            else:
-                                total += value
+                    value = ''
+                    if isinstance(valuestr, int) or isinstance(valuestr, float):
+                        value = valuestr
+                    else:
+                        if valuestr:
+                            value = get_numeric(valuestr)
+                    if value != '':
+                        novals += 1
+                        if total == '':
+                            total = value
+                        else:
+                            total += value
+                if action == 'mean':
+                    if not isinstance(total, str):
+                        total /= novals
                 if isinstance(total, float):
                     valdict[region] = number_format(total)
                 else:

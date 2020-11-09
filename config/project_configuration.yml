@@ -337,10 +337,11 @@ regional:
     "RequiredOtherPlansFunding": "sum"
     "OtherPlansFunding": "sum"
     "OtherPlansPercentFunded": "get_fraction_str(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
-    "Number of incidents reported in previous year": "sum"
-    "Number of incidents reported since start of year": "sum"
+    "% of visas pending or denied": "mean"
+    "% of travel authorizations or movements denied": "mean"
     "Number of incidents reported since start of previous year": "sum"
-    "Number of learners enrolled from pre-primary to tertiary education": "sum"
+    "% of CERF projects affected by insecurity and inaccessibility": "mean"
+    "% of CBPF projects affected by insecurity and inaccessibility": "mean"
 
 # national
 tabular_national:
@@ -929,6 +930,8 @@ tabular_national:
     headers: 1
     use_hxl: True
     val_fns:
+      "#access+visas+pct": "get_numeric_if_possible(#access+visas+pct)"
+      "#access+travel+pct": "get_numeric_if_possible(#access+travel+pct)"
       "#activity+cerf+project+insecurity+pct": "get_numeric_if_possible(#activity+cerf+project+insecurity+pct)"
       "#activity+cbpf+project+insecurity+pct": "get_numeric_if_possible(#activity+cbpf+project+insecurity+pct)"
       "#population+education": "get_numeric_if_possible(#population+education)"
