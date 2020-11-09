@@ -5,7 +5,6 @@ from hdx.data.dataset import Dataset
 
 from model import today_str
 from utilities import get_date_from_dataset_date
-from model.access_constraints import get_access
 from model.who_covid import get_who_covid
 from model.food_prices import add_food_prices
 from model.fts import get_fts
@@ -115,31 +114,29 @@ def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers
     ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(configuration, admininfo, downloader, scrapers)
     if 'national' in tabs:
         fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(basic_auths, configuration, countryiso3s, scrapers)
-        access_wheaders, access_wcolumns, access_wsources, access_rheaders, access_rcolumns, access_rsources, access_headers, access_columns, access_sources = get_access(configuration, admininfo, downloader, scrapers)
         food_headers, food_columns, food_sources = add_food_prices(configuration, countryiso3s, downloader, scrapers)
         campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, countryiso3s, downloader, outputs, scrapers)
         unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, countryiso3s, downloader, scrapers)
         tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'national', downloader, scrapers=scrapers, population_lookup=population_lookup)
 
-        national_headers = extend_headers(national, covid_headers, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, access_headers, ipc_headers)
-        national_columns = extend_columns('national', national, countryiso3s, admininfo, national_headers, covid_columns, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, access_columns, ipc_columns)
-        extend_sources(sources, tabular_sources, food_sources, campaign_sources, fts_sources, unhcr_sources, access_sources)
+        national_headers = extend_headers(national, covid_headers, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, ipc_headers)
+        national_columns = extend_columns('national', national, countryiso3s, admininfo, national_headers, covid_columns, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, ipc_columns)
+        extend_sources(sources, tabular_sources, food_sources, campaign_sources, fts_sources, unhcr_sources)
         update_tab('national', national)
 
         if 'world' in tabs:
             tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'global', downloader, scrapers=scrapers, population_lookup=population_lookup)
-            world_headers = extend_headers(world, covid_wheaders, fts_wheaders, access_wheaders, tabular_headers)
-            extend_columns('global', world, None, None, world_headers, covid_h63columns, fts_wcolumns, access_wcolumns, tabular_columns)
-            extend_sources(sources, fts_wsources, access_wsources, tabular_sources)
+            world_headers = extend_headers(world, covid_wheaders, fts_wheaders, tabular_headers)
+            extend_columns('global', world, None, None, world_headers, covid_h63columns, fts_wcolumns, tabular_columns)
+            extend_sources(sources, fts_wsources, tabular_sources)
             update_tab('world', world)
 
         if 'regional' in tabs:
             regional_headers, regional_columns = get_regional(configuration, admininfo, national_headers,
                                                               national_columns, None, (covid_wheaders, covid_wcolumns),
                                                               (fts_wheaders, fts_wcolumns))
-            regional_headers = extend_headers(regional, regional_headers, access_rheaders)
-            extend_columns('regional', regional, admininfo.regions + ['global'], admininfo, regional_headers, regional_columns, access_rcolumns)
-            extend_sources(sources, access_rsources)
+            regional_headers = extend_headers(regional, regional_headers)
+            extend_columns('regional', regional, admininfo.regions + ['global'], admininfo, regional_headers, regional_columns)
             update_tab('regional', regional)
 
     if 'subnational' in tabs:
