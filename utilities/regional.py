@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_float_or_int(valuestr):
-    if not valuestr:
+    if not valuestr or valuestr == 'N/A':
         return None
     if '.' in valuestr:
         return float(valuestr)
