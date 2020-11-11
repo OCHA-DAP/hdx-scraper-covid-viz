@@ -1,0 +1,65 @@
+ISO Code,Country,% of visas pending or denied,% of travel authorizations or movements denied,Number of incidents reported in previous year,Number of incidents reported since start of year,Number of incidents reported since start of previous year,% of CERF projects affected by insecurity and inaccessibility,% of CBPF projects affected by insecurity and inaccessibility,Campaign Vaccine,Campaign Vaccine Status,School Status,Number of learners enrolled from pre-primary to tertiary education
+#country+code,#country+name,#access+visas+pct,#access+travel+pct,#event+year+previous+num,#event+year+todate+num,#event+year+previous+todate+num,#activity+cerf+project+insecurity+pct,#activity+cbpf+project+insecurity+pct,#service+name,#status+name,#impact+type,#population+education
+AFG,Afghanistan,20.00%,0%,20,2,22,57.1%,4.0%,bivalent Oral Poliovirus,Postponed,Fully open,"9,979,405"
+AGO,Angola,,,,,,75.0%,,Inactivated Polio,Postponed,Partially open,
+BEN,Benin,,,,,,,,bivalent Oral Poliovirus,Postponed,Fully open,
+BFA,Burkina Faso,,,3,1,4,58.3%,,Inactivated Polio,Postponed,Fully open,"4,686,723"
+BDI,Burundi,15.60%,0.80%,1,,1,,,Inactivated Polio,Postponed,Fully open,
+CMR,Cameroon,,,8,4,12,92.9%,,bivalent Oral Poliovirus,Postponed,Fully open,"7,215,039"
+CAF,Central African Republic,0%,0%,15,9,24,,0.0%,bivalent Oral Poliovirus,Postponed,Partially open,
+TCD,Chad,,,1,,1,0.0%,,bivalent Oral Poliovirus,Postponed,Fully open,
+COG,Congo (the),,,27,,27,100.0%,,bivalent Oral Poliovirus,Postponed,Fully open,
+DJI,Djibouti,,,,,,66.7%,,Inactivated Polio,On track,Fully open,
+PRK,DPR Korea,100%,100%,,,,40.0%,,Inactivated Polio,Postponed,Fully open,"4,755,570"
+COD,Democratic Republic of the Congo,,,27,13,40,0.0%,9.3%,bivalent Oral Poliovirus,Postponed,Fully open,
+ETH,Ethiopia,,,9,1,10,11.1%,0.0%,bivalent Oral Poliovirus,Postponed,Closed due to COVID-19,"24,686,497"
+IRQ,Iraq,,,1,2,3,,0.0%,bivalent Oral Poliovirus,Postponed,Closed due to COVID-19,"7,010,788"
+LBR,Liberia,,,,,,,,Type 2 Poliovirus,On track,Partially open,
+MLI,Mali,,,12,9,21,38.5%,,bivalent Oral Poliovirus,Postponed,Academic break,"3,727,291"
+MMR,Myanmar,,,3,1,4,,0.0%,bivalent Oral Poliovirus,Postponed,Closed due to COVID-19,
+NER,Niger (the),10%,56%,2,2,4,40.0%,,bivalent Oral Poliovirus,Postponed,Fully open,
+NGA,Nigeria,,,6,2,8,0.0%,4.4%,bivalent Oral Poliovirus,On track,Partially open,
+PAK,Pakistan,26%,0%,4,2,6,30.0%,18.2%,bivalent Oral Poliovirus,On track,Fully open,"46,803,407"
+PHL,Philippines (the),,,2,,2,100.0%,,bivalent Oral Poliovirus,On track,Closed due to COVID-19,
+RWA,Rwanda,,,,,,50.0%,,Inactivated Polio,Postponed,Partially open,"3,464,409"
+SLE,Sierra Leone,,,,,,,,Inactivated Polio,Postponed,Fully open,
+SOM,Somalia,0%,0%,8,8,16,7.4%,0.0%,bivalent Oral Poliovirus,On track,Fully open,"544,061"
+SSD,South Sudan,0%,3%,38,43,81,41.7%,0.0%,bivalent Oral Poliovirus,Postponed,Partially open,
+SDN,Sudan (the),,,5,2,7,47.1%,14.3%,Inactivated Polio,On track,Partially open,
+SYR,Syria,,,47,26,73,40.0%,7.7%,bivalent Oral Poliovirus,Postponed,Partially open,
+TGO,Togo,,,,,,,,Inactivated Polio,On track,Fully open,
+YEM,Yemen,31%,16%,12,4,16,,0.0%,bivalent Oral Poliovirus,Postponed,Fully open,
+ZMB,Zambia,,,,1,1,100.0%,,Inactivated Polio,Postponed,Fully open,
+ZWE,Zimbabwe,,,,,,100.0%,,Inactivated Polio,Postponed,Partially open,
+ABW,Aruba,,,,,,,,,N/A,,
+ARG,Argentina,,,,,,,,,N/A,,
+BGD,Bangladesh,,,6,1,7,15.4%,,,N/A,,
+BOL,Bolivia,,,1,,1,,,,N/A,,
+BRA,Brazil,,,,,,,,,N/A,,
+CHL,Chile,,,,,,,,,N/A,,
+COL,Colombia,80%,0%,,,,,,,N/A,,
+CRI,Costa Rica,,,,,,,,,N/A,,
+CUW,CuraÃ§ao,,,,,,,,,N/A,,
+DOM,Dominican Republic,,,,,,,,,N/A,,
+ECU,Ecuador,,,1,,1,,,,N/A,,
+EGY,Egypt,,,,,,,,,N/A,,
+GUY,Guyana,,,,,,,,,N/A,,
+HTI,Haiti,,,3,,3,0.0%,,,N/A,,
+IRN,Iran (Islamic Republic of),,,,,,,,,N/A,,
+JOR,Jordan,,,3,,3,,0.0%,,N/A,,
+KEN,Kenya,,,2,,2,18.8%,,,N/A,,
+LBN,Lebanon,10%,0%,,,,0.0%,0.0%,,N/A,,
+LBY,Libya,,,2,,2,0.0%,,,N/A,,
+MEX,Mexico,,,2,,2,,,,N/A,,
+MOZ,Mozambique,,,1,,1,46.2%,,,N/A,,
+PAN,Panama,,,,,,,,,N/A,,
+PER,Peru,,,,,,,,,N/A,,
+PRY,Paraguay,,,,,,,,,N/A,,
+PSE,oPt,,,7,,7,0.0%,20.5%,,N/A,,
+TTO,Trinidad and Tobago,,,,,,,,,N/A,,
+TUR,Turkey,,,,1,1,,,,N/A,,
+TZA,United Republic of Tanzania,,,3,,3,,,,N/A,,
+UGA,Uganda,,,9,2,11,66.7%,,,N/A,,
+UKR,Ukraine,0%,15%,1,,1,,71.4%,,N/A,,
+URY,Uruguay,,,,,,,,,N/A,,
+VEN,Venezuela,70%,0%,,,,75.0%,,,N/A,,

@@ -34,6 +34,18 @@ def get_numeric(valuestr):
     return valuestr
 
 
+def get_headers_and_columns(input_headers, input_columns, desired_headers):
+    headers = [list(), list()]
+    columns = list()
+    for i, header in enumerate(input_headers[0]):
+        if header not in desired_headers:
+            continue
+        headers[0].append(header)
+        headers[1].append(input_headers[1][i])
+        columns.append(input_columns[i])
+    return headers, columns
+
+
 def get_regional(configuration, admininfo, national_headers, national_columns, population_lookup=None, *args):
     regional_config = configuration['regional']
     if population_lookup is None:
@@ -41,14 +53,7 @@ def get_regional(configuration, admininfo, national_headers, national_columns, p
     else:
         val_fns = {'Population': 'sum'}
     headers = val_fns.keys()
-    regional_headers = [list(), list()]
-    regional_columns = list()
-    for i, header in enumerate(national_headers[0]):
-        if header not in headers:
-            continue
-        regional_headers[0].append(header)
-        regional_headers[1].append(national_headers[1][i])
-        regional_columns.append(national_columns[i])
+    regional_headers, regional_columns = get_headers_and_columns(national_headers, national_columns, headers)
     valdicts = list()
     for i, header in enumerate(regional_headers[0]):
         valdict = dict()
@@ -123,3 +128,15 @@ def get_regional(configuration, admininfo, national_headers, national_columns, p
     add_population(population_lookup, regional_headers, valdicts)
     logger.info('Processed regional')
     return regional_headers, valdicts
+
+
+def get_world(configuration, regional_headers, regional_columns):
+    desired_headers = configuration['from_regional']
+    world_headers, world_columns = get_headers_and_columns(regional_headers, regional_columns, desired_headers)
+    global_columns = list()
+    for column in world_columns:
+        global_columns.append({'global': column['H63']})
+    return world_headers, global_columns
+
+
+

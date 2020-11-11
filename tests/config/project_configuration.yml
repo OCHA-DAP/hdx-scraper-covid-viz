@@ -63,89 +63,6 @@ additional_sources:
     dataset: "immunization-campaigns-impacted"
     date: "2020-08-24"
 
-# global
-tabular_global:
-  cerf_global:
-    format: "csv"
-    dataset: "cerf-covid-19-allocations"
-    force_date_today: True
-    headers: 1
-    indicator_cols:
-      - filter_col: "PFType=CBPF"
-        val_cols:
-          - "TargetAmt"
-        total_cols:
-          - formula: "TargetAmt"
-            mustbepopulated: False
-        val_fns:
-          TargetAmt: "float(TargetAmt)"
-        columns:
-          - "CBPFCovidFunding"
-        hxltags:
-          - "#value+cbpf+covid+funding+total+usd"
-      - filter_col: "PFType=CERF"
-        val_cols:
-          - "TargetAmt"
-        total_cols:
-          - formula: "TargetAmt"
-            mustbepopulated: False
-        val_fns:
-          TargetAmt: "float(TargetAmt)"
-        columns:
-          - "CERFCovidFunding"
-        hxltags:
-          - "#value+cerf+covid+funding+total+usd"
-  ifi_global:
-    format: "csv"
-    url: "tests/fixtures/Tracker COVID - Country Summary_HDX.csv"
-    dataset: "compilation-of-international-financial-institution-and-economic-data"
-    date: "2020-07-29"
-    headers: 1
-    stop_row:
-      "Country Code": ""
-    adm_cols:
-      - "Country Code"
-    val_cols:
-      - "Total (USD mn)"
-    ignore_vals:
-      - "N/A"
-      - "-"
-    val_fns:
-      "Total (USD mn)": "get_numeric_if_possible(Total (USD mn)) if Total (USD mn) else 0"
-    total_cols:
-      - formula: "number_format(Total (USD mn) * 1000000, format='%.0f')"
-        mustbepopulated: True
-    columns:
-      - "IFI COVID19 global"
-    hxltags:
-      - "#value+ifi+total"
-
-# regional
-regional:
-  format: "xlsx"
-  dataset: "unocha-office-locations"
-  sheet: 1
-  headers: 1
-  iso3: "ISO3"
-  region: "Regional_office"
-  val_fns:
-    "Cumulative_cases": "sum"
-    "Cumulative_deaths": "sum"
-    "IFI COVID19 total": "sum"
-    "CBPFCovidFunding": "sum"
-    "CERFCovidFunding": "sum"
-    "RequiredHRPFunding": "sum"
-    "HRPFunding": "sum"
-    "HRPPercentFunded": "get_fraction_str(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
-    "RequiredHRPCovidFunding": "sum"
-    "HRPCovidFunding": "sum"
-    "HRPCovidPercentFunded": "get_fraction_str(HRPCovidFunding, RequiredHRPCovidFunding) if HRPCovidFunding is not None and RequiredHRPCovidFunding is not None else ''"
-    "HRPGBVFunding": "sum"
-    "RequiredOtherPlansFunding": "sum"
-    "OtherPlansFunding": "sum"
-    "OtherPlansPercentFunded": "get_fraction_str(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
-#    "TotalRefugees": "sum"
-
 # national
 tabular_national:
   population:
@@ -602,6 +519,19 @@ tabular_national:
           - "#affected+ch+food+p5+pct"
           - "#affected+ch+food+p3plus+pct"
           - "#affected+ch+food+analysed+pct"
+  access:
+    source: "Multiple sources"
+    format: "csv"
+    url: "tests/fixtures/Access Indicators  - Data for Dashboard.csv"
+    date: "2020-10-01"
+    headers: 1
+    use_hxl: True
+    val_fns:
+      "#access+visas+pct": "get_numeric_if_possible(#access+visas+pct)"
+      "#access+travel+pct": "get_numeric_if_possible(#access+travel+pct)"
+      "#activity+cerf+project+insecurity+pct": "get_numeric_if_possible(#activity+cerf+project+insecurity+pct)"
+      "#activity+cbpf+project+insecurity+pct": "get_numeric_if_possible(#activity+cbpf+project+insecurity+pct)"
+      "#population+education": "get_numeric_if_possible(#population+education)"
 
 
 fts:
@@ -629,120 +559,99 @@ who_covid:
   url: "tests/fixtures/WHO-COVID-19-global-data.csv"
   headers: 1
 
-access_constraints:
+# regional
+regional:
   format: "xlsx"
-  dataset: "covid19-humanitarian-access"
-  ranking_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRfUPVA3sPjfqguh_kukPfCWZeNdhcrLA-l1stFB5rzRuo9qAER9ajpWAL6zRt4ESJJQafCjOuHiNgH/pub?gid=847946299&single=true&output=csv"
-  category:
-    "0-66": 0
-    "67-85": 1
-    "86+": 2
-  sheets:
-    constraints_into:
-      sheetname: "Constraints-Into"
-      isocol: "Admin0_code"
-      textcol: "Constraint_"
-      scorecol: "Score"
-    constraints_within:
-      sheetname: "Constraints- Within"
-      isocol: "Admin0_code"
-      textcol: "Constraint_"
-      scorecol: "Score"
-      weights:
-        "Active conflict and conduct of hostilities": 4
-        "Insecurity/ criminality": 4
-        "Violence and/or threat of violence against humanitarian personnel (anti-foreigner sentiment)": 4
-        "Bureaucratic impediments": 4
-        "Poor infrastructure (lack of fuel, electricity, telecommunication, etc.)": 4
-        "Terrain (no physical access, enclaved areas)": 4
-    impact:
-      sheetname: "Impact"
-      isocol: "admin0 code"
-      textcol: "Impact"
-      scorecol: "Score"
-    mitigation:
-      sheetname: "General"
-      isocol: "Admin0 Code"
-      scorecol: "Mitigation Ind."
+  dataset: "unocha-office-locations"
+  sheet: 1
+  headers: 1
+  iso3: "ISO3"
+  region: "Regional_office"
+  val_fns:
+    "Cumulative_cases": "sum"
+    "Cumulative_deaths": "sum"
+    "IFI COVID19 total": "sum"
+    "CBPFCovidFunding": "sum"
+    "CERFCovidFunding": "sum"
+    "RequiredHRPFunding": "sum"
+    "HRPFunding": "sum"
+    "HRPPercentFunded": "get_fraction_str(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
+    "RequiredHRPCovidFunding": "sum"
+    "HRPCovidFunding": "sum"
+    "HRPCovidPercentFunded": "get_fraction_str(HRPCovidFunding, RequiredHRPCovidFunding) if HRPCovidFunding is not None and RequiredHRPCovidFunding is not None else ''"
+    "HRPGBVFunding": "sum"
+    "RequiredOtherPlansFunding": "sum"
+    "OtherPlansFunding": "sum"
+    "OtherPlansPercentFunded": "get_fraction_str(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
+    "% of visas pending or denied": "mean"
+    "% of travel authorizations or movements denied": "mean"
+    "Number of incidents reported since start of previous year": "sum"
+    "% of CERF projects affected by insecurity and inaccessibility": "mean"
+    "% of CBPF projects affected by insecurity and inaccessibility": "mean"
 
-timeseries_national:
-  imf:
-    source: "IMF"
-    format: "ole"
-    url: "https://www.imf.org/external/datamapper/export/excel.php?indicator=%s"
+# global
+from_regional:
+  - "% of visas pending or denied"
+  - "% of travel authorizations or movements denied"
+  - "Number of incidents reported since start of previous year"
+  - "% of CERF projects affected by insecurity and inaccessibility"
+  - "% of CBPF projects affected by insecurity and inaccessibility"
+
+tabular_global:
+  cerf_global:
+    format: "csv"
+    dataset: "cerf-covid-19-allocations"
+    force_date_today: True
     headers: 1
-    sheet: 1
-    flatten:
-      - original: "{{2000}}"
-        new: "Value"
-        extracol: "Year"
-    indicators:
-      - url: "NGDP_RPCH"
-        name: "Real GDP growth"
-      - url: "PCPIPCH"
-        name: "Inflation rate, Consumer Prices"
-      - url: "BCA_NGDPD"
-        name: "Current account balance"
-      - url: "GGXCNL_NGDP"
-        name: "General government net lending/borrowing"
+    indicator_cols:
+      - filter_col: "PFType=CBPF"
+        val_cols:
+          - "TargetAmt"
+        total_cols:
+          - formula: "TargetAmt"
+            mustbepopulated: False
+        val_fns:
+          TargetAmt: "float(TargetAmt)"
+        columns:
+          - "CBPFCovidFunding"
+        hxltags:
+          - "#value+cbpf+covid+funding+total+usd"
+      - filter_col: "PFType=CERF"
+        val_cols:
+          - "TargetAmt"
+        total_cols:
+          - formula: "TargetAmt"
+            mustbepopulated: False
+        val_fns:
+          TargetAmt: "float(TargetAmt)"
+        columns:
+          - "CERFCovidFunding"
+        hxltags:
+          - "#value+cerf+covid+funding+total+usd"
+  ifi_global:
+    format: "csv"
+    url: "tests/fixtures/Tracker COVID - Country Summary_HDX.csv"
+    dataset: "compilation-of-international-financial-institution-and-economic-data"
+    date: "2020-07-29"
+    headers: 1
+    stop_row:
+      "Country Code": ""
     adm_cols:
-      - "{{0}}"
-    date_col: "Year"
-    date_type: "int"
-    val_col: "Value"
+      - "Country Code"
+    val_cols:
+      - "Total (USD mn)"
     ignore_vals:
-      - "no data"
-  worldbank:
-    source: "World Bank"
-    source_url: "https://data.humdata.org/organization/world-bank-group"
-    format: "json"
-    url: "http://api.worldbank.org/v2/country/{{';'.join(countryiso3s)}}/indicator/%s?format=json&per_page=10000"
-    jsonpath: "[1][*]"
-    indicators:
-      - url: "SH.MED.BEDS.ZS"
-        name: "Hospital beds (per 1,000 people)"
-      - url: "SH.MED.NUMW.P3"
-        name: "Nurses and midwives (per 1,000 people)"
-      - url: "SH.MED.PHYS.ZS"
-        name: "Physicians (per 1,000 people)"
-      - url: "SH.DYN.NCOM.ZS"
-        name: "Mortality from CVD, cancer, diabetes or CRD between exact ages 30 and 70"
-      - url: "SH.STA.DIAB.ZS"
-        name: "Diabetes prevalence (% of population ages 20 to 79)"
-      - url: "SH.PRV.SMOK"
-        name: "Smoking prevalence, total, ages 15+"
-      - url: "SH.STA.HYGN.ZS"
-        name: "People with basic handwashing facilities including soap and water (% of population)"
-      - url: "SP.POP.65UP.FE.ZS"
-        name: "Population ages 65 and above, female (% of population)"
-      - url: "SI.POV.DDAY"
-        name: "Poverty headcount ratio at $1.90 a day (2011 PPP)"
-      - url: "SI.POV.LMIC"
-        name: "Poverty headcount ratio at $3.20 a day (2011 PPP)"
-      - url: "SI.POV.UMIC"
-        name: "Poverty headcount ratio at $5.50 a day (2011 PPP)"
-      - url: "BX.TRF.PWKR.DT.GD.ZS"
-        name: "Personal remittances, received"
-    adm_cols:
-      - "countryiso3code"
-    date_col: "date"
-    date_type: "int"
-    val_col: "value"
-    ignore_vals:
-      - ~
-#  imf:
-#    source: "IMF"
-#    format: "json"
-#    url: "http://dataservices.imf.org/REST/SDMX_JSON.svc/CompactData/IFS/A.{{'+'.join([Country.get_iso2_from_iso3(x) for x in countryiso3s])}}.%s"
-#    jsonpath:
-#    indicators:
-#      - url: "PCPI_PC_CP_A_PT"
-#        name: "Inflation rate, Consumer Prices"
-#    adm_cols:
-
-
-country_currency_url: "https://www.currency-iso.org/dam/downloads/lists/list_one.xls"
-alphavantage_url: "https://www.alphavantage.co/query?function=FX_MONTHLY&from_symbol=USD&to_symbol=%s&apikey=YHFVGAV55LIXK1TR&datatype=csv"
+      - "N/A"
+      - "-"
+    val_fns:
+      "Total (USD mn)": "get_numeric_if_possible(Total (USD mn)) if Total (USD mn) else 0"
+    total_cols:
+      - formula: "number_format(Total (USD mn) * 1000000, format='%.0f')"
+        mustbepopulated: True
+    columns:
+      - "IFI COVID19 global"
+    hxltags:
+      - "#value+ifi+total"
 
 # subnational
 ipc:
