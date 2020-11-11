@@ -9,7 +9,7 @@ from model.who_covid import get_who_covid
 from model.food_prices import add_food_prices
 from model.fts import get_fts
 from model.ipc import get_ipc
-from utilities.regional import get_regional
+from utilities.regional import get_regional, get_world
 from utilities.tabularparser import get_tabular
 from model.unhcr import get_unhcr
 from model.vaccination_campaigns import add_vaccination_campaigns
@@ -124,13 +124,6 @@ def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers
         extend_sources(sources, tabular_sources, food_sources, campaign_sources, fts_sources, unhcr_sources)
         update_tab('national', national)
 
-        if 'world' in tabs:
-            tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'global', downloader, scrapers=scrapers, population_lookup=population_lookup)
-            world_headers = extend_headers(world, covid_wheaders, fts_wheaders, tabular_headers)
-            extend_columns('global', world, None, None, world_headers, covid_h63columns, fts_wcolumns, tabular_columns)
-            extend_sources(sources, fts_wsources, tabular_sources)
-            update_tab('world', world)
-
         if 'regional' in tabs:
             regional_headers, regional_columns = get_regional(configuration, admininfo, national_headers,
                                                               national_columns, None, (covid_wheaders, covid_wcolumns),
@@ -138,6 +131,14 @@ def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers
             regional_headers = extend_headers(regional, regional_headers)
             extend_columns('regional', regional, admininfo.regions + ['global'], admininfo, regional_headers, regional_columns)
             update_tab('regional', regional)
+
+        if 'world' in tabs:
+            rgheaders, rgcolumns = get_world(configuration, regional_headers, regional_columns)
+            tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, 'global', downloader, scrapers=scrapers, population_lookup=population_lookup)
+            world_headers = extend_headers(world, covid_wheaders, fts_wheaders, tabular_headers, rgheaders)
+            extend_columns('global', world, None, None, world_headers, covid_h63columns, fts_wcolumns, tabular_columns, rgcolumns)
+            extend_sources(sources, fts_wsources, tabular_sources)
+            update_tab('world', world)
 
     if 'subnational' in tabs:
         whowhatwhere_headers, whowhatwhere_columns, whowhatwhere_sources = get_whowhatwhere(configuration, admininfo, downloader, scrapers)
