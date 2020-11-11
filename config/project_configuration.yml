@@ -66,6 +66,8 @@ additional_sources:
     dataset: "wfp-food-prices"
   - indicator: "#vaccination-campaigns"
     dataset: "immunization-campaigns-impacted"
+  - indicator: "#access-data"
+    source: "Multiple Sources"
 
 # national
 tabular_national:

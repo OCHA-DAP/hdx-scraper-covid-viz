@@ -62,6 +62,9 @@ additional_sources:
   - indicator: "#vaccination-campaigns"
     dataset: "immunization-campaigns-impacted"
     date: "2020-08-24"
+  - indicator: "#access-data"
+    source: "Multiple Sources"
+    date: "2020-10-01"
 
 # national
 tabular_national:
