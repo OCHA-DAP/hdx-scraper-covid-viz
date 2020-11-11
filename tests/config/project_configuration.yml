@@ -63,8 +63,9 @@ additional_sources:
     dataset: "immunization-campaigns-impacted"
     date: "2020-08-24"
   - indicator: "#access-data"
-    source: "Multiple Sources"
+    source: "Multiple sources"
     date: "2020-10-01"
+    source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
 
 # national
 tabular_national:
@@ -533,7 +534,7 @@ tabular_national:
       "#activity+cbpf+project+insecurity+pct": "UNCERF"
       "#impact+type": "UNESCO"
       "#population+education": "UNESCO"
-      "default_source": "Multiple Sources"
+      "default_source": "Multiple sources"
     format: "csv"
     url: "tests/fixtures/Access Indicators  - Data for Dashboard.csv"
     date: "2020-10-01"
@@ -731,7 +732,7 @@ tabular_subnational:
           - "#affected+ch+food+p3plus+pct"
           - "#affected+ch+food+analysed+pct"
   ghrp:
-    source: "Multiple Sources"
+    source: "Multiple sources"
     format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3_uBOV_uRDSxOggfBus_pkCs6Iw9lm0nAxzwG14YF_frpm13WPKiM1oNnQ9zrUA/pub?gid=1565793974&single=true&output=csv"
     dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"

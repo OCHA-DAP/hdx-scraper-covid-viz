@@ -67,7 +67,9 @@ additional_sources:
   - indicator: "#vaccination-campaigns"
     dataset: "immunization-campaigns-impacted"
   - indicator: "#access-data"
-    source: "Multiple Sources"
+    source: "Multiple sources"
+    force_date_today: True
+    source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
 
 # national
 tabular_national:
@@ -660,7 +662,7 @@ tabular_national:
       "#activity+cbpf+project+insecurity+pct": "UNCERF"
       "#impact+type": "UNESCO"
       "#population+education": "UNESCO"
-      "default_source": "Multiple Sources"
+      "default_source": "Multiple sources"
     format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
     headers: 1
@@ -989,7 +991,7 @@ ipc:
 
 tabular_subnational:
   population:
-    source: "Multiple Sources"
+    source: "Multiple sources"
     source_url: "https://data.humdata.org/search?organization=worldpop&q=%22population%20counts%22"
     format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3_uBOV_uRDSxOggfBus_pkCs6Iw9lm0nAxzwG14YF_frpm13WPKiM1oNnQ9zrUA/pub?gid=1565793974&single=true&output=csv"
