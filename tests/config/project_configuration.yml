@@ -520,7 +520,17 @@ tabular_national:
           - "#affected+ch+food+p3plus+pct"
           - "#affected+ch+food+analysed+pct"
   access:
-    source: "Multiple sources"
+    source:
+      "#access+visas+pct": "OCHA"
+      "#access+travel+pct": "OCHA"
+      "#event+year+previous+num": "Aid Workers Database"
+      "#event+year+todate+num": "Aid Workers Database"
+      "#event+year+previous+todate+num": "Aid Workers Database"
+      "#activity+cerf+project+insecurity+pct": "UNCERF"
+      "#activity+cbpf+project+insecurity+pct": "UNCERF"
+      "#impact+type": "UNESCO"
+      "#population+education": "UNESCO"
+      "default_source": "Multiple Sources"
     format: "csv"
     url: "tests/fixtures/Access Indicators  - Data for Dashboard.csv"
     date: "2020-10-01"
@@ -585,7 +595,7 @@ regional:
     "OtherPlansPercentFunded": "get_fraction_str(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
     "% of visas pending or denied": "mean"
     "% of travel authorizations or movements denied": "mean"
-    "Number of incidents reported since start of previous year": "sum"
+    "Number of incidents reported since start of year": "sum"
     "% of CERF projects affected by insecurity and inaccessibility": "mean"
     "% of CBPF projects affected by insecurity and inaccessibility": "mean"
 
@@ -593,7 +603,7 @@ regional:
 from_regional:
   - "% of visas pending or denied"
   - "% of travel authorizations or movements denied"
-  - "Number of incidents reported since start of previous year"
+  - "Number of incidents reported since start of year"
   - "% of CERF projects affected by insecurity and inaccessibility"
   - "% of CBPF projects affected by insecurity and inaccessibility"
 

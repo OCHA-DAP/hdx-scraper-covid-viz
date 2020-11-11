@@ -156,7 +156,8 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
     date = date.strftime('%Y-%m-%d')
 
     for indicatorcol in indicatorcols:
-        retheaders[0].extend(indicatorcol['columns'])
+        columns = indicatorcol['columns']
+        retheaders[0].extend(columns)
         hxltags = indicatorcol['hxltags']
         retheaders[1].extend(hxltags)
         valdicts = valuedicts[indicatorcol['filter_col']]
@@ -248,8 +249,10 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
                 retval.append(newvaldict)
         else:
             retval.extend(valdicts)
-
-        sources.extend([(hxltag, date, datasetinfo['source'], datasetinfo['source_url']) for hxltag in hxltags])
+        source = datasetinfo['source']
+        if isinstance(source, str):
+            source = {'default_source': source}
+        sources.extend([(hxltag, date, source.get(hxltag, source['default_source']), datasetinfo['source_url']) for hxltag in hxltags])
     logger.info('Processed %s' % name)
     return retheaders, retval, sources
 
