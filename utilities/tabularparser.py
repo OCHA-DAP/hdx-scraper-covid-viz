@@ -252,7 +252,10 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
         source = datasetinfo['source']
         if isinstance(source, str):
             source = {'default_source': source}
-        sources.extend([(hxltag, date, source.get(hxltag, source['default_source']), datasetinfo['source_url']) for hxltag in hxltags])
+        source_url = datasetinfo['source_url']
+        if isinstance(source_url, str):
+            source_url = {'default_url': source_url}
+        sources.extend([(hxltag, date, source.get(hxltag, source['default_source']), source_url.get(hxltag, source_url['default_url'])) for hxltag in hxltags])
     logger.info('Processed %s' % name)
     return retheaders, retval, sources
 

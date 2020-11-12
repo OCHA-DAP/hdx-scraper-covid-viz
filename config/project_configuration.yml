@@ -536,6 +536,7 @@ tabular_national:
     dataset: "covid-19-sex-disaggregated-data-tracker"
     headers: 1
     external_filter:
+      # Editable link https://docs.google.com/spreadsheets/d/1KReA4uWurU7KXHDaSrEcR7hUTUFuDKO-nZviZyaNdPI/edit#gid=434885896
       url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9PhPG7-aH0EkaBGzXYlrO9252gqs-UuKIeDQr9D3pOLBOdQ_AoSwWi21msHsdyT7thnjuhSY6ykSX/pub?gid=434885896&single=true&output=csv"
       hxltags:
         - "#country+code+v_iso2"
@@ -660,9 +661,13 @@ tabular_national:
       "#event+year+previous+todate+num": "Aid Workers Database"
       "#activity+cerf+project+insecurity+pct": "UNCERF"
       "#activity+cbpf+project+insecurity+pct": "UNCERF"
-      "#impact+type": "UNESCO"
       "#population+education": "UNESCO"
       "default_source": "Multiple sources"
+    source_url:
+      "#event+year+previous+num": "https://data.humdata.org/dataset/security-incidents-on-aid-workers"
+      "#event+year+todate+num": "https://data.humdata.org/dataset/security-incidents-on-aid-workers"
+      "#event+year+previous+todate+num": "https://data.humdata.org/dataset/security-incidents-on-aid-workers"
+      "default_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
     format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
     headers: 1
