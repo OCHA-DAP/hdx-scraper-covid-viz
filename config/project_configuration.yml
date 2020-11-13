@@ -70,6 +70,10 @@ additional_sources:
     source: "Multiple sources"
     force_date_today: True
     source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
+  - indicator: "#affected+infected+sex+new+avg+per100000"
+    source: "Multiple sources"
+    force_date_today: True
+    source_url: "https://data.humdata.org/search?q=((organization:world-health-organization%20AND%20notes:Coronavirus)%20OR%20organization:global-health-50-50)"
 
 # national
 tabular_national:
@@ -659,8 +663,8 @@ tabular_national:
       "#event+year+previous+num": "Aid Workers Database"
       "#event+year+todate+num": "Aid Workers Database"
       "#event+year+previous+todate+num": "Aid Workers Database"
-      "#activity+cerf+project+insecurity+pct": "UNCERF"
-      "#activity+cbpf+project+insecurity+pct": "UNCERF"
+      "#activity+cerf+project+insecurity+pct": "OCHA"
+      "#activity+cbpf+project+insecurity+pct": "OCHA"
       "#population+education": "UNESCO"
       "default_source": "Multiple sources"
     source_url:
