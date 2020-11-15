@@ -118,8 +118,9 @@ def get_requirements_and_funding_location(v1_url, plan, countryid_iso3mapping, c
             if req != totalreq:
                 countryreq_is_totalreq = False
     if countryreq_is_totalreq:
+        for countryiso in allreqs:
+            allreqs[countryiso] = 'N/A'
         logger.info('%s has same country requirements as total requirements!' % plan_id)
-        return dict(), dict()
 
     fundingobjects = data['report3']['fundingTotals']['objects']
     if len(fundingobjects) != 0:
