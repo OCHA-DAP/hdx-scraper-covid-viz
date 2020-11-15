@@ -90,11 +90,11 @@ tabular_national:
     date_col: "Year"
     date_type: "int"
     date_condition: "Value != ''"
-    val_cols:
+    input_cols:
       - "Value"
-    columns:
+    output_cols:
       - "Population"
-    hxltags:
+    output_hxltags:
       - "#population"
   inform_hazard:
     format: "xlsx"
@@ -103,11 +103,11 @@ tabular_national:
     headers: 1
     adm_cols:
       - "Iso3"
-    val_cols:
+    input_cols:
       - "Covid-19 Hazard & Exposure"
-    columns:
+    output_cols:
       - "Covid19HazardExposure"
-    hxltags:
+    output_hxltags:
       - "#severity+hazard+inform+num"
   inform:
     format: "xlsx"
@@ -116,17 +116,17 @@ tabular_national:
     headers: 1
     adm_cols:
       - "ISO3"
-    val_cols:
+    input_cols:
       - "LACK OF COPING CAPACITY"
       - "VULNERABILITY"
       - "INFORM COVID-19 RISK"
       - "COVID-19 RISK CLASS"
-    columns:
+    output_cols:
       - "LackOfCopingCapacity"
       - "Vulnerability"
       - "Risk"
       - "RiskClass"
-    hxltags:
+    output_hxltags:
       - "#severity+coping+inform+num"
       - "#severity+inform+num+vulnerability"
       - "#severity+inform+num"
@@ -138,11 +138,11 @@ tabular_national:
     headers: 1
     adm_cols:
       - "Country"
-    val_cols:
+    input_cols:
       - "Covid 19 Economic exposure index"
-    columns:
+    output_cols:
       - "EconomicExposure"
-    hxltags:
+    output_hxltags:
       - "#severity+economic+num"
   ifi_national:
     format: "csv"
@@ -152,7 +152,7 @@ tabular_national:
       "Country Code": ""
     adm_cols:
       - "Country Code"
-    val_cols:
+    input_cols:
       - "World Bank"
       - "IFC"
       - "IMF"
@@ -163,10 +163,10 @@ tabular_national:
       - "Total (USD mn)"
       - "Total per capita (USD mn)"
       - "Total as percentage of GDP (%)"
-    ignore_vals:
+    input_ignore_vals:
       - "N/A"
       - "-"
-    val_fns:
+    input_transforms:
       "World Bank": "get_numeric_if_possible(World Bank) if World Bank else 0"
       "IFC": "get_numeric_if_possible(IFC) if IFC else 0"
       "IMF": "get_numeric_if_possible(IMF) if IMF else 0"
@@ -177,7 +177,7 @@ tabular_national:
       "Total (USD mn)": "get_numeric_if_possible(Total (USD mn)) if Total (USD mn) else 0"
       "Total per capita (USD mn)": "get_numeric_if_possible(Total per capita (USD mn)) if Total per capita (USD mn) else 0"
       "Total as percentage of GDP (%)": "get_numeric_if_possible(Total as percentage of GDP (%)) if Total as percentage of GDP (%) else 0"
-    eval_cols:
+    process_cols:
       - "number_format(World Bank * 1000000, format='%.0f')"
       - "number_format(IFC * 1000000, format='%.0f')"
       - "number_format(IMF * 1000000, format='%.0f')"
@@ -188,7 +188,7 @@ tabular_national:
       - "number_format(Total (USD mn) * 1000000, format='%.0f')"
       - "number_format(Total per capita (USD mn))"
       - "number_format(Total as percentage of GDP (%))"
-    columns:
+    output_cols:
       - "World Bank"
       - "IFC"
       - "IMF"
@@ -199,7 +199,7 @@ tabular_national:
       - "IFI COVID19 total"
       - "IFI COVID19 total percap"
       - "IFI COVID19 total pcgdp"
-    hxltags:
+    output_hxltags:
       - "#value+wb+total"
       - "#value+ifc+total"
       - "#value+imf+total"
@@ -221,11 +221,11 @@ tabular_national:
       - "ISO"
     date_col: "Year*"
     date_type: "int"
-    val_cols:
+    input_cols:
       - "National Point Estimate"
-    columns:
+    output_cols:
       - "Malnutrition Estimate"
-    hxltags:
+    output_hxltags:
       - "#severity+malnutrition+num+national"
   needs:
     format: "xlsx"
@@ -236,13 +236,13 @@ tabular_national:
       - "Country Code"
     date_col: "Year"
     date_type: "int"
-    indicator_cols:
-      - filter_col: "Metric=People in need|PiN Value for Dataviz=yes"
-        val_cols:
+    subsets:
+      - filter: "Metric=People in need|PiN Value for Dataviz=yes"
+        input_cols:
           - "Value"
-        columns:
+        output_cols:
           - "PeopleInNeed"
-        hxltags:
+        output_hxltags:
           - "#affected+inneed"
   idmc:
     format: "csv"
@@ -251,17 +251,17 @@ tabular_national:
     use_hxl: True
     date_col: "#date+year"
     date_type: "int"
-    val_cols:
+    input_cols:
       - "#affected+idps+ind+stock+conflict"
       - "#affected+idps+ind+stock+disaster"
-    val_fns:
+    input_transforms:
       "#affected+idps+ind+stock+conflict": "int(#affected+idps+ind+stock+conflict) if #affected+idps+ind+stock+conflict else 0"
       "#affected+idps+ind+stock+disaster": "int(#affected+idps+ind+stock+disaster) if #affected+idps+ind+stock+disaster else 0"
-    eval_cols:
+    process_cols:
       - "#affected+idps+ind+stock+conflict + #affected+idps+ind+stock+disaster"
-    columns:
+    output_cols:
       - "TotalIDPs"
-    hxltags:
+    output_hxltags:
       - "#affected+displaced"
   imperial:
     format: "xlsx"
@@ -269,12 +269,12 @@ tabular_national:
     sheet: 1
     headers: 1
     use_hxl: True
-    columns:
+    output_cols:
       - "Imp: Total Cases(min)"
       - "Imp: Total Cases(max)"
       - "Imp: Total Deaths(min)"
       - "Imp: Total Deaths(max)"
-    hxltags:
+    output_hxltags:
       - "#affected+infected+min+imperial"
       - "#affected+infected+max+imperial"
       - "#affected+killed+min+imperial"
@@ -285,12 +285,12 @@ tabular_national:
     sheet: 1
     headers: 1
     use_hxl: True
-    columns:
+    output_cols:
       - "LSHTM: Total Cases(min)"
       - "LSHTM: Total Cases(max)"
       - "LSHTM: Total Deaths(min)"
       - "LSHTM: Total Deaths(max)"
-    hxltags:
+    output_hxltags:
       - "#affected+infected+min+lshtm"
       - "#affected+infected+max+lshtm"
       - "#affected+killed+min+lshtm"
@@ -303,11 +303,11 @@ tabular_national:
       - "ISO"
     date_col: "Date"
     date_type: "date"
-    val_cols:
+    input_cols:
       - "Status"
-    columns:
+    output_cols:
       - "SchoolClosure"
-    hxltags:
+    output_hxltags:
       - "#impact+type"
   travel:
     format: "csv"
@@ -315,17 +315,17 @@ tabular_national:
     headers: 1
     adm_cols:
       - "iso3"
-    val_cols:
+    input_cols:
       - "info"
       - "published"
-    append_cols:
+    input_append:
       - "info"
-    keep_cols:
+    input_keep:
       - "published"
-    columns:
+    output_cols:
       - "TravelRestrictions"
       - "TravelRestrictionsPublished"
-    hxltags:
+    output_hxltags:
       - "#severity+travel"
       - "#severity+date+travel"
   cerf_national:
@@ -336,23 +336,23 @@ tabular_national:
     headers: 1
     adm_cols:
       - "PooledFundName"
-    indicator_cols:
-      - filter_col: "IsApproved=True|SourceType=CBPF"
-        val_cols:
+    subsets:
+      - filter: "IsApproved=True|SourceType=CBPF"
+        input_cols:
           - "ParticipatingMen"
           - "ParticipatingWomen"
           - "ParticipatingBoys"
           - "ParticipatingGirls"
           - "ParticipatingTotalBeneficiary"
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipatingMen: "float(ParticipatingMen)"
           ParticipatingWomen: "float(ParticipatingWomen)"
           ParticipatingBoys: "float(ParticipatingBoys)"
           ParticipatingGirls: "float(ParticipatingGirls)"
           ParticipatingTotalBeneficiary: "float(ParticipatingTotalBeneficiary)"
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipatingMen"
             mustbepopulated: False
           - formula: "ParticipatingWomen"
@@ -365,175 +365,175 @@ tabular_national:
             mustbepopulated: False
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CBPFCovidFundingMen"
           - "CBPFCovidFundingWomen"
           - "CBPFCovidFundingBoys"
           - "CBPFCovidFundingGirls"
           - "CBPFCovidFundingTotalBeneficiary"
           - "CBPFCovidFunding"
-        hxltags:
+        output_hxltags:
           - "#affected+cbpf+covid+funding+men"
           - "#affected+cbpf+covid+funding+women"
           - "#affected+boys+cbpf+covid+funding"
           - "#affected+cbpf+covid+funding+girls"
           - "#affected+cbpf+covid+funding+total"
           - "#value+cbpf+covid+funding+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker="
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CBPF|GenderMarker="
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CBPFCovidFundingGMEmpty"
-        hxltags:
+        output_hxltags:
           - "#value+cbpf+covid+funding+gmempty+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=0- Does not systematically link programming actions"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CBPF|GenderMarker=0- Does not systematically link programming actions"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CBPFCovidFundingGM0"
-        hxltags:
+        output_hxltags:
           - "#value+cbpf+covid+funding+gm0+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=1- Unlikely to contribute to gender equality (no gender equality measure and no age consideration)"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CBPF|GenderMarker=1- Unlikely to contribute to gender equality (no gender equality measure and no age consideration)"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CBPFCovidFundingGM1"
-        hxltags:
+        output_hxltags:
           - "#value+cbpf+covid+funding+gm1+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=2- Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CBPF|GenderMarker=2- Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CBPFCovidFundingGM2"
-        hxltags:
+        output_hxltags:
           - "#value+cbpf+covid+funding+gm2+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=3- Likely to contribute to gender equality, but without attention to age groups"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CBPF|GenderMarker=3- Likely to contribute to gender equality, but without attention to age groups"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CBPFCovidFundingGM3"
-        hxltags:
+        output_hxltags:
           - "#value+cbpf+covid+funding+gm3+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=4- Likely to contribute to gender equality, including across age groups"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CBPF|GenderMarker=4- Likely to contribute to gender equality, including across age groups"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CBPFCovidFundingGM4"
-        hxltags:
+        output_hxltags:
           - "#value+cbpf+covid+funding+gm4+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CERF"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CERFCovidFunding"
-        hxltags:
+        output_hxltags:
           - "#value+cerf+covid+funding+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker="
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CERF|GenderMarker="
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CERFCovidFundingGMEmpty"
-        hxltags:
+        output_hxltags:
           - "#value+cerf+covid+funding+gmempty+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=0- Does not systematically link programming actions"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CERF|GenderMarker=0- Does not systematically link programming actions"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CERFCovidFundingGM0"
-        hxltags:
+        output_hxltags:
           - "#value+cerf+covid+funding+gm0+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=1- Unlikely to contribute to gender equality (no gender equality measure and no age consideration)"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CERF|GenderMarker=1- Unlikely to contribute to gender equality (no gender equality measure and no age consideration)"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CERFCovidFundingGM1"
-        hxltags:
+        output_hxltags:
           - "#value+cerf+covid+funding+gm1+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=2- Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CERF|GenderMarker=2- Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CERFCovidFundingGM2"
-        hxltags:
+        output_hxltags:
           - "#value+cerf+covid+funding+gm2+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=3- Likely to contribute to gender equality, but without attention to age groups"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CERF|GenderMarker=3- Likely to contribute to gender equality, but without attention to age groups"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CERFCovidFundingGM3"
-        hxltags:
+        output_hxltags:
           - "#value+cerf+covid+funding+gm3+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=4- Likely to contribute to gender equality, including across age groups"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CERF|GenderMarker=4- Likely to contribute to gender equality, including across age groups"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CERFCovidFundingGM4"
-        hxltags:
+        output_hxltags:
           - "#value+cerf+covid+funding+gm4+total+usd"
   sadd:
     format: "csv"
@@ -546,27 +546,27 @@ tabular_national:
         - "#country+code+v_iso2"
     adm_cols:
       - "Country code"
-    val_cols:
+    input_cols:
       - "Cases (% male)"
       - "Cases (% female)"
       - "Deaths (% male)"
       - "Deaths (% female)"
-    val_fns:
+    input_transforms:
       "Cases (% male)": "get_numeric_if_possible(Cases (% male))"
       "Cases (% female)": "get_numeric_if_possible(Cases (% female))"
       "Deaths (% male)": "get_numeric_if_possible(Deaths (% male))"
       "Deaths (% female)": "get_numeric_if_possible(Deaths (% female))"
-    eval_cols:
+    process_cols:
       - "number_format(Cases (% male))"
       - "number_format(Cases (% female))"
       - "number_format(Deaths (% male))"
       - "number_format(Deaths (% female))"
-    columns:
+    output_cols:
       - "Cases (% male)"
       - "Cases (% female)"
       - "Deaths (% male)"
       - "Deaths (% female)"
-    hxltags:
+    output_hxltags:
       - "#affected+infected+m+pct"
       - "#affected+f+infected+pct"
       - "#affected+killed+m+pct"
@@ -588,17 +588,17 @@ tabular_national:
     date_condition: "new_tests is not None and new_tests > 0"
     adm_cols:
       - "iso_code"
-    val_cols:
+    input_cols:
       - "new_tests"
       - "new_tests_per_thousand"
       - "new_tests_smoothed_per_thousand"
       - "positive_rate"
-    columns:
+    output_cols:
       - "New Tests"
       - "New Tests Per Thousand"
       - "New Tests Per Thousand (7-day)"
       - "Positive Test Rate"
-    hxltags:
+    output_hxltags:
       - "#affected+tested"
       - "#affected+tested+per1000"
       - "#affected+tested+avg+per1000"
@@ -619,21 +619,21 @@ tabular_national:
       - "reference_year"
       - "reference_code"
     date_type: "int"
-    indicator_cols:
-      - filter_col: "chtype=current"
-        val_cols:
+    subsets:
+      - filter: "chtype=current"
+        input_cols:
           - "phase3"
           - "phase4"
           - "phase5"
           - "phase35"
           - "population"
-        val_fns:
+        input_transforms:
           "phase3": "get_numeric_if_possible(phase3)"
           "phase4": "get_numeric_if_possible(phase4)"
           "phase5": "get_numeric_if_possible(phase5)"
           "phase35": "get_numeric_if_possible(phase35)"
           "population": "get_numeric_if_possible(population)"
-        total_cols:
+        sum_cols:
           - formula: "get_fraction_str(phase3, population)"
             mustbepopulated: True
           - formula: "get_fraction_str(phase4, population)"
@@ -644,13 +644,13 @@ tabular_national:
             mustbepopulated: True
           - formula: "get_fraction_str(population, #population)"
             mustbepopulated: True
-        columns:
+        output_cols:
           - "FoodInsecurityCHP3"
           - "FoodInsecurityCHP4"
           - "FoodInsecurityCHP5"
           - "FoodInsecurityCHP3+"
           - "FoodInsecurityCHAnalysed"
-        hxltags:
+        output_hxltags:
           - "#affected+ch+food+p3+pct"
           - "#affected+ch+food+p4+pct"
           - "#affected+ch+food+p5+pct"
@@ -676,7 +676,7 @@ tabular_national:
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
     headers: 1
     use_hxl: True
-    val_fns:
+    input_transforms:
       "#access+visas+pct": "get_numeric_if_possible(#access+visas+pct)"
       "#access+travel+pct": "get_numeric_if_possible(#access+travel+pct)"
       "#activity+cerf+project+insecurity+pct": "get_numeric_if_possible(#activity+cerf+project+insecurity+pct)"
@@ -715,7 +715,7 @@ regional:
   headers: 1
   iso3: "ISO3"
   region: "Regional_office"
-  val_fns:
+  process_cols:
     "Cumulative_cases": "sum"
     "Cumulative_deaths": "sum"
     "IFI COVID19 total": "sum"
@@ -770,23 +770,23 @@ tabular_global:
     dataset: "cerf-covid-19-allocations"
     force_date_today: True
     headers: 1
-    indicator_cols:
-      - filter_col: "IsApproved=True|SourceType=CBPF"
-        val_cols:
+    subsets:
+      - filter: "IsApproved=True|SourceType=CBPF"
+        input_cols:
           - "ParticipatingMen"
           - "ParticipatingWomen"
           - "ParticipatingBoys"
           - "ParticipatingGirls"
           - "ParticipatingTotalBeneficiary"
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipatingMen: "float(ParticipatingMen)"
           ParticipatingWomen: "float(ParticipatingWomen)"
           ParticipatingBoys: "float(ParticipatingBoys)"
           ParticipatingGirls: "float(ParticipatingGirls)"
           ParticipatingTotalBeneficiary: "float(ParticipatingTotalBeneficiary)"
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipatingMen"
             mustbepopulated: False
           - formula: "ParticipatingWomen"
@@ -799,175 +799,175 @@ tabular_global:
             mustbepopulated: False
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CBPFCovidFundingMen"
           - "CBPFCovidFundingWomen"
           - "CBPFCovidFundingBoys"
           - "CBPFCovidFundingGirls"
           - "CBPFCovidFundingTotalBeneficiary"
           - "CBPFCovidFunding"
-        hxltags:
+        output_hxltags:
           - "#affected+cbpf+covid+funding+men"
           - "#affected+cbpf+covid+funding+women"
           - "#affected+boys+cbpf+covid+funding"
           - "#affected+cbpf+covid+funding+girls"
           - "#affected+cbpf+covid+funding+total"
           - "#value+cbpf+covid+funding+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker="
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CBPF|GenderMarker="
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CBPFCovidFundingGMEmpty"
-        hxltags:
+        output_hxltags:
           - "#value+cbpf+covid+funding+gmempty+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=0- Does not systematically link programming actions"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CBPF|GenderMarker=0- Does not systematically link programming actions"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CBPFCovidFundingGM0"
-        hxltags:
+        output_hxltags:
           - "#value+cbpf+covid+funding+gm0+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=1- Unlikely to contribute to gender equality (no gender equality measure and no age consideration)"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CBPF|GenderMarker=1- Unlikely to contribute to gender equality (no gender equality measure and no age consideration)"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CBPFCovidFundingGM1"
-        hxltags:
+        output_hxltags:
           - "#value+cbpf+covid+funding+gm1+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=2- Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CBPF|GenderMarker=2- Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CBPFCovidFundingGM2"
-        hxltags:
+        output_hxltags:
           - "#value+cbpf+covid+funding+gm2+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=3- Likely to contribute to gender equality, but without attention to age groups"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CBPF|GenderMarker=3- Likely to contribute to gender equality, but without attention to age groups"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CBPFCovidFundingGM3"
-        hxltags:
+        output_hxltags:
           - "#value+cbpf+covid+funding+gm3+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CBPF|GenderMarker=4- Likely to contribute to gender equality, including across age groups"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CBPF|GenderMarker=4- Likely to contribute to gender equality, including across age groups"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CBPFCovidFundingGM4"
-        hxltags:
+        output_hxltags:
           - "#value+cbpf+covid+funding+gm4+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CERF"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CERFCovidFunding"
-        hxltags:
+        output_hxltags:
           - "#value+cerf+covid+funding+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker="
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CERF|GenderMarker="
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CERFCovidFundingGMEmpty"
-        hxltags:
+        output_hxltags:
           - "#value+cerf+covid+funding+gmempty+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=0- Does not systematically link programming actions"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CERF|GenderMarker=0- Does not systematically link programming actions"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CERFCovidFundingGM0"
-        hxltags:
+        output_hxltags:
           - "#value+cerf+covid+funding+gm0+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=1- Unlikely to contribute to gender equality (no gender equality measure and no age consideration)"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CERF|GenderMarker=1- Unlikely to contribute to gender equality (no gender equality measure and no age consideration)"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CERFCovidFundingGM1"
-        hxltags:
+        output_hxltags:
           - "#value+cerf+covid+funding+gm1+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=2- Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CERF|GenderMarker=2- Unlikely to contribute to gender equality (no gender equality measure but includes age consideration)"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CERFCovidFundingGM2"
-        hxltags:
+        output_hxltags:
           - "#value+cerf+covid+funding+gm2+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=3- Likely to contribute to gender equality, but without attention to age groups"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CERF|GenderMarker=3- Likely to contribute to gender equality, but without attention to age groups"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CERFCovidFundingGM3"
-        hxltags:
+        output_hxltags:
           - "#value+cerf+covid+funding+gm3+total+usd"
-      - filter_col: "IsApproved=True|SourceType=CERF|GenderMarker=4- Likely to contribute to gender equality, including across age groups"
-        val_cols:
+      - filter: "IsApproved=True|SourceType=CERF|GenderMarker=4- Likely to contribute to gender equality, including across age groups"
+        input_cols:
           - "ParticipationBudget"
-        val_fns:
+        input_transforms:
           ParticipationBudget: "float(ParticipationBudget)"
-        total_cols:
+        sum_cols:
           - formula: "ParticipationBudget"
             mustbepopulated: False
-        columns:
+        output_cols:
           - "CERFCovidFundingGM4"
-        hxltags:
+        output_hxltags:
           - "#value+cerf+covid+funding+gm4+total+usd"
   ifi_global:
     format: "csv"
@@ -977,19 +977,19 @@ tabular_global:
       "Country Code": ""
     adm_cols:
       - "Country Code"
-    val_cols:
+    input_cols:
       - "Total (USD mn)"
-    ignore_vals:
+    input_ignore_vals:
       - "N/A"
       - "-"
-    val_fns:
+    input_transforms:
       "Total (USD mn)": "get_numeric_if_possible(Total (USD mn)) if Total (USD mn) else 0"
-    total_cols:
+    sum_cols:
       - formula: "number_format(Total (USD mn) * 1000000, format='%.0f')"
         mustbepopulated: True
-    columns:
+    output_cols:
       - "IFI COVID19 global"
-    hxltags:
+    output_hxltags:
       - "#value+ifi+total"
 
 
@@ -1009,13 +1009,13 @@ tabular_subnational:
     adm_cols:
       - "alpha_3"
       - "ADM1_PCODE"
-    val_cols:
+    input_cols:
       - "POPULATION"
-    val_fns:
+    input_transforms:
       "POPULATION": "get_numeric_if_possible(POPULATION)"
-    columns:
+    output_cols:
       - "Population"
-    hxltags:
+    output_hxltags:
       - "#population"
   cadre_harmonise:
     format: "xlsx"
@@ -1036,21 +1036,21 @@ tabular_subnational:
       - "reference_year"
       - "reference_code"
     date_type: "int"
-    indicator_cols:
-      - filter_col: "chtype=current"
-        val_cols:
+    subsets:
+      - filter: "chtype=current"
+        input_cols:
           - "phase3"
           - "phase4"
           - "phase5"
           - "phase35"
           - "population"
-        val_fns:
+        input_transforms:
           "phase3": "get_numeric_if_possible(phase3)"
           "phase4": "get_numeric_if_possible(phase4)"
           "phase5": "get_numeric_if_possible(phase5)"
           "phase35": "get_numeric_if_possible(phase35)"
           "population": "get_numeric_if_possible(population)"
-        total_cols:
+        sum_cols:
           - formula: "get_fraction_str(phase3, population)"
             mustbepopulated: True
           - formula: "get_fraction_str(phase4, population)"
@@ -1061,13 +1061,13 @@ tabular_subnational:
             mustbepopulated: True
           - formula: "get_fraction_str(population, #population)"
             mustbepopulated: True
-        columns:
+        output_cols:
           - "FoodInsecurityCHP3"
           - "FoodInsecurityCHP4"
           - "FoodInsecurityCHP5"
           - "FoodInsecurityCHP3+"
           - "FoodInsecurityCHAnalysed"
-        hxltags:
+        output_hxltags:
           - "#affected+ch+food+p3+pct"
           - "#affected+ch+food+p4+pct"
           - "#affected+ch+food+p5+pct"
@@ -1081,11 +1081,11 @@ tabular_subnational:
     adm_cols:
       - "alpha_3"
       - "ADM1_PCODE"
-    val_cols:
+    input_cols:
       - "NUMPOINTS"
-    columns:
+    output_cols:
       - "NoHealthFacilities"
-    hxltags:
+    output_hxltags:
       - "#loc+count+health"
 #  idmc:
 #    source: "IDMC"
@@ -1095,11 +1095,11 @@ tabular_subnational:
 #    adm_cols:
 #      - ~
 #      - "ADM1_PCODE"
-#    val_cols:
+#    input_cols:
 #      - "DISPLACED"
-#    columns:
+#    output_cols:
 #      - "NoDisplaced"
-#    hxltags:
+#    output_hxltags:
 #      - "#affected+displaced"
   who_subnational:
     source: "WHO"
@@ -1111,159 +1111,159 @@ tabular_subnational:
       - "Admin1"
     date_col: "Year"
     date_type: "int"
-    indicator_cols:
-      - filter_col: "Vaccine=HepB1"
-        val_cols:
+    subsets:
+      - filter: "Vaccine=HepB1"
+        input_cols:
           - "Numerator"
           - "Denominator"
-        ignore_vals:
+        input_ignore_vals:
           - "-2222"
           - "-4444"
-        val_fns:
+        input_transforms:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        total_cols:
+        sum_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        columns:
+        output_cols:
           - "HepB1 Coverage"
-        hxltags:
+        output_hxltags:
           - "#population+hepb1+pct+vaccinated"
-      - filter_col: "Vaccine=HepB2"
-        val_cols:
+      - filter: "Vaccine=HepB2"
+        input_cols:
           - "Numerator"
           - "Denominator"
-        ignore_vals:
+        input_ignore_vals:
           - "-2222"
           - "-4444"
-        val_fns:
+        input_transforms:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        total_cols:
+        sum_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        columns:
+        output_cols:
           - "HepB2 Coverage"
-        hxltags:
+        output_hxltags:
           - "#population+hepb2+pct+vaccinated"
-      - filter_col: "Vaccine=HepB3"
-        val_cols:
+      - filter: "Vaccine=HepB3"
+        input_cols:
           - "Numerator"
           - "Denominator"
-        ignore_vals:
+        input_ignore_vals:
           - "-2222"
           - "-4444"
-        val_fns:
+        input_transforms:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        total_cols:
+        sum_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        columns:
+        output_cols:
           - "HepB3 Coverage"
-        hxltags:
+        output_hxltags:
           - "#population+hepb3+pct+vaccinated"
-      - filter_col: "Vaccine=IPV1"
-        val_cols:
+      - filter: "Vaccine=IPV1"
+        input_cols:
           - "Numerator"
           - "Denominator"
-        ignore_vals:
+        input_ignore_vals:
           - "-2222"
           - "-4444"
-        val_fns:
+        input_transforms:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        total_cols:
+        sum_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        columns:
+        output_cols:
           - "IPV1 Coverage"
-        hxltags:
+        output_hxltags:
           - "#population+ipv1+pct+vaccinated"
-      - filter_col: "Vaccine=MCV1"
-        val_cols:
+      - filter: "Vaccine=MCV1"
+        input_cols:
           - "Numerator"
           - "Denominator"
-        ignore_vals:
+        input_ignore_vals:
           - "-2222"
           - "-4444"
-        val_fns:
+        input_transforms:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        total_cols:
+        sum_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        columns:
+        output_cols:
           - "MCV1 Coverage"
-        hxltags:
+        output_hxltags:
           - "#population+mcv1+pct+vaccinated"
-      - filter_col: "Vaccine=MCV2"
-        val_cols:
+      - filter: "Vaccine=MCV2"
+        input_cols:
           - "Numerator"
           - "Denominator"
-        ignore_vals:
+        input_ignore_vals:
           - "-2222"
           - "-4444"
-        val_fns:
+        input_transforms:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        total_cols:
+        sum_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        columns:
+        output_cols:
           - "MCV2 Coverage"
-        hxltags:
+        output_hxltags:
           - "#population+mcv2+pct+vaccinated"
-      - filter_col: "Vaccine=Pol1"
-        val_cols:
+      - filter: "Vaccine=Pol1"
+        input_cols:
           - "Numerator"
           - "Denominator"
-        ignore_vals:
+        input_ignore_vals:
           - "-2222"
           - "-4444"
-        val_fns:
+        input_transforms:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        total_cols:
+        sum_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        columns:
+        output_cols:
           - "Pol1 Coverage"
-        hxltags:
+        output_hxltags:
           - "#population+pct+pol1+vaccinated"
-      - filter_col: "Vaccine=Pol2"
-        val_cols:
+      - filter: "Vaccine=Pol2"
+        input_cols:
           - "Numerator"
           - "Denominator"
-        ignore_vals:
+        input_ignore_vals:
           - "-2222"
           - "-4444"
-        val_fns:
+        input_transforms:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        total_cols:
+        sum_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        columns:
+        output_cols:
           - "Pol2 Coverage"
-        hxltags:
+        output_hxltags:
           - "#population+pct+pol2+vaccinated"
-      - filter_col: "Vaccine=Pol3"
-        val_cols:
+      - filter: "Vaccine=Pol3"
+        input_cols:
           - "Numerator"
           - "Denominator"
-        ignore_vals:
+        input_ignore_vals:
           - "-2222"
           - "-4444"
-        val_fns:
+        input_transforms:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        total_cols:
+        sum_cols:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        columns:
+        output_cols:
           - "Pol3 Coverage"
-        hxltags:
+        output_hxltags:
           - "#population+pct+pol3+vaccinated"
   gam:
     format: "xlsx"
@@ -1282,11 +1282,11 @@ tabular_subnational:
       - "Region Name"
     date_col: "Year*"
     date_type: "int"
-    val_cols:
+    input_cols:
       - "Region Point Estimate"
-    columns:
+    output_cols:
       - "Malnutrition Estimate"
-    hxltags:
+    output_hxltags:
       - "#severity+malnutrition+num+subnational"
 
 road_networks_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=0&single=true&output=csv"

@@ -11,7 +11,7 @@ from utilities.admininfo import AdminInfo
 
 
 class RowParser(object):
-    def __init__(self, level, datasetinfo, headers, indicatorcols, maxdateonly=True):
+    def __init__(self, level, datasetinfo, headers, subsets, maxdateonly=True):
         if isinstance(level, str):
             if level == 'global':
                 level = None
@@ -32,19 +32,19 @@ class RowParser(object):
         self.maxdate = date
         date_condition = datasetinfo.get('date_condition')
         if date_condition is not None:
-            for col in datasetinfo['val_cols']:
+            for col in datasetinfo['input_cols']:
                 date_condition = date_condition.replace(col, f"row['{col}']")
         self.date_condition = date_condition
         self.admininfo = AdminInfo.get()
         self.admcols = datasetinfo.get('adm_cols', list())
         self.admexact = datasetinfo.get('adm_exact', False)
-        self.indicatorcols = indicatorcols
+        self.subsets = subsets
         if self.level is None:
-            self.maxdates = {i: date for i, _ in enumerate(indicatorcols)}
+            self.maxdates = {i: date for i, _ in enumerate(subsets)}
         else:
             if self.level > len(self.admcols):
                 raise ValueError('No admin columns specified for required level!')
-            self.maxdates = {i: {adm: date for adm in self.admininfo.adms[self.level]} for i, _ in enumerate(indicatorcols)}
+            self.maxdates = {i: {adm: date for adm in self.admininfo.adms[self.level]} for i, _ in enumerate(subsets)}
 
         self.maxdateonly = maxdateonly
         self.flatteninfo = datasetinfo.get('flatten')
@@ -132,13 +132,13 @@ class RowParser(object):
                 return None, None
 
         indicators_process = list()
-        for indicatorcol in self.indicatorcols:
-            filtercol = indicatorcol['filter_col']
+        for subset in self.subsets:
+            filter = subset['filter']
             process = True
-            if filtercol:
-                filtercols = filtercol.split('|')
+            if filter:
+                filters = filter.split('|')
                 match = True
-                for filterstr in filtercols:
+                for filterstr in filters:
                     filter = filterstr.split('=')
                     if row[filter[0]] != filter[1]:
                         match = False

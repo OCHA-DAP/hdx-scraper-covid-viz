@@ -30,13 +30,13 @@ brackets = r'''
 
 
 def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup, retheaders=[list(), list()], retval=list(), sources=list()):
-    indicatorcols = datasetinfo.get('indicator_cols')
-    if not indicatorcols:
-        indicatorcols = [{'filter_col': datasetinfo.get('filter_col'), 'val_cols': datasetinfo.get('val_cols', list()),
-                          'val_fns': datasetinfo.get('val_fns', dict()), 'eval_cols':  datasetinfo.get('eval_cols', list()),
-                          'keep_cols': datasetinfo.get('keep_cols', list()), 'append_cols': datasetinfo.get('append_cols', list()),
-                          'total_cols': datasetinfo.get('total_cols'), 'ignore_vals': datasetinfo.get('ignore_vals', list()),
-                          'columns': datasetinfo.get('columns', list()), 'hxltags': datasetinfo.get('hxltags', list())}]
+    subsets = datasetinfo.get('subsets')
+    if not subsets:
+        subsets = [{'filter': datasetinfo.get('filter'), 'input_cols': datasetinfo.get('input_cols', list()),
+                          'input_transforms': datasetinfo.get('input_transforms', dict()), 'process_cols':  datasetinfo.get('process_cols', list()),
+                          'input_keep': datasetinfo.get('input_keep', list()), 'input_append': datasetinfo.get('input_append', list()),
+                          'sum_cols': datasetinfo.get('sum_cols'), 'input_ignore_vals': datasetinfo.get('input_ignore_vals', list()),
+                          'output_cols': datasetinfo.get('output_cols', list()), 'output_hxltags': datasetinfo.get('output_hxltags', list())}]
     use_hxl = datasetinfo.get('use_hxl', False)
     if use_hxl:
         hxlrow = next(iterator)
@@ -44,7 +44,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
             hxlrow = next(iterator)
         exclude_tags = datasetinfo.get('exclude_tags', list())
         adm_cols = list()
-        val_cols = list()
+        input_cols = list()
         columns = list()
         for header in headers:
             hxltag = hxlrow[header]
@@ -66,59 +66,59 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
                 continue
             if hxltag == datasetinfo.get('date_col') and datasetinfo.get('include_date', False) is False:
                 continue
-            val_cols.append(hxltag)
+            input_cols.append(hxltag)
             columns.append(header)
         datasetinfo['adm_cols'] = adm_cols
-        for indicatorcol in indicatorcols:
-            orig_val_cols = indicatorcol.get('val_cols', list())
-            if not orig_val_cols:
-                orig_val_cols.extend(val_cols)
-            indicatorcol['val_cols'] = orig_val_cols
-            orig_columns = indicatorcol.get('columns', list())
+        for subset in subsets:
+            orig_input_cols = subset.get('input_cols', list())
+            if not orig_input_cols:
+                orig_input_cols.extend(input_cols)
+            subset['input_cols'] = orig_input_cols
+            orig_columns = subset.get('output_cols', list())
             if not orig_columns:
                 orig_columns.extend(columns)
-            indicatorcol['columns'] = orig_columns
-            orig_hxltags = indicatorcol.get('hxltags', list())
+            subset['output_cols'] = orig_columns
+            orig_hxltags = subset.get('output_hxltags', list())
             if not orig_hxltags:
-                orig_hxltags.extend(val_cols)
-            indicatorcol['hxltags'] = orig_hxltags
+                orig_hxltags.extend(input_cols)
+            subset['output_hxltags'] = orig_hxltags
     else:
         hxlrow = None
 
-    rowparser = RowParser(level, datasetinfo, headers, indicatorcols)
+    rowparser = RowParser(level, datasetinfo, headers, subsets)
     valuedicts = dict()
-    for indicatorcol in indicatorcols:
-        for _ in indicatorcol['val_cols']:
-            dict_of_lists_add(valuedicts, indicatorcol['filter_col'], dict())
+    for subset in subsets:
+        for _ in subset['input_cols']:
+            dict_of_lists_add(valuedicts, subset['filter'], dict())
 
     def add_row(row):
         adm, indicators_process = rowparser.do_set_value(row, name)
         if not adm:
             return
-        for i, indicatorcol in enumerate(indicatorcols):
+        for i, subset in enumerate(subsets):
             if not indicators_process[i]:
                 continue
-            filtercol = indicatorcol['filter_col']
-            ignore_vals = indicatorcol.get('ignore_vals', list())
-            val_fns = indicatorcol.get('val_fns', dict())
-            total_cols = indicatorcol.get('total_cols')
-            eval_cols = indicatorcol.get('eval_cols')
-            append_cols = indicatorcol.get('append_cols', list())
-            keep_cols = indicatorcol.get('keep_cols', list())
-            for i, valcol in enumerate(indicatorcol['val_cols']):
-                valuedict = valuedicts[filtercol][i]
+            filter = subset['filter']
+            input_ignore_vals = subset.get('input_ignore_vals', list())
+            input_transforms = subset.get('input_transforms', dict())
+            sum_cols = subset.get('sum_cols')
+            process_cols = subset.get('process_cols')
+            input_append = subset.get('input_append', list())
+            input_keep = subset.get('input_keep', list())
+            for i, valcol in enumerate(subset['input_cols']):
+                valuedict = valuedicts[filter][i]
                 val = get_rowval(row, valcol)
-                val_fn = val_fns.get(valcol)
-                if val_fn and val not in ignore_vals:
-                    val = eval(val_fn.replace(valcol, 'val'))
-                if total_cols or eval_cols:
+                input_transform = input_transforms.get(valcol)
+                if input_transform and val not in input_ignore_vals:
+                    val = eval(input_transform.replace(valcol, 'val'))
+                if sum_cols or process_cols:
                     dict_of_lists_add(valuedict, adm, val)
                 else:
                     curval = valuedict.get(adm)
-                    if valcol in append_cols:
+                    if valcol in input_append:
                         if curval:
                             val = curval + val
-                    elif valcol in keep_cols:
+                    elif valcol in input_keep:
                         if curval:
                             val = curval
                     valuedict[adm] = val
@@ -155,21 +155,21 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
             raise ValueError('No date type specified!')
     date = date.strftime('%Y-%m-%d')
 
-    for indicatorcol in indicatorcols:
-        columns = indicatorcol['columns']
-        retheaders[0].extend(columns)
-        hxltags = indicatorcol['hxltags']
-        retheaders[1].extend(hxltags)
-        valdicts = valuedicts[indicatorcol['filter_col']]
-        eval_cols = indicatorcol.get('eval_cols')
-        keep_cols = indicatorcol.get('keep_cols', list())
-        total_cols = indicatorcol.get('total_cols')
-        ignore_vals = indicatorcol.get('ignore_vals', list())
-        valcols = indicatorcol['val_cols']
+    for subset in subsets:
+        output_cols = subset['output_cols']
+        retheaders[0].extend(output_cols)
+        output_hxltags = subset['output_hxltags']
+        retheaders[1].extend(output_hxltags)
+        valdicts = valuedicts[subset['filter']]
+        process_cols = subset.get('process_cols')
+        input_keep = subset.get('input_keep', list())
+        sum_cols = subset.get('sum_cols')
+        input_ignore_vals = subset.get('input_ignore_vals', list())
+        valcols = subset['input_cols']
         # Indices of list sorted by length
         sorted_len_indices = sorted(range(len(valcols)), key=lambda k: len(valcols[k]), reverse=True)
-        if eval_cols:
-            newvaldicts = [dict() for _ in eval_cols]
+        if process_cols:
+            newvaldicts = [dict() for _ in process_cols]
 
             def text_replacement(string, adm):
                 string = string.replace('#population', '#pzbgvjh')
@@ -178,12 +178,12 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
                     valcol = valcols[j]
                     if valcol not in string:
                         continue
-                    if valcol in keep_cols:
-                        keep_col_index = 0
+                    if valcol in input_keep:
+                        input_keep_index = 0
                     else:
-                        keep_col_index = -1
-                    val = valdicts[j][adm][keep_col_index]
-                    if val is None or val == '' or val in ignore_vals:
+                        input_keep_index = -1
+                    val = valdicts[j][adm][input_keep_index]
+                    if val is None or val == '' or val in input_ignore_vals:
                         val = 0
                     else:
                         hasvalues = True
@@ -191,11 +191,11 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
                 string = string.replace('#pzbgvjh', '#population')
                 return string, hasvalues
 
-            for i, eval_col in enumerate(eval_cols):
+            for i, process_col in enumerate(process_cols):
                 valdict0 = valdicts[0]
                 for adm in valdict0:
                     hasvalues = True
-                    matches = regex.search(brackets, eval_col, flags=regex.VERBOSE)
+                    matches = regex.search(brackets, process_col, flags=regex.VERBOSE)
                     if matches:
                         for bracketed_str in matches.captures('rec'):
                             if any(bracketed_str in x for x in valcols):
@@ -205,7 +205,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
                                 hasvalues = False
                                 break
                     if hasvalues:
-                        formula, hasvalues_t = text_replacement(eval_col, adm)
+                        formula, hasvalues_t = text_replacement(process_col, adm)
                         if hasvalues_t:
                             formula = formula.replace('#population', 'population_lookup[adm]')
                             newvaldicts[i][adm] = eval(formula)
@@ -214,21 +214,21 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
                     else:
                         newvaldicts[i][adm] = ''
             retval.extend(newvaldicts)
-        elif total_cols:
-            for total_col in total_cols:
-                formula = total_col['formula']
-                mustbepopulated = total_col.get('mustbepopulated', False)
+        elif sum_cols:
+            for sum_col in sum_cols:
+                formula = sum_col['formula']
+                mustbepopulated = sum_col.get('mustbepopulated', False)
                 newvaldicts = [dict() for _ in valdicts]
                 valdict0 = valdicts[0]
                 for adm in valdict0:
                     for i, val in enumerate(valdict0[adm]):
-                        if not val or val in ignore_vals:
+                        if not val or val in input_ignore_vals:
                             exists = False
                         else:
                             exists = True
                             for valdict in valdicts[1:]:
                                 val = valdict[adm][i]
-                                if val is None or val == '' or val in ignore_vals:
+                                if val is None or val == '' or val in input_ignore_vals:
                                     exists = False
                                     break
                         if mustbepopulated and not exists:
@@ -255,7 +255,7 @@ def _get_tabular(level, name, datasetinfo, headers, iterator, population_lookup,
         source_url = datasetinfo['source_url']
         if isinstance(source_url, str):
             source_url = {'default_url': source_url}
-        sources.extend([(hxltag, date, source.get(hxltag, source['default_source']), source_url.get(hxltag, source_url['default_url'])) for hxltag in hxltags])
+        sources.extend([(hxltag, date, source.get(hxltag, source['default_source']), source_url.get(hxltag, source_url['default_url'])) for hxltag in output_hxltags])
     logger.info('Processed %s' % name)
     return retheaders, retval, sources
 
