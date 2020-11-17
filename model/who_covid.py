@@ -145,7 +145,8 @@ def get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers
     output_df.loc[
         (output_df['NewDeath_PercentChange'].isna()) & (output_df['diff_deaths'] == 0), 'NewDeath_PercentChange'] = 0.0
 
-    output_df = output_df[output_df['Cumulative_cases'] > MIN_CUMULATIVE_CASES]
+    # comment out to include PRK
+    # output_df = output_df[output_df['Cumulative_cases'] > MIN_CUMULATIVE_CASES]
 
     # Add pop to output df
     output_df = output_df.merge(df_pop, left_on='ISO_3_CODE', right_on='Country Code', how='left').drop(
