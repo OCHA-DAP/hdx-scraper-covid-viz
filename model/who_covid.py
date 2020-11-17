@@ -167,7 +167,7 @@ def get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers
     outputs['gsheets'].update_tab(trend_name, output_df, trend_hxltags)
     outputs['excel'].update_tab(trend_name, output_df, trend_hxltags)
     # Save as JSON
-    json_df = output_df.replace([numpy.inf, -numpy.inf], '').groupby('ISO_3_CODE').apply(lambda x: x.to_dict('r'))
+    json_df = output_df.replace([numpy.inf, -numpy.inf, numpy.nan], '').groupby('ISO_3_CODE').apply(lambda x: x.to_dict('r'))
     del trend_hxltags['ISO_3_CODE']
     for rows in json_df:
         countryiso = rows[0]['ISO_3_CODE']
