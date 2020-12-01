@@ -3,7 +3,7 @@ import logging
 
 from hdx.location.country import Country
 
-from model import today, calculate_ratios
+from model import calculate_ratios
 from utilities.readers import read_hdx
 
 logger = logging.getLogger(__name__)
@@ -15,17 +15,26 @@ def add_food_prices(configuration, countryiso3s, downloader, scrapers=None):
         return list(), list(), list()
     datasetinfo = configuration[name]
     headers, iterator = read_hdx(downloader, datasetinfo)
+    rows = list(iterator)
+    max_yearmonth = ''
+    for row in rows:
+        year_month = '%s/%s' % (row['Year'], row['Month'])
+        if year_month > max_yearmonth:
+            max_yearmonth = year_month
+    max_year, max_month = max_yearmonth.split('/')
+    max_month = int(max_month)
+    max_year = int(max_year)
     allowed_months = set()
-    for i in range(1, 7, 1):
-        month = today.month - i
+    for i in range(0, 6, 1):
+        month = max_month - i
         if month > 0:
-            allowed_months.add('%d/%d' % (today.year, month))
+            allowed_months.add('%d/%d' % (max_year, month))
         else:
             month = 12 - month
-            allowed_months.add('%d/%d' % (today.year - 1, month))
+            allowed_months.add('%d/%d' % (max_year - 1, month))
     commods_per_country = dict()
     affected_commods_per_country = dict()
-    for row in iterator:
+    for row in rows:
         year_month = '%s/%s' % (row['Year'], row['Month'])
         if year_month not in allowed_months:
             continue
