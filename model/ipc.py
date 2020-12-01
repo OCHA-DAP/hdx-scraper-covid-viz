@@ -83,7 +83,10 @@ def get_ipc(configuration, admininfo, downloader, scrapers=None):
         analysis_period, start, end = get_period(row, projections)
         for phase in phases:
             national_phases[phase][countryiso3] = row[f'{analysis_period} Phase {phase} %']
-        national_analysed[countryiso3] = f'{row["Current Population Analysed % of total county Pop"]:.03f}'
+        population_analysed = row["Current Population Analysed % of total county Pop"]
+        if population_analysed != '':
+            population_analysed = f'{population_analysed:.03f}'
+        national_analysed[countryiso3] = population_analysed
         national_period[countryiso3] = analysis_period
         national_start[countryiso3] = start
         national_end[countryiso3] = end
