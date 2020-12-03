@@ -31,7 +31,7 @@ def get_who_data(url, admininfo):
     df = df.loc[df['ISO_3_CODE'].isin(admininfo.countryiso3s), :]
 
     df_series = df.copy(deep=True)  # used in series processing, keeps df unchanged for use elsewhere
-    df_series['CountryName'] = df_series['ISO_3_CODE'].apply(admininfo.get_country_name_from_iso3)  # goes on to be output as covid series tab
+    df_series['CountryName'] = df_series['ISO_3_CODE'].apply(Country.get_country_name_from_iso3)  # goes on to be output as covid series tab
 
     df['Date_reported'] = pd.to_datetime(df['Date_reported'])
 

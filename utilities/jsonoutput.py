@@ -96,7 +96,7 @@ class jsonoutput:
                         newrow[hxlrow[key]] = row[key]
                 self.add_data_row(name, newrow)
 
-    def save(self, folder=None, hrp_iso3s=list()):
+    def save(self, folder=None, countries_to_save=list()):
         filepaths = list()
         filepath = self.json_configuration['filepath']
         if folder:
@@ -126,7 +126,7 @@ class jsonoutput:
                     for row in newjson:
                         if filter == 'hrp_iso3s':
                             countryiso = row.get('#country+code')
-                            if countryiso and countryiso not in hrp_iso3s:
+                            if countryiso and countryiso not in countries_to_save:
                                 continue
                         elif filter == 'global':
                             region = row.get('#region+name')

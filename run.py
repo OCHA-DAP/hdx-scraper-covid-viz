@@ -9,7 +9,6 @@ from hdx.hdx_configuration import Configuration
 from hdx.utilities.downloader import Download
 from hdx.utilities.easy_logging import setup_logging
 
-from utilities.admininfo import AdminInfo
 from utilities.exceloutput import exceloutput
 from utilities.jsonoutput import jsonoutput
 from model.main import get_indicators
@@ -65,11 +64,11 @@ def main(excel_path, gsheet_auth, updatesheets, updatetabs, scrapers, basic_auth
         else:
             jsonout = jsonoutput(configuration, updatetabs)
         outputs = {'gsheets': gsheets, 'excel': excelout, 'json': jsonout}
-        admininfo = AdminInfo.setup(downloader)
-        get_indicators(configuration, downloader, admininfo, outputs, updatetabs, scrapers, basic_auths)
+        countries_to_save = get_indicators(configuration, downloader, outputs, updatetabs, scrapers, basic_auths)
         jsonout.add_additional_json(downloader)
-        jsonout.save(hrp_iso3s=admininfo.hrp_iso3s)
+        jsonout.save(countries_to_save=countries_to_save)
         excelout.save()
+
 
 if __name__ == '__main__':
     args = parse_args()

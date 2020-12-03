@@ -2,6 +2,7 @@
 import logging
 
 from hdx.data.dataset import Dataset
+from hdx.location.country import Country
 
 from model import today_str
 from utilities import get_date_from_dataset_date
@@ -9,6 +10,7 @@ from model.who_covid import get_who_covid
 from model.food_prices import add_food_prices
 from model.fts import get_fts
 from model.ipc import get_ipc
+from utilities.admininfo import AdminInfo
 from utilities.regional import get_regional, get_world
 from utilities.tabularparser import get_tabular
 from model.unhcr import get_unhcr
@@ -44,10 +46,10 @@ def extend_columns(level, rows, adms, admininfo, headers, *args):
             ishrp = 'Y' if adm in admininfo.hrp_iso3s else 'N'
             regions = sorted(list(admininfo.iso3_to_region_and_hrp[adm]))
             regions.remove('H63')
-            row = [adm, admininfo.get_country_name_from_iso3(adm), ishrp, '|'.join(regions)]
+            row = [adm, Country.get_country_name_from_iso3(adm), ishrp, '|'.join(regions)]
         elif level == 'subnational':
             countryiso3 = admininfo.pcode_to_iso3[adm]
-            countryname = admininfo.get_country_name_from_iso3(countryiso3)
+            countryname = Country.get_country_name_from_iso3(countryiso3)
             adm1_name = admininfo.pcode_to_name[adm]
             row = [countryiso3, countryname, adm, adm1_name]
         else:
@@ -80,13 +82,16 @@ def extend_sources(sources, *args):
             sources.extend(arg)
 
 
-def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers=None, basic_auths=dict()):
+def get_indicators(configuration, downloader, outputs, tabs, scrapers=None, basic_auths=dict(), use_live=True):
     world = [list(), list()]
     regional = [['regionnames'], ['#region+name']]
     national = [['iso3', 'countryname', 'ishrp', 'region'], ['#country+code', '#country+name', '#meta+ishrp', '#region+name']]
     subnational = [['iso3', 'countryname', 'adm1_pcode', 'adm1_name'], ['#country+code', '#country+name', '#adm1+code', '#adm1+name']]
     sources = [('Indicator', 'Date', 'Source', 'Url'), ('#indicator+name', '#date', '#meta+source', '#meta+url')]
 
+    Country.countriesdata(use_live=use_live, country_name_overrides=configuration['country_name_overrides'])
+
+    admininfo = AdminInfo.setup(downloader)
     countryiso3s = admininfo.countryiso3s
     pcodes = admininfo.pcodes
     population_lookup = dict()
@@ -174,3 +179,4 @@ def get_indicators(configuration, downloader, admininfo, outputs, tabs, scrapers
 
     sources = [list(elem) for elem in dict.fromkeys(sources)]
     update_tab('sources', sources)
+    return admininfo.hrp_iso3s
