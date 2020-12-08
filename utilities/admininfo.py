@@ -3,7 +3,6 @@ import logging
 import re
 import unicodedata
 
-from hdx.hdx_configuration import Configuration
 from hdx.location.country import Country
 from hdx.utilities.dictandlist import dict_of_sets_add
 from hdx.utilities.text import multiple_replace
@@ -26,12 +25,11 @@ class AdminInfo(object):
     pcode_to_name = dict()
     pcode_to_iso3 = dict()
 
-    def __init__(self, downloader):
-        configuration = Configuration.read()
-        admin_info = configuration['admin_info']
-        self.adm1_name_replacements = configuration['adm1_name_replacements']
-        self.adm1_fuzzy_ignore = configuration['adm1_fuzzy_ignore']
-        self.adm_mappings = configuration.get('adm_mappings', [dict(), dict()])
+    def __init__(self, downloader, admin_config):
+        admin_info = admin_config['admin_info']
+        self.adm1_name_replacements = admin_config['adm1_name_replacements']
+        self.adm1_fuzzy_ignore = admin_config['adm1_fuzzy_ignore']
+        self.adm_mappings = admin_config.get('adm_mappings', [dict(), dict()])
         iso3s_no_pcodes = set()
         countryiso3s = set()
         for row in admin_info:
@@ -53,12 +51,12 @@ class AdminInfo(object):
         self.adms = [self.countryiso3s, self.pcodes]
         self.iso3s_no_pcodes = sorted(list(iso3s_no_pcodes))
         self.hrp_iso3s = sorted(list(self.name_to_pcode.keys()))
-        self.regions, self.iso3_to_region, self.iso3_to_region_and_hrp = self.read_regional(configuration, self.countryiso3s, self.hrp_iso3s, downloader)
+        self.regions, self.iso3_to_region, self.iso3_to_region_and_hrp = self.read_regional(admin_config, self.countryiso3s, self.hrp_iso3s, downloader)
         self.init_matches_errors()
 
     @staticmethod
-    def read_regional(configuration, countryiso3s, hrp_iso3s, downloader):
-        regional_config = configuration['regional']
+    def read_regional(admin_config, countryiso3s, hrp_iso3s, downloader):
+        regional_config = admin_config['regional']
         _, iterator = read_hdx(downloader, regional_config)
         iso3_to_region = dict()
         iso3_to_region_and_hrp = dict()
@@ -232,15 +230,3 @@ class AdminInfo(object):
                 logger.error('%s - Could not find %s in map names!' % (error[0], error[1]))
             else:
                 logger.error('%s - %s: Could not find %s in map names!' % (error[0], error[1], error[2]))
-
-    @classmethod
-    def setup(cls, downloader):
-        if not cls._admininfo:
-            cls._admininfo = AdminInfo(downloader)
-        return cls._admininfo
-
-    @classmethod
-    def get(cls):
-        if not cls._admininfo:
-            raise ValueError('AdminInfo not set up yet')
-        return cls._admininfo

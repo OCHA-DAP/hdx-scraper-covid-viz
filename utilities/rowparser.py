@@ -7,11 +7,10 @@ from hdx.utilities.dateparse import parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 
 from model import template
-from utilities.admininfo import AdminInfo
 
 
 class RowParser(object):
-    def __init__(self, level, datasetinfo, headers, subsets, maxdateonly=True):
+    def __init__(self, admininfo, level, datasetinfo, headers, subsets, maxdateonly=True):
         if isinstance(level, str):
             if level == 'global':
                 level = None
@@ -35,7 +34,7 @@ class RowParser(object):
             for col in datasetinfo['input_cols']:
                 date_condition = date_condition.replace(col, f"row['{col}']")
         self.date_condition = date_condition
-        self.admininfo = AdminInfo.get()
+        self.admininfo = admininfo
         self.admcols = datasetinfo.get('adm_cols', list())
         self.admexact = datasetinfo.get('adm_exact', False)
         self.subsets = subsets
