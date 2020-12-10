@@ -12,7 +12,7 @@ from utilities.readers import read_hdx_metadata
 MIN_CUMULATIVE_CASES = 100
 
 
-def get_who_data(url, admininfo):
+def get_who_data(url, h25, h63, region):
     df = pd.read_csv(url, keep_default_na=False)
     df.columns = df.columns.str.strip()
     df = df[['Date_reported', 'Country_code', 'Cumulative_cases', 'New_cases', 'New_deaths', 'Cumulative_deaths']]
@@ -24,11 +24,11 @@ def get_who_data(url, admininfo):
     df_cumulative = df.sort_values(by=['Date_reported']).drop_duplicates(subset='ISO_3_CODE', keep='last')
     df_cumulative = df_cumulative.drop(columns=['Date_reported', 'New_cases', 'New_deaths'])
     df_world = df_cumulative.sum()
-    df_cumulative = df_cumulative.loc[df['ISO_3_CODE'].isin(admininfo.countryiso3s), :]
+    df_cumulative = df_cumulative.loc[df['ISO_3_CODE'].isin(h63), :]
     df_h63 = df_cumulative.sum()
 
 
-    df = df.loc[df['ISO_3_CODE'].isin(admininfo.countryiso3s), :]
+    df = df.loc[df['ISO_3_CODE'].isin(h63), :]
 
     df_series = df.copy(deep=True)  # used in series processing, keeps df unchanged for use elsewhere
     df_series['CountryName'] = df_series['ISO_3_CODE'].apply(Country.get_country_name_from_iso3)  # goes on to be output as covid series tab
@@ -41,13 +41,13 @@ def get_who_data(url, admininfo):
     df_h63_all = df_h63_all.reset_index()
 
     # adding global H25 by date
-    df_h25_all = df.loc[df['ISO_3_CODE'].isin(admininfo.hrp_iso3s), :]
+    df_h25_all = df.loc[df['ISO_3_CODE'].isin(h25), :]
     df_h25_all = df_h25_all.groupby('Date_reported').sum()
     df_h25_all['ISO_3_CODE'] = 'H25'
     df_h25_all = df_h25_all.reset_index()
 
     # adding regional by date
-    dict_regions = pd.DataFrame(admininfo.iso3_to_region.items(), columns=['ISO3', 'Regional_office'])
+    dict_regions = pd.DataFrame(region.iso3_to_region.items(), columns=['ISO3', 'Regional_office'])
     df = pd.merge(left=df, right=dict_regions, left_on='ISO_3_CODE', right_on='ISO3', how='left')
     df = df.drop(labels='ISO3', axis='columns')
     df_regional = df.groupby(['Date_reported', 'Regional_office']).sum().reset_index()
@@ -60,7 +60,7 @@ def get_who_data(url, admininfo):
     return source_date, df_world, df_h63, df_series, df
 
 
-def get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers=None):
+def get_who_covid(configuration, outputs, h25, h63, region, population_lookup, scrapers=None):
     name = 'who_covid'
     if scrapers and not any(scraper in name for scraper in scrapers) and not any(scraper in outputs['gsheets'].updatetabs for scraper in scrapers):
         return list(), list(), list(), list(), list(), list()
@@ -68,7 +68,7 @@ def get_who_covid(configuration, outputs, admininfo, population_lookup, scrapers
     read_hdx_metadata(datasetinfo)
 
     # get WHO data
-    source_date, df_world, df_h63, df_series, df_WHO = get_who_data(datasetinfo['url'], admininfo)
+    source_date, df_world, df_h63, df_series, df_WHO = get_who_data(datasetinfo['url'], h25, h63, region)
     df_pop = pd.DataFrame.from_records(list(population_lookup.items()), columns=['Country Code', 'population'])
 
     # output time series

@@ -10,7 +10,7 @@ from model import today_str
 logger = logging.getLogger(__name__)
 
 
-def get_whowhatwhere(configuration, admininfo, downloader, scrapers=None):
+def get_whowhatwhere(configuration, adminone, downloader, scrapers=None):
     name = inspect.currentframe().f_code.co_name
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list()
@@ -43,12 +43,12 @@ def get_whowhatwhere(configuration, admininfo, downloader, scrapers=None):
             if not pcode:
                 adm1name = row.get('#adm1+name')
                 if adm1name:
-                    pcode, _ = admininfo.get_pcode(countryiso3, adm1name, '3W')
+                    pcode, _ = adminone.get_pcode(countryiso3, adm1name, '3W')
             if not pcode:
                 location = row.get('#loc')
                 if location:
                     location = location.split('>')[-1]
-                    pcode, _ = admininfo.get_pcode(countryiso3, location, '3W')
+                    pcode, _ = adminone.get_pcode(countryiso3, location, '3W')
             if pcode:
                 pcode = pcode.strip().upper()
                 org = row.get('#org')
@@ -63,7 +63,7 @@ def get_whowhatwhere(configuration, admininfo, downloader, scrapers=None):
     orgcount = dict()
     for countrypcode in orgdict:
         countryiso3, pcode = countrypcode.split(':')
-        if pcode not in admininfo.pcodes:
+        if pcode not in adminone.pcodes:
             logger.error('PCode %s in %s does not exist!' % (pcode, countryiso3))
         else:
             orgcount[pcode] = len(orgdict[countrypcode])

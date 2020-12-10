@@ -3,6 +3,7 @@ import copy
 from datetime import datetime
 
 import hxl
+from hdx.location.country import Country
 from hdx.utilities.dateparse import parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 
@@ -10,7 +11,7 @@ from model import template
 
 
 class RowParser(object):
-    def __init__(self, admininfo, level, datasetinfo, headers, subsets, maxdateonly=True):
+    def __init__(self, countryiso3s, adminone, level, datasetinfo, headers, subsets, maxdateonly=True):
         if isinstance(level, str):
             if level == 'global':
                 level = None
@@ -34,16 +35,17 @@ class RowParser(object):
             for col in datasetinfo['input_cols']:
                 date_condition = date_condition.replace(col, f"row['{col}']")
         self.date_condition = date_condition
-        self.admininfo = admininfo
+        self.adminone = adminone
         self.admcols = datasetinfo.get('adm_cols', list())
         self.admexact = datasetinfo.get('adm_exact', False)
         self.subsets = subsets
+        self.adms = [countryiso3s, self.adminone.pcodes]
         if self.level is None:
             self.maxdates = {i: date for i, _ in enumerate(subsets)}
         else:
             if self.level > len(self.admcols):
                 raise ValueError('No admin columns specified for required level!')
-            self.maxdates = {i: {adm: date for adm in self.admininfo.adms[self.level]} for i, _ in enumerate(subsets)}
+            self.maxdates = {i: {adm: date for adm in self.adms[self.level]} for i, _ in enumerate(subsets)}
 
         self.maxdateonly = maxdateonly
         self.flatteninfo = datasetinfo.get('flatten')
@@ -115,8 +117,21 @@ class RowParser(object):
             adm = row[admcol]
             if not adm:
                 return False
-            adms[i] = row[admcol].strip()
-            return self.admininfo.get_adm(adms, self.admexact, i, scrapername)
+            adm = adm.strip()
+            adms[i] = adm
+            if adm in self.adms[i]:
+                return True
+            exact = False
+            if self.admexact:
+                adms[i] = None
+            else:
+                if i == 0:
+                    adms[i], exact = Country.get_iso3_country_code_fuzzy(adm)
+                elif i == 1:
+                    adms[i], exact = self.adminone.get_pcode(adms[0], adm, scrapername)
+                if adms[i] not in self.adms[i]:
+                    adms[i] = None
+            return exact
 
         for i, admcol in enumerate(self.admcols):
             if admcol is None:

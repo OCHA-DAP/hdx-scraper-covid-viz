@@ -1298,13 +1298,108 @@ idps_locations_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZ
 
 3w_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=1662282962&single=true&output=csv"
 
+h63:
+  - ABW
+  - AFG
+  - AGO
+  - ARG
+  - BDI
+  - BEN
+  - BFA
+  - BGD
+  - BOL
+  - BRA
+  - CAF
+  - CHL
+  - CMR
+  - COD
+  - COG
+  - COL
+  - CRI
+  - CUW
+  - DJI
+  - DOM
+  - ECU
+  - EGY
+  - ETH
+  - GUY
+  - HTI
+  - IRN
+  - IRQ
+  - JOR
+  - KEN
+  - LBN
+  - LBR
+  - LBY
+  - MEX
+  - MLI
+  - MMR
+  - MOZ
+  - NER
+  - NGA
+  - PAK
+  - PAN
+  - PER
+  - PHL
+  - PRK
+  - PRY
+  - PSE
+  - RWA
+  - SDN
+  - SLE
+  - SOM
+  - SSD
+  - SYR
+  - TCD
+  - TGO
+  - TTO
+  - TUR
+  - TZA
+  - UGA
+  - UKR
+  - URY
+  - VEN
+  - YEM
+  - ZMB
+  - ZWE
+
+h25:
+  - AFG
+  - BDI
+  - BFA
+  - CAF
+  - CMR
+  - COD
+  - COL
+  - ETH
+  - HTI
+  - IRQ
+  - LBY
+  - MLI
+  - MMR
+  - NER
+  - NGA
+  - PSE
+  - SDN
+  - SOM
+  - SSD
+  - SYR
+  - TCD
+  - UKR
+  - VEN
+  - YEM
+  - ZWE
+
 country_name_overrides:
   PSE: "oPt"
   BOL: "Bolivia"
   VEN: "Venezuela"
 
+country_name_mappings:
+  "Congo DR": "COD"
+  "CAR": "CAF"
 
-admin_info:
+admin1_info:
   - {ADM1_PCODE: AF01, ADM1_REF: Kabul, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
   - {ADM1_PCODE: AF02, ADM1_REF: Kapisa, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
   - {ADM1_PCODE: AF03, ADM1_REF: Parwan, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
@@ -1737,114 +1832,73 @@ admin_info:
   - {ADM1_PCODE: ZW17, ADM1_REF: Midlands, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
   - {ADM1_PCODE: ZW18, ADM1_REF: Masvingo, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
   - {ADM1_PCODE: ZW19, ADM1_REF: Harare, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
-  - {alpha_3: AGO}
-  - {alpha_3: ARG}
-  - {alpha_3: ABW}
-  - {alpha_3: BGD}
-  - {alpha_3: BEN}
-  - {alpha_3: BOL}
-  - {alpha_3: BRA}
-  - {alpha_3: CHL}
-  - {alpha_3: CRI}
-  - {alpha_3: CUW}
-  - {alpha_3: DJI}
-  - {alpha_3: DOM}
-  - {alpha_3: PRK}
-  - {alpha_3: ECU}
-  - {alpha_3: EGY}
-  - {alpha_3: GUY}
-  - {alpha_3: IRN}
-  - {alpha_3: JOR}
-  - {alpha_3: KEN}
-  - {alpha_3: LBN}
-  - {alpha_3: LBR}
-  - {alpha_3: MEX}
-  - {alpha_3: MOZ}
-  - {alpha_3: PAK}
-  - {alpha_3: PAN}
-  - {alpha_3: PRY}
-  - {alpha_3: PER}
-  - {alpha_3: PHL}
-  - {alpha_3: COG}
-  - {alpha_3: RWA}
-  - {alpha_3: SLE}
-  - {alpha_3: TZA}
-  - {alpha_3: TGO}
-  - {alpha_3: TTO}
-  - {alpha_3: TUR}
-  - {alpha_3: UGA}
-  - {alpha_3: URY}
-  - {alpha_3: ZMB}
 
-adm_mappings:
-  - "Congo DR": "COD"
-    "CAR": "CAF"
-    "oPt": "PSE"
-  - "Nord-Ouest": "HT09"
-    "nord-ouest": "HT09"
-    "nord-quest": "HT09"
-    "north-west": "HT09"
-    "Abuja": "NG015"
-    "FCT": "NG015"
-    "FCT (Abuja)": "NG015"
-    "FCT Abuja": "NG015"
-    "Abuja FCT": "NG015"
-    "C.EST": "BF48"
-    "C.NORD": "BF49"
-    "C.OUEST": "BF50"
-    "C.SUD": "BF51"
-    "centre-ouest": "BF50"
-    "Centre-Ouest": "BF50"
-    "central /south": "BF51"
-    "central/south": "BF51"
-    "S.OUEST": "BF57"
-    "Bas congo": "CD20"
-    "Bas-congo": "CD20"
-    "bas-congo": "CD20"
-    "MUTHANA": "IQG03"
-    "Gezira": "SD15"
-    "Gazira": "SD15"
-    "Hasaka": "SY08"
-    "Hassake": "SY08"
-    "al-raka": "SY11"
-    "al-amana": "YE23"
-    "PL.Sool": "SO14"
-    "Sc.Mudug": "SO18"
-    "Amanat Al Asimah / أمانة العاصمة": "YE13"
-    "Juba Dhexe": "SO27"
-    "Juba Hoose": "SO28"
-    "Shabelle Dhexe": "SO21"
-    "Shabelle Hoose": "SO23"
-    "ben-gumz": "ET06"
-    "Rural-Dam": "SY03"
-    "al-qunitara": "SY14"
-    "harare /chitungwiza": "ZW19"
-    "B MOUHOUN": "BF46"
-    "H BASSINS": "BF53"
-    "P CENTRAL": "BF55"
-    "EXTREME NORD": "CM004"
-    "Extreme Nord": "CM004"
-    "Extr�me-Nord": "CM004"
-    "extreme nord": "CM004"
-    "extr�me-nord": "CM004"
-    "SAN_ANDRES_ISLAS": "CO88"
-    "FCT, Abuja": "NG015"
-    "PL.Mudug": "SO18"
-    "PL.Sanag": "SO15"
-    "DAR SILA": "TD21"
-    "Sana'a Govt.": "YE23"
-    "DISTRITO CAPITAL": "VE01"
-    "Chernigovskaja Oblast": "UA74"
-    "Chernіvеtskaja Oblast": "UA73"
-    "Crimea": "UA01"
-    "Luganskaja Oblast": "UA44"
-    "Rovenskaja Oblast": "UA56"
-    "Sevastopol City": "UA85"
-    "Zapоrіzskaja Oblast": "UA23"
-    "CU Niamey": "NER008"
+admin1_name_mappings:
+  "Nord-Ouest": "HT09"
+  "nord-ouest": "HT09"
+  "nord-quest": "HT09"
+  "north-west": "HT09"
+  "Abuja": "NG015"
+  "FCT": "NG015"
+  "FCT (Abuja)": "NG015"
+  "FCT Abuja": "NG015"
+  "Abuja FCT": "NG015"
+  "C.EST": "BF48"
+  "C.NORD": "BF49"
+  "C.OUEST": "BF50"
+  "C.SUD": "BF51"
+  "centre-ouest": "BF50"
+  "Centre-Ouest": "BF50"
+  "central /south": "BF51"
+  "central/south": "BF51"
+  "S.OUEST": "BF57"
+  "Bas congo": "CD20"
+  "Bas-congo": "CD20"
+  "bas-congo": "CD20"
+  "MUTHANA": "IQG03"
+  "Gezira": "SD15"
+  "Gazira": "SD15"
+  "Hasaka": "SY08"
+  "Hassake": "SY08"
+  "al-raka": "SY11"
+  "al-amana": "YE23"
+  "PL.Sool": "SO14"
+  "Sc.Mudug": "SO18"
+  "Amanat Al Asimah / أمانة العاصمة": "YE13"
+  "Juba Dhexe": "SO27"
+  "Juba Hoose": "SO28"
+  "Shabelle Dhexe": "SO21"
+  "Shabelle Hoose": "SO23"
+  "ben-gumz": "ET06"
+  "Rural-Dam": "SY03"
+  "al-qunitara": "SY14"
+  "harare /chitungwiza": "ZW19"
+  "B MOUHOUN": "BF46"
+  "H BASSINS": "BF53"
+  "P CENTRAL": "BF55"
+  "EXTREME NORD": "CM004"
+  "Extreme Nord": "CM004"
+  "Extr�me-Nord": "CM004"
+  "extreme nord": "CM004"
+  "extr�me-nord": "CM004"
+  "SAN_ANDRES_ISLAS": "CO88"
+  "FCT, Abuja": "NG015"
+  "PL.Mudug": "SO18"
+  "PL.Sanag": "SO15"
+  "DAR SILA": "TD21"
+  "Sana'a Govt.": "YE23"
+  "DISTRITO CAPITAL": "VE01"
+  "Chernigovskaja Oblast": "UA74"
+  "Chernіvеtskaja Oblast": "UA73"
+  "Crimea": "UA01"
+  "Luganskaja Oblast": "UA44"
+  "Rovenskaja Oblast": "UA56"
+  "Sevastopol City": "UA85"
+  "Zapоrіzskaja Oblast": "UA23"
+  "CU Niamey": "NER008"
 
 
-adm1_name_replacements:
+admin1_name_replacements:
   " urban": ""
   "sud": "south"
   "ouest": "west"
@@ -1856,7 +1910,7 @@ adm1_name_replacements:
   " region": ""
   " oblast": ""
 
-adm1_fuzzy_ignore:
+admin1_fuzzy_ignore:
   - "nord"
   - "north"
   - "sud"

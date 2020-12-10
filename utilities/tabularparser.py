@@ -29,7 +29,7 @@ brackets = r'''
 )'''
 
 
-def _get_tabular(admininfo, level, name, datasetinfo, headers, iterator, population_lookup, retheaders=[list(), list()], retval=list(), sources=list()):
+def _get_tabular(countryiso3s, adminone, level, name, datasetinfo, headers, iterator, population_lookup, retheaders=[list(), list()], retval=list(), sources=list()):
     subsets = datasetinfo.get('subsets')
     if not subsets:
         subsets = [{'filter': datasetinfo.get('filter'), 'input_cols': datasetinfo.get('input_cols', list()),
@@ -85,7 +85,7 @@ def _get_tabular(admininfo, level, name, datasetinfo, headers, iterator, populat
     else:
         hxlrow = None
 
-    rowparser = RowParser(admininfo, level, datasetinfo, headers, subsets)
+    rowparser = RowParser(countryiso3s, adminone, level, datasetinfo, headers, subsets)
     valuedicts = dict()
     for subset in subsets:
         for _ in subset['input_cols']:
@@ -260,7 +260,7 @@ def _get_tabular(admininfo, level, name, datasetinfo, headers, iterator, populat
     return retheaders, retval, sources
 
 
-def get_tabular(basic_auths, configuration, admininfo, level, maindownloader, scrapers=None, population_lookup=None, **kwargs):
+def get_tabular(basic_auths, configuration, countryiso3s, adminone, level, maindownloader, scrapers=None, population_lookup=None, **kwargs):
     datasets = configuration['tabular_%s' % level]
     retheaders = [list(), list()]
     retval = list()
@@ -301,7 +301,7 @@ def get_tabular(basic_auths, configuration, admininfo, level, maindownloader, sc
             keys = sort['keys']
             reverse = sort.get('reverse', False)
             iterator = sorted(list(iterator), key=itemgetter(*keys), reverse=reverse)
-        _get_tabular(admininfo, level, name, datasetinfo, headers, iterator, population_lookup, retheaders, retval, sources)
+        _get_tabular(countryiso3s, adminone, level, name, datasetinfo, headers, iterator, population_lookup, retheaders, retval, sources)
         if downloader != maindownloader:
             downloader.close()
         if population_lookup is not None:

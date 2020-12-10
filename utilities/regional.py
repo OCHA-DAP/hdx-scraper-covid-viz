@@ -46,7 +46,7 @@ def get_headers_and_columns(input_headers, input_columns, desired_headers):
     return headers, columns
 
 
-def get_regional(configuration, admininfo, national_headers, national_columns, population_lookup=None, *args):
+def get_regional(configuration, regionlookup, national_headers, national_columns, population_lookup=None, *args):
     regional_config = configuration['regional']
     if population_lookup is None:
         process_cols = regional_config['process_cols']
@@ -61,7 +61,7 @@ def get_regional(configuration, admininfo, national_headers, national_columns, p
         action = process_cols[header]
         column = regional_columns[i]
         for countryiso in column:
-            for region in admininfo.iso3_to_region_and_hrp[countryiso]:
+            for region in regionlookup.iso3_to_region_and_hrp[countryiso]:
                 dict_of_lists_add(valdict, region, column[countryiso])
         if action == 'sum' or action == 'mean':
             for region, valuelist in valdict.items():
