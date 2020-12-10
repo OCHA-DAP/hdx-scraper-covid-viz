@@ -22,12 +22,12 @@ class AdminOne(object):
     pcode_to_name = dict()
     pcode_to_iso3 = dict()
 
-    def __init__(self, admin_config, countries_fuzzy_try=None):
+    def __init__(self, admin_config):
         admin_info1 = admin_config['admin1_info']
+        self.countries_fuzzy_try = admin_config.get('countries_fuzzy_try')
         self.admin1_name_replacements = admin_config['admin1_name_replacements']
         self.admin1_fuzzy_ignore = admin_config['admin1_fuzzy_ignore']
         self.admin1_name_mappings = admin_config.get('admin1_name_mappings', dict())
-        self.countries_fuzzy_try = countries_fuzzy_try
         for row in admin_info1:
             countryiso3 = row['alpha_3']
             pcode = row.get('ADM1_PCODE')

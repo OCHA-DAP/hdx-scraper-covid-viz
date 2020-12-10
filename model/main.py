@@ -94,8 +94,9 @@ def get_indicators(configuration, downloader, outputs, tabs, scrapers=None, basi
 
     h63 = configuration['h63']
     h25 = configuration['h25']
+    configuration['countries_fuzzy_try'] = h25
     region = Region(downloader, configuration['regional'], h63, h25)
-    adminone = AdminOne(configuration, countries_fuzzy_try=h25)
+    adminone = AdminOne(configuration)
     pcodes = adminone.pcodes
     population_lookup = dict()
 
