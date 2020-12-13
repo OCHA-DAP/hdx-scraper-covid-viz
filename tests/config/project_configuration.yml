@@ -1587,7 +1587,7 @@ admin1_name_replacements:
   " region": ""
   " oblast": ""
 
-admin1_fuzzy_ignore:
+admin1_fuzzy_dont:
   - "nord"
   - "north"
   - "sud"

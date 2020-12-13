@@ -27,7 +27,6 @@ def get_who_data(url, h25, h63, region):
     df_cumulative = df_cumulative.loc[df['ISO_3_CODE'].isin(h63), :]
     df_h63 = df_cumulative.sum()
 
-
     df = df.loc[df['ISO_3_CODE'].isin(h63), :]
 
     df_series = df.copy(deep=True)  # used in series processing, keeps df unchanged for use elsewhere

@@ -2,6 +2,7 @@
 import logging
 
 from hdx.data.dataset import Dataset
+from hdx.location.adminone import AdminOne
 from hdx.location.country import Country
 
 from model import today_str
@@ -10,7 +11,6 @@ from model.who_covid import get_who_covid
 from model.food_prices import add_food_prices
 from model.fts import get_fts
 from model.ipc import get_ipc
-from utilities.adminone import AdminOne
 from utilities.region import Region
 from utilities.regional import get_regional, get_world
 from utilities.tabularparser import get_tabular
@@ -96,6 +96,11 @@ def get_indicators(configuration, downloader, outputs, tabs, scrapers=None, basi
     h25 = configuration['h25']
     configuration['countries_fuzzy_try'] = h25
     region = Region(downloader, configuration['regional'], h63, h25)
+    admin1_info = list()
+    for row in configuration['admin1_info']:
+        newrow = {'pcode': row['ADM1_PCODE'], 'name': row['ADM1_REF'], 'iso3': row['alpha_3']}
+        admin1_info.append(newrow)
+    configuration['admin1_info'] = admin1_info
     adminone = AdminOne(configuration)
     pcodes = adminone.pcodes
     population_lookup = dict()

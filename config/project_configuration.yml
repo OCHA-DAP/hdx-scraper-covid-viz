@@ -1897,7 +1897,6 @@ admin1_name_mappings:
   "Zapоrіzskaja Oblast": "UA23"
   "CU Niamey": "NER008"
 
-
 admin1_name_replacements:
   " urban": ""
   "sud": "south"
@@ -1910,7 +1909,7 @@ admin1_name_replacements:
   " region": ""
   " oblast": ""
 
-admin1_fuzzy_ignore:
+admin1_fuzzy_dont:
   - "nord"
   - "north"
   - "sud"
