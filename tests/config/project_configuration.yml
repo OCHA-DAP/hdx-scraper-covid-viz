@@ -41,7 +41,8 @@ json:
           key: "timeseries"
         - tab: "national"
           key: "cumulative"
-          filter: "hrp_iso3s"
+          filters:
+            "#country+code": "{{countries_to_save}}"
           hxltags:
             - "#country+code"
             - "#country+name"
@@ -49,7 +50,8 @@ json:
             - "#affected+killed"
         - tab: "regional"
           key: "global"
-          filter: "global"
+          filters:
+            "#region+name": "global"
           hxltags:
             - "#region+name"
             - "#affected+infected"

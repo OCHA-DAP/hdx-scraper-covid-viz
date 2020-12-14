@@ -6,6 +6,14 @@ from hdx.data.dataset import Dataset
 template = re.compile('{{.*?}}')
 
 
+def match_template(input):
+    match = template.search(input)
+    if match:
+        template_string = match.group()
+        return template_string, template_string[2:-2]
+    return None, None
+
+
 def get_rowval(row, valcol):
     if '{{' in valcol:
         repvalcol = valcol

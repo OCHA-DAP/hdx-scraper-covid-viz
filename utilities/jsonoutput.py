@@ -6,6 +6,7 @@ from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.saver import save_json
 from hdx.utilities.text import get_numeric_if_possible
 
+from utilities import match_template
 from utilities.readers import read_json, read_ole, read_hdx, read_tabular
 
 
@@ -96,7 +97,7 @@ class jsonoutput:
                         newrow[hxlrow[key]] = row[key]
                 self.add_data_row(name, newrow)
 
-    def save(self, folder=None, countries_to_save=list()):
+    def save(self, folder=None, **kwargs):
         filepaths = list()
         filepath = self.json_configuration['filepath']
         if folder:
@@ -104,6 +105,8 @@ class jsonoutput:
         logger.info('Writing JSON to %s' % filepath)
         save_json(self.json, filepath)
         filepaths.append(filepath)
+        for kwarg in kwargs:
+            exec('%s=%s' % (kwarg, kwargs[kwarg]))
         additional = self.json_configuration.get('additional', list())
         for filedetails in additional:
             json = dict()
@@ -119,19 +122,28 @@ class jsonoutput:
             for tabdetails in tabs:
                 key = f'{tabdetails["tab"]}_data'
                 newjson = self.json.get(key)
-                filter = tabdetails.get('filter')
+                filters = tabdetails.get('filters', dict())
                 hxltags = tabdetails.get('hxltags')
-                if (filter or hxltags or remove) and isinstance(newjson, list):
+                if (filters or hxltags or remove) and isinstance(newjson, list):
                     rows = list()
                     for row in newjson:
-                        if filter == 'hrp_iso3s':
-                            countryiso = row.get('#country+code')
-                            if countryiso and countryiso not in countries_to_save:
-                                continue
-                        elif filter == 'global':
-                            region = row.get('#region+name')
-                            if region and region != filter:
-                                continue
+                        ignore_row = False
+                        for filter, allowed_values in filters.items():
+                            value = row.get(filter)
+                            if value:
+                                if isinstance(allowed_values, str):
+                                    template_string, match_string = match_template(allowed_values)
+                                    if template_string:
+                                        allowed_values = eval(allowed_values.replace(template_string, match_string))
+                                if isinstance(allowed_values, list):
+                                    if value not in allowed_values:
+                                        ignore_row = True
+                                        break
+                                elif value != allowed_values:
+                                    ignore_row = True
+                                    break
+                        if ignore_row:
+                            continue
                         if hxltags is None:
                             newrow = row
                         else:

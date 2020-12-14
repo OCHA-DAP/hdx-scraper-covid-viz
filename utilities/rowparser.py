@@ -7,7 +7,7 @@ from hdx.location.country import Country
 from hdx.utilities.dateparse import parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 
-from utilities import template
+from utilities import template, match_template
 
 
 class RowParser(object):
@@ -73,12 +73,10 @@ class RowParser(object):
             newrow = copy.deepcopy(row)
             for i, flatten in enumerate(self.flatteninfo):
                 colname = flatten['original']
-                match = template.search(colname)
-                if not match:
+                template_string, replace_string = match_template(colname)
+                if not template_string:
                     raise ValueError('Column name for flattening lacks an incrementing number!')
-                template_string = match.group()
                 if counters[i] == -1:
-                    replace_string = template_string[2:-2]
                     counters[i] = int(replace_string)
                 else:
                     replace_string = '%d' % counters[i]
@@ -110,10 +108,9 @@ class RowParser(object):
         adms = [None for _ in range(len(self.admcols))]
 
         def get_adm(admcol, i):
-            match = template.search(admcol)
-            if match:
-                template_string = match.group()
-                admcol = self.headers[int(template_string[2:-2])]
+            template_string, match_string = match_template(admcol)
+            if template_string:
+                admcol = self.headers[int(match_string)]
             adm = row[admcol]
             if not adm:
                 return False

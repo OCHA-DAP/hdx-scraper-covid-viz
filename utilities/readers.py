@@ -7,7 +7,7 @@ from hdx.utilities.path import temp_dir
 from jsonpath_ng import parse
 from olefile import olefile
 
-from utilities import get_date_from_dataset_date, template
+from utilities import get_date_from_dataset_date, template, match_template
 
 logger = logging.getLogger(__name__)
 
@@ -15,10 +15,9 @@ logger = logging.getLogger(__name__)
 def get_url(url, **kwargs):
     for kwarg in kwargs:
         exec('%s=%s' % (kwarg, kwargs[kwarg]))
-    match = template.search(url)
-    if match:
-        template_string = match.group()
-        replace_string = eval(template_string[2:-2])
+    template_string, match_string = match_template(url)
+    if template_string:
+        replace_string = eval(match_string)
         url = url.replace(template_string, replace_string)
     return url
 
