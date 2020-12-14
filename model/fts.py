@@ -7,8 +7,6 @@ from hdx.utilities.dictandlist import write_list_to_csv, dict_of_lists_add
 from hdx.utilities.downloader import Download
 from hdx.utilities.text import multiple_replace, get_fraction_str
 
-from model import today_str, today
-
 logger = logging.getLogger(__name__)
 
 
@@ -169,7 +167,7 @@ def map_planname(origname):
     return name
 
 
-def get_fts(basic_auths, configuration, countryiso3s, scrapers=None):
+def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers=None):
     name = inspect.currentframe().f_code.co_name
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list(), list(), list(), list()

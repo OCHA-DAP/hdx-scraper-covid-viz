@@ -5,12 +5,10 @@ import logging
 import hxl
 from hdx.utilities.dictandlist import dict_of_sets_add
 
-from model import today_str
-
 logger = logging.getLogger(__name__)
 
 
-def get_whowhatwhere(configuration, adminone, downloader, scrapers=None):
+def get_whowhatwhere(configuration, today_str, adminone, downloader, scrapers=None):
     name = inspect.currentframe().f_code.co_name
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list()

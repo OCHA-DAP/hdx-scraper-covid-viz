@@ -606,14 +606,13 @@ regional:
     "Number of incidents reported since start of year": "sum"
     "% of CERF projects affected by insecurity and inaccessibility": "mean"
     "% of CBPF projects affected by insecurity and inaccessibility": "mean"
+  global:
+    - "% of visas pending or denied"
+    - "% of travel authorizations or movements denied"
+    - "Number of incidents reported since start of year"
+    - "% of CERF projects affected by insecurity and inaccessibility"
+    - "% of CBPF projects affected by insecurity and inaccessibility"
 
-# global
-from_regional:
-  - "% of visas pending or denied"
-  - "% of travel authorizations or movements denied"
-  - "Number of incidents reported since start of year"
-  - "% of CERF projects affected by insecurity and inaccessibility"
-  - "% of CBPF projects affected by insecurity and inaccessibility"
 
 tabular_global:
   cerf_global:

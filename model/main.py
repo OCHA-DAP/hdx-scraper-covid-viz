@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 import logging
+from datetime import datetime
 
 from hdx.data.dataset import Dataset
 from hdx.location.adminone import AdminOne
 from hdx.location.country import Country
 
-from model import today_str
 from utilities import get_date_from_dataset_date
 from model.who_covid import get_who_covid
 from model.food_prices import add_food_prices
 from model.fts import get_fts
 from model.ipc import get_ipc
 from utilities.region import Region
-from utilities.regional import get_regional, get_world
 from utilities.tabularparser import get_tabular
 from model.unhcr import get_unhcr
 from model.vaccination_campaigns import add_vaccination_campaigns
@@ -92,10 +91,12 @@ def get_indicators(configuration, downloader, outputs, tabs, scrapers=None, basi
 
     Country.countriesdata(use_live=use_live, country_name_overrides=configuration['country_name_overrides'], country_name_mappings=configuration['country_name_mappings'])
 
+    today = datetime.now()
+    today_str = today.strftime('%Y-%m-%d')
     h63 = configuration['h63']
     h25 = configuration['h25']
     configuration['countries_fuzzy_try'] = h25
-    region = Region(downloader, configuration['regional'], h63, h25)
+    region = Region(configuration['regional'], downloader, h63, h25)
     admin1_info = list()
     for row in configuration['admin1_info']:
         newrow = {'pcode': row['ADM1_PCODE'], 'name': row['ADM1_REF'], 'iso3': row['alpha_3']}
@@ -110,28 +111,28 @@ def get_indicators(configuration, downloader, outputs, tabs, scrapers=None, basi
         for output in outputs.values():
             output.update_tab(name, data)
 
-    population_headers, population_columns, population_sources = get_tabular(basic_auths, configuration, h63, adminone, 'national', downloader, scrapers=['population'], population_lookup=population_lookup)
+    population_headers, population_columns, population_sources = get_tabular(basic_auths, configuration, h63, adminone, 'national', downloader, today_str=today_str, scrapers=['population'], population_lookup=population_lookup)
     national_headers = extend_headers(national, population_headers)
     national_columns = extend_columns('national', national, h63, h25, region, adminone, national_headers, population_columns)
     extend_sources(sources, population_sources)
     population_lookup['H63'] = sum(population_lookup.values())
-    population_headers, population_columns = get_regional(configuration, region, national_headers, national_columns,
-                                                          population_lookup=population_lookup)
+    population_headers, population_columns = region.get_regional(region, national_headers, national_columns,
+                                                                 population_lookup=population_lookup)
     regional_headers = extend_headers(regional, population_headers)
     extend_columns('regional', regional, region.regions, h25, region, adminone, regional_headers, population_columns)
-    population_headers, population_columns, population_sources = get_tabular(basic_auths, configuration, h63, adminone, 'subnational', downloader, scrapers=['population'], population_lookup=population_lookup)
+    population_headers, population_columns, population_sources = get_tabular(basic_auths, configuration, h63, adminone, 'subnational', downloader, today_str=today_str, scrapers=['population'], population_lookup=population_lookup)
     subnational_headers = extend_headers(subnational, population_headers)
     extend_columns('subnational', subnational, pcodes, h25, region, adminone, subnational_headers, population_columns)
     covid_wheaders, covid_wcolumns, covid_h63columns, covid_headers, covid_columns, covid_sources = get_who_covid(configuration, outputs, h25, h63, region, population_lookup, scrapers)
     extend_sources(sources, covid_sources)
 
-    ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(configuration, h63, adminone, downloader, scrapers)
+    ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(configuration, today, h63, adminone, downloader, scrapers)
     if 'national' in tabs:
-        fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(basic_auths, configuration, h63, scrapers)
-        food_headers, food_columns, food_sources = add_food_prices(configuration, h63, downloader, scrapers)
+        fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(basic_auths, configuration, today, today_str, h63, scrapers)
+        food_headers, food_columns, food_sources = add_food_prices(configuration, today, h63, downloader, scrapers)
         campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, h63, downloader, outputs, scrapers)
-        unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, h63, downloader, scrapers)
-        tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, h63, adminone, 'national', downloader, scrapers=scrapers, population_lookup=population_lookup)
+        unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, today_str, h63, downloader, scrapers)
+        tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, h63, adminone, 'national', downloader, today_str=today_str, scrapers=scrapers, population_lookup=population_lookup)
 
         national_headers = extend_headers(national, covid_headers, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, ipc_headers)
         national_columns = extend_columns('national', national, h63, h25, region, adminone, national_headers, covid_columns, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, ipc_columns)
@@ -139,24 +140,23 @@ def get_indicators(configuration, downloader, outputs, tabs, scrapers=None, basi
         update_tab('national', national)
 
         if 'regional' in tabs:
-            regional_headers, regional_columns = get_regional(configuration, region, national_headers,
-                                                              national_columns, None, (covid_wheaders, covid_wcolumns),
-                                                              (fts_wheaders, fts_wcolumns))
+            regional_headers, regional_columns = region.get_regional(region, national_headers, national_columns, None,
+                                                                     (covid_wheaders, covid_wcolumns), (fts_wheaders, fts_wcolumns))
             regional_headers = extend_headers(regional, regional_headers)
             extend_columns('regional', regional, region.regions + ['global'], h25, region, adminone, regional_headers, regional_columns)
             update_tab('regional', regional)
 
             if 'world' in tabs:
-                rgheaders, rgcolumns = get_world(configuration, regional_headers, regional_columns)
-                tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, h63, adminone, 'global', downloader, scrapers=scrapers, population_lookup=population_lookup)
+                rgheaders, rgcolumns = region.get_world(regional_headers, regional_columns)
+                tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, h63, adminone, 'global', downloader, today_str=today_str, scrapers=scrapers, population_lookup=population_lookup)
                 world_headers = extend_headers(world, covid_wheaders, fts_wheaders, tabular_headers, rgheaders)
                 extend_columns('global', world, None, None, region, adminone, world_headers, covid_h63columns, fts_wcolumns, tabular_columns, rgcolumns)
                 extend_sources(sources, fts_wsources, tabular_sources)
                 update_tab('world', world)
 
     if 'subnational' in tabs:
-        whowhatwhere_headers, whowhatwhere_columns, whowhatwhere_sources = get_whowhatwhere(configuration, adminone, downloader, scrapers)
-        tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, h63, adminone, 'subnational', downloader, scrapers=scrapers, population_lookup=population_lookup)
+        whowhatwhere_headers, whowhatwhere_columns, whowhatwhere_sources = get_whowhatwhere(configuration, today_str, adminone, downloader, scrapers)
+        tabular_headers, tabular_columns, tabular_sources = get_tabular(basic_auths, configuration, h63, adminone, 'subnational', downloader, today_str=today_str, scrapers=scrapers, population_lookup=population_lookup)
 
         subnational_headers = extend_headers(subnational, ipc_sheaders, tabular_headers, whowhatwhere_headers)
         extend_columns('subnational', subnational, pcodes, h25, region, adminone, subnational_headers, ipc_scolumns, tabular_columns, whowhatwhere_columns)

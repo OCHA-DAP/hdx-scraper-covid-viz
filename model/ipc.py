@@ -21,7 +21,6 @@ def get_data(downloader, url, countryiso2):
                                             'format': 'xlsx'}, fill_merged_cells=True)
         data = list(data)
         adm1_names = set()
-        percentages = list()
         found_data = False
         for row in data:
             area = row['Area']
@@ -38,8 +37,8 @@ def get_data(downloader, url, countryiso2):
     return None, None
 
 
-def get_period(row, projections):
-    today = datetime.today().date()
+def get_period(today, row, projections):
+    today = today.date()
     analysis_period = ''
     for projection in projections:
         current_period = row[f'{projection} Analysis Period']
@@ -59,7 +58,7 @@ def get_period(row, projections):
     return analysis_period, start.strftime('%Y-%m-%d'), end.strftime('%Y-%m-%d')
 
 
-def get_ipc(configuration, h63, adminone, downloader, scrapers=None):
+def get_ipc(configuration, today, h63, adminone, downloader, scrapers=None):
     name = inspect.currentframe().f_code.co_name
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list(), list(), list()
@@ -80,7 +79,7 @@ def get_ipc(configuration, h63, adminone, downloader, scrapers=None):
         if not data:
             continue
         row = data[0]
-        analysis_period, start, end = get_period(row, projections)
+        analysis_period, start, end = get_period(today, row, projections)
         for phase in phases:
             national_phases[phase][countryiso3] = row[f'{analysis_period} Phase {phase} %']
         population_analysed = row["Current Population Analysed % of total county Pop"]

@@ -10,8 +10,7 @@ from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.downloader import Download
 from hdx.utilities.text import number_format, get_fraction_str, get_numeric_if_possible
 
-from model import today_str, add_population
-from utilities import get_rowval
+from utilities import get_rowval, add_population
 from utilities.rowparser import RowParser
 from utilities.readers import read_tabular, read_ole, read_json, read_hdx
 
@@ -295,6 +294,12 @@ def get_tabular(basic_auths, configuration, countryiso3s, adminone, level, maind
         if 'source_url' not in datasetinfo:
             datasetinfo['source_url'] = datasetinfo['url']
         if 'date' not in datasetinfo or datasetinfo.get('force_date_today', False):
+            today_str = kwargs.get('today_str')
+            if not today_str:
+                today = kwargs.get('today')
+                if not today:
+                    raise ValueError('No date provided for today for date metadata!')
+                today_str = today.strftime('%Y-%m-%d')
             datasetinfo['date'] = today_str
         sort = datasetinfo.get('sort')
         if sort:

@@ -4,12 +4,10 @@ import logging
 
 from os.path import join
 
-from model import today_str
-
 logger = logging.getLogger(__name__)
 
 
-def get_unhcr(configuration, countryiso3s, downloader, scrapers=None):
+def get_unhcr(configuration, today_str, countryiso3s, downloader, scrapers=None):
     name = inspect.currentframe().f_code.co_name
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list()

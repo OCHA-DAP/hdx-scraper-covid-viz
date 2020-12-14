@@ -754,9 +754,7 @@ regional:
     "Number of incidents reported since start of year": "sum"
     "% of CERF projects affected by insecurity and inaccessibility": "mean"
     "% of CBPF projects affected by insecurity and inaccessibility": "mean"
-
-# global
-from_regional:
+  global:
     - "% of visas pending or denied"
     - "% of travel authorizations or movements denied"
     - "Number of incidents reported since start of year"

@@ -7,7 +7,7 @@ from hdx.location.country import Country
 from hdx.utilities.dateparse import parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 
-from model import template
+from utilities import template
 
 
 class RowParser(object):

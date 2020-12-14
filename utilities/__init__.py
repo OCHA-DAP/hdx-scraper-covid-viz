@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from hdx.data.dataset import Dataset
-from hdx.utilities.dictandlist import dict_of_lists_add
+import re
 
-from model import template
+from hdx.data.dataset import Dataset
+
+template = re.compile('{{.*?}}')
 
 
 def get_rowval(row, valcol):
@@ -29,3 +30,19 @@ def get_date_from_dataset_date(dataset):
     elif date_type == 'date':
         return dataset.get_dataset_date(date_format='%Y-%m-%d')
     return None
+
+
+def add_population(population_lookup, headers, columns):
+    if population_lookup is None:
+        return
+    try:
+        population_index = headers[1].index('#population')
+    except ValueError:
+        population_index = None
+    if population_index is not None:
+        for key, value in columns[population_index].items():
+            try:
+                valint = int(value)
+                population_lookup[key] = valint
+            except ValueError:
+                pass
