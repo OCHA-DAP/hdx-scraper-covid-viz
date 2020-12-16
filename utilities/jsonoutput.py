@@ -72,7 +72,7 @@ class jsonoutput:
             # isinstance(values, DataFrame)
             self.generate_json_from_df(tabname, values, hxltags)
 
-    def add_additional_json(self, downloader):
+    def add_additional_json(self, downloader, today=None):
         for datasetinfo in self.json_configuration.get('additional_json', list()):
             name = datasetinfo['name']
             format = datasetinfo['format']
@@ -83,7 +83,7 @@ class jsonoutput:
                 headers, iterator = read_ole(downloader, datasetinfo)
             elif format in ['csv', 'xls', 'xlsx']:
                 if 'dataset' in datasetinfo:
-                    headers, iterator = read_hdx(downloader, datasetinfo)
+                    headers, iterator = read_hdx(downloader, datasetinfo, today=today)
                 else:
                     headers, iterator = read_tabular(downloader, datasetinfo)
             else:

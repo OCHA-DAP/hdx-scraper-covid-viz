@@ -15,7 +15,7 @@ class nooutput:
     def add_data_rows_by_key(self, name, countryiso, rows, hxltags=None):
         return
 
-    def add_additional_json(self, downloader):
+    def add_additional_json(self, downloader, today=None):
         return
 
     def save(self, **kwargs):

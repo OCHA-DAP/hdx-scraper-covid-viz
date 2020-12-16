@@ -1,10 +1,12 @@
 import filecmp
+from datetime import datetime
 from os.path import join
 
 import pytest
 from hdx.hdx_configuration import Configuration
 from hdx.hdx_locations import Locations
 from hdx.location.country import Country
+from hdx.utilities.dateparse import parse_date
 from hdx.utilities.downloader import Download
 from hdx.utilities.path import temp_dir
 
@@ -32,7 +34,8 @@ class TestCovid:
                 noout = nooutput(tabs)
                 jsonout = jsonoutput(configuration, tabs)
                 outputs = {'gsheets': noout, 'excel': noout, 'json': jsonout}
-                countries_to_save = get_indicators(configuration, downloader, outputs, tabs, scrapers=['ifi', 'who_global', 'who_national', 'who_subnational', 'who_covid', 'sadd', 'covidtests', 'cadre_harmonise', 'access'], use_live=False)
+                today = parse_date('2020-10-01')
+                countries_to_save = get_indicators(configuration, today, downloader, outputs, tabs, scrapers=['ifi', 'who_global', 'who_national', 'who_subnational', 'who_covid', 'sadd', 'covidtests', 'cadre_harmonise', 'access'], use_live=False)
                 filepaths = jsonout.save(tempdir, countries_to_save=countries_to_save)
                 assert filecmp.cmp(filepaths[0], join(folder, 'test_tabular_all.json'))
                 assert filecmp.cmp(filepaths[1], join(folder, 'test_tabular.json'))

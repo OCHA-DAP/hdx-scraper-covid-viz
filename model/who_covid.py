@@ -59,12 +59,12 @@ def get_who_data(url, h25, h63, region):
     return source_date, df_world, df_h63, df_series, df
 
 
-def get_who_covid(configuration, outputs, h25, h63, region, population_lookup, scrapers=None):
+def get_who_covid(configuration, today, outputs, h25, h63, region, population_lookup, scrapers=None):
     name = 'who_covid'
     if scrapers and not any(scraper in name for scraper in scrapers) and not any(scraper in outputs['gsheets'].updatetabs for scraper in scrapers):
         return list(), list(), list(), list(), list(), list()
     datasetinfo = configuration[name]
-    read_hdx_metadata(datasetinfo)
+    read_hdx_metadata(datasetinfo, today=today)
 
     # get WHO data
     source_date, df_world, df_h63, df_series, df_WHO = get_who_data(datasetinfo['url'], h25, h63, region)

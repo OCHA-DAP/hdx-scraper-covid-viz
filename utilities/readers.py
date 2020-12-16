@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 def get_url(url, **kwargs):
     for kwarg in kwargs:
-        exec('%s=%s' % (kwarg, kwargs[kwarg]))
+        exec('%s="%s"' % (kwarg, kwargs[kwarg]))
     template_string, match_string = match_template(url)
     if template_string:
         replace_string = eval(match_string)
@@ -60,7 +60,7 @@ def read_json(downloader, datasetinfo, **kwargs):
     return json
 
 
-def read_hdx_metadata(datasetinfo):
+def read_hdx_metadata(datasetinfo, today=None):
     dataset_name = datasetinfo['dataset']
     dataset = Dataset.read_from_hdx(dataset_name)
     format = datasetinfo['format']
@@ -75,13 +75,13 @@ def read_hdx_metadata(datasetinfo):
             return None, None
         datasetinfo['url'] = url
     if 'date' not in datasetinfo:
-        datasetinfo['date'] = get_date_from_dataset_date(dataset)
+        datasetinfo['date'] = get_date_from_dataset_date(dataset, today=today)
     if 'source' not in datasetinfo:
         datasetinfo['source'] = dataset['dataset_source']
     if 'source_url' not in datasetinfo:
         datasetinfo['source_url'] = dataset.get_hdx_url()
 
 
-def read_hdx(downloader, datasetinfo):
-    read_hdx_metadata(datasetinfo)
+def read_hdx(downloader, datasetinfo, today=None):
+    read_hdx_metadata(datasetinfo, today=today)
     return read_tabular(downloader, datasetinfo)

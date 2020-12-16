@@ -74,7 +74,6 @@ tabular_national:
   population:
     source: "World Bank"
     source_url: "https://data.humdata.org/organization/world-bank-group"
-    date: "2020-08-27"
     format: "xls"
     url: "tests/fixtures/API_SP.POP.TOTL_DS2_en_excel_v2_1302508_LIST.xls"
     sheet: "Data"
@@ -548,7 +547,6 @@ tabular_national:
       "default_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
     format: "csv"
     url: "tests/fixtures/Access Indicators  - Data for Dashboard.csv"
-    date: "2020-10-01"
     headers: 1
     use_hxl: True
     input_transforms:
@@ -788,7 +786,6 @@ tabular_subnational:
     source: "WHO"
     format: "csv"
     url: "tests/fixtures/Vaccine coverage at subnational level - Data.csv"
-    date: "2020-08-27"
     headers: 1
     adm_cols:
       - "iso"

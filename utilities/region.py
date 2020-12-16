@@ -11,9 +11,9 @@ logger = logging.getLogger(__name__)
 
 
 class Region(object):
-    def __init__(self, region_config, downloader, h63, h25):
+    def __init__(self, region_config, today, downloader, h63, h25):
         self.region_config = region_config
-        _, iterator = read_hdx(downloader, region_config)
+        _, iterator = read_hdx(downloader, region_config, today=today)
         self.iso3_to_region = dict()
         self.iso3_to_region_and_hrp = dict()
         regions = set()

@@ -14,7 +14,7 @@ def add_food_prices(configuration, today, countryiso3s, downloader, scrapers=Non
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list()
     datasetinfo = configuration[name]
-    headers, iterator = read_hdx(downloader, datasetinfo)
+    headers, iterator = read_hdx(downloader, datasetinfo, today=today)
     allowed_months = set()
     for i in range(1, 7, 1):
         month = today.month - i

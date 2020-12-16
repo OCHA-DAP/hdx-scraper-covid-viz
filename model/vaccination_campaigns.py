@@ -9,12 +9,12 @@ from utilities.readers import read_hdx
 logger = logging.getLogger(__name__)
 
 
-def add_vaccination_campaigns(configuration, countryiso3s, downloader, outputs, scrapers=None):
+def add_vaccination_campaigns(configuration, today, countryiso3s, downloader, outputs, scrapers=None):
     name = 'vaccination_campaigns'
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list()
     datasetinfo = configuration[name]
-    headers, iterator = read_hdx(downloader, datasetinfo)
+    headers, iterator = read_hdx(downloader, datasetinfo, today=today)
     hxlrow = next(iterator)
     campaigns_per_country = dict()
     affected_campaigns_per_country = dict()

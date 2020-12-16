@@ -29,15 +29,17 @@ def get_rowval(row, valcol):
         return result
 
 
-def get_date_from_dataset_date(dataset):
+def get_date_from_dataset_date(dataset, today=None):
     if isinstance(dataset, str):
         dataset = Dataset.read_from_hdx(dataset)
-    date_type = dataset.get_dataset_date_type()
-    if date_type == 'range':
-        return dataset.get_dataset_end_date(date_format='%Y-%m-%d')
-    elif date_type == 'date':
-        return dataset.get_dataset_date(date_format='%Y-%m-%d')
-    return None
+    if today is None:
+        date_info = dataset.get_date_of_dataset()
+    else:
+        date_info = dataset.get_date_of_dataset(today=today)
+    enddate = date_info.get('enddate_str')
+    if not enddate:
+        return None
+    return enddate[:10]
 
 
 def add_population(population_lookup, headers, columns):

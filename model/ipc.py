@@ -126,7 +126,7 @@ def get_ipc(configuration, today, h63, adminone, downloader, scrapers=None):
                 subnational_phase[pcode] = get_fraction_str(numerator, denominator)
     logger.info('Processed IPC')
     dataset = Dataset.read_from_hdx(ipc_configuration['dataset'])
-    date = get_date_from_dataset_date(dataset)
+    date = get_date_from_dataset_date(dataset, today=today)
     headers = [f'FoodInsecurityIPC{phase}' for phase in phases]
     headers.append('FoodInsecurityIPCAnalysed')
     headers.append('FoodInsecurityIPCAnalysisPeriod')

@@ -259,11 +259,12 @@ def _get_tabular(countryiso3s, adminone, level, name, datasetinfo, headers, iter
     return retheaders, retval, sources
 
 
-def get_tabular(basic_auths, configuration, countryiso3s, adminone, level, maindownloader, scrapers=None, population_lookup=None, **kwargs):
+def get_tabular(basic_auths, configuration, countryiso3s, adminone, level, maindownloader, today=None, scrapers=None, population_lookup=None, **kwargs):
     datasets = configuration['tabular_%s' % level]
     retheaders = [list(), list()]
     retval = list()
     sources = list()
+    now = datetime.now()
     for name in datasets:
         if scrapers:
             if not any(scraper in name for scraper in scrapers):
@@ -286,7 +287,7 @@ def get_tabular(basic_auths, configuration, countryiso3s, adminone, level, maind
             headers, iterator = read_ole(downloader, datasetinfo, **kwargs)
         elif format in ['csv', 'xls', 'xlsx']:
             if 'dataset' in datasetinfo:
-                headers, iterator = read_hdx(downloader, datasetinfo)
+                headers, iterator = read_hdx(downloader, datasetinfo, today=today)
             else:
                 headers, iterator = read_tabular(downloader, datasetinfo, **kwargs)
         else:
@@ -296,10 +297,10 @@ def get_tabular(basic_auths, configuration, countryiso3s, adminone, level, maind
         if 'date' not in datasetinfo or datasetinfo.get('force_date_today', False):
             today_str = kwargs.get('today_str')
             if not today_str:
-                today = kwargs.get('today')
-                if not today:
-                    raise ValueError('No date provided for today for date metadata!')
-                today_str = today.strftime('%Y-%m-%d')
+                if today:
+                    today_str = today.strftime('%Y-%m-%d')
+                else:
+                    today_str = now.strftime('%Y-%m-%d')
             datasetinfo['date'] = today_str
         sort = datasetinfo.get('sort')
         if sort:

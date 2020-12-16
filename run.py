@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import argparse
 import logging
+from datetime import datetime
 from os import getenv
 from os.path import join
 
@@ -64,8 +65,9 @@ def main(excel_path, gsheet_auth, updatesheets, updatetabs, scrapers, basic_auth
         else:
             jsonout = jsonoutput(configuration, updatetabs)
         outputs = {'gsheets': gsheets, 'excel': excelout, 'json': jsonout}
-        countries_to_save = get_indicators(configuration, downloader, outputs, updatetabs, scrapers, basic_auths)
-        jsonout.add_additional_json(downloader)
+        today = datetime.now()
+        countries_to_save = get_indicators(configuration, today, downloader, outputs, updatetabs, scrapers, basic_auths)
+        jsonout.add_additional_json(downloader, today=today)
         jsonout.save(countries_to_save=countries_to_save)
         excelout.save()
 
