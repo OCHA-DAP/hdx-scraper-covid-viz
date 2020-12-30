@@ -14,15 +14,28 @@ def get_unhcr(configuration, today_str, countryiso3s, downloader, scrapers=None)
     iso3tocode = downloader.download_tabular_key_value(join('config', 'UNHCR_geocode.csv'))
     unhcr_configuration = configuration['unhcr']
     base_url = unhcr_configuration['url']
+    population_codes = unhcr_configuration['population_codes']
     valuedicts = [dict(), dict()]
     for countryiso3 in countryiso3s:
-        code = iso3tocode.get(countryiso3)
-        if not code:
+        countrycode = iso3tocode.get(countryiso3)
+        if not countrycode:
             continue
-        r = downloader.download('%s%s' % (base_url, code))
-        data = r.json()['data'][0]
-        valuedicts[0][countryiso3] = data['individuals']
-        valuedicts[1][countryiso3] = data['date']
+        individuals = valuedicts[0].get(countryiso3)
+        date = valuedicts[1].get(countryiso3)
+        for population_code in population_codes:
+            r = downloader.download(base_url % (population_code, countrycode))
+            data = r.json()['data'][0]
+            value = data['individuals']
+            if value is not None:
+                value = int(value)
+                if individuals is None:
+                    individuals = value
+                    date = data['date']
+                else:
+                    individuals += value
+        if individuals is not None:
+            valuedicts[0][countryiso3] = individuals
+            valuedicts[1][countryiso3] = date
     logger.info('Processed UNHCR')
     hxltags = ['#affected+refugees', '#affected+date+refugees']
     return [['TotalRefugees', 'TotalRefugeesDate'], hxltags], valuedicts, [(hxltag, today_str, 'UNHCR', unhcr_configuration['source_url']) for hxltag in hxltags]
