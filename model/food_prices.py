@@ -21,8 +21,7 @@ def add_food_prices(configuration, today, countryiso3s, downloader, scrapers=Non
         if month > 0:
             allowed_months.add('%d/%d' % (today.year, month))
         else:
-            month = 12 - month
-            allowed_months.add('%d/%d' % (today.year - 1, month))
+            allowed_months.add('%d/%d' % (today.year - 1, 12 + month))
     commods_per_country = dict()
     affected_commods_per_country = dict()
     for row in iterator:
