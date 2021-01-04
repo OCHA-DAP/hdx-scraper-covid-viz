@@ -4,11 +4,11 @@ import logging
 
 from hdx.data.dataset import Dataset
 from hdx.location.country import Country
+from hdx.scraper import get_date_from_dataset_date
+from hdx.scraper.readers import read_tabular
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.text import get_fraction_str
 
-from utilities import get_date_from_dataset_date
-from utilities.readers import read_tabular
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 

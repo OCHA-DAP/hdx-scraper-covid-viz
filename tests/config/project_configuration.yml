@@ -10,12 +10,12 @@ tabs:
 
 
 json:
-  filepath: "test_tabular_all.json"
+  filepath: "test_scraper_all.json"
   additional:
-    - filepath: "test_tabular.json" # used by the covid viz and doesn't include unneeded timeseries
+    - filepath: "test_scraper.json" # used by the covid viz and doesn't include unneeded timeseries
       remove:
         - "covid_series_flat"
-    - filepath: "test_tabular_daily.json"
+    - filepath: "test_scraper_daily.json"
       tabs:
         - tab: "national"
           key: "cumulative"
@@ -35,7 +35,7 @@ json:
             - "#affected+tested+positive+pct"
             - "#vaccination+num+ratio"
             - "#value+food+num+ratio"
-    - filepath: "test_tabular_covidseries.json"
+    - filepath: "test_scraper_covidseries.json"
       tabs:
         - tab: "covid_series"
           key: "timeseries"
@@ -70,7 +70,7 @@ additional_sources:
     source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
 
 # national
-tabular_national:
+scraper_national:
   population:
     source: "World Bank"
     source_url: "https://data.humdata.org/organization/world-bank-group"
@@ -619,7 +619,7 @@ regional:
     - "% of CBPF projects affected by insecurity and inaccessibility"
 
 
-tabular_global:
+scraper_global:
   cerf_global:
     format: "csv"
     dataset: "cerf-covid-19-allocations"
@@ -680,7 +680,7 @@ ipc:
   url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=%d&limit=1&condition=A&export=true&country=%s"
   dataset: "ipc-country-data"
 
-tabular_subnational:
+scraper_subnational:
   cadre_harmonise:
     format: "xlsx"
     dataset: "cadre-harmonise"

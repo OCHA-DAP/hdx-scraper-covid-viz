@@ -6,8 +6,7 @@ import pandas as pd
 
 # filename for shapefile and WHO input dataset
 from hdx.location.country import Country
-
-from utilities.readers import read_hdx_metadata
+from hdx.scraper.readers import read_hdx_metadata
 
 MIN_CUMULATIVE_CASES = 100
 
