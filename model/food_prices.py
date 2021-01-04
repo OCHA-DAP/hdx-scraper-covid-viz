@@ -2,9 +2,9 @@
 import logging
 
 from hdx.location.country import Country
+from hdx.scraper.readers import read_hdx
 
 from model import calculate_ratios
-from utilities.readers import read_hdx
 
 logger = logging.getLogger(__name__)
 

@@ -7,14 +7,14 @@ from os.path import join
 
 from hdx.facades.keyword_arguments import facade
 from hdx.hdx_configuration import Configuration
+from hdx.scraper.exceloutput import ExcelOutput
+from hdx.scraper.googlesheets import GoogleSheets
+from hdx.scraper.jsonoutput import JsonOutput
+from hdx.scraper.nooutput import NoOutput
 from hdx.utilities.downloader import Download
 from hdx.utilities.easy_logging import setup_logging
 
-from utilities.exceloutput import exceloutput
-from utilities.jsonoutput import jsonoutput
 from model.main import get_indicators
-from utilities.googlesheets import googlesheets
-from utilities.nooutput import nooutput
 
 setup_logging()
 logger = logging.getLogger()
@@ -51,19 +51,19 @@ def main(excel_path, gsheet_auth, updatesheets, updatetabs, scrapers, basic_auth
             logger.info('Updating all tabs')
         else:
             logger.info('Updating only these tabs: %s' % updatetabs)
-        noout = nooutput(updatetabs)
+        noout = NoOutput(updatetabs)
         if excel_path:
-            excelout = exceloutput(excel_path, tabs, updatetabs)
+            excelout = ExcelOutput(excel_path, tabs, updatetabs)
         else:
             excelout = noout
         if gsheet_auth:
-            gsheets = googlesheets(configuration, gsheet_auth, updatesheets, tabs, updatetabs)
+            gsheets = GoogleSheets(configuration, gsheet_auth, updatesheets, tabs, updatetabs)
         else:
             gsheets = noout
         if nojson:
             jsonout = noout
         else:
-            jsonout = jsonoutput(configuration, updatetabs)
+            jsonout = JsonOutput(configuration, updatetabs)
         outputs = {'gsheets': gsheets, 'excel': excelout, 'json': jsonout}
         today = datetime.now()
         countries_to_save = get_indicators(configuration, today, downloader, outputs, updatetabs, scrapers, basic_auths)

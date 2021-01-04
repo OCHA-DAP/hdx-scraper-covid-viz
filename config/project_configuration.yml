@@ -78,7 +78,7 @@ additional_sources:
     source_url: "https://data.humdata.org/search?q=((organization:world-health-organization%20AND%20notes:Coronavirus)%20OR%20organization:global-health-50-50)"
 
 # national
-tabular_national:
+scraper_national:
   population:
     source: "World Bank"
     source_url: "https://data.humdata.org/organization/world-bank-group"
@@ -769,7 +769,7 @@ regional:
     - "% of CBPF projects affected by insecurity and inaccessibility"
 
 
-tabular_global:
+scraper_global:
   cerf_global:
     format: "csv"
     url: "https://cbpfapi.unocha.org/vo2/odata/GlobalGenericDataExtractSecure?SPCode=TAG_PRJ&PoolfundCodeAbbrv=&$format=csv"
@@ -1004,7 +1004,7 @@ ipc:
   url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,2020/?page=%d&limit=1&condition=A&export=true&country=%s"
   dataset: "ipc-country-data"
 
-tabular_subnational:
+scraper_subnational:
   population:
     source: "Multiple sources"
     source_url: "https://data.humdata.org/search?organization=worldpop&q=%22population%20counts%22"

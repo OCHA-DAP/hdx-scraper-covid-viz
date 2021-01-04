@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from hdx.utilities.dictandlist import dict_of_lists_add
+from hdx.scraper.readers import read_hdx
 
 from model import calculate_ratios
-from utilities.readers import read_hdx
 
 logger = logging.getLogger(__name__)
 

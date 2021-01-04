@@ -1,11 +1,10 @@
 import logging
 import sys
 
+from hdx.scraper import add_population
+from hdx.scraper.readers import read_hdx
 from hdx.utilities.dictandlist import dict_of_sets_add, dict_of_lists_add
 from hdx.utilities.text import number_format, get_fraction_str, get_numeric_if_possible
-
-from utilities import add_population
-from utilities.readers import read_hdx
 
 logger = logging.getLogger(__name__)
 
