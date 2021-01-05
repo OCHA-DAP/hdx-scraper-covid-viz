@@ -36,7 +36,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest --cov-config .coveragerc --cov-report= --cov=. --junitxml=junit/test-results-${{ matrix.python-version }}.xml
+        pytest --junitxml=junit/test-results-${{ matrix.python-version }}.xml --cov-config .coveragerc --cov-report= --cov=.
     - name: Coveralls
       if: ${{ success() }}
       run: |
