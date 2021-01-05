@@ -35,12 +35,12 @@ jobs:
         pytest --junitxml=junit/test-results-${{ matrix.python-version }}.xml --cov-config .coveragerc --cov-report= --cov=.
     - name: Coveralls
       if: ${{ success() }}
-      run: |
-        coveralls
-    - name: Upload pytest test results
-      uses: actions/upload-artifact@v2
+      uses: coverallsapp/github-action@master
       with:
-        name: pytest-results-${{ matrix.python-version }}
-        path: junit/test-results-${{ matrix.python-version }}.xml
-      # Use always() to always run this step to publish test results when there are test failures
-      if: ${{ always() }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1.6
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        files: junit/*.xml
