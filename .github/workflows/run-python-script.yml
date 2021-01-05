@@ -1,6 +1,6 @@
 # This workflow will install Python dependencies and run the script
 
-name: Run Python script
+name: run
 
 on:
   workflow_dispatch: # add run button in github
