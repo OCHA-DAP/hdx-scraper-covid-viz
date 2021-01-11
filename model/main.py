@@ -129,7 +129,7 @@ def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=Non
         fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(basic_auths, configuration, today, today_str, h63, scrapers)
         food_headers, food_columns, food_sources = add_food_prices(configuration, today, h63, downloader, scrapers)
         campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, today, h63, downloader, outputs, scrapers)
-        unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, today_str, h63, downloader, scrapers)
+        unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, today, today_str, h63, downloader, scrapers)
         tabular_headers, tabular_columns, tabular_sources = run_scrapers(configuration, h63, adminone, 'national', downloader, basic_auths, today=today, today_str=today_str, scrapers=scrapers, population_lookup=population_lookup)
 
         national_headers = extend_headers(national, covid_headers, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, ipc_headers)

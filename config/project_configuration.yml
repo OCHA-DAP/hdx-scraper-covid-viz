@@ -707,8 +707,15 @@ vaccination_campaigns:
   headers: 1
 
 unhcr:
-  url: "https://data2.unhcr.org/population/?population_collection=4&geo_id="
+  url: "https://data2.unhcr.org/population/?population_collection=%d&geo_id=%s"
   source_url: "https://data.humdata.org/organization/unhcr"
+  population_collections:
+    - 4
+    - 28
+    - 29
+    - 71
+  exclude:
+    - "VEN"
 
 who_covid:
   format: "csv"
