@@ -302,20 +302,20 @@ scraper_national:
       - "#affected+infected+max+lshtm"
       - "#affected+killed+min+lshtm"
       - "#affected+killed+max+lshtm"
-#  school:
-#    format: "csv"
-#    dataset: "global-school-closures-covid19"
-#    headers: 1
-#    adm_cols:
-#      - "ISO"
-#    date_col: "Date"
-#    date_type: "date"
-#    input_cols:
-#      - "Status"
-#    output_cols:
-#      - "SchoolClosure"
-#    output_hxltags:
-#      - "#impact+type"
+  school:
+    format: "csv"
+    dataset: "global-school-closures-covid19"
+    headers: 1
+    adm_cols:
+      - "ISO"
+    date_col: "Date"
+    date_type: "date"
+    input_cols:
+      - "Status"
+    output_cols:
+      - "SchoolClosure"
+    output_hxltags:
+      - "#impact+type"
   travel:
     format: "csv"
     dataset: "covid-19-global-travel-restrictions-and-airline-information"
