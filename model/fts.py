@@ -2,6 +2,7 @@
 import inspect
 import logging
 import re
+from datetime import timedelta
 
 from hdx.utilities.dictandlist import write_list_to_csv, dict_of_lists_add
 from hdx.utilities.downloader import Download
@@ -221,7 +222,8 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
                 total_gbvfund += gbvfund
 
     with Download(basic_auth=basic_auths.get('fts'), rate_limit={'calls': 1, 'period': 1}) as downloader:
-        url = '%sfts/flow/plan/overview/progress/%d' % (v2_url, today.year)
+        curdate = today - timedelta(days=31)
+        url = '%sfts/flow/plan/overview/progress/%d' % (v2_url, curdate.year)
         data = download_data(url, downloader)
         plans = data['plans']
         plan_ids = ','.join([str(plan['id']) for plan in plans])
