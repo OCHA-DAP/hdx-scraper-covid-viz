@@ -690,6 +690,26 @@ scraper_national:
       "#activity+cerf+project+insecurity+pct": "get_numeric_if_possible(#activity+cerf+project+insecurity+pct)"
       "#activity+cbpf+project+insecurity+pct": "get_numeric_if_possible(#activity+cbpf+project+insecurity+pct)"
       "#population+education": "get_numeric_if_possible(#population+education)"
+  unicef_sam:
+    source: "UNICEF"
+    format: "csv"
+    url: "https://sdmx.data.unicef.org/ws/public/sdmxapi/rest/data/UNICEF.EMOPS,DF_SITREP_COVID19,1.0/.CV-03-04?format=csv"
+    headers: 1
+    sort:
+      reverse: True
+      keys:
+        - "TIME_PERIOD"
+    adm_cols:
+      - "REF_AREA"
+    date_col: "TIME_PERIOD"
+    date_type: "date"
+    use_date_from_date_col: True
+    input_cols:
+      - "OBS_VALUE"
+    output_cols:
+      - "NoChildrenSAM"
+    output_hxltags:
+      - "#affected+children+sam"
 
 fts:
   v1_url: "https://api.hpc.tools/v1/public/"
