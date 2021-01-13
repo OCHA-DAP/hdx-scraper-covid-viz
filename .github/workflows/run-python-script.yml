@@ -29,6 +29,7 @@ jobs:
         GSHEET_AUTH: ${{ secrets.GSHEET_AUTH }}
         UPDATESHEETS: ${{ secrets.UPDATESHEETS }}
         BASIC_AUTHS: ${{ secrets.BASIC_AUTHS }}
+        OTHER_AUTHS: ${{ secrets.OTHER_AUTHS }}
       run: |
         python run.py
     - uses: stefanzweifel/git-auto-commit-action@v4
