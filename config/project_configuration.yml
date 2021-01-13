@@ -98,41 +98,6 @@ scraper_national:
       - "Population"
     output_hxltags:
       - "#population"
-  inform_hazard:
-    format: "xlsx"
-    dataset: "inform-covid-19-risk-index-version-0-1-4"
-    sheet: "Hazard & Exposure"
-    headers: 1
-    adm_cols:
-      - "Iso3"
-    input_cols:
-      - "Covid-19 Hazard & Exposure"
-    output_cols:
-      - "Covid19HazardExposure"
-    output_hxltags:
-      - "#severity+hazard+inform+num"
-  inform:
-    format: "xlsx"
-    dataset: "inform-covid-19-risk-index-version-0-1-4"
-    sheet: "INFORM COVID-19 RISK 2020 (a-z)"
-    headers: 1
-    adm_cols:
-      - "ISO3"
-    input_cols:
-      - "LACK OF COPING CAPACITY"
-      - "VULNERABILITY"
-      - "INFORM COVID-19 RISK"
-      - "COVID-19 RISK CLASS"
-    output_cols:
-      - "LackOfCopingCapacity"
-      - "Vulnerability"
-      - "Risk"
-      - "RiskClass"
-    output_hxltags:
-      - "#severity+coping+inform+num"
-      - "#severity+inform+num+vulnerability"
-      - "#severity+inform+num"
-      - "#severity+inform+type"
   economicindex:
     format: "xlsx"
     dataset: "covid-19-economic-exposure-index"
@@ -736,6 +701,20 @@ unhcr:
     - 71
   exclude:
     - "VEN"
+
+inform:
+  url: "https://api.acaps.org/api/v1/inform-severity-index/%s/?page="
+  dataset: "inform-severity-index-september-2020"
+  format: "xlsx"
+  input_cols:
+    - "INFORM Severity Index"
+    - "INFORM Severity category"
+  output_cols:
+    - "INFORM Severity Index"
+    - "INFORM Severity category"
+  output_hxltags:
+    - "#severity+inform+num"
+    - "#severity+inform+type"
 
 who_covid:
   format: "csv"

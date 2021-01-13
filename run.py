@@ -34,12 +34,13 @@ def parse_args():
     parser.add_argument('-sc', '--scrapers', default=None, help='Scrapers to run')
     parser.add_argument('-ut', '--updatetabs', default=None, help='Sheets to update')
     parser.add_argument('-nj', '--nojson', default=False, action='store_true', help='Do not update json')
-    parser.add_argument('-ba', '--basic_auths', default=None, help='Credentials for accessing scrper APIs')
+    parser.add_argument('-ba', '--basic_auths', default=None, help='Basic Auth Credentials for accessing scraper APIs')
+    parser.add_argument('-oa', '--other_auths', default=None, help='Other Credentials for accessing scraper APIs')
     args = parser.parse_args()
     return args
 
 
-def main(excel_path, gsheet_auth, updatesheets, updatetabs, scrapers, basic_auths, nojson, **ignore):
+def main(excel_path, gsheet_auth, updatesheets, updatetabs, scrapers, basic_auths, other_auths, nojson, **ignore):
     logger.info('##### hdx-scraper-covid-viz version %.1f ####' % VERSION)
     configuration = Configuration.read()
     with Download(rate_limit={'calls': 1, 'period': 0.1}) as downloader:
@@ -66,7 +67,7 @@ def main(excel_path, gsheet_auth, updatesheets, updatetabs, scrapers, basic_auth
             jsonout = JsonOutput(configuration, updatetabs)
         outputs = {'gsheets': gsheets, 'excel': excelout, 'json': jsonout}
         today = datetime.now()
-        countries_to_save = get_indicators(configuration, today, downloader, outputs, updatetabs, scrapers, basic_auths)
+        countries_to_save = get_indicators(configuration, today, downloader, outputs, updatetabs, scrapers, basic_auths, other_auths)
         jsonout.add_additional_json(downloader, today=today)
         jsonout.save(countries_to_save=countries_to_save)
         excelout.save()
@@ -111,7 +112,15 @@ if __name__ == '__main__':
         for keyvalue in ba.split(','):
             key, value = keyvalue.split(':')
             basic_auths[key] = value
+    other_auths = dict()
+    oa = args.other_auths
+    if oa is None:
+        oa = getenv('OTHER_AUTHS')
+    if oa:
+        for keyvalue in oa.split(','):
+            key, value = keyvalue.split(':')
+            other_auths[key] = value
     facade(main, hdx_read_only=True, user_agent=user_agent, preprefix=preprefix, hdx_site=hdx_site,
            project_config_yaml=join('config', 'project_configuration.yml'), excel_path=args.excel_path,
            gsheet_auth=gsheet_auth, updatesheets=updatesheets, updatetabs=updatetabs, scrapers=scrapers,
-           basic_auths=basic_auths, nojson=args.nojson)
+           basic_auths=basic_auths, other_auths=other_auths, nojson=args.nojson)

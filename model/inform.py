@@ -2,23 +2,25 @@
 import inspect
 import logging
 
+from hdx.scraper.readers import read_hdx_metadata
 from hdx.utilities.dateparse import default_date, parse_date
 from hdx.utilities.downloader import Download
 
 logger = logging.getLogger(__name__)
 
 
-def get_inform(configuration, today, countryiso3s, scrapers=None):
+def get_inform(configuration, today, countryiso3s, other_auths, scrapers=None):
     name = inspect.currentframe().f_code.co_name
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list()
     inform_configuration = configuration['inform']
+    read_hdx_metadata(inform_configuration)
     url = inform_configuration['url'] % today.strftime('%b%Y')
     input_cols = inform_configuration['input_cols']
     page = 1
-    countries_index = {'individual': dict(), 'aggregated': dict()}
+    countries_index = {'Individual': dict(), 'Aggregated': dict()}
     iso3s_present = set()
-    with Download(rate_limit={'calls': 1, 'period': 0.1}, auth='') as downloader:
+    with Download(rate_limit={'calls': 1, 'period': 0.1}, headers={'Authorization': other_auths['inform']}) as downloader:
         while True:
             r = downloader.download(f'{url}{page}')
             json = r.json()
@@ -30,7 +32,7 @@ def get_inform(configuration, today, countryiso3s, scrapers=None):
                 if countryiso3 not in countryiso3s:
                     continue
                 iso3s_present.add(countryiso3)
-                individual_or_aggregated = result['individual_or_aggregated']
+                individual_or_aggregated = result['individual_aggregated']
                 countries_index_individual_or_aggregated = countries_index[individual_or_aggregated]
                 country_index = countries_index_individual_or_aggregated.get(countryiso3, dict())
                 country_index['date'] = result['Last updated']
@@ -40,8 +42,8 @@ def get_inform(configuration, today, countryiso3s, scrapers=None):
             if json['next'] is None:
                 break
             page += 1
-    individual_index = country_index['individual']
-    aggregated_index = country_index['aggregated']
+    individual_index = countries_index['Individual']
+    aggregated_index = countries_index['Aggregated']
     valuedicts = [dict() for _ in input_cols]
     date = default_date
     for countryiso3 in iso3s_present:
@@ -58,4 +60,4 @@ def get_inform(configuration, today, countryiso3s, scrapers=None):
     source_date = date.date().isoformat()
     output_cols = inform_configuration['output_cols']
     hxltags = inform_configuration['output_hxltags']
-    return [output_cols, hxltags], valuedicts, [(hxltag, source_date, 'INFORM', 'https://data.humdata.org/dataset/covid-19-data-visual-inputs') for hxltag in hxltags]
+    return [output_cols, hxltags], valuedicts, [(hxltag, source_date, inform_configuration['source'], inform_configuration['source_url']) for hxltag in hxltags]
