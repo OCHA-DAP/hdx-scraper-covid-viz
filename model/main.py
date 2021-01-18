@@ -8,6 +8,7 @@ from hdx.scraper import get_date_from_dataset_date
 from hdx.scraper.scrapers import run_scrapers
 
 from model.inform import get_inform
+from model.iom_dtm import get_iom_dtm
 from model.who_covid import get_who_covid
 from model.food_prices import add_food_prices
 from model.fts import get_fts
@@ -82,7 +83,7 @@ def extend_sources(sources, *args):
             sources.extend(arg)
 
 
-def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=None, basic_auths=dict(), other_auths=dict(), use_live=True):
+def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=None, basic_auths=dict(), other_auths=dict(), countries_override=None, use_live=True):
     world = [list(), list()]
     regional = [['regionnames'], ['#region+name']]
     national = [['iso3', 'countryname', 'ishrp', 'region'], ['#country+code', '#country+name', '#meta+ishrp', '#region+name']]
@@ -92,8 +93,12 @@ def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=Non
     Country.countriesdata(use_live=use_live, country_name_overrides=configuration['country_name_overrides'], country_name_mappings=configuration['country_name_mappings'])
 
     today_str = today.strftime('%Y-%m-%d')
-    h63 = configuration['h63']
-    h25 = configuration['h25']
+    if countries_override:
+        h63 = countries_override
+        h25 = countries_override
+    else:
+        h63 = configuration['h63']
+        h25 = configuration['h25']
     configuration['countries_fuzzy_try'] = h25
     region = Region(configuration['regional'], today, downloader, h63, h25)
     admin1_info = list()
@@ -156,11 +161,12 @@ def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=Non
 
     if 'subnational' in tabs:
         whowhatwhere_headers, whowhatwhere_columns, whowhatwhere_sources = get_whowhatwhere(configuration, today_str, adminone, downloader, scrapers)
+        iomdtm_headers, iomdtm_columns, iomdtm_sources = get_iom_dtm(configuration, today_str, adminone, downloader, scrapers)
         tabular_headers, tabular_columns, tabular_sources = run_scrapers(configuration, h63, adminone, 'subnational', downloader, basic_auths, today=today, today_str=today_str, scrapers=scrapers, population_lookup=population_lookup)
 
-        subnational_headers = extend_headers(subnational, ipc_sheaders, tabular_headers, whowhatwhere_headers)
-        extend_columns('subnational', subnational, pcodes, h25, region, adminone, subnational_headers, ipc_scolumns, tabular_columns, whowhatwhere_columns)
-        extend_sources(sources, tabular_sources, whowhatwhere_sources)
+        subnational_headers = extend_headers(subnational, ipc_sheaders, tabular_headers, whowhatwhere_headers, iomdtm_headers)
+        extend_columns('subnational', subnational, pcodes, h25, region, adminone, subnational_headers, ipc_scolumns, tabular_columns, whowhatwhere_columns, iomdtm_columns)
+        extend_sources(sources, tabular_sources, whowhatwhere_sources, iomdtm_sources)
         update_tab('subnational', subnational)
     extend_sources(sources, ipc_sources)
 
