@@ -615,6 +615,8 @@ scraper_national:
             mustbepopulated: True
           - formula: "get_fraction_str(phase35, population)"
             mustbepopulated: True
+          - formula: "population"
+            mustbepopulated: True
           - formula: "get_fraction_str(population, #population)"
             mustbepopulated: True
         output_cols:
@@ -622,12 +624,14 @@ scraper_national:
           - "FoodInsecurityCHP4"
           - "FoodInsecurityCHP5"
           - "FoodInsecurityCHP3+"
-          - "FoodInsecurityCHAnalysed"
+          - "FoodInsecurityCHAnalysedNum"
+          - "FoodInsecurityCHAnalysedPct"
         output_hxltags:
           - "#affected+ch+food+p3+pct"
           - "#affected+ch+food+p4+pct"
           - "#affected+ch+food+p5+pct"
           - "#affected+ch+food+p3plus+pct"
+          - "#affected+ch+food+analysed+num"
           - "#affected+ch+food+analysed+pct"
   access:
     source:
