@@ -201,7 +201,7 @@ scraper_national:
       - "#severity+malnutrition+num+national"
   needs:
     format: "xlsx"
-    dataset: "global-humanitarian-overview-2020-figures"
+    dataset: "global-humanitarian-overview-2021-figures"
     sheet: "Raw Data"
     headers: 1
     adm_cols:
