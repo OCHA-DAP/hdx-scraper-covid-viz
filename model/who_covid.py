@@ -123,7 +123,7 @@ def get_who_covid(configuration, today, outputs, h25, h63, region, population_lo
         national_columns.append(dict(zip(df_cumulative['ISO_3_CODE'], df_cumulative[header].map(format_number))))
 
     # get weekly new cases - for old covid viz output
-    resampled = df_WHO.groupby(['ISO_3_CODE']).resample('W', on='Date_reported')
+    resampled = df_WHO.drop(columns=['Regional_office']).groupby(['ISO_3_CODE']).resample('W', on='Date_reported')
     new_w = resampled.sum()[['New_cases', 'New_deaths']]
     cumulative_w = resampled.min()[['Cumulative_cases', 'Cumulative_deaths']]
     ndays_w = resampled.count()['New_cases']
