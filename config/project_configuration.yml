@@ -1407,6 +1407,35 @@ h25:
   - YEM
   - ZWE
 
+hdaily:
+  - AFG
+  - BDI
+  - BFA
+  - CAF
+  - CMR
+  - COD
+  - COL
+  - ETH
+  - HTI
+  - IRQ
+  - LBY
+  - MLI
+  - MMR
+  - MOZ
+  - NER
+  - NGA
+  - PAK
+  - PSE
+  - SDN
+  - SOM
+  - SSD
+  - SYR
+  - TCD
+  - UKR
+  - VEN
+  - YEM
+  - ZWE
+
 country_name_overrides:
   PSE: "oPt"
   BOL: "Bolivia"

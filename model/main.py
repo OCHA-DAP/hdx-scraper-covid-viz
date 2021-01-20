@@ -31,7 +31,7 @@ def extend_headers(headers, *args):
     return result
 
 
-def extend_columns(level, rows, adms, h25, region, adminone, headers, *args):
+def extend_columns(level, rows, adms, h25, hdaily, region, adminone, headers, *args):
     columns = list()
     for arg in args:
         if arg:
@@ -45,9 +45,10 @@ def extend_columns(level, rows, adms, h25, region, adminone, headers, *args):
             row = [adm]
         elif level == 'national':
             ishrp = 'Y' if adm in h25 else 'N'
+            fordaily = 'Y' if adm in hdaily else 'N'
             regions = sorted(list(region.iso3_to_region_and_hrp[adm]))
             regions.remove('H63')
-            row = [adm, Country.get_country_name_from_iso3(adm), ishrp, '|'.join(regions)]
+            row = [adm, Country.get_country_name_from_iso3(adm), ishrp, fordaily, '|'.join(regions)]
         elif level == 'subnational':
             countryiso3 = adminone.pcode_to_iso3[adm]
             countryname = Country.get_country_name_from_iso3(countryiso3)
@@ -86,7 +87,7 @@ def extend_sources(sources, *args):
 def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=None, basic_auths=dict(), other_auths=dict(), countries_override=None, use_live=True):
     world = [list(), list()]
     regional = [['regionnames'], ['#region+name']]
-    national = [['iso3', 'countryname', 'ishrp', 'region'], ['#country+code', '#country+name', '#meta+ishrp', '#region+name']]
+    national = [['iso3', 'countryname', 'ishrp', 'fordaily', 'region'], ['#country+code', '#country+name', '#meta+ishrp', '#meta+fordaily', '#region+name']]
     subnational = [['iso3', 'countryname', 'adm1_pcode', 'adm1_name'], ['#country+code', '#country+name', '#adm1+code', '#adm1+name']]
     sources = [('Indicator', 'Date', 'Source', 'Url'), ('#indicator+name', '#date', '#meta+source', '#meta+url')]
 
@@ -96,9 +97,11 @@ def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=Non
     if countries_override:
         h63 = countries_override
         h25 = countries_override
+        hdaily = countries_override
     else:
         h63 = configuration['h63']
         h25 = configuration['h25']
+        hdaily = configuration['hdaily']
     configuration['countries_fuzzy_try'] = h25
     region = Region(configuration['regional'], today, downloader, h63, h25)
     admin1_info = list()
@@ -117,16 +120,16 @@ def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=Non
 
     population_headers, population_columns, population_sources = run_scrapers(configuration, h63, adminone, 'national', downloader, basic_auths, today=today, today_str=today_str, scrapers=['population'], population_lookup=population_lookup)
     national_headers = extend_headers(national, population_headers)
-    national_columns = extend_columns('national', national, h63, h25, region, adminone, national_headers, population_columns)
+    national_columns = extend_columns('national', national, h63, h25, hdaily, region, None, national_headers, population_columns)
     extend_sources(sources, population_sources)
     population_lookup['H63'] = sum(population_lookup.values())
     population_headers, population_columns = region.get_regional(region, national_headers, national_columns,
                                                                  population_lookup=population_lookup)
     regional_headers = extend_headers(regional, population_headers)
-    extend_columns('regional', regional, region.regions, h25, region, adminone, regional_headers, population_columns)
+    extend_columns('regional', regional, region.regions, None, None, region, None, regional_headers, population_columns)
     population_headers, population_columns, population_sources = run_scrapers(configuration, h63, adminone, 'subnational', downloader, basic_auths, today=today, today_str=today_str, scrapers=['population'], population_lookup=population_lookup)
     subnational_headers = extend_headers(subnational, population_headers)
-    extend_columns('subnational', subnational, pcodes, h25, region, adminone, subnational_headers, population_columns)
+    extend_columns('subnational', subnational, pcodes, None, None, None, adminone, subnational_headers, population_columns)
     covid_wheaders, covid_wcolumns, covid_h63columns, covid_headers, covid_columns, covid_sources = get_who_covid(configuration, today, outputs, h25, h63, region, population_lookup, scrapers)
     extend_sources(sources, covid_sources)
 
@@ -140,7 +143,7 @@ def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=Non
         tabular_headers, tabular_columns, tabular_sources = run_scrapers(configuration, h63, adminone, 'national', downloader, basic_auths, today=today, today_str=today_str, scrapers=scrapers, population_lookup=population_lookup)
 
         national_headers = extend_headers(national, covid_headers, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, inform_headers, ipc_headers)
-        national_columns = extend_columns('national', national, h63, h25, region, adminone, national_headers, covid_columns, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, inform_columns, ipc_columns)
+        national_columns = extend_columns('national', national, h63, h25, hdaily, region, None, national_headers, covid_columns, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, inform_columns, ipc_columns)
         extend_sources(sources, tabular_sources, food_sources, campaign_sources, fts_sources, unhcr_sources, inform_sources)
         update_tab('national', national)
 
@@ -148,14 +151,14 @@ def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=Non
             regional_headers, regional_columns = region.get_regional(region, national_headers, national_columns, None,
                                                                      (covid_wheaders, covid_wcolumns), (fts_wheaders, fts_wcolumns))
             regional_headers = extend_headers(regional, regional_headers)
-            extend_columns('regional', regional, region.regions + ['global'], h25, region, adminone, regional_headers, regional_columns)
+            extend_columns('regional', regional, region.regions + ['global'], None, None, region, None, regional_headers, regional_columns)
             update_tab('regional', regional)
 
             if 'world' in tabs:
                 rgheaders, rgcolumns = region.get_world(regional_headers, regional_columns)
                 tabular_headers, tabular_columns, tabular_sources = run_scrapers(configuration, h63, adminone, 'global', downloader, basic_auths, today=today, today_str=today_str, scrapers=scrapers, population_lookup=population_lookup)
                 world_headers = extend_headers(world, covid_wheaders, fts_wheaders, tabular_headers, rgheaders)
-                extend_columns('global', world, None, None, region, adminone, world_headers, covid_h63columns, fts_wcolumns, tabular_columns, rgcolumns)
+                extend_columns('global', world, None, None, None, None, None, world_headers, covid_h63columns, fts_wcolumns, tabular_columns, rgcolumns)
                 extend_sources(sources, fts_wsources, tabular_sources)
                 update_tab('world', world)
 
@@ -165,7 +168,7 @@ def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=Non
         tabular_headers, tabular_columns, tabular_sources = run_scrapers(configuration, h63, adminone, 'subnational', downloader, basic_auths, today=today, today_str=today_str, scrapers=scrapers, population_lookup=population_lookup)
 
         subnational_headers = extend_headers(subnational, ipc_sheaders, tabular_headers, whowhatwhere_headers, iomdtm_headers)
-        extend_columns('subnational', subnational, pcodes, h25, region, adminone, subnational_headers, ipc_scolumns, tabular_columns, whowhatwhere_columns, iomdtm_columns)
+        extend_columns('subnational', subnational, pcodes, None, None, None, adminone, subnational_headers, ipc_scolumns, tabular_columns, whowhatwhere_columns, iomdtm_columns)
         extend_sources(sources, tabular_sources, whowhatwhere_sources, iomdtm_sources)
         update_tab('subnational', subnational)
     extend_sources(sources, ipc_sources)
