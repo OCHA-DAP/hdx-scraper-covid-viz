@@ -33,6 +33,7 @@ json:
             - "#affected+killed+avg+pct+change"
             - "#value+covid+funding+hrp+pct"
             - "#affected+inneed"
+            - "#affected+tested+avg+per1000"
             - "#affected+tested+positive+pct"
             - "#vaccination+num+ratio"
             - "#value+food+num+ratio"
