@@ -23,7 +23,6 @@ json:
             - "#country+code"
             - "#country+name"
             - "#meta+ishrp"
-            - "#meta+fordaily"
             - "#affected+infected"
             - "#affected+infected+avg"
             - "#affected+infected+avg+per100000"
