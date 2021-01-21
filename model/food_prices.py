@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 
+from dateutil.relativedelta import relativedelta
 from hdx.location.country import Country
 from hdx.scraper.readers import read_hdx
 
@@ -17,11 +18,8 @@ def add_food_prices(configuration, today, countryiso3s, downloader, scrapers=Non
     headers, iterator = read_hdx(downloader, datasetinfo, today=today)
     allowed_months = set()
     for i in range(1, 7, 1):
-        month = today.month - i
-        if month > 0:
-            allowed_months.add('%d/%d' % (today.year, month))
-        else:
-            allowed_months.add('%d/%d' % (today.year - 1, 12 + month))
+        curdate = today - relativedelta(months=i)
+        allowed_months.add('%d/%d' % (curdate.year, curdate.month))
     commods_per_country = dict()
     affected_commods_per_country = dict()
     for row in iterator:
