@@ -11,7 +11,7 @@ from hdx.scraper.readers import read_hdx_metadata
 MIN_CUMULATIVE_CASES = 100
 
 
-def get_who_data(url, h25, h63, region):
+def get_who_data(url, hrp_countries, h63, region):
     df = pd.read_csv(url, keep_default_na=False)
     df.columns = df.columns.str.strip()
     df = df[['Date_reported', 'Country_code', 'Cumulative_cases', 'New_cases', 'New_deaths', 'Cumulative_deaths']]
@@ -38,11 +38,11 @@ def get_who_data(url, h25, h63, region):
     df_h63_all['ISO_3_CODE'] = 'H63'
     df_h63_all = df_h63_all.reset_index()
 
-    # adding global H25 by date
-    df_h25_all = df.loc[df['ISO_3_CODE'].isin(h25), :]
-    df_h25_all = df_h25_all.groupby('Date_reported').sum()
-    df_h25_all['ISO_3_CODE'] = 'H25'
-    df_h25_all = df_h25_all.reset_index()
+    # adding global HRPs by date
+    df_hrp_countries_all = df.loc[df['ISO_3_CODE'].isin(hrp_countries), :]
+    df_hrp_countries_all = df_hrp_countries_all.groupby('Date_reported').sum()
+    df_hrp_countries_all['ISO_3_CODE'] = 'HRPs'
+    df_hrp_countries_all = df_hrp_countries_all.reset_index()
 
     # adding regional by date
     dict_regions = pd.DataFrame(region.iso3_to_region.items(), columns=['ISO3', 'Regional_office'])
@@ -52,13 +52,13 @@ def get_who_data(url, h25, h63, region):
     df_regional = df_regional.rename(columns={'Regional_office': 'ISO_3_CODE'})
 
     df = df.append(df_h63_all)
-    df = df.append(df_h25_all)
+    df = df.append(df_hrp_countries_all)
     df = df.append(df_regional)
 
     return source_date, df_world, df_h63, df_series, df
 
 
-def get_who_covid(configuration, today, outputs, h25, h63, region, population_lookup, scrapers=None):
+def get_who_covid(configuration, today, outputs, hrp_countries, h63, region, population_lookup, scrapers=None):
     name = 'who_covid'
     if scrapers and not any(scraper in name for scraper in scrapers) and not any(scraper in outputs['gsheets'].updatetabs for scraper in scrapers):
         return list(), list(), list(), list(), list(), list()
@@ -66,7 +66,7 @@ def get_who_covid(configuration, today, outputs, h25, h63, region, population_lo
     read_hdx_metadata(datasetinfo, today=today)
 
     # get WHO data
-    source_date, df_world, df_h63, df_series, df_WHO = get_who_data(datasetinfo['url'], h25, h63, region)
+    source_date, df_world, df_h63, df_series, df_WHO = get_who_data(datasetinfo['url'], hrp_countries, h63, region)
     df_pop = pd.DataFrame.from_records(list(population_lookup.items()), columns=['Country Code', 'population'])
 
     # output time series

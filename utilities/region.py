@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 class Region(object):
-    def __init__(self, region_config, today, downloader, h63, h25):
+    def __init__(self, region_config, today, downloader, h63, hrp_countries):
         self.region_config = region_config
         _, iterator = read_hdx(downloader, region_config, today=today)
         self.iso3_to_region = dict()
@@ -26,9 +26,9 @@ class Region(object):
                 dict_of_sets_add(self.iso3_to_region_and_hrp, countryiso, region)
                 self.iso3_to_region[countryiso] = region
         self.regions = sorted(list(regions))
-        region = 'H25'
+        region = 'HRPs'
         self.regions.insert(0, region)
-        for countryiso in h25:
+        for countryiso in hrp_countries:
             dict_of_sets_add(self.iso3_to_region_and_hrp, countryiso, region)
         region = 'H63'
         self.regions.insert(0, region)
