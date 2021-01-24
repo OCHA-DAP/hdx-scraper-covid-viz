@@ -32,6 +32,8 @@ def get_inform(configuration, today, countryiso3s, other_auths, scrapers=None):
                 if countryiso3 not in countryiso3s:
                     continue
                 iso3s_present.add(countryiso3)
+                if result['country_level'] != 'Yes':
+                    continue
                 individual_or_aggregated = result['individual_aggregated']
                 countries_index_individual_or_aggregated = countries_index[individual_or_aggregated]
                 country_index = countries_index_individual_or_aggregated.get(countryiso3, dict())

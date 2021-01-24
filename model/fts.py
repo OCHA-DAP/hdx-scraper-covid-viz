@@ -117,8 +117,7 @@ def get_requirements_and_funding_location(v1_url, plan, countryid_iso3mapping, c
             if req != totalreq:
                 countryreq_is_totalreq = False
     if countryreq_is_totalreq:
-        for countryiso in allreqs:
-            allreqs[countryiso] = 'N/A'
+        allreqs = dict()
         logger.info('%s has same country requirements as total requirements!' % plan_id)
 
     fundingobjects = data['report3']['fundingTotals']['objects']
@@ -188,14 +187,17 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
         dict_of_lists_add(other_planname, iso3, name)
         if req:
             dict_of_lists_add(other_requirements, iso3, req)
+            if fund:
+                dict_of_lists_add(other_percentage, iso3, pct)
+            else:
+                dict_of_lists_add(other_percentage, iso3, None)
         else:
             dict_of_lists_add(other_requirements, iso3, None)
-        if fund and req:
+            dict_of_lists_add(other_percentage, iso3, None)
+        if fund:
             dict_of_lists_add(other_funding, iso3, fund)
-            dict_of_lists_add(other_percentage, iso3, pct)
         else:
             dict_of_lists_add(other_funding, iso3, None)
-            dict_of_lists_add(other_percentage, iso3, None)
 
     fts_configuration = configuration['fts']
     v1_url = fts_configuration['v1_url']
@@ -290,14 +292,18 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
             else:
                 allreqs, allfunds = get_requirements_and_funding_location(v1_url, plan, countryid_iso3mapping, countryiso3s, downloader)
                 planname = map_planname(planname)
-                for countryiso in allreqs:
-                    allreq = allreqs[countryiso]
-                    allfund = allfunds.get(countryiso)
-                    if allfund:
+                for countryiso in allfunds:
+                    allfund = allfunds[countryiso]
+                    allreq = allreqs.get(countryiso)
+                    if allreq:
                         allpct = get_fraction_str(allfund, allreq)
                     else:
                         allpct = None
                     add_other_requirements_and_funding(countryiso, planname, allreq, allfund, allpct)
+                for countryiso in allreqs:
+                    if countryiso in allfunds:
+                        continue
+                    add_other_requirements_and_funding(countryiso, planname, allreqs[countryiso], None, None)
 
         def create_output(vallist):
             strings = list()
@@ -308,7 +314,7 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
                     strings.append(str(val))
             return '|'.join(strings)
 
-        for countryiso in other_requirements:
+        for countryiso in other_planname:
             other_planname[countryiso] = create_output(other_planname[countryiso])
             other_requirements[countryiso] = create_output(other_requirements[countryiso])
             other_funding[countryiso] = create_output(other_funding[countryiso])
