@@ -662,21 +662,17 @@ scraper_national:
       "#activity+cbpf+project+insecurity+pct": "get_numeric_if_possible(#activity+cbpf+project+insecurity+pct)"
       "#population+education": "get_numeric_if_possible(#population+education)"
   unicef_sam:
-    source: "UNICEF"
     format: "csv"
-    url: "https://sdmx.data.unicef.org/ws/public/sdmxapi/rest/data/UNICEF.EMOPS,DF_SITREP_COVID19,1.0/.CV-03-04?format=csv"
+    dataset: "number-of-admissions-for-treatment-of-severe-acute-malnutrition-sam"
     headers: 1
-    sort:
-      reverse: True
-      keys:
-        - "TIME_PERIOD"
+    use_hxl: True
     adm_cols:
-      - "REF_AREA"
-    date_col: "TIME_PERIOD"
+      - "#country+code"
+    date_col: "#date"
     date_type: "date"
     use_date_from_date_col: True
     input_cols:
-      - "OBS_VALUE"
+      - "#affected+reached"
     output_cols:
       - "NoChildrenSAM"
     output_hxltags:
