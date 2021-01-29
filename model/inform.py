@@ -15,14 +15,13 @@ def get_inform(configuration, today, countryiso3s, other_auths, scrapers=None):
         return list(), list(), list()
     inform_configuration = configuration['inform']
     read_hdx_metadata(inform_configuration)
-    url = inform_configuration['url'] % today.strftime('%b%Y')
     input_cols = inform_configuration['input_cols']
-    page = 1
     countries_index = {'Individual': dict(), 'Aggregated': dict()}
     iso3s_present = set()
     with Download(rate_limit={'calls': 1, 'period': 0.1}, headers={'Authorization': other_auths['inform']}) as downloader:
-        while True:
-            r = downloader.download(f'{url}{page}')
+        url = inform_configuration['url'] % today.strftime('%b%Y')
+        while url:
+            r = downloader.download(url)
             json = r.json()
             for result in json['results']:
                 countryiso3 = result['iso3']
@@ -41,9 +40,7 @@ def get_inform(configuration, today, countryiso3s, other_auths, scrapers=None):
                 for input_col in input_cols:
                     country_index[input_col] = result[input_col]
                 countries_index_individual_or_aggregated[countryiso3] = country_index
-            if json['next'] is None:
-                break
-            page += 1
+            url = json['next']
     individual_index = countries_index['Individual']
     aggregated_index = countries_index['Aggregated']
     valuedicts = [dict() for _ in input_cols]

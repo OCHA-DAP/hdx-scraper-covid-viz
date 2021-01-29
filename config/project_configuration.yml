@@ -705,7 +705,7 @@ unhcr:
     - "VEN"
 
 inform:
-  url: "https://api.acaps.org/api/v1/inform-severity-index/%s/?page="
+  url: "https://api.acaps.org/api/v1/inform-severity-index/%s/?page=1"
   dataset: "inform-severity-index-september-2020"
   format: "xlsx"
   input_cols:
