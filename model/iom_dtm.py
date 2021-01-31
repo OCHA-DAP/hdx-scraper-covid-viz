@@ -33,7 +33,9 @@ def get_iom_dtm(configuration, today_str, adminone, downloader, scrapers=None):
         pcodes_found = False
         for row in data:
             pcode = row.get('#adm1+code')
-            if not pcode:
+            if pcode:
+                pcode = adminone.convert_pcode_length(countryiso3, pcode, 'iom_dtm')
+            else:
                 adm2code = row.get('#adm2+code')
                 if adm2code:
                     if len(adm2code) > 4:
@@ -48,7 +50,7 @@ def get_iom_dtm(configuration, today_str, adminone, downloader, scrapers=None):
                 location = row.get('#loc')
                 if location:
                     location = location.split('>')[-1]
-                    pcode, _ = adminone.get_pcode(countryiso3, location, '3W')
+                    pcode, _ = adminone.get_pcode(countryiso3, location, 'iom_dtm')
             if pcode:
                 pcode = pcode.strip().upper()
                 idps = row.get('#affected+idps+ind')
