@@ -1312,22 +1312,19 @@ idps_locations_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZ
 
 iom_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSnUZoKtEvfchPq-zonhd1-DAujIzo0u68vX_BlUvex43Seyc881kNE89xQp7KAolXmxX-aq3aPCl-x/pub?gid=0&single=true&output=csv"
 
-h63:
+gho:
   - ABW
   - AFG
   - AGO
   - ARG
   - BDI
-  - BEN
   - BFA
-  - BGD
   - BOL
   - BRA
   - CAF
   - CHL
   - CMR
   - COD
-  - COG
   - COL
   - CRI
   - CUW
@@ -1338,7 +1335,6 @@ h63:
   - ETH
   - GUY
   - HTI
-  - IRN
   - IRQ
   - JOR
   - KEN
@@ -1355,17 +1351,14 @@ h63:
   - PAN
   - PER
   - PHL
-  - PRK
   - PRY
   - PSE
   - RWA
   - SDN
-  - SLE
   - SOM
   - SSD
   - SYR
   - TCD
-  - TGO
   - TTO
   - TUR
   - TZA

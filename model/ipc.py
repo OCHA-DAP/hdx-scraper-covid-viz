@@ -58,7 +58,7 @@ def get_period(today, row, projections):
     return analysis_period, start.strftime('%Y-%m-%d'), end.strftime('%Y-%m-%d')
 
 
-def get_ipc(configuration, today, h63, adminone, downloader, scrapers=None):
+def get_ipc(configuration, today, gho_countries, adminone, downloader, scrapers=None):
     name = inspect.currentframe().f_code.co_name
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list(), list(), list()
@@ -75,7 +75,7 @@ def get_ipc(configuration, today, h63, adminone, downloader, scrapers=None):
     national_end = dict()
     subnational_phases = {phase: dict() for phase in phases}
     subnational_populations = {phase: dict() for phase in phases}
-    for countryiso3 in h63:
+    for countryiso3 in gho_countries:
         countryiso2 = Country.get_iso2_from_iso3(countryiso3)
         data, adm1_names = get_data(downloader, url, countryiso2)
         if not data:

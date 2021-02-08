@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 class Region(object):
-    def __init__(self, region_config, today, downloader, h63, hrp_countries):
+    def __init__(self, region_config, today, downloader, gho_countries, hrp_countries):
         self.region_config = region_config
         _, iterator = read_hdx(downloader, region_config, today=today)
         self.iso3_to_region = dict()
@@ -18,7 +18,7 @@ class Region(object):
         regions = set()
         for row in iterator:
             countryiso = row[region_config['iso3']]
-            if countryiso and countryiso in h63:
+            if countryiso and countryiso in gho_countries:
                 region = row[region_config['region']]
                 if region == 'NO COVERAGE':
                     continue
@@ -30,9 +30,9 @@ class Region(object):
         self.regions.insert(0, region)
         for countryiso in hrp_countries:
             dict_of_sets_add(self.iso3_to_region_and_hrp, countryiso, region)
-        region = 'H63'
+        region = 'GHO'
         self.regions.insert(0, region)
-        for countryiso in h63:
+        for countryiso in gho_countries:
             dict_of_sets_add(self.iso3_to_region_and_hrp, countryiso, region)
 
     def get_float_or_int(self, valuestr):
@@ -156,5 +156,5 @@ class Region(object):
         world_headers, world_columns = self.get_headers_and_columns(regional_headers, regional_columns, desired_headers)
         global_columns = list()
         for column in world_columns:
-            global_columns.append({'global': column['H63']})
+            global_columns.append({'global': column['GHO']})
         return world_headers, global_columns

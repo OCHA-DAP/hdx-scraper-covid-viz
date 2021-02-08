@@ -11,7 +11,7 @@ from hdx.scraper.readers import read_hdx_metadata
 MIN_CUMULATIVE_CASES = 100
 
 
-def get_who_data(url, hrp_countries, h63, region):
+def get_who_data(url, hrp_countries, gho_countries, region):
     df = pd.read_csv(url, keep_default_na=False)
     df.columns = df.columns.str.strip()
     df = df[['Date_reported', 'Country_code', 'Cumulative_cases', 'New_cases', 'New_deaths', 'Cumulative_deaths']]
@@ -23,20 +23,20 @@ def get_who_data(url, hrp_countries, h63, region):
     df_cumulative = df.sort_values(by=['Date_reported']).drop_duplicates(subset='ISO_3_CODE', keep='last')
     df_cumulative = df_cumulative.drop(columns=['Date_reported', 'New_cases', 'New_deaths'])
     df_world = df_cumulative.sum()
-    df_cumulative = df_cumulative.loc[df['ISO_3_CODE'].isin(h63), :]
-    df_h63 = df_cumulative.sum()
+    df_cumulative = df_cumulative.loc[df['ISO_3_CODE'].isin(gho_countries), :]
+    df_gho = df_cumulative.sum()
 
-    df = df.loc[df['ISO_3_CODE'].isin(h63), :]
+    df = df.loc[df['ISO_3_CODE'].isin(gho_countries), :]
 
     df_series = df.copy(deep=True)  # used in series processing, keeps df unchanged for use elsewhere
     df_series['CountryName'] = df_series['ISO_3_CODE'].apply(Country.get_country_name_from_iso3)  # goes on to be output as covid series tab
 
     df['Date_reported'] = pd.to_datetime(df['Date_reported'])
 
-    # adding global H63 by date
-    df_h63_all = df.groupby('Date_reported').sum()
-    df_h63_all['ISO_3_CODE'] = 'H63'
-    df_h63_all = df_h63_all.reset_index()
+    # adding global GHO by date
+    df_gho_all = df.groupby('Date_reported').sum()
+    df_gho_all['ISO_3_CODE'] = 'GHO'
+    df_gho_all = df_gho_all.reset_index()
 
     # adding global HRPs by date
     df_hrp_countries_all = df.loc[df['ISO_3_CODE'].isin(hrp_countries), :]
@@ -51,14 +51,14 @@ def get_who_data(url, hrp_countries, h63, region):
     df_regional = df.groupby(['Date_reported', 'Regional_office']).sum().reset_index()
     df_regional = df_regional.rename(columns={'Regional_office': 'ISO_3_CODE'})
 
-    df = df.append(df_h63_all)
+    df = df.append(df_gho_all)
     df = df.append(df_hrp_countries_all)
     df = df.append(df_regional)
 
-    return source_date, df_world, df_h63, df_series, df
+    return source_date, df_world, df_gho, df_series, df
 
 
-def get_who_covid(configuration, today, outputs, hrp_countries, h63, region, population_lookup, scrapers=None):
+def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, region, population_lookup, scrapers=None):
     name = 'who_covid'
     if scrapers and not any(scraper in name for scraper in scrapers) and not any(scraper in outputs['gsheets'].updatetabs for scraper in scrapers):
         return list(), list(), list(), list(), list(), list()
@@ -66,7 +66,7 @@ def get_who_covid(configuration, today, outputs, hrp_countries, h63, region, pop
     read_hdx_metadata(datasetinfo, today=today)
 
     # get WHO data
-    source_date, df_world, df_h63, df_series, df_WHO = get_who_data(datasetinfo['url'], hrp_countries, h63, region)
+    source_date, df_world, df_gho, df_series, df_WHO = get_who_data(datasetinfo['url'], hrp_countries, gho_countries, region)
     df_pop = pd.DataFrame.from_records(list(population_lookup.items()), columns=['Country Code', 'population'])
 
     # output time series
@@ -181,9 +181,9 @@ def get_who_covid(configuration, today, outputs, hrp_countries, h63, region, pop
     national_headers = [series_headers, series_hxltags]
     global_cases = {'global': int(df_world['Cumulative_cases'])}
     global_deaths = {'global': int(df_world['Cumulative_deaths'])}
-    h63_cases = {'global': int(df_h63['Cumulative_cases'])}
-    h63_deaths = {'global': int(df_h63['Cumulative_deaths'])}
+    gho_cases = {'global': int(df_gho['Cumulative_cases'])}
+    gho_deaths = {'global': int(df_gho['Cumulative_deaths'])}
     sources.extend([(hxltag, source_date, dssource, dssourceurl) for hxltag in series_hxltags])
-    return headers, [global_cases, global_deaths], [h63_cases, h63_deaths], \
+    return headers, [global_cases, global_deaths], [gho_cases, gho_deaths], \
            national_headers, national_columns, sources
 
