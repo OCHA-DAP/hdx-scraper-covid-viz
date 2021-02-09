@@ -676,6 +676,25 @@ scraper_national:
       - "NoChildrenSAM"
     output_hxltags:
       - "#affected+children+sam"
+  covax:
+    format: "csv"
+    dataset: "covax-facility-interim-distribution-forecast"
+    headers: 1
+    use_hxl: True
+    adm_cols:
+      - "#country+code"
+    input_cols:
+      - "#capacity+azsii+doses"
+      - "#capacity+azskbio+doses"
+      - "#capacity+doses+pfizerbiontech"
+    output_cols:
+      - "AZ/SII doses"
+      - "AZ/SKBio doses"
+      - "Pfizer-BioNTech doses"
+    output_hxltags:
+      - "#capacity+azsii+doses"
+      - "#capacity+azskbio+doses"
+      - "#capacity+doses+pfizerbiontech"
 
 fts:
   v1_url: "https://api.hpc.tools/v1/public/"
