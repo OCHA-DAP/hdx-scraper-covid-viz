@@ -32,9 +32,22 @@ jobs:
         OTHER_AUTHS: ${{ secrets.OTHER_AUTHS }}
       run: |
         python run.py
-    - uses: stefanzweifel/git-auto-commit-action@v4
-      name: Commit updated data bundle
+    - name: Commit updated data bundle
+      uses: stefanzweifel/git-auto-commit-action@v4
       with:
         file_pattern: out*.json
         commit_message: automatic - Data bundle updated
         push_options: '--force'
+    - name: Send mail
+      if: failure()
+      uses: dawidd6/action-send-mail@v2
+      with:
+        server_address: smtp.sendgrid.net
+        server_port: 465
+        username: ${{secrets.EMAIL_USERNAME}}
+        password: ${{secrets.EMAIL_PASSWORD}}
+        subject: "FAILED: ${{github.repository}} GitHub Actions run job"
+        body: GitHub Actions run job for ${{github.repository}} failed!
+        to: ${{secrets.EMAIL_LIST}}
+        from: GitHub Actions
+        content_type: text/html
