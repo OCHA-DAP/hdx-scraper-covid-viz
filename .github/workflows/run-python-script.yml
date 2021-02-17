@@ -42,7 +42,7 @@ jobs:
       if: failure()
       uses: dawidd6/action-send-mail@v2
       with:
-        server_address: ${{secrets.EMAIL_USERNAME}}
+        server_address: ${{secrets.EMAIL_SERVER}}
         server_port: ${{secrets.EMAIL_PORT}}
         username: ${{secrets.EMAIL_USERNAME}}
         password: ${{secrets.EMAIL_PASSWORD}}
