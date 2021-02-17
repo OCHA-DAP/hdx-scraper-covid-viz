@@ -49,5 +49,5 @@ jobs:
         subject: "FAILED: ${{github.repository}} GitHub Actions run job"
         body: GitHub Actions run job for ${{github.repository}} failed!
         to: ${{secrets.EMAIL_LIST}}
-        from: GitHub Actions
+        from: ${{secrets.EMAIL_FROM}}
         content_type: text/html
