@@ -42,8 +42,8 @@ jobs:
       if: failure()
       uses: dawidd6/action-send-mail@v2
       with:
-        server_address: smtp.sendgrid.net
-        server_port: 465
+        server_address: ${{secrets.EMAIL_USERNAME}}
+        server_port: ${{secrets.EMAIL_PORT}}
         username: ${{secrets.EMAIL_USERNAME}}
         password: ${{secrets.EMAIL_PASSWORD}}
         subject: "FAILED: ${{github.repository}} GitHub Actions run job"
