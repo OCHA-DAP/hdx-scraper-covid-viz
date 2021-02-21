@@ -525,8 +525,6 @@ scraper_national:
       - "Cases (% female)"
       - "Deaths (% male)"
       - "Deaths (% female)"
-    input_ignore_vals:
-      - ""
     input_transforms:
       "Cases (% male)": "number_format(get_numeric_if_possible(Cases (% male)))"
       "Cases (% female)": "number_format(get_numeric_if_possible(Cases (% female)))"
