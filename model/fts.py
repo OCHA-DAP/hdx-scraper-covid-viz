@@ -33,7 +33,7 @@ def download_data(url, downloader):
 
 def get_gbv_funding(v1_url, plan_id, downloader):
     gbvfund = 0
-    url = '%sfts/flow?planid=%d&groupby=globalcluster' % (v1_url, plan_id)
+    url = f'{v1_url}fts/flow?planid={plan_id}&groupby=globalcluster'
     data = download_data(url, downloader)
     fundingobjects = data['report3']['fundingTotals']['objects']
     if len(fundingobjects) != 0:
@@ -61,7 +61,7 @@ def get_gbv_funding(v1_url, plan_id, downloader):
 
 
 def get_requirements_and_funding(v1_url, v2_url, plan_id, downloader, fundingobjects):
-    url = '%spublic/governingEntity?planId=%d&scopes=governingEntityVersion' % (v2_url, plan_id)
+    url = f'{v2_url}public/governingEntity?planId={plan_id}&scopes=governingEntityVersion'
     data = download_data(url, downloader)
     covid_ids = set()
     for clusterobj in data:
@@ -72,7 +72,7 @@ def get_requirements_and_funding(v1_url, v2_url, plan_id, downloader, fundingobj
         logger.info('%s has no COVID component!' % plan_id)
         return None, None
 
-    url = '%sfts/flow?planid=%d&groupby=cluster' % (v1_url, plan_id)
+    url = f'{v1_url}fts/flow?planid={plan_id}&groupby=cluster'
     data = download_data(url, downloader)
     covidreq = 0
     for reqobj in data['requirements']['objects']:
@@ -97,7 +97,7 @@ def get_requirements_and_funding(v1_url, v2_url, plan_id, downloader, fundingobj
 def get_requirements_and_funding_location(v1_url, plan, countryid_iso3mapping, countryiso3s, downloader):
     allreqs, allfunds = dict(), dict()
     plan_id = plan['id']
-    url = '%sfts/flow?planid=%d&groupby=location' % (v1_url, plan_id)
+    url = f'{v1_url}fts/flow?planid={plan_id}&groupby=location'
     data = download_data(url, downloader)
     requirements = data['requirements']
     totalreq = requirements['totalRevisedReqs']
@@ -225,11 +225,11 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
 
     with Download(basic_auth=basic_auths.get('fts'), rate_limit={'calls': 1, 'period': 1}) as downloader:
         curdate = today - relativedelta(months=1)
-        url = '%sfts/flow/plan/overview/progress/%d' % (v2_url, curdate.year)
+        url = f'{v2_url}fts/flow/plan/overview/progress/{curdate.year}'
         data = download_data(url, downloader)
         plans = data['plans']
         plan_ids = ','.join([str(plan['id']) for plan in plans])
-        url = '%sfts/flow?emergencyid=911&planid=%s&groupby=plan' % (v1_url, plan_ids)
+        url = f'{v1_url}fts/flow?emergencyid=911&planid={plan_ids}&groupby=plan'
         funding_data = download_data(url, downloader)
         fundingtotals = funding_data['report3']['fundingTotals']
         total_covidfund = fundingtotals['total']
