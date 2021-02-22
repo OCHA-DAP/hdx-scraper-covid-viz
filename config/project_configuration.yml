@@ -673,8 +673,7 @@ scraper_national:
       - "#affected+children+sam"
   covax:
     format: "csv"
-    dataset: "covax-facility-interim-distribution-forecast"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVzu79PPTfaA2syevOQfyRRjy63dJWitqu0fFbXIQCzoUn9K9TiMWMRvFGg1RBsnLmgYugzSEiAye2/pub?gid=992438980&single=true&output=csv"
+    dataset: "covid-19-vaccine-doses-in-hrp-countries"
     headers: 1
     use_hxl: True
     adm_cols:
@@ -1057,8 +1056,7 @@ scraper_global:
       - "#value+ifi+total"
   covax:
     format: "csv"
-    dataset: "covax-facility-interim-distribution-forecast"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVzu79PPTfaA2syevOQfyRRjy63dJWitqu0fFbXIQCzoUn9K9TiMWMRvFGg1RBsnLmgYugzSEiAye2/pub?gid=992438980&single=true&output=csv"
+    dataset: "covid-19-vaccine-doses-in-hrp-countries"
     headers: 1
     use_hxl: True
     adm_cols:
