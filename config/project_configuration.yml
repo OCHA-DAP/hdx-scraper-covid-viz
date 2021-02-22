@@ -720,8 +720,7 @@ scraper_national:
       - "#capacity+doses+covax+astrazenecasii"
       - "#capacity+doses+covax+astrazenecaskbio"
 fts:
-  v1_url: "https://api.hpc.tools/v1/public/"
-  v2_url: "https://api.hpc.tools/v2/"
+  url: "https://api.hpc.tools/v"
   source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
 
 food_prices:

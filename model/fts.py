@@ -31,9 +31,9 @@ def download_data(url, downloader):
     return download(url, downloader)['data']
 
 
-def get_gbv_funding(v1_url, plan_id, downloader):
+def get_gbv_funding(base_url, plan_id, downloader):
     gbvfund = 0
-    url = f'{v1_url}fts/flow?planid={plan_id}&groupby=globalcluster'
+    url = f'{base_url}1/fts/flow/custom-search?planid={plan_id}&groupby=globalcluster'
     data = download_data(url, downloader)
     fundingobjects = data['report3']['fundingTotals']['objects']
     if len(fundingobjects) != 0:
@@ -60,8 +60,8 @@ def get_gbv_funding(v1_url, plan_id, downloader):
     return gbvfund
 
 
-def get_requirements_and_funding(v1_url, v2_url, plan_id, downloader, fundingobjects):
-    url = f'{v2_url}public/governingEntity?planId={plan_id}&scopes=governingEntityVersion'
+def get_requirements_and_funding(base_url, plan_id, downloader, fundingobjects):
+    url = f'{base_url}2/public/governingEntity?planId={plan_id}&scopes=governingEntityVersion'
     data = download_data(url, downloader)
     covid_ids = set()
     for clusterobj in data:
@@ -72,7 +72,7 @@ def get_requirements_and_funding(v1_url, v2_url, plan_id, downloader, fundingobj
         logger.info('%s has no COVID component!' % plan_id)
         return None, None
 
-    url = f'{v1_url}fts/flow?planid={plan_id}&groupby=cluster'
+    url = f'{base_url}1/fts/flow/custom-search?planid={plan_id}&groupby=cluster'
     data = download_data(url, downloader)
     covidreq = 0
     for reqobj in data['requirements']['objects']:
@@ -94,10 +94,10 @@ def get_requirements_and_funding(v1_url, v2_url, plan_id, downloader, fundingobj
     return covidreq, covidfund
 
 
-def get_requirements_and_funding_location(v1_url, plan, countryid_iso3mapping, countryiso3s, downloader):
+def get_requirements_and_funding_location(base_url, plan, countryid_iso3mapping, countryiso3s, downloader):
     allreqs, allfunds = dict(), dict()
     plan_id = plan['id']
-    url = f'{v1_url}fts/flow?planid={plan_id}&groupby=location'
+    url = f'{base_url}1/fts/flow/custom-search?planid={plan_id}&groupby=location'
     data = download_data(url, downloader)
     requirements = data['requirements']
     totalreq = requirements['totalRevisedReqs']
@@ -200,8 +200,7 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
             dict_of_lists_add(other_funding, iso3, None)
 
     fts_configuration = configuration['fts']
-    v1_url = fts_configuration['v1_url']
-    v2_url = fts_configuration['v2_url']
+    base_url = fts_configuration['url']
 
     total_covidreq = 0
     total_gbvfund = 0
@@ -225,11 +224,11 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
 
     with Download(basic_auth=basic_auths.get('fts'), rate_limit={'calls': 1, 'period': 1}) as downloader:
         curdate = today - relativedelta(months=1)
-        url = f'{v2_url}fts/flow/plan/overview/progress/{curdate.year}'
+        url = f'{base_url}2/fts/flow/plan/overview/progress/{curdate.year}'
         data = download_data(url, downloader)
         plans = data['plans']
         plan_ids = ','.join([str(plan['id']) for plan in plans])
-        url = f'{v1_url}fts/flow?emergencyid=911&planid={plan_ids}&groupby=plan'
+        url = f'{base_url}1/fts/flow/custom-search?emergencyid=911&planid={plan_ids}&groupby=plan'
         funding_data = download_data(url, downloader)
         fundingtotals = funding_data['report3']['fundingTotals']
         total_covidfund = fundingtotals['total']
@@ -244,11 +243,11 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
             else:
                 allfund = None
             includetotals = plan['planType']['includeTotals']
-            gbvfund = get_gbv_funding(v1_url, plan_id, downloader)
+            gbvfund = get_gbv_funding(base_url, plan_id, downloader)
             if plan.get('customLocationCode') == 'COVD':
                 add_covid_gbv_requirements_and_funding(planname, includetotals, allreq, allfund, gbvfund)
                 continue
-            covidreq, covidfund = get_requirements_and_funding(v1_url, v2_url, plan_id, downloader, fundingobjects)
+            covidreq, covidfund = get_requirements_and_funding(base_url, plan_id, downloader, fundingobjects)
             add_covid_gbv_requirements_and_funding(planname, includetotals, covidreq, covidfund, gbvfund)
 
             countries = plan['countries']
@@ -290,7 +289,7 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
                     planname = map_planname(planname)
                     add_other_requirements_and_funding(countryiso, planname, allreq, allfund, allpct)
             else:
-                allreqs, allfunds = get_requirements_and_funding_location(v1_url, plan, countryid_iso3mapping, countryiso3s, downloader)
+                allreqs, allfunds = get_requirements_and_funding_location(base_url, plan, countryid_iso3mapping, countryiso3s, downloader)
                 planname = map_planname(planname)
                 for countryiso in allfunds:
                     allfund = allfunds[countryiso]
