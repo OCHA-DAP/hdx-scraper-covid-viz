@@ -526,15 +526,10 @@ scraper_national:
       - "Deaths (% male)"
       - "Deaths (% female)"
     input_transforms:
-      "Cases (% male)": "get_numeric_if_possible(Cases (% male))"
-      "Cases (% female)": "get_numeric_if_possible(Cases (% female))"
-      "Deaths (% male)": "get_numeric_if_possible(Deaths (% male))"
-      "Deaths (% female)": "get_numeric_if_possible(Deaths (% female))"
-    process_cols:
-      - "number_format(Cases (% male))"
-      - "number_format(Cases (% female))"
-      - "number_format(Deaths (% male))"
-      - "number_format(Deaths (% female))"
+      "Cases (% male)": "number_format(get_numeric_if_possible(Cases (% male)))"
+      "Cases (% female)": "number_format(get_numeric_if_possible(Cases (% female)))"
+      "Deaths (% male)": "number_format(get_numeric_if_possible(Deaths (% male)))"
+      "Deaths (% female)": "number_format(get_numeric_if_possible(Deaths (% female)))"
     output_cols:
       - "Cases (% male)"
       - "Cases (% female)"
@@ -678,24 +673,52 @@ scraper_national:
       - "#affected+children+sam"
   covax:
     format: "csv"
-    dataset: "covax-facility-interim-distribution-forecast"
+    dataset: "covid-19-vaccine-doses-in-hrp-countries"
     headers: 1
     use_hxl: True
     adm_cols:
       - "#country+code"
     input_cols:
-      - "#capacity+azsii+doses"
-      - "#capacity+azskbio+doses"
-      - "#capacity+doses+pfizerbiontech"
+      - "#capacity+covax+total"
+      - "#capacity+covax+delivered+doses"
+      - "#capacity+others+delivered+doses"
+      - "#capacity+delivered+total"
+      - "#capacity+coverage+one_dose"
+      - "#meta+source_country"
+      - "#capacity+covax+pfizerbiontech+doses"
+      - "#capacity+covax+azsii+doses"
+      - "#capacity+covax+azskbio+doses"
+    input_ignore_vals:
+      - "N/A"
+    input_transforms:
+      "#capacity+covax+total": "get_numeric_if_possible(#capacity+covax+total)"
+      "#capacity+covax+delivered+doses": "get_numeric_if_possible(#capacity+covax+delivered+doses)"
+      "#capacity+others+delivered+doses": "get_numeric_if_possible(#capacity+others+delivered+doses)"
+      "#capacity+delivered+total": "get_numeric_if_possible(#capacity+delivered+total)"
+      "#capacity+coverage+one_dose": "number_format(get_numeric_if_possible(#capacity+coverage+one_dose))"
+      "#capacity+covax+pfizerbiontech+doses": "get_numeric_if_possible(#capacity+covax+pfizerbiontech+doses)"
+      "#capacity+covax+azsii+doses": "get_numeric_if_possible(#capacity+covax+azsii+doses)"
+      "#capacity+covax+azskbio+doses": "get_numeric_if_possible(#capacity+covax+azskbio+doses)"
     output_cols:
-      - "AZ/SII doses"
-      - "AZ/SKBio doses"
-      - "Pfizer-BioNTech doses"
+      - "Covax Interim Forecast Doses"
+      - "Covax Delivered Doses"
+      - "Other Delivered Doses"
+      - "Total Delivered Doses"
+      - "Population % covered by delivered doses"
+      - "Source country for doses"
+      - "Covax Pfizer-BioNTech Doses"
+      - "Covax Astrazeneca-SII Doses"
+      - "Covax Astrazeneca-SKBio Doses"
     output_hxltags:
-      - "#capacity+azsii+doses"
-      - "#capacity+azskbio+doses"
-      - "#capacity+doses+pfizerbiontech"
-
+      - "#capacity+doses+forecast+covax"
+      - "#capacity+doses+delivered+covax"
+      - "#capacity+doses+delivered+others"
+      - "#capacity+doses+delivered+total"
+      - "#targeted+doses+delivered+pct"
+      - "#meta+source+doses+country+name"
+      - "#capacity+doses+covax+pfizerbiontech"
+      - "#capacity+doses+covax+astrazenecasii"
+      - "#capacity+doses+covax+astrazenecaskbio"
 fts:
   v1_url: "https://api.hpc.tools/v1/public/"
   v2_url: "https://api.hpc.tools/v2/"
@@ -787,6 +810,14 @@ regional:
     "Number of incidents reported since start of year": "sum"
     "% of CERF projects affected by insecurity and inaccessibility": "mean"
     "% of CBPF projects affected by insecurity and inaccessibility": "mean"
+    "Covax Interim Forecast Doses": "sum"
+    "Covax Delivered Doses": "sum"
+    "Other Delivered Doses": "sum"
+    "Total Delivered Doses": "sum"
+    "Covax Pfizer-BioNTech Doses": "sum"
+    "Covax Astrazeneca-SII Doses": "sum"
+    "Covax Astrazeneca-SKBio Doses": "sum"
+
   global:
     - "% of visas pending or denied"
     - "% of travel authorizations or movements denied"
@@ -1023,6 +1054,62 @@ scraper_global:
       - "IFI COVID19 global"
     output_hxltags:
       - "#value+ifi+total"
+  covax:
+    format: "csv"
+    dataset: "covid-19-vaccine-doses-in-hrp-countries"
+    headers: 1
+    use_hxl: True
+    adm_cols:
+      - "#country+code"
+    input_cols:
+      - "#capacity+covax+total"
+      - "#capacity+covax+delivered+doses"
+      - "#capacity+others+delivered+doses"
+      - "#capacity+delivered+total"
+      - "#capacity+covax+pfizerbiontech+doses"
+      - "#capacity+covax+azsii+doses"
+      - "#capacity+covax+azskbio+doses"
+    input_ignore_vals:
+      - "N/A"
+    input_transforms:
+      "#capacity+covax+total": "get_numeric_if_possible(#capacity+covax+total) if #capacity+covax+total else 0"
+      "#capacity+covax+delivered+doses": "get_numeric_if_possible(#capacity+covax+delivered+doses) if #capacity+covax+delivered+doses else 0"
+      "#capacity+others+delivered+doses": "get_numeric_if_possible(#capacity+others+delivered+doses) if #capacity+others+delivered+doses else 0"
+      "#capacity+delivered+total": "get_numeric_if_possible(#capacity+delivered+total) if #capacity+delivered+total else 0"
+      "#capacity+covax+pfizerbiontech+doses": "get_numeric_if_possible(#capacity+covax+pfizerbiontech+doses) if #capacity+covax+pfizerbiontech+doses else 0"
+      "#capacity+covax+azsii+doses": "get_numeric_if_possible(#capacity+covax+azsii+doses) if #capacity+covax+azsii+doses else 0"
+      "#capacity+covax+azskbio+doses": "get_numeric_if_possible(#capacity+covax+azskbio+doses) if #capacity+covax+azskbio+doses else 0"
+    sum_cols:
+      - formula: "number_format(#capacity+covax+total, format='%.0f')"
+        mustbepopulated: False
+      - formula: "number_format(#capacity+covax+delivered+doses, format='%.0f')"
+        mustbepopulated: False
+      - formula: "number_format(#capacity+others+delivered+doses, format='%.0f')"
+        mustbepopulated: False
+      - formula: "number_format(#capacity+delivered+total, format='%.0f')"
+        mustbepopulated: False
+      - formula: "number_format(#capacity+covax+pfizerbiontech+doses, format='%.0f')"
+        mustbepopulated: False
+      - formula: "number_format(#capacity+covax+azsii+doses, format='%.0f')"
+        mustbepopulated: False
+      - formula: "number_format(#capacity+covax+azskbio+doses, format='%.0f')"
+        mustbepopulated: False
+    output_cols:
+      - "Covax Interim Forecast Doses"
+      - "Covax Delivered Doses"
+      - "Other Delivered Doses"
+      - "Total Delivered Doses"
+      - "Covax Pfizer-BioNTech Doses"
+      - "Covax Astrazeneca-SII Doses"
+      - "Covax Astrazeneca-SKBio Doses"
+    output_hxltags:
+      - "#capacity+doses+forecast+covax"
+      - "#capacity+doses+delivered+covax"
+      - "#capacity+doses+delivered+others"
+      - "#capacity+doses+delivered+total"
+      - "#capacity+doses+covax+pfizerbiontech"
+      - "#capacity+doses+covax+astrazenecasii"
+      - "#capacity+doses+covax+astrazenecaskbio"
 
 
 # subnational
