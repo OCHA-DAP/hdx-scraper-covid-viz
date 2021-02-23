@@ -60,38 +60,17 @@ def get_gbv_funding(base_url, plan_id, downloader):
     return gbvfund
 
 
-def get_requirements_and_funding(base_url, plan_id, downloader, fundingobjects):
-    url = f'{base_url}2/public/governingEntity?planId={plan_id}&scopes=governingEntityVersion'
-    data = download_data(url, downloader)
-    covid_ids = set()
-    for clusterobj in data:
-        tags = clusterobj['governingEntityVersion'].get('tags')
-        if tags and 'COVID-19' in tags:
-            covid_ids.add(clusterobj['id'])
-    if len(covid_ids) == 0:
-        logger.info('%s has no COVID component!' % plan_id)
-        return None, None
-
-    url = f'{base_url}1/fts/flow/custom-search?planid={plan_id}&groupby=cluster'
-    data = download_data(url, downloader)
-    covidreq = 0
-    for reqobj in data['requirements']['objects']:
-        req = reqobj.get('revisedRequirements')
-        if req:
-            req_id = reqobj.get('id')
-            if req_id and req_id in covid_ids:
-                covidreq += req
-
+def get_covid_funding(plan_id, fundingobjects):
     covidfund = 0
     if len(fundingobjects) != 0:
-        singlefundingobjects = fundingobjects[0].get('singleFundingObjects')
-        if singlefundingobjects:
-            for fundobj in singlefundingobjects:
+        objectsbreakdown = fundingobjects[0].get('objectsBreakdown')
+        if objectsbreakdown:
+            for fundobj in objectsbreakdown:
                 fund_id = fundobj.get('id')
                 fund = fundobj['totalFunding']
                 if fund_id and fund_id == plan_id:
                     covidfund += fund
-    return covidreq, covidfund
+    return covidfund
 
 
 def get_requirements_and_funding_location(base_url, plan, countryid_iso3mapping, countryiso3s, downloader):
@@ -118,13 +97,13 @@ def get_requirements_and_funding_location(base_url, plan, countryid_iso3mapping,
                 countryreq_is_totalreq = False
     if countryreq_is_totalreq:
         allreqs = dict()
-        logger.info('%s has same country requirements as total requirements!' % plan_id)
+        logger.info(f'{plan_id} has same country requirements as total requirements!')
 
     fundingobjects = data['report3']['fundingTotals']['objects']
     if len(fundingobjects) != 0:
-        singlefundingobjects = fundingobjects[0].get('singleFundingObjects')
-        if singlefundingobjects:
-            for fundobj in singlefundingobjects:
+        objectsbreakdown = fundingobjects[0].get('objectsBreakdown')
+        if objectsbreakdown:
+            for fundobj in objectsbreakdown:
                 countryid = fundobj.get('id')
                 if not countryid:
                     continue
@@ -174,9 +153,7 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
     hrp_requirements = dict()
     hrp_funding = dict()
     hrp_percentage = dict()
-    hrp_covid_requirements = dict()
     hrp_covid_funding = dict()
-    hrp_covid_percentage = dict()
     hrp_gbv_funding = dict()
     other_planname = dict()
     other_requirements = dict()
@@ -202,20 +179,16 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
     fts_configuration = configuration['fts']
     base_url = fts_configuration['url']
 
-    total_covidreq = 0
     total_gbvfund = 0
     rows = list()
 
-    def add_covid_gbv_requirements_and_funding(name, includetotals, req, fund, gbvfund=None):
-        nonlocal total_covidreq, total_gbvfund
+    def add_covid_gbv_requirements_and_funding(name, includetotals, fund, gbvfund=None):
+        nonlocal total_gbvfund
 
         if not includetotals:
             return
-        if req or fund or gbvfund:
-            rows.append([name, req, fund, gbvfund])
-            if req:
-                logger.info('%s: Requirements=%d' % (name, req))
-                total_covidreq += req
+        if fund or gbvfund:
+            rows.append([name, fund, gbvfund])
             if fund:
                 logger.info('%s: Funding=%d' % (name, fund))
             if gbvfund:
@@ -223,7 +196,7 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
                 total_gbvfund += gbvfund
 
     with Download(basic_auth=basic_auths.get('fts'), rate_limit={'calls': 1, 'period': 1}) as downloader:
-        curdate = today - relativedelta(months=1)
+        curdate = today - relativedelta(months=5)
         url = f'{base_url}2/fts/flow/plan/overview/progress/{curdate.year}'
         data = download_data(url, downloader)
         plans = data['plans']
@@ -231,10 +204,10 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
         url = f'{base_url}1/fts/flow/custom-search?emergencyid=911&planid={plan_ids}&groupby=plan'
         funding_data = download_data(url, downloader)
         fundingtotals = funding_data['report3']['fundingTotals']
-        total_covidfund = fundingtotals['total']
         fundingobjects = fundingtotals['objects']
+        total_covidfund = fundingtotals['total']
         for plan in plans:
-            plan_id = plan['id']
+            plan_id = str(plan['id'])
             planname = plan['name']
             allreq = plan['requirements']['revisedRequirements']
             funding = plan.get('funding')
@@ -245,10 +218,10 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
             includetotals = plan['planType']['includeTotals']
             gbvfund = get_gbv_funding(base_url, plan_id, downloader)
             if plan.get('customLocationCode') == 'COVD':
-                add_covid_gbv_requirements_and_funding(planname, includetotals, allreq, allfund, gbvfund)
+                add_covid_gbv_requirements_and_funding(planname, includetotals, allfund, gbvfund)
                 continue
-            covidreq, covidfund = get_requirements_and_funding(base_url, plan_id, downloader, fundingobjects)
-            add_covid_gbv_requirements_and_funding(planname, includetotals, covidreq, covidfund, gbvfund)
+            covidfund = get_covid_funding(plan_id, fundingobjects)
+            add_covid_gbv_requirements_and_funding(planname, includetotals, covidfund, gbvfund)
 
             countries = plan['countries']
             countryid_iso3mapping = dict()
@@ -256,7 +229,7 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
                 countryiso = country['iso3']
                 if countryiso:
                     countryid = country['id']
-                    countryid_iso3mapping[countryid] = countryiso
+                    countryid_iso3mapping[str(countryid)] = countryiso
             if len(countryid_iso3mapping) == 0:
                 continue
             if len(countryid_iso3mapping) == 1:
@@ -276,13 +249,8 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
                     if allfund and allreq:
                         hrp_funding[countryiso] = allfund
                         hrp_percentage[countryiso] = allpct
-                    if covidreq:
-                        hrp_covid_requirements[countryiso] = covidreq
-                    else:
-                        hrp_covid_requirements[countryiso] = None
-                    if covidfund and covidreq:
+                    if covidfund:
                         hrp_covid_funding[countryiso] = covidfund
-                        hrp_covid_percentage[countryiso] = get_fraction_str(covidfund, covidreq)
                     if gbvfund:
                         hrp_gbv_funding[countryiso] = gbvfund
                 else:
@@ -321,27 +289,22 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
         total_allreq = data['totals']['revisedRequirements']
         total_allfund = data['totals']['totalFunding']
         total_allpercent = get_fraction_str(data['totals']['progress'], 100)
-        total_covidpercent = get_fraction_str(total_covidfund, total_covidreq)
         logger.info('Processed FTS')
         write_list_to_csv('ftscovid.csv', rows, ['Name', 'Requirements', 'Funding'])
         ghxltags = ['#value+funding+hrp+required+usd', '#value+funding+hrp+total+usd', '#value+funding+hrp+pct',
-                    '#value+covid+funding+hrp+required+usd', '#value+covid+funding+hrp+total+usd', '#value+covid+funding+hrp+pct', '#value+funding+gbv+hrp+total+usd']
+                    '#value+covid+funding+hrp+total+usd', '#value+funding+gbv+hrp+total+usd']
         hxltags = ghxltags + ['#value+funding+other+planname', '#value+funding+other+required+usd', '#value+funding+other+total+usd', '#value+funding+other+pct']
         total_allreq = {'global': total_allreq}
         total_allfund = {'global': total_allfund}
         total_allpercent = {'global': total_allpercent}
-        total_covidreq = {'global': total_covidreq}
         total_covidfund = {'global': total_covidfund}
-        total_covidpercent = {'global': total_covidpercent}
         total_gbvfund = {'global': total_gbvfund}
-        return [['RequiredFunding', 'Funding', 'PercentFunded',
-                 'RequiredGHRPCovidFunding', 'GHRPCovidFunding', 'GHRPCovidPercentFunded', 'GHRPGBVFunding'], ghxltags], \
-               [total_allreq, total_allfund, total_allpercent, total_covidreq, total_covidfund, total_covidpercent, total_gbvfund], \
+        return [['RequiredFunding', 'Funding', 'PercentFunded', 'HRPCovidFunding', 'GHRPGBVFunding'], ghxltags], \
+               [total_allreq, total_allfund, total_allpercent, total_covidfund, total_gbvfund], \
                [(hxltag, today_str, 'OCHA', fts_configuration['source_url']) for hxltag in ghxltags], \
-               [['RequiredHRPFunding', 'HRPFunding', 'HRPPercentFunded',
-                 'RequiredHRPCovidFunding', 'HRPCovidFunding', 'HRPCovidPercentFunded', 'HRPGBVFunding',
+               [['RequiredHRPFunding', 'HRPFunding', 'HRPPercentFunded', 'HRPCovidFunding', 'HRPGBVFunding',
                  'OtherPlans', 'RequiredOtherPlansFunding', 'OtherPlansFunding', 'OtherPlansPercentFunded'],
                  hxltags], \
-               [hrp_requirements, hrp_funding, hrp_percentage, hrp_covid_requirements, hrp_covid_funding, hrp_covid_percentage, hrp_gbv_funding,
+               [hrp_requirements, hrp_funding, hrp_percentage, hrp_covid_funding, hrp_gbv_funding,
                 other_planname, other_requirements, other_funding, other_percentage], \
                [(hxltag, today_str, 'OCHA', fts_configuration['source_url']) for hxltag in hxltags]
