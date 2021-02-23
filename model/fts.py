@@ -196,7 +196,7 @@ def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers
                 total_gbvfund += gbvfund
 
     with Download(basic_auth=basic_auths.get('fts'), rate_limit={'calls': 1, 'period': 1}) as downloader:
-        curdate = today - relativedelta(months=5)
+        curdate = today - relativedelta(months=1)
         url = f'{base_url}2/fts/flow/plan/overview/progress/{curdate.year}'
         data = download_data(url, downloader)
         plans = data['plans']
