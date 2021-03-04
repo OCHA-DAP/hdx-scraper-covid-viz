@@ -835,6 +835,7 @@ regional:
     "TotalDosesAdministered": "sum"
 
   global:
+    - "IFI COVID19 total"
     - "% of visas pending or denied"
     - "% of travel authorizations or movements denied"
     - "Number of incidents reported since start of year"
@@ -1055,28 +1056,6 @@ scraper_global:
           - "CERFCovidFundingGM4"
         output_hxltags:
           - "#value+cerf+covid+funding+gm4+total+usd"
-  ifi_global:
-    format: "csv"
-    dataset: "compilation-of-international-financial-institution-and-economic-data"
-    headers: 1
-    stop_row:
-      "Country Code": ""
-    adm_cols:
-      - "Country Code"
-    input_cols:
-      - "Total (USD mn)"
-    input_ignore_vals:
-      - "N/A"
-      - "-"
-    input_transforms:
-      "Total (USD mn)": "get_numeric_if_possible(Total (USD mn)) if Total (USD mn) else 0"
-    sum_cols:
-      - formula: "number_format(Total (USD mn) * 1000000, format='%.0f')"
-        mustbepopulated: True
-    output_cols:
-      - "IFI COVID19 global"
-    output_hxltags:
-      - "#value+ifi+total"
 
 # subnational
 ipc:
