@@ -719,6 +719,22 @@ scraper_national:
       - "#capacity+doses+covax+pfizerbiontech"
       - "#capacity+doses+covax+astrazenecasii"
       - "#capacity+doses+covax+astrazenecaskbio"
+  ourworldindata:
+    format: "csv"
+    dataset: "covid-19-vaccinations"
+    headers: 1
+    use_hxl: True
+    adm_cols:
+      - "#country+code"
+    date_col: "#date"
+    date_type: "date"
+    input_cols:
+      - "#total+vaccinations"
+    output_cols:
+      - "TotalDosesAdministered"
+    output_hxltags:
+      - "#capacity+doses+administered+total"
+
 fts:
   url: "https://api.hpc.tools/v"
   source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
@@ -816,6 +832,7 @@ regional:
     "Covax Pfizer-BioNTech Doses": "sum"
     "Covax Astrazeneca-SII Doses": "sum"
     "Covax Astrazeneca-SKBio Doses": "sum"
+    "TotalDosesAdministered": "sum"
 
   global:
     - "% of visas pending or denied"
@@ -823,7 +840,7 @@ regional:
     - "Number of incidents reported since start of year"
     - "% of CERF projects affected by insecurity and inaccessibility"
     - "% of CBPF projects affected by insecurity and inaccessibility"
-
+    - "TotalDosesAdministered"
 
 scraper_global:
   cerf_global:
@@ -1109,7 +1126,6 @@ scraper_global:
       - "#capacity+doses+covax+pfizerbiontech"
       - "#capacity+doses+covax+astrazenecasii"
       - "#capacity+doses+covax+astrazenecaskbio"
-
 
 # subnational
 ipc:
