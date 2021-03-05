@@ -7,6 +7,7 @@ from hdx.location.country import Country
 from hdx.scraper import get_date_from_dataset_date
 from hdx.scraper.scrapers import run_scrapers
 
+from model.covax_deliveries import get_covax_deliveries
 from model.inform import get_inform
 from model.iom_dtm import get_iom_dtm
 from model.who_covid import get_who_covid
@@ -137,11 +138,12 @@ def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=Non
         campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, today, gho_countries, downloader, outputs, scrapers)
         unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, today, today_str, gho_countries, downloader, scrapers)
         inform_headers, inform_columns, inform_sources = get_inform(configuration, today, gho_countries, other_auths, scrapers)
+        covax_headers, covax_columns, covax_sources = get_covax_deliveries(configuration, today, gho_countries, downloader, scrapers)
         tabular_headers, tabular_columns, tabular_sources = run_scrapers(configuration, gho_countries, adminone, 'national', downloader, basic_auths, today=today, today_str=today_str, scrapers=scrapers, population_lookup=population_lookup)
 
-        national_headers = extend_headers(national, covid_headers, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, inform_headers, ipc_headers)
-        national_columns = extend_columns('national', national, gho_countries, hrp_countries, region, None, national_headers, covid_columns, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, inform_columns, ipc_columns)
-        extend_sources(sources, tabular_sources, food_sources, campaign_sources, fts_sources, unhcr_sources, inform_sources)
+        national_headers = extend_headers(national, covid_headers, tabular_headers, food_headers, campaign_headers, fts_headers, unhcr_headers, inform_headers, ipc_headers, covax_headers)
+        national_columns = extend_columns('national', national, gho_countries, hrp_countries, region, None, national_headers, covid_columns, tabular_columns, food_columns, campaign_columns, fts_columns, unhcr_columns, inform_columns, ipc_columns, covax_columns)
+        extend_sources(sources, tabular_sources, food_sources, campaign_sources, fts_sources, unhcr_sources, inform_sources, covax_sources)
         update_tab('national', national)
 
         if 'regional' in tabs:
