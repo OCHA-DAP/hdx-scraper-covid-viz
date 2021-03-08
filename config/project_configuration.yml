@@ -854,7 +854,6 @@ regional:
     - "Covax Pfizer-BioNTech Doses"
     - "Covax Astrazeneca-SII Doses"
     - "Covax Astrazeneca-SKBio Doses"
-    - "TotalDosesAdministered"
 
 scraper_global:
   cerf_global:
@@ -1062,6 +1061,24 @@ scraper_global:
           - "CERFCovidFundingGM4"
         output_hxltags:
           - "#value+cerf+covid+funding+gm4+total+usd"
+  ourworldindata:
+    format: "csv"
+    dataset: "covid-19-vaccinations"
+    headers: 1
+    use_hxl: True
+    adm_cols:
+      - "#country+code"
+    adm_vals:
+      - "OWID_WRL"
+    date_col: "#date"
+    date_type: "date"
+    date_level: "national"
+    input_cols:
+      - "#total+vaccinations"
+    output_cols:
+      - "TotalDosesAdministered"
+    output_hxltags:
+      - "#capacity+doses+administered+total"
 
 # subnational
 ipc:
