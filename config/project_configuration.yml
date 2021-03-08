@@ -685,9 +685,6 @@ scraper_national:
       - "#capacity+delivered+total"
       - "#capacity+coverage+one_dose"
       - "#meta+source_country"
-      - "#capacity+covax+pfizerbiontech+doses"
-      - "#capacity+covax+azsii+doses"
-      - "#capacity+covax+azskbio+doses"
     input_ignore_vals:
       - "N/A"
     input_transforms:
@@ -696,9 +693,6 @@ scraper_national:
       "#capacity+others+delivered+doses": "get_numeric_if_possible(#capacity+others+delivered+doses)"
       "#capacity+delivered+total": "get_numeric_if_possible(#capacity+delivered+total)"
       "#capacity+coverage+one_dose": "number_format(get_numeric_if_possible(#capacity+coverage+one_dose))"
-      "#capacity+covax+pfizerbiontech+doses": "get_numeric_if_possible(#capacity+covax+pfizerbiontech+doses)"
-      "#capacity+covax+azsii+doses": "get_numeric_if_possible(#capacity+covax+azsii+doses)"
-      "#capacity+covax+azskbio+doses": "get_numeric_if_possible(#capacity+covax+azskbio+doses)"
     output_cols:
       - "Covax Interim Forecast Doses"
       - "Covax Delivered Doses"
@@ -706,9 +700,6 @@ scraper_national:
       - "Total Delivered Doses"
       - "Population % covered by delivered doses"
       - "Source country for doses"
-      - "Covax Pfizer-BioNTech Doses"
-      - "Covax Astrazeneca-SII Doses"
-      - "Covax Astrazeneca-SKBio Doses"
     output_hxltags:
       - "#capacity+doses+forecast+covax"
       - "#capacity+doses+delivered+covax"
@@ -716,9 +707,6 @@ scraper_national:
       - "#capacity+doses+delivered+total"
       - "#targeted+doses+delivered+pct"
       - "#meta+source+doses+country+name"
-      - "#capacity+doses+covax+pfizerbiontech"
-      - "#capacity+doses+covax+astrazenecasii"
-      - "#capacity+doses+covax+astrazenecaskbio"
   ourworldindata:
     format: "csv"
     dataset: "covid-19-vaccinations"
@@ -835,9 +823,6 @@ regional:
     "Covax Delivered Doses": "sum"
     "Other Delivered Doses": "sum"
     "Total Delivered Doses": "sum"
-    "Covax Pfizer-BioNTech Doses": "sum"
-    "Covax Astrazeneca-SII Doses": "sum"
-    "Covax Astrazeneca-SKBio Doses": "sum"
     "TotalDosesAdministered": "sum"
 
   global:
@@ -851,9 +836,6 @@ regional:
     - "Covax Delivered Doses"
     - "Other Delivered Doses"
     - "Total Delivered Doses"
-    - "Covax Pfizer-BioNTech Doses"
-    - "Covax Astrazeneca-SII Doses"
-    - "Covax Astrazeneca-SKBio Doses"
 
 scraper_global:
   cerf_global:
