@@ -62,7 +62,6 @@ def get_inform(configuration, today, countryiso3s, other_auths, scrapers=None):
     name = inspect.currentframe().f_code.co_name
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list()
-    today = parse_date('2021-01-16')
     inform_configuration = configuration['inform']
     read_hdx_metadata(inform_configuration)
     input_cols = inform_configuration['input_cols']
