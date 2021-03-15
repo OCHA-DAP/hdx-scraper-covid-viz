@@ -761,6 +761,9 @@ inform:
   output_hxltags:
     - "#severity+inform+num"
     - "#severity+inform+type"
+  trend_input_col: "INFORM Severity Index"
+  trend_output_col: "Trend over 3 months"
+  trend_hxltag: "#severity+inform+trend"
 
 who_covid:
   format: "csv"
