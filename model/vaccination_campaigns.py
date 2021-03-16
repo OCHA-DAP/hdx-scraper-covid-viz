@@ -17,6 +17,7 @@ def add_vaccination_campaigns(configuration, today, countryiso3s, downloader, ou
     hxlrow = next(iterator)
     campaigns_per_country = dict()
     affected_campaigns_per_country = dict()
+    affected_campaigns_per_country2 = dict()
     for row in iterator:
         newrow = dict()
         countryiso = None
@@ -38,8 +39,10 @@ def add_vaccination_campaigns(configuration, today, countryiso3s, downloader, ou
         outputs['json'].add_data_row(name, newrow)
         campaigns_per_country[countryiso] = campaigns_per_country.get(countryiso, 0) + 1
         if status != 'on track' and 'reinstated' not in status:
+            affected_campaigns_per_country2[countryiso] = affected_campaigns_per_country2.get(countryiso, 0) + 1
+        if status in ('postponed covid', 'cancelled'):
             affected_campaigns_per_country[countryiso] = affected_campaigns_per_country.get(countryiso, 0) + 1
-    ratios = calculate_ratios(campaigns_per_country, affected_campaigns_per_country)
-    hxltag = '#vaccination+num+ratio'
+    ratios = calculate_ratios(campaigns_per_country, affected_campaigns_per_country2)
+    hxltags = ['#vaccination+postponed+num', '#vaccination+num+ratio']
     logger.info('Processed vaccination campaigns')
-    return [['Vaccination Ratio'], [hxltag]], [ratios], [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url'])]
+    return [['Vaccinations Postponed', 'Vaccination Ratio'], hxltags], [affected_campaigns_per_country, ratios], [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']) for hxltag in hxltags]
