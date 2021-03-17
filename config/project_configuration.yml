@@ -282,6 +282,12 @@ scraper_national:
       - "SchoolClosure"
     output_hxltags:
       - "#impact+type"
+  education:
+    format: "csv"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTzIK0HjhuatKbaEaO61GxelvdXQcZqGMhDIQpzySuZvoXs6XX2oKcHUamZs894IWO0BGwS6GVoO7kb/pub?gid=0&single=true&output=csv"
+    dataset: "global-school-closures-covid19"
+    headers: 1
+    use_hxl: True
   travel:
     format: "csv"
     dataset: "covid-19-global-travel-restrictions-and-airline-information"
