@@ -42,6 +42,9 @@ def add_vaccination_campaigns(configuration, today, countryiso3s, downloader, ou
             affected_campaigns_per_country2[countryiso] = affected_campaigns_per_country2.get(countryiso, 0) + 1
         if status in ('postponed covid', 'cancelled'):
             affected_campaigns_per_country[countryiso] = affected_campaigns_per_country.get(countryiso, 0) + 1
+    for countryiso in campaigns_per_country:
+        if countryiso not in affected_campaigns_per_country:
+            affected_campaigns_per_country[countryiso] = 0
     ratios = calculate_ratios(campaigns_per_country, affected_campaigns_per_country2)
     hxltags = ['#vaccination+postponed+num', '#vaccination+num+ratio']
     logger.info('Processed vaccination campaigns')
