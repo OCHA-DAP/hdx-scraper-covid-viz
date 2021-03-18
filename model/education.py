@@ -56,17 +56,22 @@ def get_education(configuration, countryiso3s, regionlookup, downloader, scraper
     affected_learners_total = dict()
     learners_total = dict()
     closed_countries = dict()
-    for countryiso, l_p12 in learners_pre12.items():
-        l_3 = learners_3[countryiso]
-        l_t = 0
+    for countryiso in closures:
+        l_p12 = learners_pre12.get(countryiso)
+        l_3 = learners_3.get(countryiso)
+        l_t = None
         if l_p12:
-            l_t += l_p12
-        if l_3:
-            l_t += l_3
+            l_t = l_p12
+            if l_3:
+                l_t += l_3
+        elif l_3:
+            l_t = l_3
         for region in regionlookup.iso3_to_region_and_hrp[countryiso]:
-            learners_total[region] = learners_total.get(region, 0) + l_t
+            if l_t is not None:
+                learners_total[region] = learners_total.get(region, 0) + l_t
             if countryiso in fully_closed:
-                affected_learners_total[region] = affected_learners_total.get(region, 0) + l_t
+                if l_t is not None:
+                    affected_learners_total[region] = affected_learners_total.get(region, 0) + l_t
                 closed_countries[region] = closed_countries.get(region, 0) + 1
     percentage_affected_learners = dict()
     for region, affected_learners in affected_learners_total.items():
