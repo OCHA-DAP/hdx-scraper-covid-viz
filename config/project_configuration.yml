@@ -268,26 +268,6 @@ scraper_national:
       - "#affected+infected+max+lshtm"
       - "#affected+killed+min+lshtm"
       - "#affected+killed+max+lshtm"
-  school:
-    format: "csv"
-    dataset: "global-school-closures-covid19"
-    headers: 1
-    adm_cols:
-      - "ISO"
-    date_col: "Date"
-    date_type: "date"
-    input_cols:
-      - "Status"
-    output_cols:
-      - "SchoolClosure"
-    output_hxltags:
-      - "#impact+type"
-  education:
-    format: "csv"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTzIK0HjhuatKbaEaO61GxelvdXQcZqGMhDIQpzySuZvoXs6XX2oKcHUamZs894IWO0BGwS6GVoO7kb/pub?gid=0&single=true&output=csv"
-    dataset: "global-school-closures-covid19"
-    headers: 1
-    use_hxl: True
   travel:
     format: "csv"
     dataset: "covid-19-global-travel-restrictions-and-airline-information"
@@ -782,6 +762,12 @@ covax_deliveries:
   url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVzu79PPTfaA2syevOQfyRRjy63dJWitqu0fFbXIQCzoUn9K9TiMWMRvFGg1RBsnLmgYugzSEiAye2/pub?gid=1635331605&single=true&output=csv"
   headers: 1
 
+education:
+  format: "csv"
+  dataset: "global-school-closures-covid19"
+  headers: 1
+  edu_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTzIK0HjhuatKbaEaO61GxelvdXQcZqGMhDIQpzySuZvoXs6XX2oKcHUamZs894IWO0BGwS6GVoO7kb/pub?gid=0&single=true&output=csv"
+
 # regional
 regional:
   format: "xlsx"
@@ -838,6 +824,9 @@ regional:
     - "Covax Delivered Doses"
     - "Other Delivered Doses"
     - "Total Delivered Doses"
+    - "No. affected learners"
+    - "Percentage affected learners"
+    - "No. closed countries"
 
 scraper_global:
   cerf_global:

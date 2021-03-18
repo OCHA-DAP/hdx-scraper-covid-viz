@@ -8,6 +8,7 @@ from hdx.scraper import get_date_from_dataset_date
 from hdx.scraper.scrapers import run_scrapers
 
 from model.covax_deliveries import get_covax_deliveries
+from model.education import get_education
 from model.inform import get_inform
 from model.iom_dtm import get_iom_dtm
 from model.who_covid import get_who_covid
@@ -143,22 +144,23 @@ def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=Non
         unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, today, today_str, gho_countries, downloader, scrapers)
         inform_headers, inform_columns, inform_sources = get_inform(configuration, today, gho_countries, other_auths, scrapers)
         covax_headers, covax_columns, covax_sources = get_covax_deliveries(configuration, today, gho_countries, downloader, scrapers)
+        education_rheaders, education_rcolumns, education_rsources, education_headers, education_columns, education_sources = get_education(configuration, gho_countries, region, downloader, scrapers)
         level = 'national'
         scraper_configuration = configuration[f'scraper_{level}']
         results = run_scrapers(scraper_configuration, gho_countries, adminone, level, downloader, basic_auths, today=today, today_str=today_str, scrapers=scrapers, population_lookup=population_lookup)
 
-        national_headers = extend_headers(national, covid_headers, results['headers'], food_headers, campaign_headers, fts_headers, unhcr_headers, inform_headers, ipc_headers, covax_headers)
-        national_columns = extend_columns('national', national, gho_countries, hrp_countries, region, None, national_headers, covid_columns, results['values'], food_columns, campaign_columns, fts_columns, unhcr_columns, inform_columns, ipc_columns, covax_columns)
-        extend_sources(sources, results['sources'], food_sources, campaign_sources, fts_sources, unhcr_sources, inform_sources, covax_sources)
+        national_headers = extend_headers(national, covid_headers, results['headers'], food_headers, campaign_headers, fts_headers, unhcr_headers, inform_headers, ipc_headers, covax_headers, education_headers)
+        national_columns = extend_columns('national', national, gho_countries, hrp_countries, region, None, national_headers, covid_columns, results['values'], food_columns, campaign_columns, fts_columns, unhcr_columns, inform_columns, ipc_columns, covax_columns, education_columns)
+        extend_sources(sources, results['sources'], food_sources, campaign_sources, fts_sources, unhcr_sources, inform_sources, covax_sources, education_sources)
         update_tab('national', national)
 
         if 'regional' in tabs:
             regional_headers, regional_columns = region.get_regional(region, national_headers, national_columns, None,
                                                                      (covid_wheaders, covid_wcolumns), (fts_wheaders, fts_wcolumns))
-            regional_headers = extend_headers(regional, regional_headers)
-            extend_columns('regional', regional, region.regions + ['global'], None, region, None, regional_headers, regional_columns)
+            regional_headers = extend_headers(regional, regional_headers, education_rheaders)
+            regional_columns = extend_columns('regional', regional, region.regions + ['global'], None, region, None, regional_headers, regional_columns, education_rcolumns)
             update_tab('regional', regional)
-
+            extend_sources(sources, education_rsources)
             if 'world' in tabs:
                 rgheaders, rgcolumns = region.get_world(regional_headers, regional_columns)
                 level = 'global'
