@@ -85,9 +85,9 @@ def get_education(configuration, countryiso3s, regionlookup, downloader, scraper
         percentage_affected_learners[region] = get_fraction_str(no_learners, learners_total[region])
     logger.info('Processed education')
     grheaders = ['No. affected learners', 'Percentage affected learners', 'No. closed countries']
-    grhxltags = ['#affected+learners+num', '#affected+learners+pct', '#status+country+closed']
+    grhxltags = ['#affected+learners', '#affected+learners+pct', '#status+country+closed']
     headers = ['School Closure', 'No. pre-primary to upper-secondary learners', 'No. tertiary learners', 'No. affected learners']
-    hxltags = ['#impact+type', '#population+learners+pre_primary_to_secondary', '#population+learners+tertiary', '#affected+learners+num']
+    hxltags = ['#impact+type', '#population+learners+pre_primary_to_secondary', '#population+learners+tertiary', '#affected+learners']
     return [grheaders, grhxltags], [affected_learners_total, percentage_affected_learners, closed_countries], \
            [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']) for hxltag in hxltags], \
            [headers, hxltags], [closures, learners_pre12, learners_3, affected_learners], \
