@@ -81,6 +81,8 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
                               'Date_reported': '#date+reported'}
     for i, header in enumerate(series_headers):
         series_headers_hxltags[header] = series_hxltags[i]
+
+    # get rolling 7 day new cases - for old covid viz output and daily PDF
     series_name = 'covid_series'
     df_series['Average_cases_7_days'] = df_series.groupby('ISO_3_CODE')['New_cases'].rolling(window=7, min_periods=1).mean().reset_index(0, drop=True)
     df_series['Average_deaths_7_days'] = df_series.groupby('ISO_3_CODE')['New_deaths'].rolling(window=7, min_periods=1).mean().reset_index(0, drop=True)
@@ -122,7 +124,7 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
 
         national_columns.append(dict(zip(df_cumulative['ISO_3_CODE'], df_cumulative[header].map(format_number))))
 
-    # get weekly new cases - for old covid viz output
+    # Viz trend weekly (non-rolling) output
     resampled = df_WHO.drop(columns=['Regional_office']).groupby(['ISO_3_CODE']).resample('W', on='Date_reported')
     new_w = resampled.sum()[['New_cases', 'New_deaths']]
     cumulative_w = resampled.min()[['Cumulative_cases', 'Cumulative_deaths']]
