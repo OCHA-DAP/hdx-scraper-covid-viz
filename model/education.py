@@ -1,31 +1,27 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from hdx.scraper.readers import read
+from hdx.scraper.readers import read, read_tabular
 from hdx.utilities.dateparse import default_date, parse_date
 from hdx.utilities.text import get_fraction_str, get_numeric_if_possible
 
 logger = logging.getLogger(__name__)
 
 
-def get_education(configuration, countryiso3s, regionlookup, downloader, scrapers=None):
+def get_education(configuration, today, countryiso3s, regionlookup, downloader, scrapers=None):
     name = 'education'
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list(), list(), list(), list()
     datasetinfo = configuration[name]
     closures_headers, closures_iterator = read(downloader, datasetinfo)
     closures = dict()
-    curdate = default_date
     for row in closures_iterator:
         countryiso = row['ISO']
         if not countryiso or countryiso not in countryiso3s:
             continue
         date = parse_date(row['Date'])
-        if date < curdate:
+        if date.date() != today.date():
             continue
-        if date > curdate:
-            curdate = date
-            closures = dict()
         closures[countryiso] = row['Status']
     fully_closed = list()
     for countryiso, closure in closures.items():

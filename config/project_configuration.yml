@@ -236,38 +236,6 @@ scraper_national:
       - "TotalIDPs"
     output_hxltags:
       - "#affected+displaced"
-  imperial:
-    format: "xlsx"
-    dataset: "imperial-college-covid-19-projections"
-    sheet: 1
-    headers: 1
-    use_hxl: True
-    output_cols:
-      - "Imp: Total Cases(min)"
-      - "Imp: Total Cases(max)"
-      - "Imp: Total Deaths(min)"
-      - "Imp: Total Deaths(max)"
-    output_hxltags:
-      - "#affected+infected+min+imperial"
-      - "#affected+infected+max+imperial"
-      - "#affected+killed+min+imperial"
-      - "#affected+killed+max+imperial"
-  lshtm:
-    format: "xlsx"
-    dataset: "lshtm-covid-19-projections"
-    sheet: 1
-    headers: 1
-    use_hxl: True
-    output_cols:
-      - "LSHTM: Total Cases(min)"
-      - "LSHTM: Total Cases(max)"
-      - "LSHTM: Total Deaths(min)"
-      - "LSHTM: Total Deaths(max)"
-    output_hxltags:
-      - "#affected+infected+min+lshtm"
-      - "#affected+infected+max+lshtm"
-      - "#affected+killed+min+lshtm"
-      - "#affected+killed+max+lshtm"
   travel:
     format: "csv"
     dataset: "covid-19-global-travel-restrictions-and-airline-information"
@@ -1673,6 +1641,17 @@ admin1_info:
   - {ADM1_PCODE: MMR018, ADM1_REF: Nay Pyi Taw, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
   - {ADM1_PCODE: MMR111, ADM1_REF: Bago, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
   - {ADM1_PCODE: MMR222, ADM1_REF: Shan, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
+  - {ADM1_PCODE: MZ01, ADM1_REF: Cabo Delgado, ADM0_PCODE: MZ, alpha_3: MOZ, ADM0_REF: Mozambique}
+  - {ADM1_PCODE: MZ02, ADM1_REF: Gaza, ADM0_PCODE: MZ, alpha_3: MOZ, ADM0_REF: Mozambique}
+  - {ADM1_PCODE: MZ03, ADM1_REF: Inhambane, ADM0_PCODE: MZ, alpha_3: MOZ, ADM0_REF: Mozambique}
+  - {ADM1_PCODE: MZ04, ADM1_REF: Manica, ADM0_PCODE: MZ, alpha_3: MOZ, ADM0_REF: Mozambique}
+  - {ADM1_PCODE: MZ05, ADM1_REF: Maputo, ADM0_PCODE: MZ, alpha_3: MOZ, ADM0_REF: Mozambique}
+  - {ADM1_PCODE: MZ06, ADM1_REF: Maputo City, ADM0_PCODE: MZ, alpha_3: MOZ, ADM0_REF: Mozambique}
+  - {ADM1_PCODE: MZ07, ADM1_REF: Nampula, ADM0_PCODE: MZ, alpha_3: MOZ, ADM0_REF: Mozambique}
+  - {ADM1_PCODE: MZ08, ADM1_REF: Niassa, ADM0_PCODE: MZ, alpha_3: MOZ, ADM0_REF: Mozambique}
+  - {ADM1_PCODE: MZ09, ADM1_REF: Sofala, ADM0_PCODE: MZ, alpha_3: MOZ, ADM0_REF: Mozambique}
+  - {ADM1_PCODE: MZ10, ADM1_REF: Tete, ADM0_PCODE: MZ, alpha_3: MOZ, ADM0_REF: Mozambique}
+  - {ADM1_PCODE: MZ11, ADM1_REF: Zambezia, ADM0_PCODE: MZ, alpha_3: MOZ, ADM0_REF: Mozambique}
   - {ADM1_PCODE: NER001, ADM1_REF: Agadez, ADM0_PCODE: NER, alpha_3: NER, ADM0_REF: Niger}
   - {ADM1_PCODE: NER002, ADM1_REF: Diffa, ADM0_PCODE: NER, alpha_3: NER, ADM0_REF: Niger}
   - {ADM1_PCODE: NER003, ADM1_REF: Dosso, ADM0_PCODE: NER, alpha_3: NER, ADM0_REF: Niger}
@@ -1718,6 +1697,11 @@ admin1_info:
   - {ADM1_PCODE: NG035, ADM1_REF: Taraba, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
   - {ADM1_PCODE: NG036, ADM1_REF: Yobe, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
   - {ADM1_PCODE: NG037, ADM1_REF: Zamfara, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
+  - {ADM1_PCODE: PK2, ADM1_REF: Pakhtunkhwa, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK5, ADM1_REF: Federal Capital Territory, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK6, ADM1_REF: Punjab, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK7, ADM1_REF: Balochistan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK8, ADM1_REF: Sindh, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
   - {ADM1_PCODE: PS1, ADM1_REF: Gaza Strip, ADM0_PCODE: PS, alpha_3: PSE, ADM0_REF: State of Palestine}
   - {ADM1_PCODE: PS2, ADM1_REF: No Mans Land, ADM0_PCODE: PS, alpha_3: PSE, ADM0_REF: State of Palestine}
   - {ADM1_PCODE: PS3, ADM1_REF: West Bank, ADM0_PCODE: PS, alpha_3: PSE, ADM0_REF: State of Palestine}

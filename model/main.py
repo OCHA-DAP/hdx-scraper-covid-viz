@@ -144,7 +144,7 @@ def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=Non
         unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, today, today_str, gho_countries, downloader, scrapers)
         inform_headers, inform_columns, inform_sources = get_inform(configuration, today, gho_countries, other_auths, scrapers)
         covax_headers, covax_columns, covax_sources = get_covax_deliveries(configuration, today, gho_countries, downloader, scrapers)
-        education_rheaders, education_rcolumns, education_rsources, education_headers, education_columns, education_sources = get_education(configuration, gho_countries, region, downloader, scrapers)
+        education_rheaders, education_rcolumns, education_rsources, education_headers, education_columns, education_sources = get_education(configuration, today, gho_countries, region, downloader, scrapers)
         level = 'national'
         scraper_configuration = configuration[f'scraper_{level}']
         results = run_scrapers(scraper_configuration, gho_countries, adminone, level, downloader, basic_auths, today=today, today_str=today_str, scrapers=scrapers, population_lookup=population_lookup)
