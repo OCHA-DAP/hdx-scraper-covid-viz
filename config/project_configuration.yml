@@ -1697,11 +1697,137 @@ admin1_info:
   - {ADM1_PCODE: NG035, ADM1_REF: Taraba, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
   - {ADM1_PCODE: NG036, ADM1_REF: Yobe, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
   - {ADM1_PCODE: NG037, ADM1_REF: Zamfara, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: PK2, ADM1_REF: Pakhtunkhwa, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
-  - {ADM1_PCODE: PK5, ADM1_REF: Federal Capital Territory, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
-  - {ADM1_PCODE: PK6, ADM1_REF: Punjab, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
-  - {ADM1_PCODE: PK7, ADM1_REF: Balochistan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
-  - {ADM1_PCODE: PK8, ADM1_REF: Sindh, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK201, ADM1_REF: Abbottabad, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK601, ADM1_REF: Attock, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK701, ADM1_REF: Awaran, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK801, ADM1_REF: Badin, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK602, ADM1_REF: Bahawalnagar, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK603, ADM1_REF: Bahawalpur, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK232, ADM1_REF: Bajaur, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK202, ADM1_REF: Bannu, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK702, ADM1_REF: Barkhan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK203, ADM1_REF: Batagram, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK604, ADM1_REF: Bhakkar, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK204, ADM1_REF: Buner, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK704, ADM1_REF: Chagai, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK605, ADM1_REF: Chakwal, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK205, ADM1_REF: Charsadda, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK606, ADM1_REF: Chiniot, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK206, ADM1_REF: Chitral, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK802, ADM1_REF: Dadu, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK705, ADM1_REF: Dera Bugti, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK607, ADM1_REF: Dera Ghazi Khan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK207, ADM1_REF: Dera Ismail Khan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK608, ADM1_REF: Faisalabad, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK239, ADM1_REF: FR Bannu, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK240, ADM1_REF: FR Dera Ismail Khan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK241, ADM1_REF: FR Kohat, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK242, ADM1_REF: FR Lakki Marwat, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK243, ADM1_REF: FR Peshawar, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK244, ADM1_REF: FR Tank, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK803, ADM1_REF: Ghotki, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK609, ADM1_REF: Gujranwala, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK610, ADM1_REF: Gujrat, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK706, ADM1_REF: Gwadar, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK611, ADM1_REF: Hafizabad, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK208, ADM1_REF: Hangu, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK209, ADM1_REF: Haripur, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK707, ADM1_REF: Harnai, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK804, ADM1_REF: Hyderabad, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK501, ADM1_REF: Islamabad, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK805, ADM1_REF: Jacobabad, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK708, ADM1_REF: Jaffarabad, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK806, ADM1_REF: Jamshoro, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK709, ADM1_REF: Jhal Magsi, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK612, ADM1_REF: Jhang, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK613, ADM1_REF: Jhelum, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK711, ADM1_REF: Kachhi, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK710, ADM1_REF: Kalat, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK807, ADM1_REF: Karachi City, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK210, ADM1_REF: Karak, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK808, ADM1_REF: Kashmore, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK614, ADM1_REF: Kasur, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK712, ADM1_REF: Kech, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK809, ADM1_REF: Khairpur, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK615, ADM1_REF: Khanewal, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK713, ADM1_REF: Kharan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK616, ADM1_REF: Khushab, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK714, ADM1_REF: Khuzdar, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK233, ADM1_REF: Khyber, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK715, ADM1_REF: Killa Abdullah, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK716, ADM1_REF: Killa Saifullah, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK211, ADM1_REF: Kohat, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK212, ADM1_REF: Kohistan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK717, ADM1_REF: Kohlu, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK234, ADM1_REF: Kurram, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK617, ADM1_REF: Lahore, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK213, ADM1_REF: Lakki Marwat, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK810, ADM1_REF: Larkana, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK718, ADM1_REF: Las Bela, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK618, ADM1_REF: Layyah, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK732, ADM1_REF: Lehri, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK619, ADM1_REF: Lodhran, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK719, ADM1_REF: Loralai, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK214, ADM1_REF: Lower Dir, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK215, ADM1_REF: Malakand PA, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK620, ADM1_REF: Mandi Bahauddin, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK216, ADM1_REF: Mansehra, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK217, ADM1_REF: Mardan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK720, ADM1_REF: Mastung, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK811, ADM1_REF: Matiari, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK621, ADM1_REF: Mianwali, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK812, ADM1_REF: Mirpur Khas, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK235, ADM1_REF: Mohmand, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK622, ADM1_REF: Multan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK721, ADM1_REF: Musakhel, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK623, ADM1_REF: Muzaffargarh, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK624, ADM1_REF: Nankana Sahib, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK625, ADM1_REF: Narowal, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK722, ADM1_REF: Nasirabad, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK813, ADM1_REF: Naushahro Feroze, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK236, ADM1_REF: North Waziristan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK218, ADM1_REF: Nowshera, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK723, ADM1_REF: Nushki, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK626, ADM1_REF: Okara, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK237, ADM1_REF: Orakzai, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK627, ADM1_REF: Pakpattan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK724, ADM1_REF: Panjgur, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK219, ADM1_REF: Peshawar, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK725, ADM1_REF: Pishin, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK815, ADM1_REF: Qambar Shahdadkot, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK726, ADM1_REF: Quetta, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK628, ADM1_REF: Rahim Yar Khan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK629, ADM1_REF: Rajanpur, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK630, ADM1_REF: Rawalpindi, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK631, ADM1_REF: Sahiwal, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK814, ADM1_REF: Sanghar, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK632, ADM1_REF: Sargodha, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK816, ADM1_REF: Shaheed Benazirabad, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK220, ADM1_REF: Shangla, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK727, ADM1_REF: Sheerani, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK633, ADM1_REF: Sheikhupura, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK817, ADM1_REF: Shikarpur, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK634, ADM1_REF: Sialkot, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK728, ADM1_REF: Sibi, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK733, ADM1_REF: Sohbatpur, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK238, ADM1_REF: South Waziristan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK824, ADM1_REF: Sujawal, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK818, ADM1_REF: Sukkur, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK221, ADM1_REF: Swabi, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK222, ADM1_REF: Swat, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK819, ADM1_REF: Tando Allah Yar, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK820, ADM1_REF: Tando Muhammad Khan, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK229, ADM1_REF: Tank, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK821, ADM1_REF: Tharparkar, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK822, ADM1_REF: Thatta, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK635, ADM1_REF: Toba Tek Singh, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK231, ADM1_REF: Tor Ghar, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK823, ADM1_REF: Umerkot, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK230, ADM1_REF: Upper Dir, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK636, ADM1_REF: Vehari, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK729, ADM1_REF: Washuk, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK730, ADM1_REF: Zhob, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
+  - {ADM1_PCODE: PK731, ADM1_REF: Ziarat, ADM0_PCODE: PK, alpha_3: PAK, ADM0_REF: Pakistan}
   - {ADM1_PCODE: PS1, ADM1_REF: Gaza Strip, ADM0_PCODE: PS, alpha_3: PSE, ADM0_REF: State of Palestine}
   - {ADM1_PCODE: PS2, ADM1_REF: No Mans Land, ADM0_PCODE: PS, alpha_3: PSE, ADM0_REF: State of Palestine}
   - {ADM1_PCODE: PS3, ADM1_REF: West Bank, ADM0_PCODE: PS, alpha_3: PSE, ADM0_REF: State of Palestine}
