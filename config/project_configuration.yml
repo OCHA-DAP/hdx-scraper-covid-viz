@@ -731,10 +731,15 @@ covax_deliveries:
   headers: 1
 
 education:
-  format: "csv"
-  dataset: "global-school-closures-covid19"
-  headers: 1
-  edu_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTzIK0HjhuatKbaEaO61GxelvdXQcZqGMhDIQpzySuZvoXs6XX2oKcHUamZs894IWO0BGwS6GVoO7kb/pub?gid=0&single=true&output=csv"
+  closures:
+    format: "csv"
+    dataset: "global-school-closures-covid19"
+    headers: 1
+  enrolment:
+    format: "xlsx"
+    dataset: "global-school-closures-covid19"
+    sheet: 1
+    headers: 1
 
 # regional
 regional:

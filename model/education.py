@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from hdx.scraper.readers import read, read_tabular
-from hdx.utilities.dateparse import default_date, parse_date
-from hdx.utilities.text import get_fraction_str, get_numeric_if_possible
+from hdx.scraper.readers import read
+from hdx.utilities.dateparse import parse_date
+from hdx.utilities.text import get_fraction_str
 
 logger = logging.getLogger(__name__)
 
@@ -12,7 +12,8 @@ def get_education(configuration, today, countryiso3s, regionlookup, downloader, 
     name = 'education'
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list(), list(), list(), list()
-    datasetinfo = configuration[name]
+    educationinfo = configuration[name]
+    datasetinfo = educationinfo['closures']
     closures_headers, closures_iterator = read(downloader, datasetinfo)
     closures = dict()
     for row in closures_iterator:
@@ -27,38 +28,49 @@ def get_education(configuration, today, countryiso3s, regionlookup, downloader, 
     for countryiso, closure in closures.items():
         if closure.lower() == 'closed due to covid-19':
             fully_closed.append(countryiso)
-    datasetinfo['url'] = datasetinfo['edu_url']
+    datasetinfo = educationinfo['enrolment']
     learners_headers, learners_iterator = read(downloader, datasetinfo)
-    hxlrow = next(learners_iterator)
-    learners_pre12 = dict()
+    learners_012 = dict()
     learners_3 = dict()
     affected_learners = dict()
     all_learners = dict()
-    curdate = default_date
+
     for row in learners_iterator:
-        newrow = dict()
-        for key in row:
-            newrow[hxlrow[key]] = row[key]
-        countryiso = newrow['#country+code']
+        countryiso = row['ISO3']
         if not countryiso or countryiso not in countryiso3s:
             continue
-        date = parse_date(newrow['#date'])
-        if date < curdate:
-            continue
-        if date > curdate:
-            curdate = date
-            learners_pre12[countryiso] = dict()
-            learners_3[countryiso] = dict()
-        l_p12 = get_numeric_if_possible(newrow['#population+learners+pre_primary_to_secondary'])
-        learners_pre12[countryiso] = l_p12
-        l_3 = get_numeric_if_possible(newrow['#population+learners+tertiary'])
-        learners_3[countryiso] = l_3
+        l_0 = row['Pre-primary (both)']
+        l_1 = row['Primary (both)']
+        l_2 = row['Secondary (both)']
+        l_3 = row['Tertiary (both)']
+        l_012 = None
+        if l_0 != '-':
+            l_012 = int(l_0)
+        if l_1 != '-':
+            l_1 = int(l_1)
+            if l_012 is None:
+                l_012 = l_1
+            else:
+                l_012 += l_1
+        if l_2 != '-':
+            l_2 = int(l_2)
+            if l_012 is None:
+                l_012 = l_2
+            else:
+                l_012 += l_2
+        if l_012 is not None:
+            learners_012[countryiso] = l_012
+        if l_3 == '-':
+            l_3 = None
+        else:
+            l_3 = int(l_3)
+            learners_3[countryiso] = l_3
         no_learners = None
-        if l_p12:
-            no_learners = l_p12
+        if l_012 is not None:
+            no_learners = l_012
             if l_3:
                 no_learners += l_3
-        elif l_3:
+        elif l_3 is not None:
             no_learners = l_3
         if no_learners is not None:
             all_learners[countryiso] = no_learners
@@ -86,5 +98,5 @@ def get_education(configuration, today, countryiso3s, regionlookup, downloader, 
     hxltags = ['#impact+type', '#population+learners+pre_primary_to_secondary', '#population+learners+tertiary', '#affected+learners']
     return [grheaders, grhxltags], [affected_learners_total, percentage_affected_learners, closed_countries], \
            [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']) for hxltag in hxltags], \
-           [headers, hxltags], [closures, learners_pre12, learners_3, affected_learners], \
+           [headers, hxltags], [closures, learners_012, learners_3, affected_learners], \
            [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']) for hxltag in hxltags]
