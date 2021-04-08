@@ -5,6 +5,7 @@ import pandas as pd
 
 
 # filename for shapefile and WHO input dataset
+from epiweeks import Week
 from hdx.location.country import Country
 from hdx.scraper.readers import read_hdx_metadata
 
@@ -17,7 +18,13 @@ def get_who_data(url, hrp_countries, gho_countries, region):
     df = df[['Date_reported', 'Country_code', 'Cumulative_cases', 'New_cases', 'New_deaths', 'Cumulative_deaths']]
     df.insert(1, 'ISO_3_CODE', df['Country_code'].apply(Country.get_iso3_from_iso2))
     df = df.drop(columns=['Country_code'])
+    earliest_date = df['Date_reported'].min()
+    epiweek = Week.fromdate(earliest_date, system='iso')
+    epiweeks_startdate = epiweek.enddate()
     source_date = df['Date_reported'].max()
+    epiweek = Week.fromdate(source_date, system='iso')
+    epiweeks_enddate = epiweek.startdate()
+
 
     # cumulative
     df_cumulative = df.sort_values(by=['Date_reported']).drop_duplicates(subset='ISO_3_CODE', keep='last')
