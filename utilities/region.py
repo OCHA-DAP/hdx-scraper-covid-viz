@@ -34,6 +34,7 @@ class Region(object):
         self.regions.insert(0, region)
         for countryiso in gho_countries:
             dict_of_sets_add(self.iso3_to_region_and_hrp, countryiso, region)
+        self.hrp_countries = hrp_countries
 
     def get_float_or_int(self, valuestr):
         if not valuestr or valuestr == 'N/A':
@@ -81,9 +82,16 @@ class Region(object):
             valdict = dict()
             valdicts.append(valdict)
             action = process_cols[header]
+            if action[-5:] == '-hrps':
+                action = action[:-5]
+                only_hrps = True
+            else:
+                only_hrps = False
             column = regional_columns[i]
             for countryiso in column:
                 for region in regionlookup.iso3_to_region_and_hrp[countryiso]:
+                    if only_hrps and region != 'GHO' and countryiso not in self.hrp_countries:
+                        continue
                     dict_of_lists_add(valdict, region, column[countryiso])
             if action == 'sum' or action == 'mean':
                 for region, valuelist in valdict.items():

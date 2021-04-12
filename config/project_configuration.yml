@@ -780,11 +780,11 @@ regional:
     "Number of incidents reported since start of year": "sum"
     "% of CERF projects affected by insecurity and inaccessibility": "mean"
     "% of CBPF projects affected by insecurity and inaccessibility": "mean"
-    "Covax Interim Forecast Doses": "sum"
-    "Covax Delivered Doses": "sum"
-    "Other Delivered Doses": "sum"
-    "Total Delivered Doses": "sum"
-    "TotalDosesAdministered": "sum"
+    "Covax Interim Forecast Doses": "sum-hrps"
+    "Covax Delivered Doses": "sum-hrps"
+    "Other Delivered Doses": "sum-hrps"
+    "Total Delivered Doses": "sum-hrps"
+    "TotalDosesAdministered": "sum-hrps"
 
   global:
     - "IFI COVID19 total"
