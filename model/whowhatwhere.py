@@ -28,6 +28,9 @@ def get_whowhatwhere(configuration, today_str, adminone, downloader, scrapers=No
         except hxl.HXLException:
             logger.warning('Could not process 3w data for %s. Maybe there are no HXL tags.' % countryiso3)
             continue
+        except Exception:
+            logger.exception('Error reading 3w data for %s!' % countryiso3)
+            raise
         pcodes_found = False
         for row in data:
             pcode = row.get('#adm1+code')
