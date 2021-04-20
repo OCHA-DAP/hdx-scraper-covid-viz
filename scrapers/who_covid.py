@@ -154,6 +154,7 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
         columns=['Country Code'])
     # Get cases per hundred thousand
     output_df = output_df.rename(columns={'New_cases': 'weekly_new_cases', 'New_deaths': 'weekly_new_deaths',
+                                          'diff_cases': 'weekly_new_cases_change', 'diff_deaths': 'weekly_new_deaths_change',
                                           'Cumulative_cases': 'cumulative_cases', 'Cumulative_deaths': 'cumulative_deaths'})
     output_df['weekly_new_cases_per_ht'] = output_df['weekly_new_cases'] / output_df['population'] * 1E5
     output_df['weekly_new_deaths_per_ht'] = output_df['weekly_new_deaths'] / output_df['population'] * 1E5
@@ -162,8 +163,12 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
 
     output_df['Date_reported'] = output_df['Date_reported'].apply(lambda x: x.strftime('%Y-%m-%d'))
     output_df = output_df.drop(
-        ['NewCase_PercentChange', 'NewDeath_PercentChange', 'ndays', 'diff_cases', 'diff_deaths'], axis=1)
-    trend_hxltags = {'ISO_3_CODE': '#country+code', 'Date_reported': '#date+reported', 'weekly_new_cases': '#affected+infected+new+weekly', 'weekly_new_deaths': '#affected+killed+new+weekly', 'weekly_new_cases_per_ht': '#affected+infected+new+per100000+weekly', 'weekly_new_cases_pc_change': '#affected+infected+new+pct+weekly'}
+        ['NewCase_PercentChange', 'NewDeath_PercentChange', 'ndays'], axis=1)
+    trend_hxltags = {'ISO_3_CODE': '#country+code', 'Date_reported': '#date+reported',
+                     'weekly_new_cases': '#affected+infected+new+weekly', 'weekly_new_deaths': '#affected+killed+new+weekly',
+                     'weekly_new_cases_per_ht': '#affected+infected+new+per100000+weekly', 'weekly_new_deaths_per_ht': '#affected+killed+new+per100000+weekly',
+                     'weekly_new_cases_change': '#affected+infected+new+num+weekly', 'weekly_new_deaths_change': '#affected+killed+new+num+weekly',
+                     'weekly_new_cases_pc_change': '#affected+infected+new+pct+weekly', 'weekly_new_deaths_pc_change': '#affected+killed+new+pct+weekly'}
     trend_name = 'covid_trend'
     outputs['gsheets'].update_tab(trend_name, output_df, trend_hxltags)
     outputs['excel'].update_tab(trend_name, output_df, trend_hxltags)
