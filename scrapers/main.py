@@ -7,18 +7,18 @@ from hdx.location.country import Country
 from hdx.scraper import get_date_from_dataset_date
 from hdx.scraper.scrapers import run_scrapers
 
-from model.covax_deliveries import get_covax_deliveries
-from model.education import get_education
-from model.inform import get_inform
-from model.iom_dtm import get_iom_dtm
-from model.who_covid import get_who_covid
-from model.food_prices import add_food_prices
-from model.fts import get_fts
-from model.ipc import get_ipc
+from scrapers.covax_deliveries import get_covax_deliveries
+from scrapers.education import get_education
+from scrapers.inform import get_inform
+from scrapers.iom_dtm import get_iom_dtm
+from scrapers.who_covid import get_who_covid
+from scrapers.food_prices import add_food_prices
+from scrapers.fts import get_fts
+from scrapers.ipc import get_ipc
 from utilities.region import Region
-from model.unhcr import get_unhcr
-from model.vaccination_campaigns import add_vaccination_campaigns
-from model.whowhatwhere import get_whowhatwhere
+from scrapers.unhcr import get_unhcr
+from scrapers.vaccination_campaigns import add_vaccination_campaigns
+from scrapers.whowhatwhere import get_whowhatwhere
 
 logger = logging.getLogger(__name__)
 

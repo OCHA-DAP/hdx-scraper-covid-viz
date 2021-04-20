@@ -3,7 +3,7 @@ import logging
 
 from hdx.scraper.readers import read_hdx
 
-from model import calculate_ratios
+from scrapers import calculate_ratios
 
 logger = logging.getLogger(__name__)
 

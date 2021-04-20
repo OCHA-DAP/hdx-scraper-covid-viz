@@ -10,7 +10,7 @@ from hdx.utilities.dateparse import parse_date
 from hdx.utilities.downloader import Download
 from hdx.utilities.path import temp_dir
 
-from model.main import get_indicators
+from scrapers.main import get_indicators
 
 
 class TestCovid:

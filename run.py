@@ -14,7 +14,7 @@ from hdx.scraper.nooutput import NoOutput
 from hdx.utilities.downloader import Download
 from hdx.utilities.easy_logging import setup_logging
 
-from model.main import get_indicators
+from scrapers.main import get_indicators
 
 setup_logging()
 logger = logging.getLogger()
