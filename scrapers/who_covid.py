@@ -167,7 +167,7 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
     trend_hxltags = {'ISO_3_CODE': '#country+code', 'Date_reported': '#date+reported',
                      'weekly_new_cases': '#affected+infected+new+weekly', 'weekly_new_deaths': '#affected+killed+new+weekly',
                      'weekly_new_cases_per_ht': '#affected+infected+new+per100000+weekly', 'weekly_new_deaths_per_ht': '#affected+killed+new+per100000+weekly',
-                     'weekly_new_cases_change': '#affected+infected+new+num+weekly', 'weekly_new_deaths_change': '#affected+killed+new+num+weekly',
+                     'weekly_new_cases_change': '#affected+infected+new+change+weekly', 'weekly_new_deaths_change': '#affected+killed+new+change+weekly',
                      'weekly_new_cases_pc_change': '#affected+infected+new+pct+weekly', 'weekly_new_deaths_pc_change': '#affected+killed+new+pct+weekly'}
     trend_name = 'covid_trend'
     outputs['gsheets'].update_tab(trend_name, output_df, trend_hxltags)
