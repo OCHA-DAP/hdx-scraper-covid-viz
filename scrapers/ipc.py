@@ -149,8 +149,8 @@ def get_ipc(configuration, today, gho_countries, adminone, downloader, scrapers=
     headers.append('FoodInsecurityIPCAnalysisPeriodEnd')
     hxltags = [f'#affected+food+ipc+p{phase}+pct' for phase in phases[:-1]]
     hxltags.append('#affected+food+ipc+p3plus+pct')
-    hxltags.extend([f'#affected+food+ipc+p{phase}+pop+num' for phase in phases[:-1]])
-    hxltags.append('#affected+food+ipc+p3plus+pop+num')
+    hxltags.extend([f'#affected+food+ipc+p{phase}+num' for phase in phases[:-1]])
+    hxltags.append('#affected+food+ipc+p3plus+num')
     hxltags.append('#affected+food+ipc+analysed+num')
     hxltags.append('#affected+food+ipc+analysed+pct')
     hxltags.append('#date+ipc+period')
