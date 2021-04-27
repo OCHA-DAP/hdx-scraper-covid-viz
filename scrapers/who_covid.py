@@ -103,31 +103,6 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
     national_columns = [dict(zip(df_national['ISO_3_CODE'], df_national['Cumulative_cases'].map(format_0dp))),
                         dict(zip(df_national['ISO_3_CODE'], df_national['Cumulative_deaths'].map(format_0dp)))]
 
-    # Change `#affected+infected+avg+per100000` to use epi week instead of 7 day rolling. This will align it with the viz and it is understood that it means this indicator will not update daily.
-    #
-    # The calculation for `#affected+infected+avg+per100000+pct+change` will need to change to align the change above.
-    #
-    # `#affected+killed+avg` and `#affected+killed+avg+pct+change` also to be changed to epi week based
-    #     df_series['Average_cases_7_days'] = df_series.groupby('ISO_3_CODE')['New_cases'].rolling(window=7, min_periods=1).mean().reset_index(0, drop=True)
-    #     df_series['Average_deaths_7_days'] = df_series.groupby('ISO_3_CODE')['New_deaths'].rolling(window=7, min_periods=1).mean().reset_index(0, drop=True)
-    #     df_series = df_series.merge(df_pop, left_on='ISO_3_CODE', right_on='Country Code', how='left').drop(columns=['Country Code'])
-    #     df_series['Average_cases_7_days_per_100000'] = df_series['Average_cases_7_days'] / df_series['population'] * 100000
-    #     # get daily trends in cases (per 100k, 7 day avg) and deaths (7 day average); added for trend arrows in PDF
-    #     df_series['Average_cases_7_days_per_100000_pc_change'] = df_series.groupby('ISO_3_CODE')[
-    #         'Average_cases_7_days_per_100000'].pct_change() * 100
-    #     df_series['Average_cases_7_days_per_100000_pc_change'].fillna(value=0, inplace=True)  # nan values are handled, but inf values remain in output
-    #     df_series['Average_cases_7_days_per_100000_pc_change'] = df_series['Average_cases_7_days_per_100000_pc_change'].replace([numpy.inf, -numpy.inf],'inf')
-    #     df_series['Average_deaths_7_days_pc_change'] = df_series.groupby('ISO_3_CODE')[
-    #         'Average_deaths_7_days'].pct_change() * 100
-    #     df_series['Average_deaths_7_days_pc_change'].fillna(value=0, inplace=True)
-    #     df_series['Average_deaths_7_days_pc_change'] = df_series['Average_deaths_7_days_pc_change'].replace([numpy.inf, -numpy.inf], 'inf')
-    #     series_headers = ['Cumulative_cases', 'Average_cases_7_days', 'Average_cases_7_days_per_100000',
-    #                       'Average_cases_7_days_per_100000_pc_change', 'Cumulative_deaths', 'Average_deaths_7_days',
-    #                       'Average_deaths_7_days_pc_change']
-    #     series_hxltags = ['#affected+infected', '#affected+infected+avg', '#affected+infected+avg+per100000',
-    #                       '#affected+infected+avg+per100000+pct+change', '#affected+killed', '#affected+killed+avg',
-    #                       '#affected+killed+avg+pct+change']
-
     # Viz and daily PDF trend epi weekly (non-rolling) output
     resampled = df_WHO.drop(columns=['Regional_office']).groupby(['ISO_3_CODE']).resample('W', on='Date_reported')
     new_w = resampled.sum()[['New_cases', 'New_deaths']]
