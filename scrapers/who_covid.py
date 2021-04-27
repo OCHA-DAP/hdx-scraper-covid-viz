@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import copy
+
 import numpy
 import pandas as pd
 
@@ -70,35 +72,17 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
     df_pop = pd.DataFrame.from_records(list(population_lookup.items()), columns=['Country Code', 'population'])
 
     # output time series
-    series_headers = ['Cumulative_cases', 'Average_cases_7_days', 'Average_cases_7_days_per_100000',
-                      'Average_cases_7_days_per_100000_pc_change', 'Cumulative_deaths', 'Average_deaths_7_days',
-                      'Average_deaths_7_days_pc_change']
-    series_hxltags = ['#affected+infected', '#affected+infected+avg', '#affected+infected+avg+per100000',
-                      '#affected+infected+avg+per100000+pct+change', '#affected+killed', '#affected+killed+avg',
-                      '#affected+killed+avg+pct+change']
+    series_headers = ['Cumulative_cases', 'Cumulative_deaths']
+    series_hxltags = ['#affected+infected', '#affected+killed']
     series_headers_hxltags = {'ISO_3_CODE': '#country+code',
                               'CountryName': '#country+name',
                               'Date_reported': '#date+reported'}
     for i, header in enumerate(series_headers):
         series_headers_hxltags[header] = series_hxltags[i]
 
-    # get rolling 7 day new cases - for old covid viz output and daily PDF
+    # cumulative numbers for national/daily and old covid viz
     series_name = 'covid_series'
-    df_series['Average_cases_7_days'] = df_series.groupby('ISO_3_CODE')['New_cases'].rolling(window=7, min_periods=1).mean().reset_index(0, drop=True)
-    df_series['Average_deaths_7_days'] = df_series.groupby('ISO_3_CODE')['New_deaths'].rolling(window=7, min_periods=1).mean().reset_index(0, drop=True)
-    df_series = df_series.merge(df_pop, left_on='ISO_3_CODE', right_on='Country Code', how='left').drop(columns=['Country Code'])
-    df_series['Average_cases_7_days_per_100000'] = df_series['Average_cases_7_days'] / df_series['population'] * 100000
-    df_series = df_series.drop(['New_cases', 'New_deaths', 'population'], axis=1)
-
-    # get daily trends in cases (per 100k, 7 day avg) and deaths (7 day average); added for trend arrows in PDF
-    df_series['Average_cases_7_days_per_100000_pc_change'] = df_series.groupby('ISO_3_CODE')[
-        'Average_cases_7_days_per_100000'].pct_change() * 100
-    df_series['Average_cases_7_days_per_100000_pc_change'].fillna(value=0, inplace=True)  # nan values are handled, but inf values remain in output
-    df_series['Average_cases_7_days_per_100000_pc_change'] = df_series['Average_cases_7_days_per_100000_pc_change'].replace([numpy.inf, -numpy.inf],'inf')
-    df_series['Average_deaths_7_days_pc_change'] = df_series.groupby('ISO_3_CODE')[
-        'Average_deaths_7_days'].pct_change() * 100
-    df_series['Average_deaths_7_days_pc_change'].fillna(value=0, inplace=True)
-    df_series['Average_deaths_7_days_pc_change'] = df_series['Average_deaths_7_days_pc_change'].replace([numpy.inf, -numpy.inf], 'inf')
+    df_series = df_series.drop(['New_cases', 'New_deaths'], axis=1)
 
     outputs['gsheets'].update_tab(series_name, df_series, series_headers_hxltags, 1000)  # 1000 rows in gsheets!/;
     outputs['excel'].update_tab(series_name, df_series, series_headers_hxltags)
@@ -109,30 +93,23 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
         countryname = rows[0]['CountryName']
         outputs['json'].add_data_rows_by_key(series_name, countryname, rows, series_headers_hxltags)
 
-    df_cumulative = df_series.sort_values(by=['Date_reported']).drop_duplicates(subset='ISO_3_CODE', keep='last')
-    national_columns = list()
-    for header in series_headers:
-        if 'Cumulative' in header:
-            format = '%.0f'
-        else:
-            format = '%.4f'
+    df_national = df_series.sort_values(by=['Date_reported']).drop_duplicates(subset='ISO_3_CODE', keep='last')
 
-        def format_number(x):
-            if isinstance(x, str):
-                return x
-            return format % x
+    def format_0dp(x):
+        if isinstance(x, str):
+            return x
+        return '%.0f' % x
 
-        national_columns.append(dict(zip(df_cumulative['ISO_3_CODE'], df_cumulative[header].map(format_number))))
+    national_columns = [dict(zip(df_national['ISO_3_CODE'], df_national['Cumulative_cases'].map(format_0dp))),
+                        dict(zip(df_national['ISO_3_CODE'], df_national['Cumulative_deaths'].map(format_0dp)))]
 
-    # Viz trend weekly (non-rolling) output
+    # Viz and daily PDF trend epi weekly (non-rolling) output
     resampled = df_WHO.drop(columns=['Regional_office']).groupby(['ISO_3_CODE']).resample('W', on='Date_reported')
     new_w = resampled.sum()[['New_cases', 'New_deaths']]
-    cumulative_w = resampled.min()[['Cumulative_cases', 'Cumulative_deaths']]
     ndays_w = resampled.count()['New_cases']
     ndays_w = ndays_w.rename('ndays')
 
-    output_df = pd.merge(left=new_w, right=cumulative_w, left_index=True, right_index=True, how='inner')
-    output_df = pd.merge(left=output_df, right=ndays_w, left_index=True, right_index=True, how='inner')
+    output_df = pd.merge(left=new_w, right=ndays_w, left_index=True, right_index=True, how='inner')
     output_df = output_df[output_df['ndays'] == 7]
     output_df = output_df.reset_index()
 
@@ -146,17 +123,13 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
     output_df.loc[
         (output_df['NewDeath_PercentChange'].isna()) & (output_df['diff_deaths'] == 0), 'NewDeath_PercentChange'] = 0.0
 
-    # comment out to include PRK
-    # output_df = output_df[output_df['Cumulative_cases'] > MIN_CUMULATIVE_CASES]
-
     # Add pop to output df
     output_df = output_df.merge(df_pop, left_on='ISO_3_CODE', right_on='Country Code', how='left').drop(
         columns=['Country Code'])
-    # Get cases per hundred thousand
     output_df = output_df.rename(columns={'New_cases': 'weekly_new_cases', 'New_deaths': 'weekly_new_deaths',
                                           'NewCase_PercentChange': 'weekly_new_cases_pc_change', 'NewDeath_PercentChange': 'weekly_new_deaths_pc_change',
-                                          'diff_cases': 'weekly_new_cases_change', 'diff_deaths': 'weekly_new_deaths_change',
-                                          'Cumulative_cases': 'cumulative_cases', 'Cumulative_deaths': 'cumulative_deaths'})
+                                          'diff_cases': 'weekly_new_cases_change', 'diff_deaths': 'weekly_new_deaths_change'})
+    # Get cases per hundred thousand
     output_df['weekly_new_cases_per_ht'] = output_df['weekly_new_cases'] / output_df['population'] * 1E5
     output_df['weekly_new_deaths_per_ht'] = output_df['weekly_new_deaths'] / output_df['population'] * 1E5
 
@@ -176,14 +149,27 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
     for rows in json_df:
         countryiso = rows[0]['ISO_3_CODE']
         outputs['json'].add_data_rows_by_key(name, countryiso, rows, trend_hxltags)
+
+    df_national = output_df.sort_values(by=['Date_reported']).drop_duplicates(subset='ISO_3_CODE', keep='last')
+
+    def format_4dp(x):
+        if isinstance(x, str):
+            return x
+        return '%.4f' % x
+
+    del trend_hxltags['Date_reported']
+    for header in trend_hxltags:
+        national_columns.append(dict(zip(df_national['ISO_3_CODE'], df_national[header].map(format_4dp))))
+
     hxltags = set(series_hxltags) | set(trend_hxltags.values())
-    hxltags.remove('#date+reported')
     dssource = datasetinfo['source']
     dssourceurl = datasetinfo['source_url']
     sources = [(hxltag, source_date, dssource, dssourceurl) for hxltag in sorted(hxltags)]
 
     headers = [['Cumulative_cases', 'Cumulative_deaths'], ['#affected+infected', '#affected+killed']]
-    national_headers = [series_headers, series_hxltags]
+    national_headers = copy.deepcopy(headers)
+    national_headers[0].extend(trend_hxltags.keys())
+    national_headers[1].extend(trend_hxltags.values())
     global_cases = {'global': int(df_world['Cumulative_cases'])}
     global_deaths = {'global': int(df_world['Cumulative_deaths'])}
     gho_cases = {'global': int(df_gho['Cumulative_cases'])}
