@@ -16,10 +16,7 @@ def get_covax_deliveries(configuration, today, countryiso3s, downloader, scraper
     datasetinfo = configuration[name]
     headers, iterator = read(downloader, datasetinfo, today=today)
     hxlrow = next(iterator)
-    pipeline = dict()
-    vaccine = dict()
-    funder = dict()
-    doses = dict()
+    doses_lookup = dict()
     for row in iterator:
         newrow = dict()
         for key in row:
@@ -27,16 +24,26 @@ def get_covax_deliveries(configuration, today, countryiso3s, downloader, scraper
         countryiso = newrow['#country+code']
         if not countryiso or countryiso not in countryiso3s:
             continue
-        dict_of_lists_add(pipeline, countryiso, newrow['#meta+vaccine+pipeline'])
-        dict_of_lists_add(vaccine, countryiso, newrow['#meta+vaccine+producer'])
-        dict_of_lists_add(funder, countryiso, newrow['#meta+vaccine+funder'])
-        dict_of_lists_add(doses, countryiso, str(get_numeric_if_possible(newrow['#capacity+vaccine+doses'])))
-    for countryiso in pipeline:
-        pipeline[countryiso] = '|'.join(pipeline[countryiso])
-        vaccine[countryiso] = '|'.join(vaccine[countryiso])
-        funder[countryiso] = '|'.join(funder[countryiso])
+        key = f'{countryiso}|{newrow["#meta+vaccine+pipeline"]}|{newrow["#meta+vaccine+producer"]}|{newrow["#meta+vaccine+funder"]}'
+        nodoses = get_numeric_if_possible(newrow['#capacity+vaccine+doses'])
+        if nodoses:
+            doses_lookup[key] = doses_lookup.get(key, 0) + nodoses
+    pipelines = dict()
+    producers = dict()
+    funders = dict()
+    doses = dict()
+    for key in sorted(doses_lookup):
+        countryiso, pipeline, producer, funder = key.split('|')
+        dict_of_lists_add(pipelines, countryiso, pipeline)
+        dict_of_lists_add(producers, countryiso, producer)
+        dict_of_lists_add(funders, countryiso, funder)
+        dict_of_lists_add(doses, countryiso, str(doses_lookup[key]))
+    for countryiso in pipelines:
+        pipelines[countryiso] = '|'.join(pipelines[countryiso])
+        producers[countryiso] = '|'.join(producers[countryiso])
+        funders[countryiso] = '|'.join(funders[countryiso])
         doses[countryiso] = '|'.join(doses[countryiso])
     logger.info('Processed covax deliveries')
     hxltags = ['#meta+vaccine+pipeline', '#meta+vaccine+producer', '#meta+vaccine+funder', '#capacity+vaccine+doses']
     return [['Pipeline', 'Vaccine', 'Funder', 'Doses'], hxltags], \
-           [pipeline, vaccine, funder, doses], [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']) for hxltag in hxltags]
+           [pipelines, producers, funders, doses], [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']) for hxltag in hxltags]

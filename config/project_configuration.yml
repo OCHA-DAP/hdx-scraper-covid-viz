@@ -774,6 +774,7 @@ regional:
     "Total Delivered Doses": "sum-hrps"
     "TotalDosesAdministered": "sum-hrps"
     "FoodInsecurityIPCP3+Pop": "sum"
+    "NoChildrenSAM": "sum"
 
   global:
     - "IFI COVID19 total"
@@ -792,6 +793,7 @@ regional:
     - "Percentage affected learners"
     - "No. closed countries"
     - "FoodInsecurityIPCP3+Pop"
+    - "NoChildrenSAM"
 
 scraper_global:
   cerf_global:
