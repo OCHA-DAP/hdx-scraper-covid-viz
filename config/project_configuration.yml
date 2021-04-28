@@ -259,9 +259,27 @@ scraper_national:
       - "#severity+travel"
       - "#severity+date+travel"
   cerf_national:
+    source:
+      "#value+cbpf+funding+total+usd": "CBPF"
+      "#value+cbpf+funding+gmempty+total+usd": "CBPF"
+      "#value+cbpf+funding+gm0+total+usd": "CBPF"
+      "#value+cbpf+funding+gm1+total+usd": "CBPF"
+      "#value+cbpf+funding+gm2+total+usd": "CBPF"
+      "#value+cbpf+funding+gm3+total+usd": "CBPF"
+      "#value+cbpf+funding+gm4+total+usd": "CBPF"
+      "default_source": "CERF"
+    source_url:
+      "#value+cbpf+funding+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "#value+cbpf+funding+gmempty+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "#value+cbpf+funding+gm0+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "#value+cbpf+funding+gm1+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "#value+cbpf+funding+gm2+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "#value+cbpf+funding+gm3+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "#value+cbpf+funding+gm4+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "default_url": "https://data.humdata.org/dataset/cerf-allocations"
     format: "csv"
     url: "https://cbpfgms.github.io/pfbi-data/download/full_pfmb_allocations.csv"
-    dataset: "cerf-covid-19-allocations"
+    dataset: "cerf-allocations"
     force_date_today: True
     headers: 1
     date_col: "AllocationYear"
@@ -798,9 +816,27 @@ regional:
 
 scraper_global:
   cerf_global:
+    source:
+      "#value+cbpf+funding+total+usd": "CBPF"
+      "#value+cbpf+funding+gmempty+total+usd": "CBPF"
+      "#value+cbpf+funding+gm0+total+usd": "CBPF"
+      "#value+cbpf+funding+gm1+total+usd": "CBPF"
+      "#value+cbpf+funding+gm2+total+usd": "CBPF"
+      "#value+cbpf+funding+gm3+total+usd": "CBPF"
+      "#value+cbpf+funding+gm4+total+usd": "CBPF"
+      "default_source": "CERF"
+    source_url:
+      "#value+cbpf+funding+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "#value+cbpf+funding+gmempty+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "#value+cbpf+funding+gm0+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "#value+cbpf+funding+gm1+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "#value+cbpf+funding+gm2+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "#value+cbpf+funding+gm3+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "#value+cbpf+funding+gm4+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "default_url": "https://data.humdata.org/dataset/cerf-allocations"
     format: "csv"
     url: "https://cbpfgms.github.io/pfbi-data/download/full_pfmb_allocations.csv"
-    dataset: "cerf-covid-19-allocations"
+    dataset: "cerf-allocations"
     force_date_today: True
     headers: 1
     date_col: "AllocationYear"
