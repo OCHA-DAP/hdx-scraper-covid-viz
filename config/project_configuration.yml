@@ -31,6 +31,7 @@ json:
             - "#affected+infected+new+weekly"
             - "#affected+infected+new+per100000+weekly"
             - "#affected+infected+new+pct+weekly"
+            - "#affected+killed+new+weekly"
             - "#affected+killed+new+per100000+weekly"
             - "#affected+killed+new+pct+weekly"
             - "#capacity+doses+delivered+total"
