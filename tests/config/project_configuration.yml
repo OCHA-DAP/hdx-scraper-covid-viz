@@ -595,26 +595,49 @@ regional:
   iso3: "ISO3"
   region: "Regional_office"
   process_cols:
-    "Cumulative_cases": "sum"
-    "Cumulative_deaths": "sum"
-    "IFI COVID19 total": "sum"
-    "CBPFCovidFunding": "sum"
-    "CERFCovidFunding": "sum"
-    "RequiredHRPFunding": "sum"
-    "HRPFunding": "sum"
-    "HRPPercentFunded": "get_fraction_str(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
-    "RequiredHRPCovidFunding": "sum"
-    "HRPCovidFunding": "sum"
-    "HRPCovidPercentFunded": "get_fraction_str(HRPCovidFunding, RequiredHRPCovidFunding) if HRPCovidFunding is not None and RequiredHRPCovidFunding is not None else ''"
-    "HRPGBVFunding": "sum"
-    "RequiredOtherPlansFunding": "sum"
-    "OtherPlansFunding": "sum"
-    "OtherPlansPercentFunded": "get_fraction_str(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
-    "% of visas pending or denied": "mean"
-    "% of travel authorizations or movements denied": "mean"
-    "Number of incidents reported since start of year": "sum"
-    "% of CERF projects affected by insecurity and inaccessibility": "mean"
-    "% of CBPF projects affected by insecurity and inaccessibility": "mean"
+    "Cumulative_cases":
+      action: "sum"
+    "Cumulative_deaths":
+      action: "sum"
+    "IFI COVID19 total":
+      action: "sum"
+    "CBPFCovidFunding":
+      action: "sum"
+    "CERFCovidFunding":
+      action: "sum"
+    "RequiredHRPFunding":
+      action: "sum"
+    "HRPFunding":
+      action: "sum"
+    "HRPPercentFunded":
+      action: "eval"
+      formula: "get_fraction_str(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
+    "RequiredHRPCovidFunding":
+      action: "sum"
+    "HRPCovidFunding":
+      action: "sum"
+    "HRPCovidPercentFunded":
+      action: "eval"
+      formula: "get_fraction_str(HRPCovidFunding, RequiredHRPCovidFunding) if HRPCovidFunding is not None and RequiredHRPCovidFunding is not None else ''"
+    "HRPGBVFunding":
+      action: "sum"
+    "RequiredOtherPlansFunding":
+      action: "sum"
+    "OtherPlansFunding":
+      action: "sum"
+    "OtherPlansPercentFunded":
+      action: "eval"
+      formula: "get_fraction_str(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
+    "% of visas pending or denied":
+      action: "mean"
+    "% of travel authorizations or movements denied":
+      action: "mean"
+    "Number of incidents reported since start of year":
+      action: "sum"
+    "% of CERF projects affected by insecurity and inaccessibility":
+      action: "mean"
+    "% of CBPF projects affected by insecurity and inaccessibility":
+      action: "mean"
   global:
     - "% of visas pending or denied"
     - "% of travel authorizations or movements denied"

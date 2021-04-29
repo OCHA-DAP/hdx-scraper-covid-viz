@@ -36,7 +36,8 @@ class Region(object):
             dict_of_sets_add(self.iso3_to_region_and_hrp, countryiso, region)
         self.hrp_countries = hrp_countries
 
-    def get_float_or_int(self, valuestr):
+    @staticmethod
+    def get_float_or_int(valuestr):
         if not valuestr or valuestr == 'N/A':
             return None
         if '.' in valuestr:
@@ -44,12 +45,13 @@ class Region(object):
         else:
             return int(valuestr)
 
-    def get_numeric(self, valuestr):
+    @classmethod
+    def get_numeric(cls, valuestr):
         if isinstance(valuestr, str):
             total = 0
             hasvalues = False
             for value in valuestr.split('|'):
-                value = self.get_float_or_int(value)
+                value = cls.get_float_or_int(value)
                 if value:
                     hasvalues = True
                     total += value
@@ -59,92 +61,130 @@ class Region(object):
         return valuestr
 
     @staticmethod
-    def get_headers_and_columns(input_headers, input_columns, desired_headers):
+    def get_headers_and_columns(desired_headers, input_headers, input_columns):
         headers = [list(), list()]
         columns = list()
-        for i, header in enumerate(input_headers[0]):
-            if header not in desired_headers:
-                continue
-            headers[0].append(header)
-            headers[1].append(input_headers[1][i])
-            columns.append(input_columns[i])
+        for header in desired_headers:
+            try:
+                index = input_headers[0].index(header)
+                headers[0].append(header)
+                headers[1].append(input_headers[1][index])
+                columns.append(input_columns[index])
+            except ValueError:
+                logger.error(f'Regional header to be used as global not found: {header}!')
         return headers, columns
+
+    def should_process(self, process_info, region, countryiso):
+        subset = process_info.get('subset')
+        if subset:
+            # "hrps" is the only subset defined right now
+            if subset == 'hrps' and region != 'GHO' and countryiso not in self.hrp_countries:
+                return False
+        return True
+
+    @classmethod
+    def process(cls, process_info, valdicts, regional_headers, index):
+        valdict = valdicts[-1]
+        action = process_info['action']
+        if action == 'sum' or action == 'mean':
+            for region, valuelist in valdict.items():
+                total = ''
+                novals = 0
+                for valuestr in valuelist:
+                    value = ''
+                    if isinstance(valuestr, int) or isinstance(valuestr, float):
+                        value = valuestr
+                    else:
+                        if valuestr:
+                            value = cls.get_numeric(valuestr)
+                    if value != '':
+                        novals += 1
+                        if total == '':
+                            total = value
+                        else:
+                            total += value
+                if action == 'mean':
+                    if not isinstance(total, str):
+                        total /= novals
+                if isinstance(total, float):
+                    valdict[region] = number_format(total)
+                else:
+                    valdict[region] = total
+        elif action == 'range':
+            for region, valuelist in valdict.items():
+                min = sys.maxsize
+                max = -min
+                for valuestr in valuelist:
+                    if valuestr:
+                        value = cls.get_numeric(valuestr)
+                        if value > max:
+                            max = value
+                        if value < min:
+                            min = value
+                if min == sys.maxsize or max == -sys.maxsize:
+                    valdict[region] = ''
+                else:
+                    if isinstance(max, float):
+                        max = number_format(max)
+                    if isinstance(min, float):
+                        min = number_format(min)
+                    valdict[region] = '%s-%s' % (str(min), str(max))
+        elif action == 'eval':
+            formula = process_info['formula']
+            for region, valuelist in valdict.items():
+                toeval = formula
+                for j in range(index):
+                    value = valdicts[j].get(region, '')
+                    if value == '':
+                        value = None
+                    toeval = toeval.replace(regional_headers[0][j], str(value))
+                valdict[region] = eval(toeval)
 
     def get_regional(self, regionlookup, national_headers, national_columns, population_lookup=None, *args):
         if population_lookup is None:
             process_cols = self.region_config['process_cols']
         else:
-            process_cols = {'Population': 'sum'}
-        headers = process_cols.keys()
-        regional_headers, regional_columns = self.get_headers_and_columns(national_headers, national_columns, headers)
+            process_cols = {'Population': {'action': 'sum'}}
+        desired_headers = process_cols.keys()
+        regional_headers, regional_columns = self.get_headers_and_columns(desired_headers, national_headers, national_columns)
         valdicts = list()
         for i, header in enumerate(regional_headers[0]):
             valdict = dict()
             valdicts.append(valdict)
-            action = process_cols[header]
-            if action[-5:] == '-hrps':
-                action = action[:-5]
-                only_hrps = True
-            else:
-                only_hrps = False
+            process_info = process_cols[header]
             column = regional_columns[i]
             for countryiso in column:
                 for region in regionlookup.iso3_to_region_and_hrp[countryiso]:
-                    if only_hrps and region != 'GHO' and countryiso not in self.hrp_countries:
+                    if not self.should_process(process_info, region, countryiso):
                         continue
                     dict_of_lists_add(valdict, region, column[countryiso])
-            if action == 'sum' or action == 'mean':
-                for region, valuelist in valdict.items():
-                    total = ''
-                    novals = 0
-                    for valuestr in valuelist:
-                        value = ''
-                        if isinstance(valuestr, int) or isinstance(valuestr, float):
-                            value = valuestr
-                        else:
-                            if valuestr:
-                                value = self.get_numeric(valuestr)
-                        if value != '':
-                            novals += 1
-                            if total == '':
-                                total = value
-                            else:
-                                total += value
-                    if action == 'mean':
-                        if not isinstance(total, str):
-                            total /= novals
-                    if isinstance(total, float):
-                        valdict[region] = number_format(total)
-                    else:
-                        valdict[region] = total
-            elif action == 'range':
-                for region, valuelist in valdict.items():
-                    min = sys.maxsize
-                    max = -min
-                    for valuestr in valuelist:
-                        if valuestr:
-                            value = self.get_numeric(valuestr)
-                            if value > max:
-                                max = value
-                            if value < min:
-                                min = value
-                    if min == sys.maxsize or max == -sys.maxsize:
-                        valdict[region] = ''
-                    else:
-                        if isinstance(max, float):
-                            max = number_format(max)
-                        if isinstance(min, float):
-                            min = number_format(min)
-                        valdict[region] = '%s-%s' % (str(min), str(max))
-            else:
-                for region, valuelist in valdict.items():
-                    toeval = action
-                    for j in range(i):
-                        value = valdicts[j].get(region, '')
-                        if value == '':
-                            value = None
-                        toeval = toeval.replace(regional_headers[0][j], str(value))
-                    valdict[region] = eval(toeval)
+            self.process(process_info, valdicts, regional_headers, i)
+
+        if population_lookup is None:
+            multi_cols = self.region_config.get('multi_cols', list())
+            for header in multi_cols:
+                multi_info = multi_cols[header]
+                regional_headers[0].append(header)
+                regional_headers[1].append(multi_info['hxltag'])
+                found_region_countries = set()
+                valdict = dict()
+                valdicts.append(valdict)
+                for i, orig_header in enumerate(multi_info['headers']):
+                    index = national_headers[0].index(orig_header)
+                    column = national_columns[index]
+                    for countryiso in column:
+                        for region in regionlookup.iso3_to_region_and_hrp[countryiso]:
+                            if not self.should_process(multi_info, region, countryiso):
+                                continue
+                            key = f'{region}|{countryiso}'
+                            if key in found_region_countries:
+                                continue
+                            value = column[countryiso]
+                            if value:
+                                found_region_countries.add(key)
+                                dict_of_lists_add(valdict, region, value)
+                self.process(multi_info, valdicts, regional_headers, len(regional_headers[0]) - 1)
+
         for arg in args:
             gheaders, gvaldicts = arg
             if gheaders:
@@ -161,7 +201,7 @@ class Region(object):
 
     def get_world(self, regional_headers, regional_columns):
         desired_headers = self.region_config['global']
-        world_headers, world_columns = self.get_headers_and_columns(regional_headers, regional_columns, desired_headers)
+        world_headers, world_columns = self.get_headers_and_columns(desired_headers, regional_headers, regional_columns)
         global_columns = list()
         for column in world_columns:
             global_columns.append({'global': column['GHO']})

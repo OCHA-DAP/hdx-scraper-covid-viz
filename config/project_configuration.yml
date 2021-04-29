@@ -760,40 +760,85 @@ regional:
   iso3: "ISO3"
   region: "Regional_office"
   process_cols:
-    "Cumulative_cases": "sum"
-    "Cumulative_deaths": "sum"
-    "IFI COVID19 total": "sum"
-    "PeopleInNeed": "sum"
-    "CBPFFunding": "sum"
-    "CBPFFundingGMEmpty": "sum"
-    "CBPFFundingGM0": "sum"
-    "CBPFFundingGM1": "sum"
-    "CBPFFundingGM2": "sum"
-    "CBPFFundingGM3": "sum"
-    "CBPFFundingGM4": "sum"
-    "CERFFunding": "sum"
-    "CERFFundingGMEmpty": "sum"
-    "CERFFundingGM0": "sum"
-    "CERFFundingGM1": "sum"
-    "CERFFundingGM2": "sum"
-    "CERFFundingGM3": "sum"
-    "CERFFundingGM4": "sum"
-    "RequiredHRPFunding": "sum"
-    "HRPFunding": "sum"
-    "HRPPercentFunded": "get_fraction_str(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
-    "% of visas pending or denied": "mean"
-    "% of travel authorizations or movements denied": "mean"
-    "Number of incidents reported since start of year": "sum"
-    "% of CERF projects affected by insecurity and inaccessibility": "mean"
-    "% of CBPF projects affected by insecurity and inaccessibility": "mean"
-    "Vaccinations Postponed": "sum"
-    "Covax Interim Forecast Doses": "sum-hrps"
-    "Covax Delivered Doses": "sum-hrps"
-    "Other Delivered Doses": "sum-hrps"
-    "Total Delivered Doses": "sum-hrps"
-    "TotalDosesAdministered": "sum-hrps"
-    "FoodInsecurityIPCP3+Pop": "sum"
-    "NoChildrenSAM": "sum"
+    "Cumulative_cases":
+      action: "sum"
+    "Cumulative_deaths":
+      action: "sum"
+    "IFI COVID19 total":
+      action: "sum"
+    "PeopleInNeed":
+      action: "sum"
+    "CBPFFunding":
+      action: "sum"
+    "CBPFFundingGMEmpty":
+      action: "sum"
+    "CBPFFundingGM0":
+      action: "sum"
+    "CBPFFundingGM1":
+      action: "sum"
+    "CBPFFundingGM2":
+      action: "sum"
+    "CBPFFundingGM3":
+      action: "sum"
+    "CBPFFundingGM4":
+      action: "sum"
+    "CERFFunding":
+      action: "sum"
+    "CERFFundingGMEmpty":
+      action: "sum"
+    "CERFFundingGM0":
+      action: "sum"
+    "CERFFundingGM1":
+      action: "sum"
+    "CERFFundingGM2":
+      action: "sum"
+    "CERFFundingGM3":
+      action: "sum"
+    "CERFFundingGM4":
+      action: "sum"
+    "RequiredHRPFunding":
+      action: "sum"
+    "HRPFunding":
+      action: "sum"
+    "HRPPercentFunded":
+      action: "eval"
+      formula: "get_fraction_str(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
+    "% of visas pending or denied":
+      action: "mean"
+    "% of travel authorizations or movements denied":
+      action: "mean"
+    "Number of incidents reported since start of year":
+      action: "sum"
+    "% of CERF projects affected by insecurity and inaccessibility":
+      action: "mean"
+    "% of CBPF projects affected by insecurity and inaccessibility":
+      action: "mean"
+    "Vaccinations Postponed":
+      action: "sum"
+    "Covax Interim Forecast Doses":
+      action: "sum"
+      subset: "hrps"
+    "Covax Delivered Doses":
+      action: "sum"
+      subset: "hrps"
+    "Other Delivered Doses":
+      action: "sum"
+      subset: "hrps"
+    "Total Delivered Doses":
+      action: "sum"
+      subset: "hrps"
+    "TotalDosesAdministered":
+      action: "sum"
+      subset: "hrps"
+    "NoChildrenSAM":
+      action: "sum"
+  multi_cols:
+    "FoodInsecurityP3+":
+      action: "sum"
+      hxltag: "#affected+food+ipc+p3plus+num"
+      headers:
+        - "FoodInsecurityCHP3+"
+        - "FoodInsecurityIPCP3+Pop"
 
   global:
     - "IFI COVID19 total"
@@ -811,7 +856,7 @@ regional:
     - "No. affected learners"
     - "Percentage affected learners"
     - "No. closed countries"
-    - "FoodInsecurityIPCP3+Pop"
+    - "FoodInsecurityP3+"
     - "NoChildrenSAM"
 
 scraper_global:
