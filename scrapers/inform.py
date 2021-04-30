@@ -72,7 +72,7 @@ def get_inform(configuration, today, countryiso3s, other_auths, scrapers=None):
         crisis_types = [valuedictsfortoday.pop()]
         severity_indices = [valuedictsfortoday[0]]
         input_col = [trend_input_col]
-        for i in range(1, 6, 1):
+        for i in range(1, 9, 1):
             prevdate = today - relativedelta(months=i)
             valuedictsfordate = get_columns_by_date(prevdate, base_url, countryiso3s, input_col, downloader)
             country_dates.append(valuedictsfordate[2])
@@ -83,17 +83,31 @@ def get_inform(configuration, today, countryiso3s, other_auths, scrapers=None):
     maxdate = default_date
     for countryiso in severity_indices[0]:
         trend = None
+        cur_country_date = country_dates[0][countryiso]
+        if cur_country_date > maxdate:
+            maxdate = cur_country_date
+        indices = [0]
+        for i, country_date in enumerate(country_dates[1:]):
+            next_country_date = country_date[countryiso]
+            if next_country_date != cur_country_date:
+                indices.append(i)
+                if len(indices) == 6:
+                    break
+                cur_country_date = next_country_date
         crisis_type = crisis_types[0][countryiso]
-        country_date = country_dates[0][countryiso]
-        if country_date > maxdate:
-            maxdate = country_date
-        for other_type in crisis_types[1:]:
-            if crisis_type != other_type[countryiso]:
+        for i in indices:
+            if crisis_type != crisis_types[i][countryiso]:
                 trend = '-'
                 break
         if trend is None:
-            avg = round((severity_indices[0][countryiso] + severity_indices[1][countryiso] + severity_indices[2][countryiso]) / 3, 1)
-            prevavg = round((severity_indices[3][countryiso] + severity_indices[4][countryiso] + severity_indices[5][countryiso]) / 3, 1)
+            avg = 0.0
+            for i in indices[:3]:
+                avg += severity_indices[i][countryiso]
+            avg = round(avg / 3, 1)
+            prevavg = 0.0
+            for i in indices[3:]:
+                prevavg += severity_indices[i][countryiso]
+            prevavg = round(prevavg / 3, 1)
             if avg == prevavg:
                 trend = 'stable'
             elif avg < prevavg:
