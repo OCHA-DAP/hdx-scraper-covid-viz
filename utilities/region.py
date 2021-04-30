@@ -61,7 +61,7 @@ class Region(object):
         return valuestr
 
     @staticmethod
-    def get_headers_and_columns(desired_headers, input_headers, input_columns):
+    def get_headers_and_columns(desired_headers, input_headers, input_columns, message):
         headers = [list(), list()]
         columns = list()
         for header in desired_headers:
@@ -71,7 +71,7 @@ class Region(object):
                 headers[1].append(input_headers[1][index])
                 columns.append(input_columns[index])
             except ValueError:
-                logger.error(f'Regional header to be used as global not found: {header}!')
+                logger.error(message.format(header))
         return headers, columns
 
     def should_process(self, process_info, region, countryiso):
@@ -146,7 +146,9 @@ class Region(object):
         else:
             process_cols = {'Population': {'action': 'sum'}}
         desired_headers = process_cols.keys()
-        regional_headers, regional_columns = self.get_headers_and_columns(desired_headers, national_headers, national_columns)
+        message = 'Regional header {} not found in national headers!'
+        regional_headers, regional_columns = self.get_headers_and_columns(desired_headers, national_headers,
+                                                                          national_columns, message)
         valdicts = list()
         for i, header in enumerate(regional_headers[0]):
             valdict = dict()
@@ -164,12 +166,21 @@ class Region(object):
             multi_cols = self.region_config.get('multi_cols', list())
             for header in multi_cols:
                 multi_info = multi_cols[header]
+                input_headers = multi_info['headers']
+                ignore = False
+                for input_header in input_headers:
+                    if input_header not in national_headers[0]:
+                        logger.error(message.format(input_header))
+                        ignore = True
+                        break
+                if ignore:
+                    continue
                 regional_headers[0].append(header)
                 regional_headers[1].append(multi_info['hxltag'])
                 found_region_countries = set()
                 valdict = dict()
                 valdicts.append(valdict)
-                for i, orig_header in enumerate(multi_info['headers']):
+                for i, orig_header in enumerate(input_headers):
                     index = national_headers[0].index(orig_header)
                     column = national_columns[index]
                     for countryiso in column:
@@ -201,7 +212,9 @@ class Region(object):
 
     def get_world(self, regional_headers, regional_columns):
         desired_headers = self.region_config['global']
-        world_headers, world_columns = self.get_headers_and_columns(desired_headers, regional_headers, regional_columns)
+        message = 'Regional header {} to be used as global not found!'
+        world_headers, world_columns = self.get_headers_and_columns(desired_headers, regional_headers,
+                                                                    regional_columns, message)
         global_columns = list()
         for column in world_columns:
             global_columns.append({'global': column['GHO']})
