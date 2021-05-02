@@ -5,15 +5,15 @@ import logging
 from dateutil.relativedelta import relativedelta
 from hdx.scraper.readers import read_hdx_metadata
 from hdx.utilities.dateparse import default_date, parse_date
+from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.downloader import Download
 
 logger = logging.getLogger(__name__)
 
 
-def get_columns_by_date(date, base_url, countryiso3s, input_cols, downloader):
+def download_data(date, base_url, countryiso3s, input_cols, downloader):
     url = base_url % date.strftime('%b%Y')
-    countries_index = {'Individual': dict(), 'Aggregated': dict()}
-    iso3s_present = set()
+    countries_index = dict()
     while url:
         r = downloader.download(url)
         json = r.json()
@@ -26,35 +26,63 @@ def get_columns_by_date(date, base_url, countryiso3s, input_cols, downloader):
                 continue
             if result['country_level'] != 'Yes':
                 continue
-            iso3s_present.add(countryiso3)
+            first_val = result[input_cols[0]]
+            if not first_val:
+                continue
+            country_index = countries_index.get(countryiso3, dict())
             individual_or_aggregated = result['individual_aggregated']
-            countries_index_individual_or_aggregated = countries_index[individual_or_aggregated]
-            country_index = countries_index_individual_or_aggregated.get(countryiso3, dict())
-            last_updated = result['Last updated']
             type_of_crisis = result['type_of_crisis']
+            ind_agg_type = country_index.get('ind_agg_type', dict())
+            dict_of_lists_add(ind_agg_type, individual_or_aggregated, type_of_crisis)
+            country_index['ind_agg_type'] = ind_agg_type
+            crises_index = country_index.get('crises', dict())
+            crisis_index = crises_index.get(type_of_crisis, dict())
+            last_updated = result['Last updated']
             for input_col in input_cols:
-                country_index[input_col] = (result[input_col], type_of_crisis, last_updated)
-            countries_index_individual_or_aggregated[countryiso3] = country_index
+                crisis_index[input_col] = (result[input_col], last_updated)
+            crises_index[type_of_crisis] = crisis_index
+            country_index['crises'] = crises_index
+            countries_index[countryiso3] = country_index
         url = json['next']
-    individual_index = countries_index['Individual']
-    aggregated_index = countries_index['Aggregated']
+    return countries_index
+
+
+def get_columns_by_date(date, base_url, countryiso3s, input_col, downloader, crisis_types, not_found):
+    countries_index = download_data(date, base_url, countryiso3s, [input_col], downloader)
+    valuedict = dict()
+    for countryiso3, type_of_crisis in crisis_types.items():
+        country_index = countries_index.get(countryiso3)
+        if not country_index:
+            not_found.add(countryiso3)
+            continue
+        crisis = country_index['crises'].get(type_of_crisis)
+        if not crisis:
+            not_found.add(countryiso3)
+            continue
+        val, last_updated = crisis[input_col]
+        valuedict[countryiso3] = val
+    return valuedict
+
+
+def get_latest_columns(date, base_url, countryiso3s, input_cols, downloader):
+    countries_index = download_data(date, base_url, countryiso3s, input_cols, downloader)
     valuedicts = [dict() for _ in input_cols]
-    crisis_type = dict()
-    country_date = dict()
-    for countryiso3 in iso3s_present:
-        if countryiso3 in aggregated_index:
-            country_index = aggregated_index[countryiso3]
-        else:
-            country_index = individual_index[countryiso3]
+    crisis_types = dict()
+    max_date = default_date
+    for countryiso3, country_data in countries_index.items():
+        crises_types = country_data['ind_agg_type'].get('Aggregated')
+        if not crises_types:
+            crises_types = country_data['ind_agg_type'].get('Individual')
+        type_of_crisis = crises_types[0]
+        crisis_types[countryiso3] = type_of_crisis
+        crisis = country_data['crises'][type_of_crisis]
         for i, input_col in enumerate(input_cols):
-            val, type_of_crisis, last_updated = country_index[input_col]
-            if val is not None:
-                valuedicts[i][countryiso3] = val
-                crisis_type[countryiso3] = type_of_crisis
-                country_date[countryiso3] = parse_date(last_updated)
-    valuedicts.append(crisis_type)
-    valuedicts.append(country_date)
-    return valuedicts
+            val, last_updated = crisis[input_col]
+            valuedicts[i][countryiso3] = val
+            date = parse_date(last_updated)
+            if date > max_date:
+                max_date = date
+    return valuedicts, crisis_types, max_date
 
 
 def get_inform(configuration, today, countryiso3s, other_auths, scrapers=None):
@@ -68,42 +96,33 @@ def get_inform(configuration, today, countryiso3s, other_auths, scrapers=None):
     base_url = inform_configuration['url']
     with Download(rate_limit={'calls': 1, 'period': 0.1}, headers={'Authorization': other_auths['inform']}) as downloader:
         start_date = today - relativedelta(months=1)
-        valuedictsfortoday = get_columns_by_date(start_date, base_url, countryiso3s, input_cols, downloader)
-        country_dates = [valuedictsfortoday.pop()]
-        crisis_types = [valuedictsfortoday.pop()]
+        valuedictsfortoday, crisis_types, max_date = get_latest_columns(start_date, base_url, countryiso3s,
+                                                                        input_cols, downloader)
         severity_indices = [valuedictsfortoday[0]]
-        input_col = [trend_input_col]
+        not_found = set()
         for i in range(1, 6, 1):
             prevdate = start_date - relativedelta(months=i)
-            valuedictsfordate = get_columns_by_date(prevdate, base_url, countryiso3s, input_col, downloader)
-            country_dates.append(valuedictsfordate[2])
-            crisis_types.append(valuedictsfordate[1])
-            severity_indices.append(valuedictsfordate[0])
+            valuedictfordate = get_columns_by_date(prevdate, base_url, countryiso3s, trend_input_col, downloader,
+                                                    crisis_types, not_found)
+            severity_indices.append(valuedictfordate)
+
     trend_valuedict = dict()
     valuedictsfortoday.append(trend_valuedict)
-    maxdate = default_date
-    for countryiso in severity_indices[0]:
-        trend = None
-        crisis_type = crisis_types[0][countryiso]
-        country_date = country_dates[0][countryiso]
-        if country_date > maxdate:
-            maxdate = country_date
-        for other_type in crisis_types[1:]:
-            if crisis_type != other_type[countryiso]:
-                trend = '-'
-                break
-        if trend is None:
-            avg = round((severity_indices[0][countryiso] + severity_indices[1][countryiso] + severity_indices[2][countryiso]) / 3, 1)
-            prevavg = round((severity_indices[3][countryiso] + severity_indices[4][countryiso] + severity_indices[5][countryiso]) / 3, 1)
-            if avg == prevavg:
-                trend = 'stable'
-            elif avg < prevavg:
-                trend = 'decreasing'
-            else:
-                trend = 'increasing'
-        trend_valuedict[countryiso] = trend
+    for countryiso3 in severity_indices[0]:
+        if countryiso3 in not_found:
+            trend_valuedict[countryiso3] = '-'
+            continue
+        avg = round((severity_indices[0][countryiso3] + severity_indices[1][countryiso3] + severity_indices[2][countryiso3]) / 3, 1)
+        prevavg = round((severity_indices[3][countryiso3] + severity_indices[4][countryiso3] + severity_indices[5][countryiso3]) / 3, 1)
+        if avg == prevavg:
+            trend = 'stable'
+        elif avg < prevavg:
+            trend = 'decreasing'
+        else:
+            trend = 'increasing'
+        trend_valuedict[countryiso3] = trend
     logger.info('Processed INFORM')
-    source_date = maxdate.date().isoformat()
+    source_date = max_date.date().isoformat()
     output_cols = inform_configuration['output_cols'] + [inform_configuration['trend_output_col']]
     hxltags = inform_configuration['output_hxltags'] + [inform_configuration['trend_hxltag']]
     return [output_cols, hxltags], valuedictsfortoday, [(hxltag, source_date, inform_configuration['source'], inform_configuration['source_url']) for hxltag in hxltags]
