@@ -67,13 +67,14 @@ def get_inform(configuration, today, countryiso3s, other_auths, scrapers=None):
     trend_input_col = inform_configuration['trend_input_col']
     base_url = inform_configuration['url']
     with Download(rate_limit={'calls': 1, 'period': 0.1}, headers={'Authorization': other_auths['inform']}) as downloader:
-        valuedictsfortoday = get_columns_by_date(today, base_url, countryiso3s, input_cols, downloader)
+        start_date = today - relativedelta(months=1)
+        valuedictsfortoday = get_columns_by_date(start_date, base_url, countryiso3s, input_cols, downloader)
         country_dates = [valuedictsfortoday.pop()]
         crisis_types = [valuedictsfortoday.pop()]
         severity_indices = [valuedictsfortoday[0]]
         input_col = [trend_input_col]
         for i in range(1, 6, 1):
-            prevdate = today - relativedelta(months=i)
+            prevdate = start_date - relativedelta(months=i)
             valuedictsfordate = get_columns_by_date(prevdate, base_url, countryiso3s, input_col, downloader)
             country_dates.append(valuedictsfordate[2])
             crisis_types.append(valuedictsfordate[1])
