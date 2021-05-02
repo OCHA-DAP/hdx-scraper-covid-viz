@@ -2,13 +2,13 @@
 import logging
 
 from hdx.scraper.readers import read
-from hdx.utilities.dateparse import parse_date
+from hdx.utilities.dateparse import parse_date, default_date
 from hdx.utilities.text import get_fraction_str
 
 logger = logging.getLogger(__name__)
 
 
-def get_education(configuration, today, countryiso3s, regionlookup, downloader, scrapers=None):
+def get_education(configuration, countryiso3s, regionlookup, downloader, scrapers=None):
     name = 'education'
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list(), list(), list(), list()
@@ -16,13 +16,16 @@ def get_education(configuration, today, countryiso3s, regionlookup, downloader, 
     datasetinfo = educationinfo['closures']
     closures_headers, closures_iterator = read(downloader, datasetinfo)
     closures = dict()
+    country_dates = dict()
     for row in closures_iterator:
         countryiso = row['ISO']
         if not countryiso or countryiso not in countryiso3s:
             continue
         date = parse_date(row['Date'])
-        if date.date() != today.date():
+        max_date = country_dates.get(countryiso, default_date)
+        if date < max_date:
             continue
+        country_dates[countryiso] = date
         closures[countryiso] = row['Status']
     fully_closed = list()
     for countryiso, closure in closures.items():
