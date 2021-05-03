@@ -280,7 +280,6 @@ scraper_national:
     format: "csv"
     url: "https://cbpfgms.github.io/pfbi-data/download/full_pfmb_allocations.csv"
     dataset: "cerf-allocations"
-    force_date_today: True
     headers: 1
     date_col: "AllocationYear"
     date_type: "int"
@@ -882,7 +881,6 @@ scraper_global:
     format: "csv"
     url: "https://cbpfgms.github.io/pfbi-data/download/full_pfmb_allocations.csv"
     dataset: "cerf-allocations"
-    force_date_today: True
     headers: 1
     date_col: "AllocationYear"
     date_type: "int"
