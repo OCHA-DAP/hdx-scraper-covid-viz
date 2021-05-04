@@ -675,6 +675,10 @@ scraper_national:
     dataset: "covid-19-vaccinations"
     headers: 1
     use_hxl: True
+    external_filter:
+      url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVzu79PPTfaA2syevOQfyRRjy63dJWitqu0fFbXIQCzoUn9K9TiMWMRvFGg1RBsnLmgYugzSEiAye2/pub?gid=992438980&single=true&output=csv"
+      hxltags:
+       - "#country+code"
     adm_cols:
       - "#country+code"
     date_col: "#date"
