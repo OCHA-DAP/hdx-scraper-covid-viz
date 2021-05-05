@@ -551,47 +551,27 @@ scraper_national:
           "population": "get_numeric_if_possible(population)"
         sum_cols:
           - formula: "phase3"
-            mustbepopulated: True
-          - formula: "get_fraction_str(phase3, population)"
-            mustbepopulated: True
+            mustbepopulated: False
           - formula: "phase4"
-            mustbepopulated: True
-          - formula: "get_fraction_str(phase4, population)"
-            mustbepopulated: True
+            mustbepopulated: False
           - formula: "phase5"
-            mustbepopulated: True
-          - formula: "get_fraction_str(phase5, population)"
-            mustbepopulated: True
+            mustbepopulated: False
           - formula: "phase35"
-            mustbepopulated: True
-          - formula: "get_fraction_str(phase35, population)"
-            mustbepopulated: True
+            mustbepopulated: False
           - formula: "population"
-            mustbepopulated: True
-          - formula: "get_fraction_str(population, #population)"
-            mustbepopulated: True
+            mustbepopulated: False
         output_cols:
           - "FoodInsecurityCHP3"
-          - "FoodInsecurityCHP3%"
           - "FoodInsecurityCHP4"
-          - "FoodInsecurityCHP4%"
           - "FoodInsecurityCHP5"
-          - "FoodInsecurityCHP5%"
           - "FoodInsecurityCHP3+"
-          - "FoodInsecurityCHP3+%"
           - "FoodInsecurityCHAnalysed"
-          - "FoodInsecurityCHAnalysed%"
         output_hxltags:
           - "#affected+ch+food+p3+num"
-          - "#affected+ch+food+p3+pct"
           - "#affected+ch+food+p4+num"
-          - "#affected+ch+food+p4+pct"
           - "#affected+ch+food+p5+num"
-          - "#affected+ch+food+p5+pct"
           - "#affected+ch+food+p3plus+num"
-          - "#affected+ch+food+p3plus+pct"
           - "#affected+ch+food+analysed+num"
-          - "#affected+ch+food+analysed+pct"
   access:
     source:
       "#access+visas+pct": "OCHA"
@@ -1136,47 +1116,27 @@ scraper_subnational:
           "population": "get_numeric_if_possible(population)"
         sum_cols:
           - formula: "phase3"
-            mustbepopulated: True
-          - formula: "get_fraction_str(phase3, population)"
-            mustbepopulated: True
+            mustbepopulated: False
           - formula: "phase4"
-            mustbepopulated: True
-          - formula: "get_fraction_str(phase4, population)"
-            mustbepopulated: True
+            mustbepopulated: False
           - formula: "phase5"
-            mustbepopulated: True
-          - formula: "get_fraction_str(phase5, population)"
-            mustbepopulated: True
+            mustbepopulated: False
           - formula: "phase35"
-            mustbepopulated: True
-          - formula: "get_fraction_str(phase35, population)"
-            mustbepopulated: True
+            mustbepopulated: False
           - formula: "population"
-            mustbepopulated: True
-          - formula: "get_fraction_str(population, #population)"
-            mustbepopulated: True
+            mustbepopulated: False
         output_cols:
           - "FoodInsecurityCHP3"
-          - "FoodInsecurityCHP3%"
           - "FoodInsecurityCHP4"
-          - "FoodInsecurityCHP4%"
           - "FoodInsecurityCHP5"
-          - "FoodInsecurityCHP5%"
           - "FoodInsecurityCHP3+"
-          - "FoodInsecurityCHP3+%"
           - "FoodInsecurityCHAnalysed"
-          - "FoodInsecurityCHAnalysed%"
         output_hxltags:
           - "#affected+ch+food+p3+num"
-          - "#affected+ch+food+p3+pct"
           - "#affected+ch+food+p4+num"
-          - "#affected+ch+food+p4+pct"
           - "#affected+ch+food+p5+num"
-          - "#affected+ch+food+p5+pct"
           - "#affected+ch+food+p3plus+num"
-          - "#affected+ch+food+p3plus+pct"
           - "#affected+ch+food+analysed+num"
-          - "#affected+ch+food+analysed+pct"
   healthfac:
     source: "HOT"
     format: "csv"
