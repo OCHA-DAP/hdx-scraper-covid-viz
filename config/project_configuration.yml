@@ -821,7 +821,7 @@ regional:
       hxltag: "#affected+food+ipc+p3plus+num"
       headers:
         - "FoodInsecurityCHP3+"
-        - "FoodInsecurityIPCP3+Pop"
+        - "FoodInsecurityIPCP3+"
 
   global:
     - "IFI COVID19 total"
