@@ -21,7 +21,9 @@ def get_education(configuration, countryiso3s, regionlookup, downloader, scraper
         countryiso = row['ISO']
         if not countryiso or countryiso not in countryiso3s:
             continue
-        date = parse_date(row['Date'])
+        date = row['Date']
+        if isinstance(date, str):
+            date = parse_date(date)
         max_date = country_dates.get(countryiso, default_date)
         if date < max_date:
             continue
