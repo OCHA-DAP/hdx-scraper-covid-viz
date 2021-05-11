@@ -138,8 +138,8 @@ def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=Non
 
     ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(configuration, today, gho_countries, adminone, downloader, scrapers)
     if 'national' in tabs:
-        fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(basic_auths, configuration, today, today_str, gho_countries, scrapers)
-        food_headers, food_columns, food_sources = add_food_prices(configuration, today, gho_countries, downloader, scrapers)
+        fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(configuration, today, today_str, gho_countries, basic_auths, scrapers)
+        food_headers, food_columns, food_sources = add_food_prices(configuration, today, gho_countries, downloader, basic_auths, scrapers)
         campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, today, gho_countries, downloader, outputs, scrapers)
         unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, today, today_str, gho_countries, downloader, scrapers)
         inform_headers, inform_columns, inform_sources = get_inform(configuration, today, gho_countries, other_auths, scrapers)
