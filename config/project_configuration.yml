@@ -677,7 +677,7 @@ fts:
 food_prices:
   format: "csv"
   dataset: "wfp-food-prices-for-the-world"
-  headers: 1
+  base_url: "https://api.wfp.org"
 
 vaccination_campaigns:
   format: "csv"

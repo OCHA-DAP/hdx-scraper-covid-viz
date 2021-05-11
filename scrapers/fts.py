@@ -114,7 +114,7 @@ def map_planname(origname):
     return name
 
 
-def get_fts(basic_auths, configuration, today, today_str, countryiso3s, scrapers=None):
+def get_fts(configuration, today, today_str, countryiso3s, basic_auths, scrapers=None):
     name = inspect.currentframe().f_code.co_name
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list(), list(), list(), list()
