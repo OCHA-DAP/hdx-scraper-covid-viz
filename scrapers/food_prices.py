@@ -1,38 +1,46 @@
 # -*- coding: utf-8 -*-
 import logging
-from calendar import monthrange
 
 from dateutil.relativedelta import relativedelta
-from hdx.location.country import Country
 from hdx.scraper.readers import read_hdx_metadata
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.downloader import Download
 
-
 logger = logging.getLogger(__name__)
 
 
-def add_food_prices(configuration, today, countryiso3s, downloader, basic_auths, scrapers=None):
+def add_food_prices(configuration, today, countryiso3s, retriever, basic_auths, scrapers=None):
     name = 'food_prices'
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list()
     datasetinfo = configuration[name]
     read_hdx_metadata(datasetinfo, today=today)
     base_url = datasetinfo['base_url']
-    basic_auth = basic_auths[name]
-    token_downloader = Download(basic_auth=basic_auth)
-    token_downloader.download(f'{base_url}/token', post=True, parameters={'grant_type': 'client_credentials'})
-    access_token = token_downloader.get_json()['access_token']
-    headers = {'Accept': 'application/json', 'Authorization': f'Bearer {access_token}'}
+    if retriever.use_saved:
+        headers = None
+    else:
+        basic_auth = basic_auths[name]
+        token_downloader = Download(basic_auth=basic_auth)
+        token_downloader.download(f'{base_url}/token', post=True, parameters={'grant_type': 'client_credentials'})
+        access_token = token_downloader.get_json()['access_token']
+        headers = {'Accept': 'application/json', 'Authorization': f'Bearer {access_token}'}
 
-    def get_list(endpoint, **kwargs):
+    def get_list(endpoint, countryiso3, startdate=None):
+        url = f'{base_url}/{endpoint}'
+        filename = url.split('/')[-2]
         page = 1
         all_data = []
         data = None
         while data is None or len(data) > 0:
-            kwargs['page'] = page
-            downloader.download(f'{base_url}/{endpoint}', parameters=kwargs, headers=headers)
-            data = downloader.get_json()['items']
+            parameters = {'CountryCode': countryiso3, 'page': page}
+            if startdate:
+                parameters['startDate'] = startdate
+            try:
+                json = retriever.retrieve_json(url, f'{filename}_{countryiso3}_{page}.json', f'{filename} for {countryiso3} page {page}', False,
+                                               parameters=parameters, headers=headers)
+            except FileNotFoundError:
+                json = {'items': list()}
+            data = json['items']
             all_data.extend(data)
             page = page + 1
         return all_data
@@ -42,12 +50,12 @@ def add_food_prices(configuration, today, countryiso3s, downloader, basic_auths,
     category_id_weights = {1: 2, 2: 4, 3: 4, 4: 1, 5: 3, 6: 0.5, 7: 0.5}
     for countryiso3 in countryiso3s:
         logger.info(f'Processing {countryiso3}')
-        commodities = get_list('vam-data-bridges/1.1.0/Commodities/List', CountryCode=countryiso3)
+        commodities = get_list('vam-data-bridges/1.1.0/Commodities/List', countryiso3)
         if not commodities:
             logger.info(f'{countryiso3} has no commodities!')
             continue
         commodity_id_to_category_id = {x['id']: x['categoryId'] for x in commodities}
-        alps = get_list('vam-data-bridges/1.1.0/MarketPrices/Alps', CountryCode=countryiso3, startDate=six_months_ago)
+        alps = get_list('vam-data-bridges/1.1.0/MarketPrices/Alps', countryiso3, six_months_ago)
         if not alps:
             logger.info(f'{countryiso3} has no ALPS!')
             continue

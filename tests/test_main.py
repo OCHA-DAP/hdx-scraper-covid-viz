@@ -9,6 +9,7 @@ from hdx.scraper.nooutput import NoOutput
 from hdx.utilities.dateparse import parse_date
 from hdx.utilities.downloader import Download
 from hdx.utilities.path import temp_dir
+from hdx.utilities.retriever import Retrieve
 
 from scrapers.main import get_indicators
 
@@ -28,12 +29,13 @@ class TestCovid:
     def test_get_indicators(self, configuration, folder):
         with temp_dir('TestCovidViz', delete_on_success=True, delete_on_failure=False) as tempdir:
             with Download(user_agent='test') as downloader:
+                retriever = Retrieve(downloader, tempdir, folder, tempdir, save=False, use_saved=True)
                 tabs = configuration['tabs']
                 noout = NoOutput(tabs)
                 jsonout = JsonOutput(configuration, tabs)
                 outputs = {'gsheets': noout, 'excel': noout, 'json': jsonout}
                 today = parse_date('2020-10-01')
-                countries_to_save = get_indicators(configuration, today, downloader, outputs, tabs, scrapers=['ifi', 'who_global', 'who_national', 'who_subnational', 'who_covid', 'sadd', 'covidtests', 'cadre_harmonise', 'access'], use_live=False)
+                countries_to_save = get_indicators(configuration, today, retriever, outputs, tabs, scrapers=['ifi', 'who_global', 'who_national', 'who_subnational', 'who_covid', 'sadd', 'covidtests', 'cadre_harmonise', 'access', 'food_prices'], use_live=False)
                 filepaths = jsonout.save(tempdir, countries_to_save=countries_to_save)
                 assert filecmp.cmp(filepaths[0], join(folder, 'test_scraper_all.json'))
                 assert filecmp.cmp(filepaths[1], join(folder, 'test_scraper.json'))

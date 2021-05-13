@@ -85,7 +85,7 @@ def extend_sources(sources, *args):
             sources.extend(arg)
 
 
-def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=None, basic_auths=dict(), other_auths=dict(), countries_override=None, use_live=True):
+def get_indicators(configuration, today, retriever, outputs, tabs, scrapers=None, basic_auths=dict(), other_auths=dict(), countries_override=None, use_live=True):
     world = [list(), list()]
     regional = [['regionnames'], ['#region+name']]
     national = [['iso3', 'countryname', 'ishrp', 'region'], ['#country+code', '#country+name', '#meta+ishrp', '#region+name']]
@@ -102,6 +102,7 @@ def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=Non
         gho_countries = configuration['gho']
         hrp_countries = configuration['HRPs']
     configuration['countries_fuzzy_try'] = hrp_countries
+    downloader = retriever.downloader
     region = Region(configuration['regional'], today, downloader, gho_countries, hrp_countries)
     admin1_info = list()
     for row in configuration['admin1_info']:
@@ -139,7 +140,7 @@ def get_indicators(configuration, today, downloader, outputs, tabs, scrapers=Non
     ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(configuration, today, gho_countries, adminone, downloader, scrapers)
     if 'national' in tabs:
         fts_wheaders, fts_wcolumns, fts_wsources, fts_headers, fts_columns, fts_sources = get_fts(configuration, today, today_str, gho_countries, basic_auths, scrapers)
-        food_headers, food_columns, food_sources = add_food_prices(configuration, today, gho_countries, downloader, basic_auths, scrapers)
+        food_headers, food_columns, food_sources = add_food_prices(configuration, today, gho_countries, retriever, basic_auths, scrapers)
         campaign_headers, campaign_columns, campaign_sources = add_vaccination_campaigns(configuration, today, gho_countries, downloader, outputs, scrapers)
         unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(configuration, today, today_str, gho_countries, downloader, scrapers)
         inform_headers, inform_columns, inform_sources = get_inform(configuration, today, gho_countries, other_auths, scrapers)
