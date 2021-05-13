@@ -8,7 +8,7 @@ from hdx.utilities.text import get_fraction_str
 logger = logging.getLogger(__name__)
 
 
-def get_education(configuration, countryiso3s, regionlookup, downloader, scrapers=None):
+def get_education(configuration, today, countryiso3s, regionlookup, downloader, scrapers=None):
     name = 'education'
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list(), list(), list(), list()
@@ -24,6 +24,8 @@ def get_education(configuration, countryiso3s, regionlookup, downloader, scraper
         date = row['Date']
         if isinstance(date, str):
             date = parse_date(date)
+        if date > today:
+            continue
         max_date = country_dates.get(countryiso, default_date)
         if date < max_date:
             continue
