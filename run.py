@@ -13,6 +13,8 @@ from hdx.scraper.jsonoutput import JsonOutput
 from hdx.scraper.nooutput import NoOutput
 from hdx.utilities.downloader import Download
 from hdx.utilities.easy_logging import setup_logging
+from hdx.utilities.path import temp_dir
+from hdx.utilities.retriever import Retrieve
 
 from scrapers.main import get_indicators
 
@@ -37,43 +39,47 @@ def parse_args():
     parser.add_argument('-ba', '--basic_auths', default=None, help='Basic Auth Credentials for accessing scraper APIs')
     parser.add_argument('-oa', '--other_auths', default=None, help='Other Credentials for accessing scraper APIs')
     parser.add_argument('-co', '--countries_override', default=None, help='Countries to run')
+    parser.add_argument('-sv', '--save', default=False, action='store_true', help='Save downloaded data')
+    parser.add_argument('-usv', '--use_saved', default=False, action='store_true', help='Use saved data')
     args = parser.parse_args()
     return args
 
 
 def main(excel_path, gsheet_auth, updatesheets, updatetabs, scrapers, basic_auths, other_auths, nojson,
-         countries_override, **ignore):
+         countries_override, save, use_saved, **ignore):
     logger.info('##### hdx-scraper-covid-viz version %.1f ####' % VERSION)
     configuration = Configuration.read()
-    with Download(rate_limit={'calls': 1, 'period': 0.1}) as downloader:
-        if scrapers:
-            logger.info('Updating only scrapers: %s' % scrapers)
-        tabs = configuration['tabs']
-        if updatetabs is None:
-            updatetabs = list(tabs.keys())
-            logger.info('Updating all tabs')
-        else:
-            logger.info('Updating only these tabs: %s' % updatetabs)
-        noout = NoOutput(updatetabs)
-        if excel_path:
-            excelout = ExcelOutput(excel_path, tabs, updatetabs)
-        else:
-            excelout = noout
-        if gsheet_auth:
-            gsheets = GoogleSheets(configuration, gsheet_auth, updatesheets, tabs, updatetabs)
-        else:
-            gsheets = noout
-        if nojson:
-            jsonout = noout
-        else:
-            jsonout = JsonOutput(configuration, updatetabs)
-        outputs = {'gsheets': gsheets, 'excel': excelout, 'json': jsonout}
-        today = datetime.now()
-        countries_to_save = get_indicators(configuration, today, downloader, outputs, updatetabs, scrapers,
-                                           basic_auths, other_auths, countries_override)
-        jsonout.add_additional_json(downloader, today=today)
-        jsonout.save(countries_to_save=countries_to_save)
-        excelout.save()
+    with temp_dir() as temp_folder:
+        with Download(rate_limit={'calls': 1, 'period': 0.1}) as downloader:
+            retriever = Retrieve(downloader, temp_folder, 'saved_data', temp_folder, save, use_saved)
+            if scrapers:
+                logger.info('Updating only scrapers: %s' % scrapers)
+            tabs = configuration['tabs']
+            if updatetabs is None:
+                updatetabs = list(tabs.keys())
+                logger.info('Updating all tabs')
+            else:
+                logger.info('Updating only these tabs: %s' % updatetabs)
+            noout = NoOutput(updatetabs)
+            if excel_path:
+                excelout = ExcelOutput(excel_path, tabs, updatetabs)
+            else:
+                excelout = noout
+            if gsheet_auth:
+                gsheets = GoogleSheets(configuration, gsheet_auth, updatesheets, tabs, updatetabs)
+            else:
+                gsheets = noout
+            if nojson:
+                jsonout = noout
+            else:
+                jsonout = JsonOutput(configuration, updatetabs)
+            outputs = {'gsheets': gsheets, 'excel': excelout, 'json': jsonout}
+            today = datetime.now()
+            countries_to_save = get_indicators(configuration, today, retriever, outputs, updatetabs, scrapers,
+                                               basic_auths, other_auths, countries_override)
+            jsonout.add_additional_json(downloader, today=today)
+            jsonout.save(countries_to_save=countries_to_save)
+            excelout.save()
 
 
 if __name__ == '__main__':
@@ -131,4 +137,4 @@ if __name__ == '__main__':
            project_config_yaml=join('config', 'project_configuration.yml'), excel_path=args.excel_path,
            gsheet_auth=gsheet_auth, updatesheets=updatesheets, updatetabs=updatetabs, scrapers=scrapers,
            basic_auths=basic_auths, other_auths=other_auths, nojson=args.nojson,
-           countries_override=countries_override)
+           countries_override=countries_override, save=args.save, use_saved=args.use_saved)
