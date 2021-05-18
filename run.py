@@ -88,7 +88,7 @@ if __name__ == '__main__':
     if user_agent is None:
         user_agent = getenv('USER_AGENT')
         if user_agent is None:
-            user_agent = 'test'
+            user_agent = 'hdx-scraper-covid-viz'
     preprefix = args.preprefix
     if preprefix is None:
         preprefix = getenv('PREPREFIX')
