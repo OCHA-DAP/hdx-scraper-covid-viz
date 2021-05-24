@@ -497,7 +497,7 @@ scraper_national:
     headers: 1
     use_hxl: True
     date_col: "#date"
-    date_type: "year"
+    date_type: "date"
   covidtests:
     format: "xlsx"
     dataset: "total-covid-19-tests-performed-by-country"
