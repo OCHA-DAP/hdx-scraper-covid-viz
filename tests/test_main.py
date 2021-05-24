@@ -34,7 +34,7 @@ class TestCovid:
                 noout = NoOutput(tabs)
                 jsonout = JsonOutput(configuration, tabs)
                 outputs = {'gsheets': noout, 'excel': noout, 'json': jsonout}
-                today = parse_date('2020-10-01')
+                today = parse_date('2021-05-03')
                 countries_to_save = get_indicators(configuration, today, retriever, outputs, tabs, scrapers=['ifi', 'who_global', 'who_national', 'who_subnational', 'who_covid', 'sadd', 'covidtests', 'cadre_harmonise', 'access', 'food_prices'], use_live=False)
                 filepaths = jsonout.save(tempdir, countries_to_save=countries_to_save)
                 assert filecmp.cmp(filepaths[0], join(folder, 'test_scraper_all.json'))

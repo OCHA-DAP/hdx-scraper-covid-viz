@@ -98,7 +98,7 @@ scraper_national:
       - "Country Code"
     adm_exact: True
     date_col: "Year"
-    date_type: "int"
+    date_type: "year"
     date_condition: "Value != ''"
     input_cols:
       - "Value"
@@ -200,7 +200,7 @@ scraper_national:
     adm_cols:
       - "ISO"
     date_col: "Year*"
-    date_type: "int"
+    date_type: "year"
     input_cols:
       - "National Point Estimate"
     output_cols:
@@ -215,7 +215,7 @@ scraper_national:
     adm_cols:
       - "Country Code"
     date_col: "Year"
-    date_type: "int"
+    date_type: "year"
     subsets:
       - filter: "Metric=People in need|PiN Value for Dataviz=yes"
         input_cols:
@@ -230,7 +230,7 @@ scraper_national:
     headers: 1
     use_hxl: True
     date_col: "#date+year"
-    date_type: "int"
+    date_type: "year"
     input_cols:
       - "#affected+idps+ind+stock+conflict"
       - "#affected+idps+ind+stock+disaster"
@@ -262,7 +262,7 @@ scraper_national:
     output_hxltags:
       - "#severity+travel"
       - "#severity+date+travel"
-  cerf_national:
+  allocations_national:
     source:
       "#value+cbpf+funding+total+usd": "CBPF"
       "#value+cbpf+funding+gmempty+total+usd": "CBPF"
@@ -286,7 +286,7 @@ scraper_national:
     dataset: "cerf-allocations"
     headers: 1
     date_col: "AllocationYear"
-    date_type: "int"
+    date_type: "year"
     single_maxdate: True
     adm_cols:
       - "CountryCode"
@@ -497,7 +497,7 @@ scraper_national:
     headers: 1
     use_hxl: True
     date_col: "#date"
-    date_type: "int"
+    date_type: "year"
   covidtests:
     format: "xlsx"
     dataset: "total-covid-19-tests-performed-by-country"
@@ -851,7 +851,7 @@ regional:
     - "NoChildrenSAM"
 
 scraper_global:
-  cerf_global:
+  allocations_global:
     source:
       "#value+cbpf+funding+total+usd": "CBPF"
       "#value+cbpf+funding+gmempty+total+usd": "CBPF"
@@ -875,7 +875,7 @@ scraper_global:
     dataset: "cerf-allocations"
     headers: 1
     date_col: "AllocationYear"
-    date_type: "int"
+    date_type: "year"
     single_maxdate: True
     subsets:
       - filter: "FundType=CBPF"
@@ -1046,6 +1046,49 @@ scraper_global:
           - "CERFFundingGM4"
         output_hxltags:
           - "#value+cerf+funding+gm4+total+usd"
+  contributions_global:
+    source:
+      "#value+cbpf+funding+total+usd": "CBPF"
+      "default_source": "CERF"
+    source_url:
+      "#value+cbpf+funding+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "default_url": "https://data.humdata.org/dataset/cerf-allocations"
+    format: "csv"
+    url: "https://cbpfgms.github.io/pfbi-data/download/pfmb_contributions.csv"
+    dataset: "cerf-allocations"
+    headers: 1
+    date_col: "FiscalYear"
+    date_type: "year"
+    single_maxdate: True
+    subsets:
+      - filter: "FundType=CBPF"
+        input_cols:
+          - "PaidAmt"
+          - "PledgeAmt"
+        input_transforms:
+          PaidAmt: "float(PaidAmt) if PaidAmt else 0"
+          PledgeAmt: "float(PledgeAmt)"
+        sum_cols:
+          - formula: "PaidAmt+PledgeAmt"
+            mustbepopulated: False
+        output_cols:
+          - "CBPFContributions"
+        output_hxltags:
+          - "#value+cbpf+contributions+total+usd"
+      - filter: "FundType=CERF"
+        input_cols:
+          - "PaidAmt"
+          - "PledgeAmt"
+        input_transforms:
+          PaidAmt: "float(PaidAmt) if PaidAmt else 0"
+          PledgeAmt: "float(PledgeAmt)"
+        sum_cols:
+          - formula: "PaidAmt+PledgeAmt"
+            mustbepopulated: False
+        output_cols:
+          - "CERFContributions"
+        output_hxltags:
+          - "#value+cerf+contributions+total+usd"
   ourworldindata:
     format: "csv"
     dataset: "covid-19-vaccinations"
@@ -1182,7 +1225,7 @@ scraper_subnational:
       - "iso"
       - "Admin1"
     date_col: "Year"
-    date_type: "int"
+    date_type: "year"
     subsets:
       - filter: "Vaccine=HepB1"
         input_cols:
@@ -1353,7 +1396,7 @@ scraper_subnational:
       - "ISO"
       - "Region Name"
     date_col: "Year*"
-    date_type: "int"
+    date_type: "year"
     input_cols:
       - "Region Point Estimate"
     output_cols:

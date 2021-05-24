@@ -70,7 +70,7 @@ additional_sources:
     date: "2020-08-24"
   - indicator: "#access-data"
     source: "Multiple sources"
-    date: "2020-10-01"
+    date: "2021-05-03"
     source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
 
 # national
@@ -86,7 +86,7 @@ scraper_national:
       - "Country Code"
     adm_exact: True
     date_col: "Year"
-    date_type: "int"
+    date_type: "year"
     input_cols:
       - "Value"
     output_cols:
@@ -274,7 +274,7 @@ scraper_national:
     adm_cols:
       - "ISO"
     date_col: "Year*"
-    date_type: "int"
+    date_type: "year"
     input_cols:
       - "National Point Estimate"
     output_cols:
@@ -289,7 +289,7 @@ scraper_national:
     adm_cols:
       - "Country Code"
     date_col: "Year"
-    date_type: "int"
+    date_type: "year"
     subsets:
       - filter: "Metric=People in need|PiN Value for Dataviz=yes"
         input_cols:
@@ -304,7 +304,7 @@ scraper_national:
     headers: 1
     use_hxl: True
     date_col: "#date+year"
-    date_type: "int"
+    date_type: "year"
     input_cols:
       - "#affected+idps+ind+stock+conflict"
       - "#affected+idps+ind+stock+disaster"
@@ -454,7 +454,7 @@ scraper_national:
   covidtests:
     format: "xlsx"
     dataset: "total-covid-19-tests-performed-by-country"
-    date: "2020-10-01"
+    date: "2021-05-03"
     url: "tests/fixtures/owid-covid-data.xlsx"
     headers: 1
     sheet: 1
@@ -482,7 +482,7 @@ scraper_national:
     format: "xlsx"
     dataset: "cadre-harmonise"
     url: "tests/fixtures/cadre_harmonise_caf_ipc.xlsx"
-    date: "2020-10-01"
+    date: "2021-05-03"
     headers: 1
     sheet: 1
     sort:
@@ -712,7 +712,7 @@ scraper_subnational:
     format: "xlsx"
     dataset: "cadre-harmonise"
     url: "tests/fixtures/cadre_harmonise_caf_ipc.xlsx"
-    date: "2020-10-01"
+    date: "2021-05-03"
     headers: 1
     sheet: 1
     sort:
@@ -818,7 +818,7 @@ scraper_subnational:
       - "iso"
       - "Admin1"
     date_col: "Year"
-    date_type: "int"
+    date_type: "year"
     subsets:
       - filter: "Vaccine=HepB1"
         input_cols:
@@ -989,7 +989,7 @@ scraper_subnational:
       - "ISO"
       - "Region Name"
     date_col: "Year*"
-    date_type: "int"
+    date_type: "year"
     input_cols:
       - "Region Point Estimate"
     output_cols:
