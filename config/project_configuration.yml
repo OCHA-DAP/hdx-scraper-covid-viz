@@ -1446,6 +1446,7 @@ gho:
   - MEX
   - MLI
   - MMR
+  - MWI
   - MOZ
   - NER
   - NGA
@@ -1453,7 +1454,6 @@ gho:
   - PAN
   - PER
   - PHL
-  - PRY
   - PSE
   - RWA
   - SDN
