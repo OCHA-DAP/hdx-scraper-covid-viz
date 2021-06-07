@@ -167,6 +167,7 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
 
     df_national = output_df.sort_values(by=['Date_reported']).drop_duplicates(subset='ISO_3_CODE', keep='last')
 
+    trend_hxltags['weekly_new_deaths_pc_change'] = '#affected+killed+new+pct+weekly'  # for daily report
     del trend_hxltags['Date_reported']
     for header in trend_hxltags:
         if any(x in header for x in ('per_ht', 'pc_change')):
