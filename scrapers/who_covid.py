@@ -113,22 +113,22 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
     output_df = output_df[output_df['ndays'] == 7]
     output_df = output_df.reset_index()
 
-    output_df['NewCase_PercentChange'] = output_df.groupby('ISO_3_CODE')['New_cases'].pct_change()
-    output_df['NewDeath_PercentChange'] = output_df.groupby('ISO_3_CODE')['New_deaths'].pct_change()
+    output_df['weekly_cum_cases'] = output_df['New_cases'].cumsum()
+    output_df['weekly_cum_deaths'] = output_df['New_deaths'].cumsum()
+    output_df['weekly_new_cases_pc_change'] = output_df.groupby('ISO_3_CODE')['New_cases'].pct_change()
+    output_df['weekly_new_deaths_pc_change'] = output_df.groupby('ISO_3_CODE')['New_deaths'].pct_change()
     # For percent change, if the diff is actually 0, change nan to 0
-    output_df['diff_cases'] = output_df.groupby('ISO_3_CODE')['New_cases'].diff()
+    output_df['weekly_new_cases_change'] = output_df.groupby('ISO_3_CODE')['New_cases'].diff()
     output_df.loc[
-        (output_df['NewCase_PercentChange'].isna()) & (output_df['diff_cases'] == 0), 'NewCase_PercentChange'] = 0.0
-    output_df['diff_deaths'] = output_df.groupby('ISO_3_CODE')['New_deaths'].diff()
+        (output_df['weekly_new_cases_pc_change'].isna()) & (output_df['weekly_new_cases_change'] == 0), 'weekly_new_cases_pc_change'] = 0.0
+    output_df['weekly_new_deaths_change'] = output_df.groupby('ISO_3_CODE')['New_deaths'].diff()
     output_df.loc[
-        (output_df['NewDeath_PercentChange'].isna()) & (output_df['diff_deaths'] == 0), 'NewDeath_PercentChange'] = 0.0
+        (output_df['weekly_new_deaths_pc_change'].isna()) & (output_df['weekly_new_deaths_change'] == 0), 'weekly_new_deaths_pc_change'] = 0.0
 
     # Add pop to output df
     output_df = output_df.merge(df_pop, left_on='ISO_3_CODE', right_on='Country Code', how='left').drop(
         columns=['Country Code'])
-    output_df = output_df.rename(columns={'New_cases': 'weekly_new_cases', 'New_deaths': 'weekly_new_deaths',
-                                          'NewCase_PercentChange': 'weekly_new_cases_pc_change', 'NewDeath_PercentChange': 'weekly_new_deaths_pc_change',
-                                          'diff_cases': 'weekly_new_cases_change', 'diff_deaths': 'weekly_new_deaths_change'})
+    output_df = output_df.rename(columns={'New_cases': 'weekly_new_cases', 'New_deaths': 'weekly_new_deaths'})
     # Get cases per hundred thousand
     output_df['weekly_new_cases_per_ht'] = output_df['weekly_new_cases'] / output_df['population'] * 1E5
     output_df['weekly_new_deaths_per_ht'] = output_df['weekly_new_deaths'] / output_df['population'] * 1E5
@@ -136,30 +136,44 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
     output_df['Date_reported'] = output_df['Date_reported'].apply(lambda x: x.strftime('%Y-%m-%d'))
     output_df = output_df.drop(['ndays'], axis=1)
     trend_hxltags = {'ISO_3_CODE': '#country+code', 'Date_reported': '#date+reported',
+                     'weekly_cum_cases': '#affected+infected+cumulative+weekly', 'weekly_cum_deaths': '#affected+killed+cumulative+weekly',
                      'weekly_new_cases': '#affected+infected+new+weekly', 'weekly_new_deaths': '#affected+killed+new+weekly',
-                     'weekly_new_cases_per_ht': '#affected+infected+new+per100000+weekly', 'weekly_new_deaths_per_ht': '#affected+killed+new+per100000+weekly',
-                     'weekly_new_cases_change': '#affected+infected+new+change+weekly', 'weekly_new_deaths_change': '#affected+killed+new+change+weekly',
-                     'weekly_new_cases_pc_change': '#affected+infected+new+pct+weekly', 'weekly_new_deaths_pc_change': '#affected+killed+new+pct+weekly'}
+                     'weekly_new_cases_per_ht': '#affected+infected+new+per100000+weekly',# 'weekly_new_deaths_per_ht': '#affected+killed+new+per100000+weekly',
+#                     'weekly_new_cases_change': '#affected+infected+new+change+weekly', 'weekly_new_deaths_change': '#affected+killed+new+change+weekly',
+                     'weekly_new_cases_pc_change': '#affected+infected+new+pct+weekly'}#, 'weekly_new_deaths_pc_change': '#affected+killed+new+pct+weekly'}
     trend_name = 'covid_trend'
     outputs['gsheets'].update_tab(trend_name, output_df, trend_hxltags)
     outputs['excel'].update_tab(trend_name, output_df, trend_hxltags)
     # Save as JSON
     json_df = output_df.replace([numpy.inf, -numpy.inf, numpy.nan], '').groupby('ISO_3_CODE').apply(lambda x: x.to_dict('r'))
     del trend_hxltags['ISO_3_CODE']
-    for rows in json_df:
-        countryiso = rows[0]['ISO_3_CODE']
-        outputs['json'].add_data_rows_by_key(name, countryiso, rows, trend_hxltags)
 
-    df_national = output_df.sort_values(by=['Date_reported']).drop_duplicates(subset='ISO_3_CODE', keep='last')
+    def format_0dp(x):
+        if isinstance(x, str):
+            return x
+        return '%.0f' % x
 
     def format_4dp(x):
         if isinstance(x, str):
             return x
         return '%.4f' % x
 
+    for rows in json_df:
+        countryiso = rows[0]['ISO_3_CODE']
+        for row in rows:
+            row['weekly_new_cases_per_ht'] = format_4dp(row['weekly_new_cases_per_ht'])
+            row['weekly_new_cases_pc_change'] = format_4dp(row['weekly_new_cases_pc_change'])
+        outputs['json'].add_data_rows_by_key(name, countryiso, rows, trend_hxltags)
+
+    df_national = output_df.sort_values(by=['Date_reported']).drop_duplicates(subset='ISO_3_CODE', keep='last')
+
     del trend_hxltags['Date_reported']
     for header in trend_hxltags:
-        national_columns.append(dict(zip(df_national['ISO_3_CODE'], df_national[header].map(format_4dp))))
+        if any(x in header for x in ('per_ht', 'pc_change')):
+            fn = format_4dp
+        else:
+            fn = format_0dp
+        national_columns.append(dict(zip(df_national['ISO_3_CODE'], df_national[header].map(fn))))
 
     hxltags = set(series_hxltags) | set(trend_hxltags.values())
     dssource = datasetinfo['source']

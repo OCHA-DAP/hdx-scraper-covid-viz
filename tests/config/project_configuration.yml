@@ -23,10 +23,9 @@ json:
             - "#country+code"
             - "#country+name"
             - "#meta+ishrp"
-            - "#affected+infected+new+weekly"
             - "#affected+infected+new+per100000+weekly"
             - "#affected+infected+new+pct+weekly"
-            - "#affected+killed+new+per100000+weekly"
+            - "#affected+killed+new+weekly"
             - "#affected+killed+new+pct+weekly"
             - "#capacity+doses+delivered+total"
             - "#capacity+doses+administered+total"
@@ -76,7 +75,7 @@ additional_sources:
 # national
 scraper_national:
   population:
-    source: "World Bank"
+    source: "WorldPop"
     source_url: "https://data.humdata.org/organization/world-bank-group"
     format: "xls"
     url: "tests/fixtures/API_SP.POP.TOTL_DS2_en_excel_v2_1302508_LIST.xls"
