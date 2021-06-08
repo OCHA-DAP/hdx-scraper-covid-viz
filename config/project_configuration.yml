@@ -113,6 +113,8 @@ scraper_national:
       - "Country"
     input_cols:
       - "Covid 19 Economic exposure index"
+    input_transforms:
+      "Covid 19 Economic exposure index": "number_format(Covid 19 Economic exposure index, trailing_zeros=False)"
     output_cols:
       - "EconomicExposure"
     output_hxltags:
@@ -162,8 +164,8 @@ scraper_national:
       - "number_format(ISDB * 1000000, format='%.0f')"
       - "number_format(EBRD * 1000000, format='%.0f')"
       - "number_format(Total (USD mn) * 1000000, format='%.0f')"
-      - "number_format(Total per capita (USD mn))"
-      - "number_format(Total as percentage of GDP (%))"
+      - "number_format(Total per capita (USD mn), trailing_zeros=False)"
+      - "number_format(Total as percentage of GDP (%), trailing_zeros=False)"
     output_cols:
       - "World Bank"
       - "IFC"
@@ -201,6 +203,8 @@ scraper_national:
     date_type: "year"
     input_cols:
       - "National Point Estimate"
+    input_transforms:
+      "National Point Estimate": "number_format(National Point Estimate, trailing_zeros=False)"
     output_cols:
       - "Malnutrition Estimate"
     output_hxltags:
@@ -475,10 +479,10 @@ scraper_national:
       - "Deaths (% male)"
       - "Deaths (% female)"
     input_transforms:
-      "Cases (% male)": "number_format(get_numeric_if_possible(Cases (% male)))"
-      "Cases (% female)": "number_format(get_numeric_if_possible(Cases (% female)))"
-      "Deaths (% male)": "number_format(get_numeric_if_possible(Deaths (% male)))"
-      "Deaths (% female)": "number_format(get_numeric_if_possible(Deaths (% female)))"
+      "Cases (% male)": "number_format(get_numeric_if_possible(Cases (% male)), trailing_zeros=False)"
+      "Cases (% female)": "number_format(get_numeric_if_possible(Cases (% female)), trailing_zeros=False)"
+      "Deaths (% male)": "number_format(get_numeric_if_possible(Deaths (% male)), trailing_zeros=False)"
+      "Deaths (% female)": "number_format(get_numeric_if_possible(Deaths (% female)), trailing_zeros=False)"
     output_cols:
       - "Cases (% male)"
       - "Cases (% female)"
@@ -637,7 +641,7 @@ scraper_national:
       "#capacity+covax+delivered+doses": "get_numeric_if_possible(#capacity+covax+delivered+doses)"
       "#capacity+others+delivered+doses": "get_numeric_if_possible(#capacity+others+delivered+doses)"
       "#capacity+delivered+total": "get_numeric_if_possible(#capacity+delivered+total)"
-      "#capacity+coverage+one_dose": "number_format(get_numeric_if_possible(#capacity+coverage+one_dose))"
+      "#capacity+coverage+one_dose": "number_format(get_numeric_if_possible(#capacity+coverage+one_dose), trailing_zeros=False)"
     output_cols:
       - "Covax Interim Forecast Doses"
       - "Covax Delivered Doses"
@@ -1397,6 +1401,8 @@ scraper_subnational:
     date_type: "year"
     input_cols:
       - "Region Point Estimate"
+    input_transforms:
+      "Region Point Estimate": "number_format(Region Point Estimate, trailing_zeros=False)"
     output_cols:
       - "Malnutrition Estimate"
     output_hxltags:

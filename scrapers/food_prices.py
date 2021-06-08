@@ -5,6 +5,7 @@ from dateutil.relativedelta import relativedelta
 from hdx.scraper.readers import read_hdx_metadata
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.downloader import Download
+from hdx.utilities.text import number_format
 
 logger = logging.getLogger(__name__)
 
@@ -91,7 +92,7 @@ def add_food_prices(configuration, today, countryiso3s, retriever, basic_auths, 
             market_ratio = commodities_per_market_crisis.get(market_id, 0) / commodities_per_market[market_id]
             country_ratio += market_ratio
         country_ratio /= len(commodities_per_market)
-        ratios[countryiso3] = country_ratio
+        ratios[countryiso3] = number_format(country_ratio, trailing_zeros=False)
     hxltag = '#value+food+num+ratio'
     logger.info('Processed WFP')
     return [['Food Prices Ratio'], [hxltag]], [ratios], [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url'])]

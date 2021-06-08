@@ -107,7 +107,7 @@ class Region(object):
                     if not isinstance(total, str):
                         total /= novals
                 if isinstance(total, float):
-                    valdict[region] = number_format(total)
+                    valdict[region] = number_format(total, trailing_zeros=False)
                 else:
                     valdict[region] = total
         elif action == 'range':
@@ -125,9 +125,9 @@ class Region(object):
                     valdict[region] = ''
                 else:
                     if isinstance(max, float):
-                        max = number_format(max)
+                        max = number_format(max, trailing_zeros=False)
                     if isinstance(min, float):
-                        min = number_format(min)
+                        min = number_format(min, trailing_zeros=False)
                     valdict[region] = '%s-%s' % (str(min), str(max))
         elif action == 'eval':
             formula = process_info['formula']

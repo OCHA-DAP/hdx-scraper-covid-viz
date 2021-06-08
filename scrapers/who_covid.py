@@ -9,6 +9,7 @@ import pandas as pd
 # filename for shapefile and WHO input dataset
 from hdx.location.country import Country
 from hdx.scraper.readers import read_hdx_metadata
+from hdx.utilities.text import number_format
 
 MIN_CUMULATIVE_CASES = 100
 
@@ -149,14 +150,10 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
     del trend_hxltags['ISO_3_CODE']
 
     def format_0dp(x):
-        if isinstance(x, str):
-            return x
-        return '%.0f' % x
+        return number_format(x, '%.0f')
 
     def format_4dp(x):
-        if isinstance(x, str):
-            return x
-        return '%.4f' % x
+        return number_format(x, '%.4f', False)
 
     for rows in json_df:
         countryiso = rows[0]['ISO_3_CODE']
