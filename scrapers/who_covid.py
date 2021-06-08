@@ -138,9 +138,9 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
     trend_hxltags = {'ISO_3_CODE': '#country+code', 'Date_reported': '#date+reported',
                      'weekly_cum_cases': '#affected+infected+cumulative+weekly', 'weekly_cum_deaths': '#affected+killed+cumulative+weekly',
                      'weekly_new_cases': '#affected+infected+new+weekly', 'weekly_new_deaths': '#affected+killed+new+weekly',
-                     'weekly_new_cases_per_ht': '#affected+infected+new+per100000+weekly',# 'weekly_new_deaths_per_ht': '#affected+killed+new+per100000+weekly',
-#                     'weekly_new_cases_change': '#affected+infected+new+change+weekly', 'weekly_new_deaths_change': '#affected+killed+new+change+weekly',
-                     'weekly_new_cases_pc_change': '#affected+infected+new+pct+weekly'}#, 'weekly_new_deaths_pc_change': '#affected+killed+new+pct+weekly'}
+                     'weekly_new_cases_per_ht': '#affected+infected+new+per100000+weekly', 'weekly_new_deaths_per_ht': '#affected+killed+new+per100000+weekly',
+                     'weekly_new_cases_change': '#affected+infected+new+change+weekly', 'weekly_new_deaths_change': '#affected+killed+new+change+weekly',
+                     'weekly_new_cases_pc_change': '#affected+infected+new+pct+weekly', 'weekly_new_deaths_pc_change': '#affected+killed+new+pct+weekly'}
     trend_name = 'covid_trend'
     outputs['gsheets'].update_tab(trend_name, output_df, trend_hxltags)
     outputs['excel'].update_tab(trend_name, output_df, trend_hxltags)
@@ -161,16 +161,16 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
     for rows in json_df:
         countryiso = rows[0]['ISO_3_CODE']
         for row in rows:
-            row['weekly_new_cases_per_ht'] = format_4dp(row['weekly_new_cases_per_ht'])
-            row['weekly_new_cases_pc_change'] = format_4dp(row['weekly_new_cases_pc_change'])
+            for header in trend_hxltags:
+                if any(header.endswith(x) for x in ('per_ht', 'pc_change')):
+                    row[header] = format_4dp(row[header])
         outputs['json'].add_data_rows_by_key(name, countryiso, rows, trend_hxltags)
 
     df_national = output_df.sort_values(by=['Date_reported']).drop_duplicates(subset='ISO_3_CODE', keep='last')
 
-    trend_hxltags['weekly_new_deaths_pc_change'] = '#affected+killed+new+pct+weekly'  # for daily report
     del trend_hxltags['Date_reported']
     for header in trend_hxltags:
-        if any(x in header for x in ('per_ht', 'pc_change')):
+        if any(header.endswith(x) for x in ('per_ht', 'pc_change')):
             fn = format_4dp
         else:
             fn = format_0dp
