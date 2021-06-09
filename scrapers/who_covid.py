@@ -114,15 +114,16 @@ def get_who_covid(configuration, today, outputs, hrp_countries, gho_countries, r
     output_df = output_df[output_df['ndays'] == 7]
     output_df = output_df.reset_index()
 
-    output_df['weekly_cum_cases'] = output_df['New_cases'].cumsum()
-    output_df['weekly_cum_deaths'] = output_df['New_deaths'].cumsum()
-    output_df['weekly_new_cases_pc_change'] = output_df.groupby('ISO_3_CODE')['New_cases'].pct_change()
-    output_df['weekly_new_deaths_pc_change'] = output_df.groupby('ISO_3_CODE')['New_deaths'].pct_change()
+    df_by_iso3 = output_df.groupby('ISO_3_CODE')
+    output_df['weekly_cum_cases'] = df_by_iso3['New_cases'].cumsum()
+    output_df['weekly_cum_deaths'] = df_by_iso3['New_deaths'].cumsum()
+    output_df['weekly_new_cases_pc_change'] = df_by_iso3['New_cases'].pct_change()
+    output_df['weekly_new_deaths_pc_change'] = df_by_iso3['New_deaths'].pct_change()
     # For percent change, if the diff is actually 0, change nan to 0
-    output_df['weekly_new_cases_change'] = output_df.groupby('ISO_3_CODE')['New_cases'].diff()
+    output_df['weekly_new_cases_change'] = df_by_iso3['New_cases'].diff()
     output_df.loc[
         (output_df['weekly_new_cases_pc_change'].isna()) & (output_df['weekly_new_cases_change'] == 0), 'weekly_new_cases_pc_change'] = 0.0
-    output_df['weekly_new_deaths_change'] = output_df.groupby('ISO_3_CODE')['New_deaths'].diff()
+    output_df['weekly_new_deaths_change'] = df_by_iso3['New_deaths'].diff()
     output_df.loc[
         (output_df['weekly_new_deaths_pc_change'].isna()) & (output_df['weekly_new_deaths_change'] == 0), 'weekly_new_deaths_pc_change'] = 0.0
 
