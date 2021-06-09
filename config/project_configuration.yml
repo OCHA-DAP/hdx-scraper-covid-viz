@@ -214,10 +214,15 @@ scraper_national:
     dataset: "global-humanitarian-overview-2021-figures"
     sheet: "Raw Data"
     headers: 1
+    sort:
+      reverse: True
+      keys:
+        - "Year"
     adm_cols:
       - "Country Code"
     date_col: "Year"
     date_type: "year"
+    single_maxdate: True
     subsets:
       - filter: "Metric=People in need|PiN Value for Dataviz=yes"
         input_cols:
@@ -287,6 +292,10 @@ scraper_national:
     url: "https://cbpfgms.github.io/pfbi-data/download/full_pfmb_allocations.csv"
     dataset: "cerf-allocations"
     headers: 1
+    sort:
+      reverse: True
+      keys:
+        - "AllocationYear"
     date_col: "AllocationYear"
     date_type: "year"
     single_maxdate: True
@@ -876,6 +885,10 @@ scraper_global:
     url: "https://cbpfgms.github.io/pfbi-data/download/full_pfmb_allocations.csv"
     dataset: "cerf-allocations"
     headers: 1
+    sort:
+      reverse: True
+      keys:
+        - "AllocationYear"
     date_col: "AllocationYear"
     date_type: "year"
     single_maxdate: True
@@ -1059,6 +1072,10 @@ scraper_global:
     url: "https://cbpfgms.github.io/pfbi-data/download/pfmb_contributions.csv"
     dataset: "cerf-allocations"
     headers: 1
+    sort:
+      reverse: True
+      keys:
+        - "FiscalYear"
     date_col: "FiscalYear"
     date_type: "year"
     single_maxdate: True
