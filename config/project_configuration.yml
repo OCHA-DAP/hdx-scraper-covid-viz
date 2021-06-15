@@ -685,9 +685,8 @@ scraper_national:
     output_hxltags:
       - "#capacity+doses+administered+total"
   worldbank:
-    source: "World Bank"
     format: "xlsx"
-    url: "https://development-data-hub-s3-public.s3.amazonaws.com/ddhfiles/1235981/data-coviddash-latest.xlsx"
+    dataset: "harmonized-covid-19-household-monitoring-surveys"
     sheet: "2. Harmonized Indicators"
     headers: 1
     adm_cols:
