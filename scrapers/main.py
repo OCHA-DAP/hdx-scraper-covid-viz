@@ -11,6 +11,7 @@ from scrapers.covax_deliveries import get_covax_deliveries
 from scrapers.education import get_education
 from scrapers.inform import get_inform
 from scrapers.iom_dtm import get_iom_dtm
+from scrapers.monthly_report import get_monthly_report_source
 from scrapers.who_covid import get_who_covid
 from scrapers.food_prices import add_food_prices
 from scrapers.fts import get_fts
@@ -206,7 +207,7 @@ def get_indicators(configuration, today, retriever, outputs, tabs, scrapers=None
             if source_url is None:
                 source_url = dataset.get_hdx_url()
         sources.append((sourceinfo['indicator'], date, source, source_url))
-
+    sources.append(get_monthly_report_source(configuration))
     sources = [list(elem) for elem in dict.fromkeys(sources)]
     update_tab('sources', sources)
     return hrp_countries

@@ -83,6 +83,11 @@ additional_sources:
     force_date_today: True
     source_url: "https://data.humdata.org/search?q=(name:ipc-country-data%20OR%20name:cadre-harmonise)"
 
+monthly_report:
+  hxltag: "#meta+monthly+report"
+  dataset: "repository-for-pdf-files"
+  resource: "OCHA-data-explorer-monthly-report.pdf"
+
 # national
 scraper_national:
   population:
