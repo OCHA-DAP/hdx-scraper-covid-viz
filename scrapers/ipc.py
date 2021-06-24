@@ -10,15 +10,19 @@ from hdx.utilities.dictandlist import dict_of_lists_add
 
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from hdx.utilities.downloader import DownloadError
 
 logger = logging.getLogger(__name__)
 
 
 def get_data(downloader, url, today, countryiso2):
     for page in range(1, 3):
-        _, data = read_tabular(downloader, {'url': url % (today.year, page, countryiso2), 'sheet': 'IPC', 'headers': [4, 6],
-                                            'format': 'xlsx'}, fill_merged_cells=True)
-        data = list(data)
+        try:
+            _, data = read_tabular(downloader, {'url': url % (today.year, page, countryiso2), 'sheet': 'IPC', 'headers': [4, 6],
+                                                'format': 'xlsx'}, fill_merged_cells=True)
+            data = list(data)
+        except DownloadError:
+            data = list()
         adm1_names = set()
         found_data = False
         for row in data:
