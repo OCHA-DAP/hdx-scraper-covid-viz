@@ -66,8 +66,8 @@ def add_food_prices(configuration, today, countryiso3s, retriever, basic_auths, 
             if analysis_value_price_flag == 'forecast':
                 continue
             commodity_id = row['commodityID']
-            category_id = commodity_id_to_category_id[commodity_id]
-            if category_id >= 8:
+            category_id = commodity_id_to_category_id.get(commodity_id)
+            if not category_id or category_id >= 8:
                 continue
             row['categoryId'] = category_id
             yearmonth = f'{row["commodityPriceDateYear"]}/{row["commodityPriceDateMonth"]}'
