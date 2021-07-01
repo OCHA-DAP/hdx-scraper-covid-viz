@@ -1504,12 +1504,14 @@ gho:
   - ARG
   - BDI
   - BFA
+  - BGD
   - BOL
   - BRA
   - CAF
   - CHL
   - CMR
   - COD
+  - COG
   - COL
   - CRI
   - CUW
@@ -1524,19 +1526,17 @@ gho:
   - JOR
   - KEN
   - LBN
-  - LBR
   - LBY
   - MEX
   - MLI
   - MMR
-  - MWI
   - MOZ
   - NER
   - NGA
   - PAK
   - PAN
   - PER
-  - PHL
+  - PRY
   - PSE
   - RWA
   - SDN
