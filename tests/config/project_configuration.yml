@@ -577,6 +577,7 @@ food_prices:
   format: "csv"
   dataset: "wfp-food-prices"
   base_url: "https://api.wfp.org"
+  date: "2021-05-15"
 
 vaccination_campaigns:
   format: "csv"
