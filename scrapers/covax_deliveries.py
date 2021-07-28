@@ -28,22 +28,21 @@ def get_covax_deliveries(configuration, today, countryiso3s, downloader, scraper
         nodoses = get_numeric_if_possible(newrow['#capacity+vaccine+doses'])
         if nodoses:
             doses_lookup[key] = doses_lookup.get(key, 0) + nodoses
-    pipelines = dict()
-    producers = dict()
     funders = dict()
+    producers = dict()
     doses = dict()
     for key in sorted(doses_lookup):
         countryiso, pipeline, producer, funder = key.split('|')
-        dict_of_lists_add(pipelines, countryiso, pipeline)
+        if pipeline == 'COVAX':
+            funder = f'{pipeline}/{funder}'
         dict_of_lists_add(producers, countryiso, producer)
         dict_of_lists_add(funders, countryiso, funder)
         dict_of_lists_add(doses, countryiso, str(doses_lookup[key]))
-    for countryiso in pipelines:
-        pipelines[countryiso] = '|'.join(pipelines[countryiso])
+    for countryiso in funders:
         producers[countryiso] = '|'.join(producers[countryiso])
         funders[countryiso] = '|'.join(funders[countryiso])
         doses[countryiso] = '|'.join(doses[countryiso])
     logger.info('Processed covax deliveries')
-    hxltags = ['#meta+vaccine+pipeline', '#meta+vaccine+producer', '#meta+vaccine+funder', '#capacity+vaccine+doses']
-    return [['Pipeline', 'Vaccine', 'Funder', 'Doses'], hxltags], \
-           [pipelines, producers, funders, doses], [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']) for hxltag in hxltags]
+    hxltags = ['#meta+vaccine+producer', '#meta+vaccine+funder', '#capacity+vaccine+doses']
+    return [['Vaccine', 'Funder', 'Doses'], hxltags], \
+           [producers, funders, doses], [(hxltag, datasetinfo['date'], datasetinfo['source'], datasetinfo['source_url']) for hxltag in hxltags]
