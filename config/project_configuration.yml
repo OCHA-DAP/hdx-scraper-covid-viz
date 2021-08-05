@@ -86,7 +86,7 @@ additional_sources:
 monthly_report:
   hxltag: "#meta+monthly+report"
   dataset: "repository-for-pdf-files"
-  resource: "OCHA-data-explorer-monthly-report.pdf"
+  resource: "OCHA_data_explorer_monthly_report.pdf"
 
 # national
 scraper_national:
