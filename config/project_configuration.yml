@@ -746,6 +746,22 @@ scraper_national:
           - "DecreasedWages"
         output_hxltags:
           - "#affected+less_wages+hh+pct"
+  covax_allocations:
+    format: "xlsx"
+    dataset: "covax-round-6-allocations"
+    sheet: 1
+    headers: 2
+    adm_cols:
+      - "HRP Country"
+    input_cols:
+      - "Doses allocated: Sinopharm"
+      - "Doses allocated: Sinovac"
+    output_cols:
+      - "DosesAllocSinopharm"
+      - "DosesAllocSinovac"
+    output_hxltags:
+      - "#capacity+doses+allocated+sinopharm"
+      - "#capacity+doses+allocated+sinovac"
 
 fts:
   url: "https://api.hpc.tools/v"
@@ -1586,6 +1602,7 @@ country_name_overrides:
 country_name_mappings:
   "Congo DR": "COD"
   "CAR": "CAF"
+  "DRC": "COD"
 
 admin1_info:
   - {ADM1_PCODE: AF01, ADM1_REF: Kabul, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
