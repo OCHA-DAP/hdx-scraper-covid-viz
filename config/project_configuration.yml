@@ -754,14 +754,11 @@ scraper_national:
     adm_cols:
       - "HRP Country"
     input_cols:
-      - "Doses allocated: Sinopharm"
-      - "Doses allocated: Sinovac"
+      - "Allotment Total, Round 6"
     output_cols:
-      - "DosesAllocSinopharm"
-      - "DosesAllocSinovac"
+      - "DosesAllocated"
     output_hxltags:
-      - "#capacity+doses+allocated+sinopharm"
-      - "#capacity+doses+allocated+sinovac"
+      - "#capacity+doses+forecast+covax"
 
 fts:
   url: "https://api.hpc.tools/v"
