@@ -1527,7 +1527,9 @@ gho:
   - ECU
   - EGY
   - ETH
+  - GTM
   - GUY
+  - HND
   - HTI
   - IRQ
   - JOR
@@ -1547,6 +1549,7 @@ gho:
   - PSE
   - RWA
   - SDN
+  - SLV
   - SOM
   - SSD
   - SYR
