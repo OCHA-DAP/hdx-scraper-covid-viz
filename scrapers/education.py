@@ -94,6 +94,7 @@ def get_education(configuration, today, countryiso3s, regionlookup, downloader, 
                 learners_total[region] = learners_total.get(region, 0) + country_learners
             if country_affected_learners is not None:
                 affected_learners_total[region] = affected_learners_total.get(region, 0) + country_affected_learners
+            if countryiso in fully_closed:
                 closed_countries[region] = closed_countries.get(region, 0) + 1
     percentage_affected_learners = dict()
     for region, no_learners in affected_learners_total.items():
