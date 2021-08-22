@@ -642,7 +642,6 @@ scraper_national:
     adm_cols:
       - "#country+code"
     input_cols:
-      - "#capacity+covax+total"
       - "#capacity+covax+delivered+doses"
       - "#capacity+others+delivered+doses"
       - "#capacity+delivered+total"
@@ -651,20 +650,17 @@ scraper_national:
     input_ignore_vals:
       - "N/A"
     input_transforms:
-      "#capacity+covax+total": "get_numeric_if_possible(#capacity+covax+total)"
       "#capacity+covax+delivered+doses": "get_numeric_if_possible(#capacity+covax+delivered+doses)"
       "#capacity+others+delivered+doses": "get_numeric_if_possible(#capacity+others+delivered+doses)"
       "#capacity+delivered+total": "get_numeric_if_possible(#capacity+delivered+total)"
       "#capacity+coverage+one_dose": "number_format(get_numeric_if_possible(#capacity+coverage+one_dose), trailing_zeros=False)"
     output_cols:
-      - "Covax Interim Forecast Doses"
       - "Covax Delivered Doses"
       - "Other Delivered Doses"
       - "Total Delivered Doses"
       - "Population % covered by delivered doses"
       - "Source country for doses"
     output_hxltags:
-      - "#capacity+doses+forecast+covax"
       - "#capacity+doses+delivered+covax"
       - "#capacity+doses+delivered+others"
       - "#capacity+doses+delivered+total"
@@ -892,9 +888,6 @@ regional:
       action: "mean"
     "Vaccinations Postponed":
       action: "sum"
-    "Covax Interim Forecast Doses":
-      action: "sum"
-      subset: "hrps"
     "Covax Delivered Doses":
       action: "sum"
       subset: "hrps"
@@ -908,6 +901,8 @@ regional:
       action: "sum"
       subset: "hrps"
     "NoChildrenSAM":
+      action: "sum"
+    "DosesAllocated":
       action: "sum"
   multi_cols:
     "FoodInsecurityP3+":
@@ -926,7 +921,6 @@ regional:
     - "% of CERF projects affected by insecurity and inaccessibility"
     - "% of CBPF projects affected by insecurity and inaccessibility"
     - "Vaccinations Postponed"
-    - "Covax Interim Forecast Doses"
     - "Covax Delivered Doses"
     - "Other Delivered Doses"
     - "Total Delivered Doses"
@@ -935,6 +929,7 @@ regional:
     - "No. closed countries"
     - "FoodInsecurityP3+"
     - "NoChildrenSAM"
+    - "DosesAllocated"
 
 scraper_global:
   allocations_global:
