@@ -743,7 +743,7 @@ scraper_national:
         output_hxltags:
           - "#affected+less_wages+hh+pct"
   covax_allocations:
-    format: "xlsx"
+    format: "csv"
     dataset: "covax-round-6-allocations"
     sheet: 1
     headers: 2
@@ -751,6 +751,8 @@ scraper_national:
       - "HRP Country"
     input_cols:
       - "Allotment Total, Round 6"
+    input_transforms:
+      "Allotment Total, Round 6": "get_numeric_if_possible(Allotment Total, Round 6)"
     output_cols:
       - "DosesAllocated"
     output_hxltags:
