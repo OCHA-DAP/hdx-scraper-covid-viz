@@ -428,7 +428,7 @@ scraper_national:
     url: "tests/fixtures/covid-19-sex-disaggregated-data.csv"
     headers: 1
     external_filter:
-      url: "https://github.com/OCHA-DAP/hdx-scraper-covid-viz/raw/master/tests/fixtures/sadd-countries-to-include.csv"
+      url: "https://github.com/OCHA-DAP/hdx-scraper-covid-viz/raw/main/tests/fixtures/sadd-countries-to-include.csv"
       hxltags:
         - "#country+code+v_iso2"
     adm_cols:
