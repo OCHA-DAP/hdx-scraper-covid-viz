@@ -1571,6 +1571,8 @@ HRPs:
   - COD
   - COL
   - ETH
+  - GTM
+  - HND
   - HTI
   - IRQ
   - LBY
@@ -1582,6 +1584,7 @@ HRPs:
   - PAK
   - PSE
   - SDN
+  - SLV
   - SOM
   - SSD
   - SYR
@@ -1764,6 +1767,46 @@ admin1_info:
   - {ADM1_PCODE: ET13, ADM1_REF: Harari, ADM0_PCODE: ET, alpha_3: ETH, ADM0_REF: Ethiopia}
   - {ADM1_PCODE: ET14, ADM1_REF: Addis Ababa, ADM0_PCODE: ET, alpha_3: ETH, ADM0_REF: Ethiopia}
   - {ADM1_PCODE: ET15, ADM1_REF: Dire Dawa, ADM0_PCODE: ET, alpha_3: ETH, ADM0_REF: Ethiopia}
+  - {ADM1_PCODE: GT01, ADM1_REF: Guatemala, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT02, ADM1_REF: El Progreso, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT03, ADM1_REF: Sacatepequez, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT04, ADM1_REF: Chimaltenango, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT05, ADM1_REF: Escuintla, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT06, ADM1_REF: Santa Rosa, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT07, ADM1_REF: Solola, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT08, ADM1_REF: Totonicapan, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT09, ADM1_REF: Quetzaltenango, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT10, ADM1_REF: Suchitepequez, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT11, ADM1_REF: Retalhuleu, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT12, ADM1_REF: San Marcos, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT13, ADM1_REF: Huehuetenango, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT14, ADM1_REF: Quiche, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT15, ADM1_REF: Baja Verapaz, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT16, ADM1_REF: Alta Verapaz, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT17, ADM1_REF: Peten, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT18, ADM1_REF: Izabal, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT19, ADM1_REF: Zacapa, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT20, ADM1_REF: Chiquimula, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT21, ADM1_REF: Jalapa, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: GT22, ADM1_REF: Jutiapa, ADM0_PCODE: GT, alpha_3: GTM, ADM0_REF: Guatemala}
+  - {ADM1_PCODE: HN01, ADM1_REF: Atlantida, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN02, ADM1_REF: Colon, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN03, ADM1_REF: Comayagua, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN04, ADM1_REF: Copan, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN05, ADM1_REF: Cortes, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN06, ADM1_REF: Choluteca, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN07, ADM1_REF: El Paraiso, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN08, ADM1_REF: Francisco Morazan, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN09, ADM1_REF: Gracias a Dios, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN10, ADM1_REF: Intibuca, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN11, ADM1_REF: Islas de La Bahia, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN12, ADM1_REF: La Paz, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN13, ADM1_REF: Lempira, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN14, ADM1_REF: Ocotepeque, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN15, ADM1_REF: Olancho, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN16, ADM1_REF: Santa Barbara, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN17, ADM1_REF: Valle, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
+  - {ADM1_PCODE: HN18, ADM1_REF: Yoro, ADM0_PCODE: HN, alpha_3: HND, ADM0_REF: Honduras}
   - {ADM1_PCODE: HT01, ADM1_REF: West, ADM0_PCODE: HT, alpha_3: HTI, ADM0_REF: Haiti}
   - {ADM1_PCODE: HT02, ADM1_REF: South East, ADM0_PCODE: HT, alpha_3: HTI, ADM0_REF: Haiti}
   - {ADM1_PCODE: HT03, ADM1_REF: North, ADM0_PCODE: HT, alpha_3: HTI, ADM0_REF: Haiti}
@@ -2056,6 +2099,20 @@ admin1_info:
   - {ADM1_PCODE: SS08, ADM1_REF: Warrap, ADM0_PCODE: SS, alpha_3: SSD, ADM0_REF: South Sudan}
   - {ADM1_PCODE: SS09, ADM1_REF: Western Bahr El Ghazal, ADM0_PCODE: SS, alpha_3: SSD, ADM0_REF: South Sudan}
   - {ADM1_PCODE: SS10, ADM1_REF: Western Equatoria, ADM0_PCODE: SS, alpha_3: SSD, ADM0_REF: South Sudan}
+  - {ADM1_PCODE: SV01, ADM1_REF: Ahuachapan, ADM0_PCODE: SV, alpha_3: SLV, ADM0_REF: El Salvador}
+  - {ADM1_PCODE: SV02, ADM1_REF: Cabanas, ADM0_PCODE: SV, alpha_3: SLV, ADM0_REF: El Salvador}
+  - {ADM1_PCODE: SV03, ADM1_REF: Chalatenango, ADM0_PCODE: SV, alpha_3: SLV, ADM0_REF: El Salvador}
+  - {ADM1_PCODE: SV04, ADM1_REF: Cuscatlan, ADM0_PCODE: SV, alpha_3: SLV, ADM0_REF: El Salvador}
+  - {ADM1_PCODE: SV05, ADM1_REF: La Libertad, ADM0_PCODE: SV, alpha_3: SLV, ADM0_REF: El Salvador}
+  - {ADM1_PCODE: SV06, ADM1_REF: La Paz, ADM0_PCODE: SV, alpha_3: SLV, ADM0_REF: El Salvador}
+  - {ADM1_PCODE: SV07, ADM1_REF: La Union, ADM0_PCODE: SV, alpha_3: SLV, ADM0_REF: El Salvador}
+  - {ADM1_PCODE: SV08, ADM1_REF: Morazan, ADM0_PCODE: SV, alpha_3: SLV, ADM0_REF: El Salvador}
+  - {ADM1_PCODE: SV09, ADM1_REF: San Miguel, ADM0_PCODE: SV, alpha_3: SLV, ADM0_REF: El Salvador}
+  - {ADM1_PCODE: SV10, ADM1_REF: San Salvador, ADM0_PCODE: SV, alpha_3: SLV, ADM0_REF: El Salvador}
+  - {ADM1_PCODE: SV11, ADM1_REF: San Vicente, ADM0_PCODE: SV, alpha_3: SLV, ADM0_REF: El Salvador}
+  - {ADM1_PCODE: SV12, ADM1_REF: Santa Ana, ADM0_PCODE: SV, alpha_3: SLV, ADM0_REF: El Salvador}
+  - {ADM1_PCODE: SV13, ADM1_REF: Sonsonate, ADM0_PCODE: SV, alpha_3: SLV, ADM0_REF: El Salvador}
+  - {ADM1_PCODE: SV14, ADM1_REF: Usulutan, ADM0_PCODE: SV, alpha_3: SLV, ADM0_REF: El Salvador}
   - {ADM1_PCODE: SY01, ADM1_REF: Damascus, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
   - {ADM1_PCODE: SY02, ADM1_REF: Aleppo, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
   - {ADM1_PCODE: SY03, ADM1_REF: Rural Damascus, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
