@@ -822,7 +822,7 @@ education:
   enrolment:
     format: "xlsx"
     dataset: "global-school-closures-covid19"
-    resource: "Enrollment"
+    resource: "Enrollments data"
     sheet: 1
     headers: 1
 

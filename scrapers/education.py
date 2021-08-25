@@ -51,15 +51,15 @@ def get_education(configuration, today, countryiso3s, regionlookup, downloader, 
         l_2 = row['Secondary (both)']
         l_3 = row['Tertiary (both)']
         l_012 = None
-        if l_0 != '-':
+        if l_0 is not None and l_0 != '-':
             l_012 = int(l_0)
-        if l_1 != '-':
+        if l_1 is not None and l_1 != '-':
             l_1 = int(l_1)
             if l_012 is None:
                 l_012 = l_1
             else:
                 l_012 += l_1
-        if l_2 != '-':
+        if l_2 is not None and l_2 != '-':
             l_2 = int(l_2)
             if l_012 is None:
                 l_012 = l_2
@@ -69,7 +69,7 @@ def get_education(configuration, today, countryiso3s, regionlookup, downloader, 
             learners_012[countryiso] = l_012
         if l_3 == '-':
             l_3 = None
-        else:
+        elif l_3 is not None:
             l_3 = int(l_3)
             learners_3[countryiso] = l_3
         no_learners = None
