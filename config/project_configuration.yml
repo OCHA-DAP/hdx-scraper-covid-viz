@@ -750,9 +750,9 @@ scraper_national:
     adm_cols:
       - "HRP Country"
     input_cols:
-      - "Allotment Total, Round 6"
+      - "Total to date"
     input_transforms:
-      "Allotment Total, Round 6": "get_numeric_if_possible(Allotment Total, Round 6)"
+      "Total to date": "get_numeric_if_possible(Total to date)"
     output_cols:
       - "DosesAllocated"
     output_hxltags:
