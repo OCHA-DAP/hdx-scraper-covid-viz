@@ -762,9 +762,13 @@ scraper_national:
     dataset: "wfp-food-prices"
     url: "https://drive.google.com/uc?export=download&id=1RZ7T26iMWSEnL9PLdxGe-5lkamK0kjt2"
     headers: 1
+    sort:
+      keys:
+        - "CountryName"
+        - "MMFPSNTotImpactQuarterlyChange"
     adm_cols:
       - "CountryName"
-    date_col: "lastModifyDate"
+    date_col: "MMFPSNDate"
     date_type: "date"
     subsets:
       - filter: "MMFPSNDataLevel=National                           "
