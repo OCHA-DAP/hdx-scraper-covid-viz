@@ -701,7 +701,7 @@ scraper_national:
         input_cols:
           - "indicator_val"
         input_transforms:
-          "indicator_val": "number_format(indicator_val / 100, trailing_zeros=False)"
+          "indicator_val": "get_fraction_str(indicator_val, 100, trailing_zeros=False)"
         output_cols:
           - "ReceivedAssistance"
         output_hxltags:
@@ -710,7 +710,7 @@ scraper_national:
         input_cols:
           - "indicator_val"
         input_transforms:
-          "indicator_val": "number_format(indicator_val / 100, trailing_zeros=False)"
+          "indicator_val": "get_fraction_str(indicator_val, 100, trailing_zeros=False)"
         output_cols:
           - "SkippedMeals"
         output_hxltags:
@@ -719,7 +719,7 @@ scraper_national:
         input_cols:
           - "indicator_val"
         input_transforms:
-          "indicator_val": "number_format(indicator_val / 100, trailing_zeros=False)"
+          "indicator_val": "get_fraction_str(indicator_val, 100, trailing_zeros=False)"
         output_cols:
           - "StoppedWorking"
         output_hxltags:
@@ -728,7 +728,7 @@ scraper_national:
         input_cols:
           - "indicator_val"
         input_transforms:
-          "indicator_val": "number_format(indicator_val / 100, trailing_zeros=False)"
+          "indicator_val": "get_fraction_str(indicator_val, 100, trailing_zeros=False)"
         output_cols:
           - "ReducedConsumption"
         output_hxltags:
@@ -737,7 +737,7 @@ scraper_national:
         input_cols:
           - "indicator_val"
         input_transforms:
-          "indicator_val": "number_format(indicator_val / 100, trailing_zeros=False)"
+          "indicator_val": "get_fraction_str(indicator_val, 100, trailing_zeros=False)"
         output_cols:
           - "DecreasedWages"
         output_hxltags:
@@ -757,6 +757,25 @@ scraper_national:
       - "DosesAllocated"
     output_hxltags:
       - "#capacity+doses+forecast+covax"
+  food_basket:
+    format: "csv"
+    dataset: "wfp-food-prices"
+    url: "https://drive.google.com/uc?export=download&id=1RZ7T26iMWSEnL9PLdxGe-5lkamK0kjt2"
+    headers: 1
+    adm_cols:
+      - "CountryName"
+    date_col: "lastModifyDate"
+    date_type: "date"
+    subsets:
+      - filter: "MMFPSNDataLevel=National                           "
+        input_cols:
+          - "MMFPSNTotImpactQuarterlyChange"
+        input_transforms:
+          "MMFPSNTotImpactQuarterlyChange": "get_fraction_str(MMFPSNTotImpactQuarterlyChange, 100, trailing_zeros=False)"
+        output_cols:
+          - "ChangeInFoodBasketCost"
+        output_hxltags:
+          - "#indicator+foodbasket+change+pct"
 
 fts:
   url: "https://api.hpc.tools/v"
