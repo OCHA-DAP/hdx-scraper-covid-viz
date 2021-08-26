@@ -760,7 +760,7 @@ scraper_national:
   food_basket:
     format: "csv"
     dataset: "wfp-food-prices"
-    url: "https://drive.google.com/uc?export=download&id=1RZ7T26iMWSEnL9PLdxGe-5lkamK0kjt2"
+    url: "https://wfp.sharepoint.com/:x:/s/EconomicMarketAnalysis/EVeSfcSQAvtGtAE3aseaNHoB5uENuNW4anaJ84ryqQI8Qw?download=1"
     headers: 1
     sort:
       keys:
