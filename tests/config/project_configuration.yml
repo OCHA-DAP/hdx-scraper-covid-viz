@@ -465,9 +465,9 @@ scraper_national:
     url: "tests/fixtures/owid-covid-data.xlsx"
     headers: 1
     sheet: 1
+    prefilter: "new_tests is not None and new_tests > 0"
     date_col: "date"
     date_type: "date"
-    date_condition: "new_tests is not None and new_tests > 0"
     adm_cols:
       - "iso_code"
     input_cols:

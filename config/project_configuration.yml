@@ -97,12 +97,12 @@ scraper_national:
     url: "http://api.worldbank.org/v2/en/indicator/SP.POP.TOTL?downloadformat=excel&dataformat=list"
     sheet: "Data"
     headers: 3
+    prefilter: "Value != ''"
     adm_cols:
       - "Country Code"
     adm_exact: True
     date_col: "Year"
     date_type: "year"
-    date_condition: "Value != ''"
     input_cols:
       - "Value"
     output_cols:
@@ -519,9 +519,9 @@ scraper_national:
     dataset: "total-covid-19-tests-performed-by-country"
     headers: 1
     sheet: 1
+    prefilter: "new_tests is not None and new_tests > 0"
     date_col: "date"
     date_type: "date"
-    date_condition: "new_tests is not None and new_tests > 0"
     adm_cols:
       - "iso_code"
     input_cols:
@@ -762,10 +762,7 @@ scraper_national:
     dataset: "wfp-food-prices"
     url: "https://wfp.sharepoint.com/:x:/s/EconomicMarketAnalysis/EVeSfcSQAvtGtAE3aseaNHoB5uENuNW4anaJ84ryqQI8Qw?download=1"
     headers: 1
-    sort:
-      keys:
-        - "CountryName"
-        - "MMFPSNTotImpactQuarterlyChange"
+    prefilter: "MMFPSNTotImpactQuarterlyChange != ''"
     adm_cols:
       - "CountryName"
     date_col: "MMFPSNDate"
