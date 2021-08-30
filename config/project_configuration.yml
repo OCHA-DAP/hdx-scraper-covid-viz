@@ -880,6 +880,15 @@ regional:
       action: "sum"
     "DosesAllocated":
       action: "sum"
+    "WorldBankFinancingApproved":
+      action: "sum"
+    "GAVIFinancingApproved":
+      action: "sum"
+    "GAVIFinancingDisbursed":
+      action: "sum"
+    "WorldBankGAVIFinancingTotal":
+      action: "sum"
+
   multi_cols:
     "FoodInsecurityP3+":
       action: "sum"
@@ -905,6 +914,10 @@ regional:
     - "FoodInsecurityP3+"
     - "NoChildrenSAM"
     - "DosesAllocated"
+    - "WorldBankFinancingApproved"
+    - "GAVIFinancingApproved"
+    - "GAVIFinancingDisbursed"
+    - "WorldBankGAVIFinancingTotal"
 
 scraper_global:
   allocations_global:
