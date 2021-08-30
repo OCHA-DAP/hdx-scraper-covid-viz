@@ -716,15 +716,23 @@ scraper_national:
     input_cols:
       - "Amount ($m)"
       - "GAVI COVID Delivery Support (early access)"
+      - "GAVI CDS (early access) Disbursed"
+      - "TOTAL (WB+GAVI) ($m)"
     input_transforms:
       "Amount ($m)": "get_numeric_if_possible(Amount ($m))"
       "GAVI COVID Delivery Support (early access)": "get_numeric_if_possible(GAVI COVID Delivery Support (early access))"
+      "GAVI CDS (early access) Disbursed": "get_numeric_if_possible(GAVI CDS (early access) Disbursed)"
+      "TOTAL (WB+GAVI) ($m)": "get_numeric_if_possible(TOTAL (WB+GAVI) ($m))"
     output_cols:
-      - "WorldBankFinancing"
-      - "GAVIFinancing"
+      - "WorldBankFinancingApproved"
+      - "GAVIFinancingApproved"
+      - "GAVIFinancingDisbursed"
+      - "WorldBankGAVIFinancingTotal"
     output_hxltags:
-      - "#value+total+worldbank"
-      - "#value+total+gavi"
+      - "#value+financing+worldbank+approved"
+      - "#value+financing+gavi+approved"
+      - "#value+financing+gavi+disbursed"
+      - "#value+financing+approved"
 
 fts:
   url: "https://api.hpc.tools/v"
