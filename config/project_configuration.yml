@@ -148,6 +148,7 @@ scraper_national:
     dataset: "global-humanitarian-overview-2021-figures"
     sheet: "Raw Data"
     headers: 1
+    prefilter: "Metric == 'People in need' and PiN Value for Dataviz == 'yes'"
     sort:
       reverse: True
       keys:
@@ -157,14 +158,15 @@ scraper_national:
     date_col: "Year"
     date_type: "year"
     single_maxdate: True
-    subsets:
-      - filter: "Metric=People in need|PiN Value for Dataviz=yes"
-        input_cols:
-          - "Value"
-        output_cols:
-          - "PeopleInNeed"
-        output_hxltags:
-          - "#affected+inneed"
+    filter_cols:
+      - "Metric"
+      - "PiN Value for Dataviz"
+    input_cols:
+      - "Value"
+    output_cols:
+      - "PeopleInNeed"
+    output_hxltags:
+      - "#affected+inneed"
   idmc:
     format: "csv"
     dataset: "idmc-internally-displaced-persons-idps"
@@ -235,8 +237,11 @@ scraper_national:
     single_maxdate: True
     adm_cols:
       - "CountryCode"
+    filter_cols:
+      - "FundType"
+      - "GenderMarker"
     subsets:
-      - filter: "FundType=CBPF"
+      - filter: "FundType == 'CBPF'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -248,7 +253,7 @@ scraper_national:
           - "CBPFFunding"
         output_hxltags:
           - "#value+cbpf+funding+total+usd"
-      - filter: "FundType=CBPF|GenderMarker="
+      - filter: "FundType == 'CBPF' and GenderMarker == ''"
         input_cols:
           - "Budget"
         input_transforms:
@@ -260,7 +265,7 @@ scraper_national:
           - "CBPFFundingGMEmpty"
         output_hxltags:
           - "#value+cbpf+funding+gmempty+total+usd"
-      - filter: "FundType=CBPF|GenderMarker=0"
+      - filter: "FundType == 'CBPF' and GenderMarker == '0'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -272,7 +277,7 @@ scraper_national:
           - "CBPFFundingGM0"
         output_hxltags:
           - "#value+cbpf+funding+gm0+total+usd"
-      - filter: "FundType=CBPF|GenderMarker=1"
+      - filter: "FundType == 'CBPF' and GenderMarker == '1'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -284,7 +289,7 @@ scraper_national:
           - "CBPFFundingGM1"
         output_hxltags:
           - "#value+cbpf+funding+gm1+total+usd"
-      - filter: "FundType=CBPF|GenderMarker=2"
+      - filter: "FundType == 'CBPF' and GenderMarker == '2'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -296,7 +301,7 @@ scraper_national:
           - "CBPFFundingGM2"
         output_hxltags:
           - "#value+cbpf+funding+gm2+total+usd"
-      - filter: "FundType=CBPF|GenderMarker=3"
+      - filter: "FundType == 'CBPF' and GenderMarker == '3'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -308,7 +313,7 @@ scraper_national:
           - "CBPFFundingGM3"
         output_hxltags:
           - "#value+cbpf+funding+gm3+total+usd"
-      - filter: "FundType=CBPF|GenderMarker=4"
+      - filter: "FundType == 'CBPF' and GenderMarker == '4'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -320,7 +325,7 @@ scraper_national:
           - "CBPFFundingGM4"
         output_hxltags:
           - "#value+cbpf+funding+gm4+total+usd"
-      - filter: "FundType=CERF"
+      - filter: "FundType == 'CERF'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -332,7 +337,7 @@ scraper_national:
           - "CERFFunding"
         output_hxltags:
           - "#value+cerf+funding+total+usd"
-      - filter: "FundType=CERF|GenderMarker="
+      - filter: "FundType == 'CERF' and GenderMarker == ''"
         input_cols:
           - "Budget"
         input_transforms:
@@ -344,7 +349,7 @@ scraper_national:
           - "CERFFundingGMEmpty"
         output_hxltags:
           - "#value+cerf+funding+gmempty+total+usd"
-      - filter: "FundType=CERF|GenderMarker=0"
+      - filter: "FundType == 'CERF' and GenderMarker == '0'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -356,7 +361,7 @@ scraper_national:
           - "CERFFundingGM0"
         output_hxltags:
           - "#value+cerf+funding+gm0+total+usd"
-      - filter: "FundType=CERF|GenderMarker=1"
+      - filter: "FundType == 'CERF' and GenderMarker == '1'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -368,7 +373,7 @@ scraper_national:
           - "CERFFundingGM1"
         output_hxltags:
           - "#value+cerf+funding+gm1+total+usd"
-      - filter: "FundType=CERF|GenderMarker=2"
+      - filter: "FundType == 'CERF' and GenderMarker == '2'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -380,7 +385,7 @@ scraper_national:
           - "CERFFundingGM2"
         output_hxltags:
           - "#value+cerf+funding+gm2+total+usd"
-      - filter: "FundType=CERF|GenderMarker=3"
+      - filter: "FundType == 'CERF' and GenderMarker == '3'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -392,7 +397,7 @@ scraper_national:
           - "CERFFundingGM3"
         output_hxltags:
           - "#value+cerf+funding+gm3+total+usd"
-      - filter: "FundType=CERF|GenderMarker=4"
+      - filter: "FundType == 'CERF' and GenderMarker == '4'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -473,6 +478,7 @@ scraper_national:
     dataset: "cadre-harmonise"
     headers: 1
     sheet: 1
+    prefilter: "chtype == 'current'"
     sort:
       reverse: True
       keys:
@@ -484,43 +490,43 @@ scraper_national:
       - "reference_year"
       - "reference_code"
     date_type: "int"
-    subsets:
-      - filter: "chtype=current"
-        input_cols:
-          - "phase3"
-          - "phase4"
-          - "phase5"
-          - "phase35"
-          - "population"
-        input_transforms:
-          "phase3": "get_numeric_if_possible(phase3)"
-          "phase4": "get_numeric_if_possible(phase4)"
-          "phase5": "get_numeric_if_possible(phase5)"
-          "phase35": "get_numeric_if_possible(phase35)"
-          "population": "get_numeric_if_possible(population)"
-        sum_cols:
-          - formula: "phase3"
-            mustbepopulated: False
-          - formula: "phase4"
-            mustbepopulated: False
-          - formula: "phase5"
-            mustbepopulated: False
-          - formula: "phase35"
-            mustbepopulated: False
-          - formula: "population"
-            mustbepopulated: False
-        output_cols:
-          - "FoodInsecurityCHP3"
-          - "FoodInsecurityCHP4"
-          - "FoodInsecurityCHP5"
-          - "FoodInsecurityCHP3+"
-          - "FoodInsecurityCHAnalysed"
-        output_hxltags:
-          - "#affected+ch+food+p3+num"
-          - "#affected+ch+food+p4+num"
-          - "#affected+ch+food+p5+num"
-          - "#affected+ch+food+p3plus+num"
-          - "#affected+ch+food+analysed+num"
+    filter_cols:
+      - "chtype"
+    input_cols:
+      - "phase3"
+      - "phase4"
+      - "phase5"
+      - "phase35"
+      - "population"
+    input_transforms:
+      "phase3": "get_numeric_if_possible(phase3)"
+      "phase4": "get_numeric_if_possible(phase4)"
+      "phase5": "get_numeric_if_possible(phase5)"
+      "phase35": "get_numeric_if_possible(phase35)"
+      "population": "get_numeric_if_possible(population)"
+    sum_cols:
+      - formula: "phase3"
+        mustbepopulated: False
+      - formula: "phase4"
+        mustbepopulated: False
+      - formula: "phase5"
+        mustbepopulated: False
+      - formula: "phase35"
+        mustbepopulated: False
+      - formula: "population"
+        mustbepopulated: False
+    output_cols:
+      - "FoodInsecurityCHP3"
+      - "FoodInsecurityCHP4"
+      - "FoodInsecurityCHP5"
+      - "FoodInsecurityCHP3+"
+      - "FoodInsecurityCHAnalysed"
+    output_hxltags:
+      - "#affected+ch+food+p3+num"
+      - "#affected+ch+food+p4+num"
+      - "#affected+ch+food+p5+num"
+      - "#affected+ch+food+p3plus+num"
+      - "#affected+ch+food+analysed+num"
   access:
     source:
       "#access+visas+pct": "OCHA"
@@ -625,8 +631,12 @@ scraper_national:
       - "year"
       - "month"
     date_type: "int"
+    filter_cols:
+      - "indicator"
+      - "urban_rural"
+      - "industry"
     subsets:
-      - filter: "indicator=Safe_anysource|urban_rural=National|industry=All"
+      - filter: "indicator == 'Safe_anysource' and urban_rural == 'National' and industry == 'All'"
         input_cols:
           - "indicator_val"
         input_transforms:
@@ -635,7 +645,7 @@ scraper_national:
           - "ReceivedAssistance"
         output_hxltags:
           - "#targeted+assist+hh+pct"
-      - filter: "indicator=FS_skipmeal|urban_rural=National|industry=All"
+      - filter: "indicator == 'FS_skipmeal' and urban_rural == 'National' and industry == 'All'"
         input_cols:
           - "indicator_val"
         input_transforms:
@@ -644,7 +654,7 @@ scraper_national:
           - "SkippedMeals"
         output_hxltags:
           - "#affected+skip_meals+hh+pct"
-      - filter: "indicator=Labo_stop|urban_rural=National|industry=All"
+      - filter: "indicator == 'Labo_stop' and urban_rural == 'National' and industry == 'All'"
         input_cols:
           - "indicator_val"
         input_transforms:
@@ -653,7 +663,7 @@ scraper_national:
           - "StoppedWorking"
         output_hxltags:
           - "#affected+stop_working+hh+pct"
-      - filter: "indicator=Copi_reduce|urban_rural=National|industry=All"
+      - filter: "indicator == 'Copi_reduce' and urban_rural == 'National' and industry == 'All'"
         input_cols:
           - "indicator_val"
         input_transforms:
@@ -662,7 +672,7 @@ scraper_national:
           - "ReducedConsumption"
         output_hxltags:
           - "#affected+less_consumption+hh+pct"
-      - filter: "indicator=Inco_WachangenLD|urban_rural=National|industry=All"
+      - filter: "indicator == 'Inco_WachangenLD' and urban_rural == 'National' and industry == 'All'"
         input_cols:
           - "indicator_val"
         input_transforms:
@@ -688,24 +698,30 @@ scraper_national:
       - "#capacity+doses+forecast+covax"
   food_basket:
     format: "csv"
-    dataset: "wfp-food-prices"
+    dataset: "cost-of-the-food-basket"
     url: "https://wfp.sharepoint.com/:x:/s/EconomicMarketAnalysis/EVeSfcSQAvtGtAE3aseaNHoB5uENuNW4anaJ84ryqQI8Qw?download=1"
     headers: 1
-    prefilter: "MMFPSNTotImpactQuarterlyChange != ''"
+    prefilter: "MMFPSNDataLevel.strip() == 'National' and MMFPSNTotImpactQuarterlyChange != ''"
+    sort:
+      reverse: True
+      keys:
+        - "MMFPSNDate"
     adm_cols:
       - "CountryName"
     date_col: "MMFPSNDate"
     date_type: "date"
-    subsets:
-      - filter: "MMFPSNDataLevel=National                           "
-        input_cols:
-          - "MMFPSNTotImpactQuarterlyChange"
-        input_transforms:
-          "MMFPSNTotImpactQuarterlyChange": "get_fraction_str(MMFPSNTotImpactQuarterlyChange, 100, trailing_zeros=False)"
-        output_cols:
-          - "ChangeInFoodBasketCost"
-        output_hxltags:
-          - "#indicator+foodbasket+change+pct"
+    single_maxdate: True
+    filter_cols:
+      - "MMFPSNDataLevel"
+      - "MMFPSNTotImpactQuarterlyChange"
+    input_cols:
+      - "MMFPSNTotImpactQuarterlyChange"
+    input_transforms:
+      "MMFPSNTotImpactQuarterlyChange": "get_fraction_str(MMFPSNTotImpactQuarterlyChange, 100, trailing_zeros=False)"
+    output_cols:
+      - "ChangeInFoodBasketCost"
+    output_hxltags:
+      - "#indicator+foodbasket+change+pct"
   financing:
     format: "csv"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
@@ -950,8 +966,11 @@ scraper_global:
     date_col: "AllocationYear"
     date_type: "year"
     single_maxdate: True
+    filter_cols:
+      - "FundType"
+      - "GenderMarker"
     subsets:
-      - filter: "FundType=CBPF"
+      - filter: "FundType == 'CBPF'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -963,7 +982,7 @@ scraper_global:
           - "CBPFFunding"
         output_hxltags:
           - "#value+cbpf+funding+total+usd"
-      - filter: "FundType=CBPF|GenderMarker="
+      - filter: "FundType == 'CBPF' and GenderMarker == ''"
         input_cols:
           - "Budget"
         input_transforms:
@@ -975,7 +994,7 @@ scraper_global:
           - "CBPFFundingGMEmpty"
         output_hxltags:
           - "#value+cbpf+funding+gmempty+total+usd"
-      - filter: "FundType=CBPF|GenderMarker=0"
+      - filter: "FundType == 'CBPF' and GenderMarker == '0'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -987,7 +1006,7 @@ scraper_global:
           - "CBPFFundingGM0"
         output_hxltags:
           - "#value+cbpf+funding+gm0+total+usd"
-      - filter: "FundType=CBPF|GenderMarker=1"
+      - filter: "FundType == 'CBPF' and GenderMarker == '1'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -999,7 +1018,7 @@ scraper_global:
           - "CBPFFundingGM1"
         output_hxltags:
           - "#value+cbpf+funding+gm1+total+usd"
-      - filter: "FundType=CBPF|GenderMarker=2"
+      - filter: "FundType == 'CBPF' and GenderMarker == '2'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -1011,7 +1030,7 @@ scraper_global:
           - "CBPFFundingGM2"
         output_hxltags:
           - "#value+cbpf+funding+gm2+total+usd"
-      - filter: "FundType=CBPF|GenderMarker=3"
+      - filter: "FundType == 'CBPF' and GenderMarker == '3'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -1023,7 +1042,7 @@ scraper_global:
           - "CBPFFundingGM3"
         output_hxltags:
           - "#value+cbpf+funding+gm3+total+usd"
-      - filter: "FundType=CBPF|GenderMarker=4"
+      - filter: "FundType == 'CBPF' and GenderMarker == '4'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -1035,7 +1054,7 @@ scraper_global:
           - "CBPFFundingGM4"
         output_hxltags:
           - "#value+cbpf+funding+gm4+total+usd"
-      - filter: "FundType=CERF"
+      - filter: "FundType == 'CERF'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -1047,7 +1066,7 @@ scraper_global:
           - "CERFFunding"
         output_hxltags:
           - "#value+cerf+funding+total+usd"
-      - filter: "FundType=CERF|GenderMarker="
+      - filter: "FundType == 'CERF' and GenderMarker == ''"
         input_cols:
           - "Budget"
         input_transforms:
@@ -1059,7 +1078,7 @@ scraper_global:
           - "CERFFundingGMEmpty"
         output_hxltags:
           - "#value+cerf+funding+gmempty+total+usd"
-      - filter: "FundType=CERF|GenderMarker=0"
+      - filter: "FundType == 'CERF' and GenderMarker == '0'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -1071,7 +1090,7 @@ scraper_global:
           - "CERFFundingGM0"
         output_hxltags:
           - "#value+cerf+funding+gm0+total+usd"
-      - filter: "FundType=CERF|GenderMarker=1"
+      - filter: "FundType == 'CERF' and GenderMarker == '1'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -1083,7 +1102,7 @@ scraper_global:
           - "CERFFundingGM1"
         output_hxltags:
           - "#value+cerf+funding+gm1+total+usd"
-      - filter: "FundType=CERF|GenderMarker=2"
+      - filter: "FundType == 'CERF' and GenderMarker == '2'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -1095,7 +1114,7 @@ scraper_global:
           - "CERFFundingGM2"
         output_hxltags:
           - "#value+cerf+funding+gm2+total+usd"
-      - filter: "FundType=CERF|GenderMarker=3"
+      - filter: "FundType == 'CERF' and GenderMarker == '3'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -1107,7 +1126,7 @@ scraper_global:
           - "CERFFundingGM3"
         output_hxltags:
           - "#value+cerf+funding+gm3+total+usd"
-      - filter: "FundType=CERF|GenderMarker=4"
+      - filter: "FundType == 'CERF' and GenderMarker == '4'"
         input_cols:
           - "Budget"
         input_transforms:
@@ -1137,8 +1156,10 @@ scraper_global:
     date_col: "FiscalYear"
     date_type: "year"
     single_maxdate: True
+    filter_cols:
+      - "FundType"
     subsets:
-      - filter: "FundType=CBPF"
+      - filter: "FundType == 'CBPF'"
         input_cols:
           - "PaidAmt"
           - "PledgeAmt"
@@ -1152,7 +1173,7 @@ scraper_global:
           - "CBPFContributions"
         output_hxltags:
           - "#value+cbpf+contributions+total+usd"
-      - filter: "FundType=CERF"
+      - filter: "FundType == 'CERF'"
         input_cols:
           - "PaidAmt"
           - "PledgeAmt"
@@ -1214,6 +1235,7 @@ scraper_subnational:
     dataset: "cadre-harmonise"
     headers: 1
     sheet: 1
+    prefilter: "chtype == 'current'"
     sort:
       reverse: True
       keys:
@@ -1228,43 +1250,43 @@ scraper_subnational:
       - "reference_year"
       - "reference_code"
     date_type: "int"
-    subsets:
-      - filter: "chtype=current"
-        input_cols:
-          - "phase3"
-          - "phase4"
-          - "phase5"
-          - "phase35"
-          - "population"
-        input_transforms:
-          "phase3": "get_numeric_if_possible(phase3)"
-          "phase4": "get_numeric_if_possible(phase4)"
-          "phase5": "get_numeric_if_possible(phase5)"
-          "phase35": "get_numeric_if_possible(phase35)"
-          "population": "get_numeric_if_possible(population)"
-        sum_cols:
-          - formula: "phase3"
-            mustbepopulated: False
-          - formula: "phase4"
-            mustbepopulated: False
-          - formula: "phase5"
-            mustbepopulated: False
-          - formula: "phase35"
-            mustbepopulated: False
-          - formula: "population"
-            mustbepopulated: False
-        output_cols:
-          - "FoodInsecurityCHP3"
-          - "FoodInsecurityCHP4"
-          - "FoodInsecurityCHP5"
-          - "FoodInsecurityCHP3+"
-          - "FoodInsecurityCHAnalysed"
-        output_hxltags:
-          - "#affected+ch+food+p3+num"
-          - "#affected+ch+food+p4+num"
-          - "#affected+ch+food+p5+num"
-          - "#affected+ch+food+p3plus+num"
-          - "#affected+ch+food+analysed+num"
+    filter_cols:
+      - "chtype"
+    input_cols:
+      - "phase3"
+      - "phase4"
+      - "phase5"
+      - "phase35"
+      - "population"
+    input_transforms:
+      "phase3": "get_numeric_if_possible(phase3)"
+      "phase4": "get_numeric_if_possible(phase4)"
+      "phase5": "get_numeric_if_possible(phase5)"
+      "phase35": "get_numeric_if_possible(phase35)"
+      "population": "get_numeric_if_possible(population)"
+    sum_cols:
+      - formula: "phase3"
+        mustbepopulated: False
+      - formula: "phase4"
+        mustbepopulated: False
+      - formula: "phase5"
+        mustbepopulated: False
+      - formula: "phase35"
+        mustbepopulated: False
+      - formula: "population"
+        mustbepopulated: False
+    output_cols:
+      - "FoodInsecurityCHP3"
+      - "FoodInsecurityCHP4"
+      - "FoodInsecurityCHP5"
+      - "FoodInsecurityCHP3+"
+      - "FoodInsecurityCHAnalysed"
+    output_hxltags:
+      - "#affected+ch+food+p3+num"
+      - "#affected+ch+food+p4+num"
+      - "#affected+ch+food+p5+num"
+      - "#affected+ch+food+p3plus+num"
+      - "#affected+ch+food+analysed+num"
   healthfac:
     source: "HOT"
     format: "csv"
@@ -1303,8 +1325,10 @@ scraper_subnational:
       - "Admin1"
     date_col: "Year"
     date_type: "year"
+    filter_cols:
+      - "Vaccine"
     subsets:
-      - filter: "Vaccine=HepB1"
+      - filter: "Vaccine == 'HepB1'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -1321,7 +1345,7 @@ scraper_subnational:
           - "HepB1 Coverage"
         output_hxltags:
           - "#population+hepb1+pct+vaccinated"
-      - filter: "Vaccine=HepB2"
+      - filter: "Vaccine == 'HepB2'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -1338,7 +1362,7 @@ scraper_subnational:
           - "HepB2 Coverage"
         output_hxltags:
           - "#population+hepb2+pct+vaccinated"
-      - filter: "Vaccine=HepB3"
+      - filter: "Vaccine == 'HepB3'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -1355,7 +1379,7 @@ scraper_subnational:
           - "HepB3 Coverage"
         output_hxltags:
           - "#population+hepb3+pct+vaccinated"
-      - filter: "Vaccine=IPV1"
+      - filter: "Vaccine == 'IPV1'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -1372,7 +1396,7 @@ scraper_subnational:
           - "IPV1 Coverage"
         output_hxltags:
           - "#population+ipv1+pct+vaccinated"
-      - filter: "Vaccine=MCV1"
+      - filter: "Vaccine == 'MCV1'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -1389,7 +1413,7 @@ scraper_subnational:
           - "MCV1 Coverage"
         output_hxltags:
           - "#population+mcv1+pct+vaccinated"
-      - filter: "Vaccine=MCV2"
+      - filter: "Vaccine == 'MCV2'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -1406,7 +1430,7 @@ scraper_subnational:
           - "MCV2 Coverage"
         output_hxltags:
           - "#population+mcv2+pct+vaccinated"
-      - filter: "Vaccine=Pol1"
+      - filter: "Vaccine == 'Pol1'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -1423,7 +1447,7 @@ scraper_subnational:
           - "Pol1 Coverage"
         output_hxltags:
           - "#population+pct+pol1+vaccinated"
-      - filter: "Vaccine=Pol2"
+      - filter: "Vaccine == 'Pol2'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -1440,7 +1464,7 @@ scraper_subnational:
           - "Pol2 Coverage"
         output_hxltags:
           - "#population+pct+pol2+vaccinated"
-      - filter: "Vaccine=Pol3"
+      - filter: "Vaccine == 'Pol3'"
         input_cols:
           - "Numerator"
           - "Denominator"

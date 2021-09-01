@@ -129,27 +129,26 @@ scraper_national:
     dataset: "coronavirus-covid-19-cases-and-deaths"
     url: "tests/fixtures/WHO-COVID-19-global-data.csv"
     headers: 1
+    prefilter: "Date_reported == '2020-08-06'"
     adm_cols:
       - "Country_code"
     date_col: "Date_reported"
     date_type: "date"
     use_date_from_date_col: True
-    subsets:
-      - filter: "Date_reported=2020-08-06"
-        input_cols:
-          - "Cumulative_cases"
-          - "Cumulative_deaths"
-        sum_cols:
-          - formula: "number_format(Cumulative_cases / #population * 100000, format='%.2f')"
-            mustbepopulated: True
-          - formula: "number_format(Cumulative_deaths / #population * 100000, format='%.2f')"
-            mustbepopulated: True
-        output_cols:
-          - "Cases2Per100000"
-          - "Deaths2Per100000"
-        output_hxltags:
-          - "#affected+infected+2+per100000"
-          - "#affected+killed+2+per100000"
+    input_cols:
+      - "Cumulative_cases"
+      - "Cumulative_deaths"
+    sum_cols:
+      - formula: "number_format(Cumulative_cases / #population * 100000, format='%.2f')"
+        mustbepopulated: True
+      - formula: "number_format(Cumulative_deaths / #population * 100000, format='%.2f')"
+        mustbepopulated: True
+    output_cols:
+      - "Cases2Per100000"
+      - "Deaths2Per100000"
+    output_hxltags:
+      - "#affected+infected+2+per100000"
+      - "#affected+killed+2+per100000"
   inform_hazard:
     format: "xlsx"
     dataset: "inform-covid-19-risk-index-version-0-1-2"
@@ -293,18 +292,20 @@ scraper_national:
     dataset: "global-humanitarian-overview-2020-figures"
     sheet: "Raw Data"
     headers: 1
+    prefilter: "Metric == 'People in need' and PiN Value for Dataviz == 'yes'"
     adm_cols:
       - "Country Code"
     date_col: "Year"
     date_type: "year"
-    subsets:
-      - filter: "Metric=People in need|PiN Value for Dataviz=yes"
-        input_cols:
-          - "Value"
-        output_cols:
-          - "PeopleInNeed"
-        output_hxltags:
-          - "#affected+inneed"
+    filter_cols:
+      - "Metric"
+      - "PiN Value for Dataviz"
+    input_cols:
+      - "Value"
+    output_cols:
+      - "PeopleInNeed"
+    output_hxltags:
+      - "#affected+inneed"
   idmc:
     format: "csv"
     dataset: "idmc-internally-displaced-persons-idps"
@@ -396,8 +397,10 @@ scraper_national:
     headers: 1
     adm_cols:
       - "ISO2Country"
+    filter_cols:
+      - "PFType"
     subsets:
-      - filter: "PFType=CBPF"
+      - filter: "PFType == 'CBPF'"
         input_cols:
           - "TargetAmt"
         input_transforms:
@@ -409,7 +412,7 @@ scraper_national:
           - "CBPFCovidFunding"
         output_hxltags:
           - "#value+cbpf+covid+funding+total+usd"
-      - filter: "PFType=CERF"
+      - filter: "PFType == 'CERF'"
         input_cols:
           - "TargetAmt"
         input_transforms:
@@ -492,6 +495,7 @@ scraper_national:
     date: "2021-05-03"
     headers: 1
     sheet: 1
+    prefilter: "chtype == 'current'"
     sort:
       reverse: True
       keys:
@@ -503,43 +507,43 @@ scraper_national:
       - "reference_year"
       - "reference_code"
     date_type: "int"
-    subsets:
-      - filter: "chtype=current"
-        input_cols:
-          - "phase3"
-          - "phase4"
-          - "phase5"
-          - "phase35"
-          - "population"
-        input_transforms:
-          "phase3": "float(phase3)"
-          "phase4": "float(phase4)"
-          "phase5": "float(phase5)"
-          "phase35": "float(phase35)"
-          "population": "float(population)"
-        sum_cols:
-          - formula: "get_fraction_str(phase3, population)"
-            mustbepopulated: True
-          - formula: "get_fraction_str(phase4, population)"
-            mustbepopulated: True
-          - formula: "get_fraction_str(phase5, population)"
-            mustbepopulated: True
-          - formula: "get_fraction_str(phase35, population)"
-            mustbepopulated: True
-          - formula: "get_fraction_str(population, #population)"
-            mustbepopulated: True
-        output_cols:
-          - "FoodInsecurityCHP3"
-          - "FoodInsecurityCHP4"
-          - "FoodInsecurityCHP5"
-          - "FoodInsecurityCHP3+"
-          - "FoodInsecurityCHAnalysed"
-        output_hxltags:
-          - "#affected+ch+food+p3+pct"
-          - "#affected+ch+food+p4+pct"
-          - "#affected+ch+food+p5+pct"
-          - "#affected+ch+food+p3plus+pct"
-          - "#affected+ch+food+analysed+pct"
+    filter_cols:
+      - "chtype"
+    input_cols:
+      - "phase3"
+      - "phase4"
+      - "phase5"
+      - "phase35"
+      - "population"
+    input_transforms:
+      "phase3": "float(phase3)"
+      "phase4": "float(phase4)"
+      "phase5": "float(phase5)"
+      "phase35": "float(phase35)"
+      "population": "float(population)"
+    sum_cols:
+      - formula: "get_fraction_str(phase3, population)"
+        mustbepopulated: True
+      - formula: "get_fraction_str(phase4, population)"
+        mustbepopulated: True
+      - formula: "get_fraction_str(phase5, population)"
+        mustbepopulated: True
+      - formula: "get_fraction_str(phase35, population)"
+        mustbepopulated: True
+      - formula: "get_fraction_str(population, #population)"
+        mustbepopulated: True
+    output_cols:
+      - "FoodInsecurityCHP3"
+      - "FoodInsecurityCHP4"
+      - "FoodInsecurityCHP5"
+      - "FoodInsecurityCHP3+"
+      - "FoodInsecurityCHAnalysed"
+    output_hxltags:
+      - "#affected+ch+food+p3+pct"
+      - "#affected+ch+food+p4+pct"
+      - "#affected+ch+food+p5+pct"
+      - "#affected+ch+food+p3plus+pct"
+      - "#affected+ch+food+analysed+pct"
   access:
     source:
       "#access+visas+pct": "OCHA"
@@ -660,8 +664,10 @@ scraper_global:
     dataset: "cerf-covid-19-allocations"
     force_date_today: True
     headers: 1
+    filter_cols:
+      - "PFType"
     subsets:
-      - filter: "PFType=CBPF"
+      - filter: "PFType == 'CBPF'"
         input_cols:
           - "TargetAmt"
         sum_cols:
@@ -673,7 +679,7 @@ scraper_global:
           - "CBPFCovidFunding"
         output_hxltags:
           - "#value+cbpf+covid+funding+total+usd"
-      - filter: "PFType=CERF"
+      - filter: "PFType == 'CERF'"
         input_cols:
           - "TargetAmt"
         sum_cols:
@@ -723,6 +729,7 @@ scraper_subnational:
     date: "2021-05-03"
     headers: 1
     sheet: 1
+    prefilter: "chtype == 'current'"
     sort:
       reverse: True
       keys:
@@ -737,43 +744,43 @@ scraper_subnational:
       - "reference_year"
       - "reference_code"
     date_type: "int"
-    subsets:
-      - filter: "chtype=current"
-        input_cols:
-          - "phase3"
-          - "phase4"
-          - "phase5"
-          - "phase35"
-          - "population"
-        input_transforms:
-          "phase3": "float(phase3)"
-          "phase4": "float(phase4)"
-          "phase5": "float(phase5)"
-          "phase35": "float(phase35)"
-          "population": "float(population)"
-        sum_cols:
-          - formula: "get_fraction_str(phase3, population)"
-            mustbepopulated: True
-          - formula: "get_fraction_str(phase4, population)"
-            mustbepopulated: True
-          - formula: "get_fraction_str(phase5, population)"
-            mustbepopulated: True
-          - formula: "get_fraction_str(phase35, population)"
-            mustbepopulated: True
-          - formula: "get_fraction_str(population, #population)"
-            mustbepopulated: True
-        output_cols:
-          - "FoodInsecurityCHP3"
-          - "FoodInsecurityCHP4"
-          - "FoodInsecurityCHP5"
-          - "FoodInsecurityCHP3+"
-          - "FoodInsecurityCHAnalysed"
-        output_hxltags:
-          - "#affected+ch+food+p3+pct"
-          - "#affected+ch+food+p4+pct"
-          - "#affected+ch+food+p5+pct"
-          - "#affected+ch+food+p3plus+pct"
-          - "#affected+ch+food+analysed+pct"
+    filter_cols:
+      - "chtype"
+    input_cols:
+      - "phase3"
+      - "phase4"
+      - "phase5"
+      - "phase35"
+      - "population"
+    input_transforms:
+      "phase3": "float(phase3)"
+      "phase4": "float(phase4)"
+      "phase5": "float(phase5)"
+      "phase35": "float(phase35)"
+      "population": "float(population)"
+    sum_cols:
+      - formula: "get_fraction_str(phase3, population)"
+        mustbepopulated: True
+      - formula: "get_fraction_str(phase4, population)"
+        mustbepopulated: True
+      - formula: "get_fraction_str(phase5, population)"
+        mustbepopulated: True
+      - formula: "get_fraction_str(phase35, population)"
+        mustbepopulated: True
+      - formula: "get_fraction_str(population, #population)"
+        mustbepopulated: True
+    output_cols:
+      - "FoodInsecurityCHP3"
+      - "FoodInsecurityCHP4"
+      - "FoodInsecurityCHP5"
+      - "FoodInsecurityCHP3+"
+      - "FoodInsecurityCHAnalysed"
+    output_hxltags:
+      - "#affected+ch+food+p3+pct"
+      - "#affected+ch+food+p4+pct"
+      - "#affected+ch+food+p5+pct"
+      - "#affected+ch+food+p3plus+pct"
+      - "#affected+ch+food+analysed+pct"
   ghrp:
     source: "Multiple sources"
     format: "csv"
@@ -827,8 +834,10 @@ scraper_subnational:
       - "Admin1"
     date_col: "Year"
     date_type: "year"
+    filter_cols:
+      - "Vaccine"
     subsets:
-      - filter: "Vaccine=HepB1"
+      - filter: "Vaccine == 'HepB1'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -845,7 +854,7 @@ scraper_subnational:
           - "HepB1 Coverage"
         output_hxltags:
           - "#population+hepb1+pct+vaccinated"
-      - filter: "Vaccine=HepB2"
+      - filter: "Vaccine == 'HepB2'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -862,7 +871,7 @@ scraper_subnational:
           - "HepB2 Coverage"
         output_hxltags:
           - "#population+hepb2+pct+vaccinated"
-      - filter: "Vaccine=HepB3"
+      - filter: "Vaccine == 'HepB3'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -879,7 +888,7 @@ scraper_subnational:
           - "HepB3 Coverage"
         output_hxltags:
           - "#population+hepb3+pct+vaccinated"
-      - filter: "Vaccine=IPV1"
+      - filter: "Vaccine == 'IPV1'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -896,7 +905,7 @@ scraper_subnational:
           - "IPV1 Coverage"
         output_hxltags:
           - "#population+ipv1+pct+vaccinated"
-      - filter: "Vaccine=MCV1"
+      - filter: "Vaccine == 'MCV1'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -913,7 +922,7 @@ scraper_subnational:
           - "MCV1 Coverage"
         output_hxltags:
           - "#population+mcv1+pct+vaccinated"
-      - filter: "Vaccine=MCV2"
+      - filter: "Vaccine == 'MCV2'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -930,7 +939,7 @@ scraper_subnational:
           - "MCV2 Coverage"
         output_hxltags:
           - "#population+mcv2+pct+vaccinated"
-      - filter: "Vaccine=Pol1"
+      - filter: "Vaccine == 'Pol1'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -947,7 +956,7 @@ scraper_subnational:
           - "Pol1 Coverage"
         output_hxltags:
           - "#population+pct+pol1+vaccinated"
-      - filter: "Vaccine=Pol2"
+      - filter: "Vaccine == 'Pol2'"
         input_cols:
           - "Numerator"
           - "Denominator"
@@ -964,7 +973,7 @@ scraper_subnational:
           - "Pol2 Coverage"
         output_hxltags:
           - "#population+pct+pol2+vaccinated"
-      - filter: "Vaccine=Pol3"
+      - filter: "Vaccine == 'Pol3'"
         input_cols:
           - "Numerator"
           - "Denominator"
