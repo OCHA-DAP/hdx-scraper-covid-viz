@@ -778,7 +778,7 @@ unhcr:
 
 inform:
   url: "https://api.acaps.org/api/v1/inform-severity-index/%s/?page=1"
-  dataset: "inform-severity-index-september-2020"
+  dataset: "inform-global-crisis-severity-index"
   format: "xlsx"
   input_cols:
     - "INFORM Severity Index"
