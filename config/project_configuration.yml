@@ -724,7 +724,7 @@ scraper_national:
       - "#indicator+foodbasket+change+pct"
   financing:
     format: "csv"
-    dataset: "compilation-of-international-financial-institution-and-economic-data"
+    dataset: "world-bank-and-gavi-vaccine-financing"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSKfpC4IaUs9iWc7TSrOoPNuR7cJ4civ8csvt8S_RcCXVG7xNxcyQ8Z-vSnJZ_lXYOTGlLh6Vnmn1Y/pub?gid=0&single=true&output=csv"
     headers: 1
     adm_cols:
