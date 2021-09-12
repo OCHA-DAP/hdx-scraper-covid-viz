@@ -35,29 +35,34 @@ def add_food_prices(
         }
 
     def get_list(endpoint, countryiso3, startdate=None):
-        url = f"{base_url}/{endpoint}"
-        filename = url.split("/")[-2]
-        page = 1
+        if countryiso3 == 'PSE':  # hack as PSE is treated by WFP as 2 areas
+            countryiso3s = ['PSW', 'PSG']
+        else:
+            countryiso3s = [countryiso3]
         all_data = []
-        data = None
-        while data is None or len(data) > 0:
-            parameters = {"CountryCode": countryiso3, "page": page}
-            if startdate:
-                parameters["startDate"] = startdate
-            try:
-                json = retriever.retrieve_json(
-                    url,
-                    f"{filename}_{countryiso3}_{page}.json",
-                    f"{filename} for {countryiso3} page {page}",
-                    False,
-                    parameters=parameters,
-                    headers=headers,
-                )
-            except FileNotFoundError:
-                json = {"items": list()}
-            data = json["items"]
-            all_data.extend(data)
-            page = page + 1
+        for countryiso3 in countryiso3s:
+            url = f"{base_url}/{endpoint}"
+            filename = url.split("/")[-2]
+            page = 1
+            data = None
+            while data is None or len(data) > 0:
+                parameters = {"CountryCode": countryiso3, "page": page}
+                if startdate:
+                    parameters["startDate"] = startdate
+                try:
+                    json = retriever.retrieve_json(
+                        url,
+                        f"{filename}_{countryiso3}_{page}.json",
+                        f"{filename} for {countryiso3} page {page}",
+                        False,
+                        parameters=parameters,
+                        headers=headers,
+                    )
+                except FileNotFoundError:
+                    json = {"items": list()}
+                data = json["items"]
+                all_data.extend(data)
+                page = page + 1
         return all_data
 
     six_months_ago = today - relativedelta(months=6)
