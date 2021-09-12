@@ -35,14 +35,14 @@ def add_food_prices(
         }
 
     def get_list(endpoint, countryiso3, startdate=None):
+        all_data = list()
+        url = f"{base_url}/{endpoint}"
+        filename = url.split("/")[-2]
         if countryiso3 == 'PSE':  # hack as PSE is treated by WFP as 2 areas
             countryiso3s = ['PSW', 'PSG']
         else:
             countryiso3s = [countryiso3]
-        all_data = []
         for countryiso3 in countryiso3s:
-            url = f"{base_url}/{endpoint}"
-            filename = url.split("/")[-2]
             page = 1
             data = None
             while data is None or len(data) > 0:
