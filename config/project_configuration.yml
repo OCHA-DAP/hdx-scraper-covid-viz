@@ -814,7 +814,7 @@ education:
   enrolment:
     format: "xlsx"
     dataset: "global-school-closures-covid19"
-    resource: "Enrollments data"
+    resource: "Enrollment data"
     sheet: 1
     headers: 1
 
