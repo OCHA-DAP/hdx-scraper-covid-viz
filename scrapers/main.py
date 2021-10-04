@@ -12,7 +12,11 @@ from scrapers.food_prices import add_food_prices
 from scrapers.fts import get_fts
 from scrapers.inform import get_inform
 from scrapers.iom_dtm import get_iom_dtm
-from scrapers.ipc_old import get_ipc
+run = 'NEW'
+if run == 'OLD':
+    from scrapers.ipc_old import get_ipc
+else:
+    from scrapers.ipc import get_ipc
 from scrapers.monthly_report import get_monthly_report_source
 from scrapers.unhcr import get_unhcr
 from scrapers.vaccination_campaigns import add_vaccination_campaigns
@@ -238,12 +242,14 @@ def get_indicators(
     )
     extend_sources(sources, covid_sources)
 
-    # ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(
-    #     configuration, today, gho_countries, adminone, other_auths, scrapers
-    # )
-    ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(
-        configuration, today, gho_countries, adminone, downloader, scrapers
-    )
+    if run == 'OLD':
+        ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(
+            configuration, today, gho_countries, adminone, downloader, scrapers
+        )
+    else:
+        ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(
+            configuration, today, gho_countries, adminone, other_auths, scrapers
+        )
     if "national" in tabs:
         (
             fts_wheaders,

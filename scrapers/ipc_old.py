@@ -102,6 +102,7 @@ def get_ipc(configuration, today, gho_countries, adminone, downloader, scrapers=
         national_period[countryiso3] = analysis_period
         national_start[countryiso3] = start
         national_end[countryiso3] = end
+        has_data = False
         for row in data[1:]:
             country = row["Country"]
             if adm1_names:
@@ -119,6 +120,10 @@ def get_ipc(configuration, today, gho_countries, adminone, downloader, scrapers=
                 population = row[f"{analysis_period} Phase {phase} #"]
                 if population:
                     dict_of_lists_add(subnational_populations[phase], pcode, population)
+                    has_data = True
+        if not has_data:
+            logger.warning(f"{countryiso3} has no values for any admin areas!")
+    no_phase3plus = dict()
     for phase in phases:
         subnational_population = subnational_populations[phase]
         for pcode in subnational_population:
@@ -130,6 +135,12 @@ def get_ipc(configuration, today, gho_countries, adminone, downloader, scrapers=
                 for i, population in enumerate(populations):
                     population_in_pcode += population
                 subnational_population[pcode] = population_in_pcode
+            if phase == "P3+":
+                countryiso2 = pcode[:2]
+                no_phase3plus[countryiso2] = no_phase3plus.get(countryiso2, 0) + 1
+    for countryiso2, number in no_phase3plus.items():
+        if number < 4:
+            logger.warning(f"{Country.get_iso3_from_iso2(countryiso2)} has values for only {number} admin areas!")
     logger.info("Processed IPC")
     dataset = Dataset.read_from_hdx(ipc_configuration["dataset"])
     date = get_date_from_dataset_date(dataset, today=today)
