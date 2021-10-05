@@ -6,7 +6,6 @@ from dateutil.relativedelta import relativedelta
 from hdx.data.dataset import Dataset
 from hdx.location.country import Country
 from hdx.scraper import get_date_from_dataset_date
-from hdx.utilities.dictandlist import dict_of_sets_add
 from hdx.utilities.downloader import Download
 
 logger = logging.getLogger(__name__)
@@ -41,12 +40,14 @@ def get_ipc(configuration, today, gho_countries, adminone, other_auths, scrapers
         rate_limit={"calls": 1, "period": 0.1},
         extra_params_dict={"key": other_auths["ipc"]},
     ) as downloader:
-        analyses_countries_and_years = dict()
+        countryisos = set()
         downloader.download(f"{base_url}/analyses?type=A")
         for analysis in downloader.get_json():
             countryiso2 = analysis["country"]
-            year = analysis["year"]
-            dict_of_sets_add(analyses_countries_and_years, countryiso2, year)
+            countryiso3 = Country.get_iso3_from_iso2(countryiso2)
+            if countryiso3 not in gho_countries:
+                continue
+            countryisos.add((countryiso3, countryiso2))
         phases = ["3", "4", "5"]
         national_populations = {phase: dict() for phase in phases}
         national_populations["P3+"] = dict()
@@ -58,19 +59,12 @@ def get_ipc(configuration, today, gho_countries, adminone, other_auths, scrapers
         projection_names = ["Current", "First Projection", "Second Projection"]
         projection_mappings = ["", "_projected", "_second_projected"]
         analysis_dates = set()
-        for countryiso2 in analyses_countries_and_years:
-            countryiso3 = Country.get_iso3_from_iso2(countryiso2)
-            if countryiso3 not in gho_countries:
-                continue
-            for i, year in enumerate(sorted(analyses_countries_and_years[countryiso2], reverse=True)):
-                downloader.download(f"{base_url}/population?start={year}&end={year}&country={countryiso2}")
-                country_data = downloader.get_json()
-                if country_data:
-                    country_data = country_data[0]
-                    break
-                if i == 2:
-                    break
-            if not country_data:
+        for countryiso3, countryiso2 in sorted(countryisos):
+            downloader.download(f"{base_url}/population?country={countryiso2}")
+            country_data = downloader.get_json()
+            if country_data:
+                country_data = country_data[-1]
+            else:
                 continue
             analysis_dates.add(country_data["analysis_date"])
             projections = list()
