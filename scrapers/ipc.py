@@ -94,7 +94,11 @@ def get_ipc(configuration, today, gho_countries, adminone, other_auths, scrapers
                         pop = area.get(f"phase{phase}_population{projection_mapping}")
                         if pop:
                             sum += pop
-                    subnational_populations[pcode] = sum
+                    cur_sum = subnational_populations.get(pcode)
+                    if cur_sum:
+                        subnational_populations[pcode] = cur_sum + sum
+                    else:
+                        subnational_populations[pcode] = sum
     dataset = Dataset.read_from_hdx(ipc_configuration["dataset"])
     date = get_date_from_dataset_date(dataset, today=today)
 #    analysis_dates = [(datetime.strptime(date, "%b %Y").date() + relativedelta(day=31)) for date in analysis_dates]
