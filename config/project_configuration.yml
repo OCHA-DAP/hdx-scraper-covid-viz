@@ -167,6 +167,17 @@ scraper_national:
       - "PeopleInNeed"
     output_hxltags:
       - "#affected+inneed"
+  inneed:
+    format: "csv"
+    dataset: "interagency-response-plans"
+    headers: 1
+    use_hxl: True
+    input_cols:
+      - "#inneed"
+    output_cols:
+      - "NoPeopleInNeed"
+    output_hxltags:
+      - "#inneed"
   idmc:
     format: "csv"
     dataset: "idmc-internally-displaced-persons-idps"
@@ -833,6 +844,8 @@ regional:
       action: "sum"
     "PeopleInNeed":
       action: "sum"
+    "NoPeopleInNeed":
+      action: "sum"
     "CBPFFunding":
       action: "sum"
     "CBPFFundingGMEmpty":
@@ -915,6 +928,7 @@ regional:
 
   global:
     - "PeopleInNeed"
+    - "NoPeopleInNeed"
     - "% of visas pending or denied"
     - "% of travel authorizations or movements denied"
     - "Number of incidents reported since start of year"
