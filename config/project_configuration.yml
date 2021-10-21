@@ -143,30 +143,6 @@ scraper_national:
       - "Malnutrition Estimate"
     output_hxltags:
       - "#severity+malnutrition+num+national"
-  needs:
-    format: "xlsx"
-    dataset: "global-humanitarian-overview-2021-figures"
-    sheet: "Raw Data"
-    headers: 1
-    prefilter: "Metric == 'People in need' and PiN Value for Dataviz == 'yes'"
-    sort:
-      reverse: True
-      keys:
-        - "Year"
-    adm_cols:
-      - "Country Code"
-    date_col: "Year"
-    date_type: "year"
-    single_maxdate: True
-    filter_cols:
-      - "Metric"
-      - "PiN Value for Dataviz"
-    input_cols:
-      - "Value"
-    output_cols:
-      - "PeopleInNeed"
-    output_hxltags:
-      - "#affected+inneed"
   inneed:
     format: "csv"
     dataset: "interagency-response-plans"
@@ -175,9 +151,9 @@ scraper_national:
     input_cols:
       - "#inneed"
     output_cols:
-      - "NoPeopleInNeed"
+      - "PeopleInNeed"
     output_hxltags:
-      - "#inneed"
+      - "#affected+inneed"
   idmc:
     format: "csv"
     dataset: "idmc-internally-displaced-persons-idps"
@@ -844,8 +820,6 @@ regional:
       action: "sum"
     "PeopleInNeed":
       action: "sum"
-    "NoPeopleInNeed":
-      action: "sum"
     "CBPFFunding":
       action: "sum"
     "CBPFFundingGMEmpty":
@@ -928,7 +902,6 @@ regional:
 
   global:
     - "PeopleInNeed"
-    - "NoPeopleInNeed"
     - "% of visas pending or denied"
     - "% of travel authorizations or movements denied"
     - "Number of incidents reported since start of year"
