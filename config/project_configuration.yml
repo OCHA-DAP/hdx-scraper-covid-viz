@@ -901,7 +901,6 @@ regional:
         - "FoodInsecurityIPCP3+"
 
   global:
-    - "PeopleInNeed"
     - "% of visas pending or denied"
     - "% of travel authorizations or movements denied"
     - "Number of incidents reported since start of year"
@@ -1192,6 +1191,25 @@ scraper_global:
       - "TotalDosesAdministered"
     output_hxltags:
       - "#capacity+doses+administered+total"
+  inneed:
+    format: "csv"
+    dataset: "interagency-response-plans"
+    headers: 1
+    use_hxl: True
+    prefilter: "#meta+included == 'TRUE'"
+    exclude_tags:
+      - "#country+code"
+    filter_cols:
+      - "#meta+included"
+    input_cols:
+      - "#inneed"
+    sum_cols:
+      - formula: "#inneed"
+        mustbepopulated: False
+    output_cols:
+      - "PeopleInNeed"
+    output_hxltags:
+      - "#affected+inneed"
 
 # subnational
 ipc:
