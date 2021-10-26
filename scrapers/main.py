@@ -15,6 +15,7 @@ from scrapers.iom_dtm import get_iom_dtm
 from scrapers.ipc import get_ipc
 from scrapers.monthly_report import get_monthly_report_source
 from scrapers.unhcr import get_unhcr
+from scrapers.unhcr_myanmar_idps import patch_unhcr_myanmar_idps
 from scrapers.vaccination_campaigns import add_vaccination_campaigns
 from scrapers.who_covid import get_who_covid
 from scrapers.whowhatwhere import get_whowhatwhere
@@ -339,6 +340,7 @@ def get_indicators(
             covax_sources,
             education_sources,
         )
+        patch_unhcr_myanmar_idps(configuration, national, downloader, scrapers=scrapers)
         update_tab("national", national)
 
         if "regional" in tabs:

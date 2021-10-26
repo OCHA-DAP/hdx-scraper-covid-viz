@@ -154,7 +154,7 @@ scraper_national:
       - "PeopleInNeed"
     output_hxltags:
       - "#affected+inneed"
-  idmc:
+  idps:
     format: "csv"
     dataset: "idmc-internally-displaced-persons-idps"
     headers: 1
@@ -737,6 +737,9 @@ scraper_national:
       - "#value+financing+gavi+disbursed"
       - "#value+financing+approved"
 
+unhcr_myanmar_idps:
+  url: "https://data2.unhcr.org/population/?widget_id=264111&geo_id=693&population_group=5407,4999"
+
 fts:
   url: "https://api.hpc.tools/v"
   source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
@@ -750,7 +753,6 @@ vaccination_campaigns:
   format: "csv"
   dataset: "immunization-campaigns-impacted"
   headers: 1
-
 
 unhcr:
   url: "https://data2.unhcr.org/population/?population_collection=%d&geo_id=%s"
@@ -1306,20 +1308,6 @@ scraper_subnational:
       - "NoHealthFacilities"
     output_hxltags:
       - "#loc+count+health"
-#  idmc:
-#    source: "IDMC"
-#    format: "csv"
-#    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSo25hpVc-ttGF0LEfWP2QTbqFTaf5SdGqp5eAqOfRwoGE6ROitk_Boco_3TMXjDARK8he3HdmzYkIP/pub?gid=893315748&single=true&output=csv"
-#    headers: 1
-#    adm_cols:
-#      - ~
-#      - "ADM1_PCODE"
-#    input_cols:
-#      - "DISPLACED"
-#    output_cols:
-#      - "NoDisplaced"
-#    output_hxltags:
-#      - "#affected+displaced"
   who_subnational:
     source: "WHO"
     format: "csv"
