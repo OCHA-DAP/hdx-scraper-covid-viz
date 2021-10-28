@@ -738,7 +738,7 @@ scraper_national:
       - "#value+financing+approved"
 
 unhcr_myanmar_idps:
-  url: "https://data2.unhcr.org/population/?widget_id=264111&geo_id=693&population_group=5407,4999"
+  url: "https://data.unhcr.org/population/?widget_id=264111&geo_id=693&population_group=5407,4999"
 
 fts:
   url: "https://api.hpc.tools/v"
@@ -755,7 +755,7 @@ vaccination_campaigns:
   headers: 1
 
 unhcr:
-  url: "https://data2.unhcr.org/population/?population_collection=%d&geo_id=%s"
+  url: "https://data.unhcr.org/population/?population_collection=%d&geo_id=%s"
   source_url: "https://data.humdata.org/organization/unhcr"
   population_collections:
     - 4
