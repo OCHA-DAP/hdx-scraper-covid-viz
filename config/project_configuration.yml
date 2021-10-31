@@ -1212,6 +1212,19 @@ scraper_global:
       - "PeopleInNeed"
     output_hxltags:
       - "#affected+inneed"
+  inneed_numcountries:
+    format: "csv"
+    dataset: "interagency-response-plans"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSUJdFPpj3N6m4L5XiZSl1OQm7oVcclVM3IDQm1P6K5SfuBNIB2M0-BJhdR0KQ-w95lJUiC4wMWw9RP/pub?gid=881913165&single=true&output=csv"
+    headers: 1
+    use_hxl: True
+    input_cols:
+      - "#meta+countries+num"
+    output_cols:
+      - "NumCountriesInNeed"
+    output_hxltags:
+      - "#meta+countries+inneed+num"
+
 
 # subnational
 ipc:
