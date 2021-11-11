@@ -2,8 +2,8 @@ import filecmp
 from os.path import join
 
 import pytest
-from hdx.hdx_configuration import Configuration
-from hdx.hdx_locations import Locations
+from hdx.api.configuration import Configuration
+from hdx.api.locations import Locations
 from hdx.scraper.jsonoutput import JsonOutput
 from hdx.scraper.nooutput import NoOutput
 from hdx.utilities.dateparse import parse_date

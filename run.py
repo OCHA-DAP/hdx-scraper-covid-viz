@@ -5,7 +5,7 @@ from os import getenv
 from os.path import join
 
 from hdx.facades.keyword_arguments import facade
-from hdx.hdx_configuration import Configuration
+from hdx.api.configuration import Configuration
 from hdx.scraper.exceloutput import ExcelOutput
 from hdx.scraper.googlesheets import GoogleSheets
 from hdx.scraper.jsonoutput import JsonOutput
