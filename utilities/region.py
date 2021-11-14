@@ -1,8 +1,8 @@
 import logging
 import sys
 
-from hdx.scraper import add_population
 from hdx.scraper.readers import read_hdx
+from hdx.scraper.utils import add_population
 from hdx.utilities.dictandlist import dict_of_lists_add, dict_of_sets_add
 from hdx.utilities.text import get_fraction_str, get_numeric_if_possible, number_format
 

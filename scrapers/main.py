@@ -3,9 +3,8 @@ import logging
 from hdx.data.dataset import Dataset
 from hdx.location.adminone import AdminOne
 from hdx.location.country import Country
-from hdx.scraper import get_date_from_dataset_date
 from hdx.scraper.scrapers import run_scrapers
-
+from hdx.scraper.utils import get_date_from_dataset_date
 from scrapers.covax_deliveries import get_covax_deliveries
 from scrapers.education import get_education
 from scrapers.food_prices import add_food_prices
