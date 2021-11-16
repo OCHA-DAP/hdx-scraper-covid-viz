@@ -5,7 +5,7 @@ import re
 from dateutil.relativedelta import relativedelta
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.downloader import Download
-from hdx.utilities.text import get_fraction_str, multiple_replace
+from hdx.utilities.text import get_fraction_str, multiple_replace, earliest_index
 
 logger = logging.getLogger(__name__)
 
@@ -87,33 +87,30 @@ def get_requirements_and_funding_location(
 
 def map_planname(origname):
     name = None
-    if "Refugee" in origname:
-        words = origname.split(" ")
+    origname_simplified = origname.replace("  ", " ")
+    origname_simplified = re.sub(r"\d\d\d\d", "", origname_simplified)  # strip date
+    origname_simplified = re.sub(r"[\(\[].*?[\)\]]", "", origname_simplified)  # strip stuff in brackets
+    origname_simplified = origname_simplified.strip()
+    origname_lower = origname_simplified.lower()
+    if "refugee" or "migrant" in origname_lower:
+        location = None
         try:
-            index = words.index("Regional")
-            name = " ".join(words[: index + 1])
+            for_index = origname_lower.index(" for ")
+            location = origname_simplified[for_index+5:]
+            location = location.replace("the", "").strip()
         except ValueError:
-            try:
-                index = words.index("from")
-                newwords = list()
-                for word in words[index + 1 :]:
-                    if "(" in word:
-                        break
-                    newwords.append(word)
-                name = f"{' '.join(newwords)} Regional"
-            except ValueError:
-                index = words.index("Refugee")
-                name = f"{' '.join(words[:index])} Regional"
+            non_location_index = earliest_index(origname_lower, ["regional", "refugee"])
+            if non_location_index:
+                location = origname_simplified[:non_location_index-1]
+        if location:
+            name = f"{location} Regional"
     if not name:
-        name = re.sub(r"[\(\[].*?[\)\]]", "", origname)
-        name = multiple_replace(
-            name, {"Intersectoral": "", "Response": "", "Plan": "", "Joint": ""}
-        )
-        name = " ".join(name.split())
+        name = multiple_replace(origname_simplified, {"Plan": "", "Intersectoral": "", "Joint": ""})
+        name = name.strip()
     if origname == name:
-        logger.info(f"Plan name {name} not simplified")
+        logger.info(f'Plan name "{name}" not simplified')
     else:
-        logger.info(f"Plan name {name} simplified from {origname}")
+        logger.info(f'Plan name "{name}" simplified from "{origname}"')
     return name
 
 
