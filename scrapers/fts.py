@@ -5,7 +5,7 @@ import re
 from dateutil.relativedelta import relativedelta
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.downloader import Download
-from hdx.utilities.text import get_fraction_str, multiple_replace, earliest_index
+from hdx.utilities.text import earliest_index, get_fraction_str, multiple_replace
 
 logger = logging.getLogger(__name__)
 
@@ -89,23 +89,27 @@ def map_planname(origname):
     name = None
     origname_simplified = origname.replace("  ", " ")
     origname_simplified = re.sub(r"\d\d\d\d", "", origname_simplified)  # strip date
-    origname_simplified = re.sub(r"[\(\[].*?[\)\]]", "", origname_simplified)  # strip stuff in brackets
+    origname_simplified = re.sub(
+        r"[\(\[].*?[\)\]]", "", origname_simplified
+    )  # strip stuff in brackets
     origname_simplified = origname_simplified.strip()
     origname_lower = origname_simplified.lower()
     if "refugee" or "migrant" in origname_lower:
         location = None
         try:
             for_index = origname_lower.index(" for ")
-            location = origname_simplified[for_index+5:]
+            location = origname_simplified[for_index + 5 :]
             location = location.replace("the", "").strip()
         except ValueError:
             non_location_index = earliest_index(origname_lower, ["regional", "refugee"])
             if non_location_index:
-                location = origname_simplified[:non_location_index-1]
+                location = origname_simplified[: non_location_index - 1]
         if location:
             name = f"{location} Regional"
     if not name:
-        name = multiple_replace(origname_simplified, {"Plan": "", "Intersectoral": "", "Joint": ""})
+        name = multiple_replace(
+            origname_simplified, {"Plan": "", "Intersectoral": "", "Joint": ""}
+        )
         name = name.strip()
     if origname == name:
         logger.info(f'Plan name "{name}" not simplified')

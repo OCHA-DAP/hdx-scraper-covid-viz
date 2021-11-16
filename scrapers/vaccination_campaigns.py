@@ -1,7 +1,6 @@
 import logging
 
 from hdx.scraper.readers import read_hdx
-
 from scrapers import calculate_ratios
 
 logger = logging.getLogger(__name__)

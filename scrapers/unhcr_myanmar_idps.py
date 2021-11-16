@@ -14,7 +14,7 @@ def patch_unhcr_myanmar_idps(configuration, national, downloader, scrapers=None)
     for i, row in enumerate(national[2:]):
         if row[0] != "MMR":
             continue
-        current_idps = national[i+2][index]
+        current_idps = national[i + 2][index]
         logger.info(f"Replacing {current_idps} with {number_idps} for MMR IDPs!")
-        national[i+2][index] = number_idps
+        national[i + 2][index] = number_idps
     logger.info("Processed UNHCR Myanmar IDPs")
