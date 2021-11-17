@@ -5,20 +5,21 @@ from hdx.location.adminone import AdminOne
 from hdx.location.country import Country
 from hdx.scraper.scrapers import run_scrapers
 from hdx.scraper.utils import get_date_from_dataset_date
-from scrapers.covax_deliveries import get_covax_deliveries
-from scrapers.education import get_education
-from scrapers.food_prices import add_food_prices
-from scrapers.fts import get_fts
-from scrapers.inform import get_inform
-from scrapers.iom_dtm import get_iom_dtm
-from scrapers.ipc import get_ipc
-from scrapers.monthly_report import get_monthly_report_source
-from scrapers.unhcr import get_unhcr
-from scrapers.unhcr_myanmar_idps import patch_unhcr_myanmar_idps
-from scrapers.vaccination_campaigns import add_vaccination_campaigns
-from scrapers.who_covid import get_who_covid
-from scrapers.whowhatwhere import get_whowhatwhere
 from utilities.region import Region
+
+from .covax_deliveries import get_covax_deliveries
+from .education import get_education
+from .food_prices import add_food_prices
+from .fts import get_fts
+from .inform import get_inform
+from .iom_dtm import get_iom_dtm
+from .ipc import get_ipc
+from .monthly_report import get_monthly_report_source
+from .unhcr import get_unhcr
+from .unhcr_myanmar_idps import patch_unhcr_myanmar_idps
+from .vaccination_campaigns import add_vaccination_campaigns
+from .who_covid import get_who_covid
+from .whowhatwhere import get_whowhatwhere
 
 logger = logging.getLogger(__name__)
 
