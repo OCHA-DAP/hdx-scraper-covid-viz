@@ -88,27 +88,37 @@ def get_requirements_and_funding_location(
 def map_planname(origname):
     name = None
     origname_simplified = origname.replace("  ", " ")
-    origname_simplified = re.sub(r"\d\d\d\d", "", origname_simplified)  # strip date
+    origname_simplified = re.sub(
+        r"\d\d\d\d(-\d\d\d\d)?", "", origname_simplified
+    )  # strip date
     origname_simplified = re.sub(
         r"[\(\[].*?[\)\]]", "", origname_simplified
     )  # strip stuff in brackets
     origname_simplified = origname_simplified.strip()
     origname_lower = origname_simplified.lower()
-    if "refugee" or "migrant" in origname_lower:
+    regional_strings = ["regional", "refugee", "migrant"]
+    if any(x in origname_lower for x in regional_strings):
         location = None
         try:
             for_index = origname_lower.index(" for ")
             location = origname_simplified[for_index + 5 :]
             location = location.replace("the", "").strip()
         except ValueError:
-            non_location_index = earliest_index(origname_lower, ["regional", "refugee"])
+            non_location_index = earliest_index(origname_lower, regional_strings)
             if non_location_index:
                 location = origname_simplified[: non_location_index - 1]
         if location:
             name = f"{location} Regional"
     if not name:
         name = multiple_replace(
-            origname_simplified, {"Plan": "", "Intersectoral": "", "Joint": ""}
+            origname_simplified,
+            {
+                "Plan": "",
+                "Intersectoral": "",
+                "Joint": "",
+                "Flash Appeal": "Appeal",
+                "Emergency Response": "Emergency",
+            },
         )
         name = name.strip()
     if origname == name:
