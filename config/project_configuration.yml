@@ -795,10 +795,9 @@ covax_deliveries:
 
 education:
   closures:
-    format: "xlsx"
+    format: "csv"
     dataset: "global-school-closures-covid19"
     resource: "School closure evolution"
-    sheet: 1
     headers: 1
   enrolment:
     format: "xlsx"
