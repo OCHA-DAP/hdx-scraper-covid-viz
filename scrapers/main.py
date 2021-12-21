@@ -177,6 +177,12 @@ def get_indicators(
                 "sources": fallback_sources,
                 "sources hxltags": sources_hxltags,
             },
+            "regional": {
+                "data": fallback_data["regional_data"],
+                "admin hxltag": "#region+name",
+                "sources": fallback_sources,
+                "sources hxltags": sources_hxltags,
+            },
             "national": {
                 "data": fallback_data["national_data"],
                 "admin hxltag": "#country+code",
@@ -329,7 +335,7 @@ def get_indicators(
             closures_sources,
             fully_closed,
         ) = get_education_closures(
-            configuration, today, gho_countries, region, downloader, scrapers
+            configuration, today, gho_countries, region, downloader, fallbacks, scrapers
         )
         (
             enrolment_rheaders,
