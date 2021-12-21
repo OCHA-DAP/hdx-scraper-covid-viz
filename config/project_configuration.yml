@@ -793,18 +793,18 @@ covax_deliveries:
   url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVzu79PPTfaA2syevOQfyRRjy63dJWitqu0fFbXIQCzoUn9K9TiMWMRvFGg1RBsnLmgYugzSEiAye2/pub?gid=1635331605&single=true&output=csv"
   headers: 1
 
-education:
-  closures:
-    format: "csv"
-    dataset: "global-school-closures-covid19"
-    resource: "School closure evolution"
-    headers: 1
-  enrolment:
-    format: "xlsx"
-    dataset: "global-school-closures-covid19"
-    resource: "Enrollment data"
-    sheet: 1
-    headers: 1
+education_closures:
+  format: "csv"
+  dataset: "global-school-closures-covid19"
+  resource: "School closure evolution"
+  headers: 1
+
+education_enrolment:
+  format: "xlsx"
+  dataset: "global-school-closures-covid19"
+  resource: "Enrollment data"
+  sheet: 1
+  headers: 1
 
 # regional
 regional:

@@ -10,7 +10,8 @@ from hdx.utilities.loader import LoadError, load_json
 from utilities.region import Region
 
 from .covax_deliveries import get_covax_deliveries
-from .education import get_education
+from .education_closures import get_education_closures
+from .education_enrolment import get_education_enrolment
 from .food_prices import add_food_prices
 from .fts import get_fts
 from .inform import get_inform
@@ -320,14 +321,25 @@ def get_indicators(
             configuration, today, gho_countries, downloader, scrapers
         )
         (
-            education_rheaders,
-            education_rcolumns,
-            education_rsources,
-            education_headers,
-            education_columns,
-            education_sources,
-        ) = get_education(
+            closures_rheaders,
+            closures_rcolumns,
+            closures_rsources,
+            closures_headers,
+            closures_columns,
+            closures_sources,
+            fully_closed,
+        ) = get_education_closures(
             configuration, today, gho_countries, region, downloader, scrapers
+        )
+        (
+            enrolment_rheaders,
+            enrolment_rcolumns,
+            enrolment_rsources,
+            enrolment_headers,
+            enrolment_columns,
+            enrolment_sources,
+        ) = get_education_enrolment(
+            configuration, fully_closed, gho_countries, region, downloader, scrapers
         )
         level = "national"
         scraper_configuration = configuration[f"scraper_{level}"]
@@ -356,7 +368,8 @@ def get_indicators(
             inform_headers,
             ipc_headers,
             covax_headers,
-            education_headers,
+            closures_headers,
+            enrolment_headers,
         )
         national_columns = extend_columns(
             "national",
@@ -375,7 +388,8 @@ def get_indicators(
             inform_columns,
             ipc_columns,
             covax_columns,
-            education_columns,
+            closures_columns,
+            enrolment_columns,
         )
         extend_sources(
             sources,
@@ -386,7 +400,8 @@ def get_indicators(
             unhcr_sources,
             inform_sources,
             covax_sources,
-            education_sources,
+            closures_sources,
+            enrolment_sources,
         )
         patch_unhcr_myanmar_idps(configuration, national, downloader, scrapers=scrapers)
         update_tab("national", national)
@@ -401,7 +416,7 @@ def get_indicators(
                 (fts_wheaders, fts_wcolumns),
             )
             regional_headers = extend_headers(
-                regional, regional_headers, education_rheaders
+                regional, regional_headers, closures_rheaders, enrolment_rheaders
             )
             regional_columns = extend_columns(
                 "regional",
@@ -412,10 +427,11 @@ def get_indicators(
                 None,
                 regional_headers,
                 regional_columns,
-                education_rcolumns,
+                closures_rcolumns,
+                enrolment_rcolumns,
             )
             update_tab("regional", regional)
-            extend_sources(sources, education_rsources)
+            extend_sources(sources, closures_rsources, enrolment_rsources)
             if "world" in tabs:
                 rgheaders, rgcolumns = region.get_world(
                     regional_headers, regional_columns
