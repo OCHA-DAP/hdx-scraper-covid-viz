@@ -47,7 +47,7 @@ class TestCovid:
                 jsonout = JsonOutput(configuration, tabs)
                 outputs = {"gsheets": noout, "excel": noout, "json": jsonout}
                 today = parse_date("2021-05-03")
-                countries_to_save = get_indicators(
+                countries_to_save, fail = get_indicators(
                     configuration,
                     today,
                     retriever,
@@ -67,6 +67,52 @@ class TestCovid:
                     ],
                     use_live=False,
                 )
+                assert fail is False
+                filepaths = jsonout.save(tempdir, countries_to_save=countries_to_save)
+                assert filecmp.cmp(filepaths[0], join(folder, "test_scraper_all.json"))
+                assert filecmp.cmp(filepaths[1], join(folder, "test_scraper.json"))
+                assert filecmp.cmp(
+                    filepaths[2], join(folder, "test_scraper_daily.json")
+                )
+                assert filecmp.cmp(
+                    filepaths[3], join(folder, "test_scraper_covidseries.json")
+                )
+
+    def test_fallbacks(self, configuration, folder):
+        with temp_dir(
+            "TestCovidVizFB", delete_on_success=True, delete_on_failure=False
+        ) as tempdir:
+            with Download(user_agent="test") as downloader:
+                retriever = Retrieve(
+                    downloader, tempdir, folder, tempdir, save=False, use_saved=True
+                )
+                tabs = configuration["tabs"]
+                noout = NoOutput(tabs)
+                jsonout = JsonOutput(configuration, tabs)
+                outputs = {"gsheets": noout, "excel": noout, "json": jsonout}
+                today = parse_date("2021-05-03")
+                countries_to_save, fail = get_indicators(
+                    configuration,
+                    today,
+                    retriever,
+                    outputs,
+                    tabs,
+                    scrapers=[
+                        "ifi",
+                        "who_global",
+                        "who_national",
+                        "who_subnational",
+                        "who_covid",
+                        "sadd",
+                        "ctfallbacks",
+                        "cadre_harmonise",
+                        "access",
+                        "food_prices",
+                    ],
+                    use_live=False,
+                    fallbacks_root=folder,
+                )
+                assert fail is True
                 filepaths = jsonout.save(tempdir, countries_to_save=countries_to_save)
                 assert filecmp.cmp(filepaths[0], join(folder, "test_scraper_all.json"))
                 assert filecmp.cmp(filepaths[1], join(folder, "test_scraper.json"))

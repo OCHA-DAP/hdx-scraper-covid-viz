@@ -1,10 +1,12 @@
 import logging
+from os.path import join
 
 from hdx.data.dataset import Dataset
 from hdx.location.adminone import AdminOne
 from hdx.location.country import Country
 from hdx.scraper.scrapers import run_scrapers
 from hdx.scraper.utils import get_date_from_dataset_date
+from hdx.utilities.loader import LoadError, load_json
 from utilities.region import Region
 
 from .covax_deliveries import get_covax_deliveries
@@ -102,6 +104,7 @@ def get_indicators(
     other_auths=dict(),
     countries_override=None,
     use_live=True,
+    fallbacks_root="",
 ):
     world = [list(), list()]
     regional = [["regionnames"], ["#region+name"]]
@@ -148,6 +151,46 @@ def get_indicators(
     adminone = AdminOne(configuration)
     pcodes = adminone.pcodes
     population_lookup = dict()
+    all_fallbacks = list()
+
+    def add_fallbacks(res):
+        fb = res.get("fallbacks")
+        if fb:
+            all_fallbacks.extend(fb)
+
+    fallbacks_file = configuration["json"]["additional"][0]["filepath"]
+    fallbacks_path = join(fallbacks_root, fallbacks_file)
+    try:
+        fallback_data = load_json(fallbacks_path)
+        fallback_sources = fallback_data["sources_data"]
+        sources_hxltags = [
+            "#indicator+name",
+            "#date",
+            "#meta+source",
+            "#meta+url",
+        ]
+        fallbacks = {
+            "global": {
+                "data": fallback_data["world_data"],
+                "admin name": "global",
+                "sources": fallback_sources,
+                "sources hxltags": sources_hxltags,
+            },
+            "national": {
+                "data": fallback_data["national_data"],
+                "admin hxltag": "#country+code",
+                "sources": fallback_sources,
+                "sources hxltags": sources_hxltags,
+            },
+            "subnational": {
+                "data": fallback_data["subnational_data"],
+                "admin hxltag": "#adm1+code",
+                "sources": fallback_sources,
+                "sources hxltags": sources_hxltags,
+            },
+        }
+    except (IOError, LoadError):
+        fallbacks = None
 
     def update_tab(name, data):
         logger.info(f"Updating tab: {name}")
@@ -167,7 +210,9 @@ def get_indicators(
         today_str=today_str,
         scrapers=["population"],
         population_lookup=population_lookup,
+        fallbacks=fallbacks[level] if fallbacks else None,
     )
+    add_fallbacks(results)
     national_headers = extend_headers(national, results["headers"])
     national_columns = extend_columns(
         "national",
@@ -208,7 +253,9 @@ def get_indicators(
         today_str=today_str,
         scrapers=["population"],
         population_lookup=population_lookup,
+        fallbacks=fallbacks[level] if fallbacks else None,
     )
+    add_fallbacks(results)
     subnational_headers = extend_headers(subnational, results["headers"])
     extend_columns(
         "subnational",
@@ -295,8 +342,9 @@ def get_indicators(
             today_str=today_str,
             scrapers=scrapers,
             population_lookup=population_lookup,
+            fallbacks=fallbacks[level] if fallbacks else None,
         )
-
+        add_fallbacks(results)
         national_headers = extend_headers(
             national,
             covid_headers,
@@ -385,7 +433,9 @@ def get_indicators(
                     today_str=today_str,
                     scrapers=scrapers,
                     population_lookup=population_lookup,
+                    fallbacks=fallbacks[level] if fallbacks else None,
                 )
+                add_fallbacks(results)
                 world_headers = extend_headers(
                     world, covid_wheaders, fts_wheaders, results["headers"], rgheaders
                 )
@@ -427,8 +477,9 @@ def get_indicators(
             today_str=today_str,
             scrapers=scrapers,
             population_lookup=population_lookup,
+            fallbacks=fallbacks[level] if fallbacks else None,
         )
-
+        add_fallbacks(results)
         subnational_headers = extend_headers(
             subnational,
             ipc_sheaders,
@@ -479,4 +530,9 @@ def get_indicators(
     sources.append(get_monthly_report_source(configuration))
     sources = [list(elem) for elem in dict.fromkeys(sources)]
     update_tab("sources", sources)
-    return hrp_countries
+    if all_fallbacks:
+        logger.error(f"Fallbacks were used: {', '.join(all_fallbacks)}")
+        fail = True
+    else:
+        fail = False
+    return hrp_countries, fail

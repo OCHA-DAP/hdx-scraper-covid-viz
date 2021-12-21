@@ -1,11 +1,12 @@
 import argparse
 import logging
+import sys
 from datetime import datetime
 from os import getenv
 from os.path import join
 
-from hdx.facades.keyword_arguments import facade
 from hdx.api.configuration import Configuration
+from hdx.facades.keyword_arguments import facade
 from hdx.scraper.exceloutput import ExcelOutput
 from hdx.scraper.googlesheets import GoogleSheets
 from hdx.scraper.jsonoutput import JsonOutput
@@ -14,7 +15,6 @@ from hdx.utilities.downloader import Download
 from hdx.utilities.easy_logging import setup_logging
 from hdx.utilities.path import temp_dir
 from hdx.utilities.retriever import Retrieve
-
 from scrapers.main import get_indicators
 
 setup_logging()
@@ -117,7 +117,7 @@ def main(
                 jsonout = JsonOutput(configuration, updatetabs)
             outputs = {"gsheets": gsheets, "excel": excelout, "json": jsonout}
             today = datetime.now()
-            countries_to_save = get_indicators(
+            countries_to_save, fail = get_indicators(
                 configuration,
                 today,
                 retriever,
@@ -131,6 +131,8 @@ def main(
             jsonout.add_additional_json(downloader, today=today)
             jsonout.save(countries_to_save=countries_to_save)
             excelout.save()
+            if fail:
+                sys.exit(1)
 
 
 if __name__ == "__main__":
