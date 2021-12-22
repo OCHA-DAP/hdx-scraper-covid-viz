@@ -1146,438 +1146,508 @@ country_name_mappings:
   "CAR": "CAF"
 
 admin1_info:
-  - {ADM1_PCODE: AF01, ADM1_REF: Kabul, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF02, ADM1_REF: Kapisa, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF03, ADM1_REF: Parwan, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF04, ADM1_REF: Maidan Wardak, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF05, ADM1_REF: Logar, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF06, ADM1_REF: Nangarhar, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF07, ADM1_REF: Laghman, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF08, ADM1_REF: Panjsher, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF09, ADM1_REF: Baghlan, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF10, ADM1_REF: Bamyan, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF11, ADM1_REF: Ghazni, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF12, ADM1_REF: Paktika, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF13, ADM1_REF: Paktya, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF14, ADM1_REF: Khost, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF15, ADM1_REF: Kunar, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF16, ADM1_REF: Nuristan, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF17, ADM1_REF: Badakhshan, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF18, ADM1_REF: Takhar, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF19, ADM1_REF: Kunduz, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF20, ADM1_REF: Samangan, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF21, ADM1_REF: Balkh, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF22, ADM1_REF: Sar E Pul, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF23, ADM1_REF: Ghor, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF24, ADM1_REF: Daykundi, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF25, ADM1_REF: Uruzgan, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF26, ADM1_REF: Zabul, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF27, ADM1_REF: Kandahar, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF28, ADM1_REF: Jawzjan, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF29, ADM1_REF: Faryab, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF30, ADM1_REF: Hilmand, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF31, ADM1_REF: Badghis, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF32, ADM1_REF: Hirat, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF33, ADM1_REF: Farah, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: AF34, ADM1_REF: Nimroz, ADM0_PCODE: AF, alpha_3: AFG, ADM0_REF: Afghanistan}
-  - {ADM1_PCODE: BDI001, ADM1_REF: Bubanza, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI002, ADM1_REF: Bujumbura Rural, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI003, ADM1_REF: Bururi, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI004, ADM1_REF: Cankuzo, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI005, ADM1_REF: Cibitoke, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI006, ADM1_REF: Gitega, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI007, ADM1_REF: Karuzi, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI008, ADM1_REF: Kayanza, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI009, ADM1_REF: Kirundo, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI010, ADM1_REF: Makamba, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI011, ADM1_REF: Muramvya, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI012, ADM1_REF: Muyinga, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI013, ADM1_REF: Mwaro, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI014, ADM1_REF: Ngozi, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI015, ADM1_REF: Rutana, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI016, ADM1_REF: Ruyigi, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI017, ADM1_REF: Bujumbura Mairie, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BDI018, ADM1_REF: Rumonge, ADM0_PCODE: BDI, alpha_3: BDI, ADM0_REF: Burundi}
-  - {ADM1_PCODE: BF13, ADM1_REF: Centre, ADM0_PCODE: BF, alpha_3: BFA, ADM0_REF: Burkina Faso}
-  - {ADM1_PCODE: BF46, ADM1_REF: Boucle Du Mouhoun, ADM0_PCODE: BF, alpha_3: BFA, ADM0_REF: Burkina Faso}
-  - {ADM1_PCODE: BF47, ADM1_REF: Cascades, ADM0_PCODE: BF, alpha_3: BFA, ADM0_REF: Burkina Faso}
-  - {ADM1_PCODE: BF48, ADM1_REF: Centre Est, ADM0_PCODE: BF, alpha_3: BFA, ADM0_REF: Burkina Faso}
-  - {ADM1_PCODE: BF49, ADM1_REF: Centre Nord, ADM0_PCODE: BF, alpha_3: BFA, ADM0_REF: Burkina Faso}
-  - {ADM1_PCODE: BF50, ADM1_REF: Centre Ouest, ADM0_PCODE: BF, alpha_3: BFA, ADM0_REF: Burkina Faso}
-  - {ADM1_PCODE: BF51, ADM1_REF: Centre Sud, ADM0_PCODE: BF, alpha_3: BFA, ADM0_REF: Burkina Faso}
-  - {ADM1_PCODE: BF52, ADM1_REF: Est, ADM0_PCODE: BF, alpha_3: BFA, ADM0_REF: Burkina Faso}
-  - {ADM1_PCODE: BF53, ADM1_REF: Hauts Bassins, ADM0_PCODE: BF, alpha_3: BFA, ADM0_REF: Burkina Faso}
-  - {ADM1_PCODE: BF54, ADM1_REF: Nord, ADM0_PCODE: BF, alpha_3: BFA, ADM0_REF: Burkina Faso}
-  - {ADM1_PCODE: BF55, ADM1_REF: Plateau Central, ADM0_PCODE: BF, alpha_3: BFA, ADM0_REF: Burkina Faso}
-  - {ADM1_PCODE: BF56, ADM1_REF: Sahel, ADM0_PCODE: BF, alpha_3: BFA, ADM0_REF: Burkina Faso}
-  - {ADM1_PCODE: BF57, ADM1_REF: Sud Ouest, ADM0_PCODE: BF, alpha_3: BFA, ADM0_REF: Burkina Faso}
-  - {ADM1_PCODE: CF11, ADM1_REF: Ombella Mpoko, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF12, ADM1_REF: Lobaye, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF21, ADM1_REF: Mambere Kadei, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF22, ADM1_REF: Nana Mambere, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF23, ADM1_REF: Sangha Mbaere, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF31, ADM1_REF: Ouham Pende, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF32, ADM1_REF: Ouham, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF41, ADM1_REF: Kemo, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF42, ADM1_REF: Nana Gribizi, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF43, ADM1_REF: Ouaka, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF51, ADM1_REF: Bamingui Bangoran, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF52, ADM1_REF: Haute Kotto, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF53, ADM1_REF: Vakaga, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF61, ADM1_REF: Basse Kotto, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF62, ADM1_REF: Mbomou, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF63, ADM1_REF: Haut Mbomou, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CF71, ADM1_REF: Bangui, ADM0_PCODE: CF, alpha_3: CAF, ADM0_REF: Central African Republic}
-  - {ADM1_PCODE: CM001, ADM1_REF: Adamawa, ADM0_PCODE: CM, alpha_3: CMR, ADM0_REF: Cameroon}
-  - {ADM1_PCODE: CM002, ADM1_REF: Centre, ADM0_PCODE: CM, alpha_3: CMR, ADM0_REF: Cameroon}
-  - {ADM1_PCODE: CM003, ADM1_REF: East, ADM0_PCODE: CM, alpha_3: CMR, ADM0_REF: Cameroon}
-  - {ADM1_PCODE: CM004, ADM1_REF: Far North, ADM0_PCODE: CM, alpha_3: CMR, ADM0_REF: Cameroon}
-  - {ADM1_PCODE: CM005, ADM1_REF: Littoral, ADM0_PCODE: CM, alpha_3: CMR, ADM0_REF: Cameroon}
-  - {ADM1_PCODE: CM006, ADM1_REF: North, ADM0_PCODE: CM, alpha_3: CMR, ADM0_REF: Cameroon}
-  - {ADM1_PCODE: CM007, ADM1_REF: North West, ADM0_PCODE: CM, alpha_3: CMR, ADM0_REF: Cameroon}
-  - {ADM1_PCODE: CM008, ADM1_REF: West, ADM0_PCODE: CM, alpha_3: CMR, ADM0_REF: Cameroon}
-  - {ADM1_PCODE: CM009, ADM1_REF: South, ADM0_PCODE: CM, alpha_3: CMR, ADM0_REF: Cameroon}
-  - {ADM1_PCODE: CM010, ADM1_REF: South West, ADM0_PCODE: CM, alpha_3: CMR, ADM0_REF: Cameroon}
-  - {ADM1_PCODE: CD10, ADM1_REF: Kinshasa, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD20, ADM1_REF: Kongo Central, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD31, ADM1_REF: Kwango, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD32, ADM1_REF: Kwilu, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD33, ADM1_REF: Mai Ndombe, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD41, ADM1_REF: Equateur, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD42, ADM1_REF: Sud Ubangi, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD43, ADM1_REF: Nord Ubangi, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD44, ADM1_REF: Mongala, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD45, ADM1_REF: Tshuapa, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD51, ADM1_REF: Tshopo, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD52, ADM1_REF: Bas Uele, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD53, ADM1_REF: Haut Uele, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD54, ADM1_REF: Ituri, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD61, ADM1_REF: Nord Kivu, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD62, ADM1_REF: Sud Kivu, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD63, ADM1_REF: Maniema, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD71, ADM1_REF: Haut Katanga, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD72, ADM1_REF: Lualaba, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD73, ADM1_REF: Haut Lomami, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD74, ADM1_REF: Tanganyika, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD81, ADM1_REF: Lomami, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD82, ADM1_REF: Kasai Oriental, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD83, ADM1_REF: Sankuru, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD91, ADM1_REF: Kasai Central, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CD92, ADM1_REF: Kasai, ADM0_PCODE: CD, alpha_3: COD, ADM0_REF: Democratic Republic of the Congo}
-  - {ADM1_PCODE: CO05, ADM1_REF: Antioquia, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO08, ADM1_REF: Atlantico, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO11, ADM1_REF: 'Bogota, D.C.', ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO13, ADM1_REF: Bolivar, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO15, ADM1_REF: Boyaca, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO17, ADM1_REF: Caldas, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO18, ADM1_REF: Caqueta, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO19, ADM1_REF: Cauca, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO20, ADM1_REF: Cesar, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO23, ADM1_REF: Cordoba, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO25, ADM1_REF: Cundinamarca, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO27, ADM1_REF: Choco, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO41, ADM1_REF: Huila, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO44, ADM1_REF: La Guajira, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO47, ADM1_REF: Magdalena, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO50, ADM1_REF: Meta, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO52, ADM1_REF: Narino, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO54, ADM1_REF: Norte de Santander, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO63, ADM1_REF: Quindio, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO66, ADM1_REF: Risaralda, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO68, ADM1_REF: Santander, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO70, ADM1_REF: Sucre, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO73, ADM1_REF: Tolima, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO76, ADM1_REF: Valle del Cauca, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO81, ADM1_REF: Arauca, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO85, ADM1_REF: Casanare, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO86, ADM1_REF: Putumayo, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO88, ADM1_REF: "Archipielago de San Andres, Providencia y Santa Catalina", ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO91, ADM1_REF: Amazonas, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO94, ADM1_REF: Guainia, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO95, ADM1_REF: Guaviare, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO97, ADM1_REF: Vaupes, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: CO99, ADM1_REF: Vichada, ADM0_PCODE: CO, alpha_3: COL, ADM0_REF: Colombia}
-  - {ADM1_PCODE: ET01, ADM1_REF: Tigray, ADM0_PCODE: ET, alpha_3: ETH, ADM0_REF: Ethiopia}
-  - {ADM1_PCODE: ET02, ADM1_REF: Afar, ADM0_PCODE: ET, alpha_3: ETH, ADM0_REF: Ethiopia}
-  - {ADM1_PCODE: ET03, ADM1_REF: Amhara, ADM0_PCODE: ET, alpha_3: ETH, ADM0_REF: Ethiopia}
-  - {ADM1_PCODE: ET04, ADM1_REF: Oromia, ADM0_PCODE: ET, alpha_3: ETH, ADM0_REF: Ethiopia}
-  - {ADM1_PCODE: ET05, ADM1_REF: Somali, ADM0_PCODE: ET, alpha_3: ETH, ADM0_REF: Ethiopia}
-  - {ADM1_PCODE: ET06, ADM1_REF: Benishangul Gumz, ADM0_PCODE: ET, alpha_3: ETH, ADM0_REF: Ethiopia}
-  - {ADM1_PCODE: ET07, ADM1_REF: Snnp, ADM0_PCODE: ET, alpha_3: ETH, ADM0_REF: Ethiopia}
-  - {ADM1_PCODE: ET12, ADM1_REF: Gambela, ADM0_PCODE: ET, alpha_3: ETH, ADM0_REF: Ethiopia}
-  - {ADM1_PCODE: ET13, ADM1_REF: Harari, ADM0_PCODE: ET, alpha_3: ETH, ADM0_REF: Ethiopia}
-  - {ADM1_PCODE: ET14, ADM1_REF: Addis Ababa, ADM0_PCODE: ET, alpha_3: ETH, ADM0_REF: Ethiopia}
-  - {ADM1_PCODE: ET15, ADM1_REF: Dire Dawa, ADM0_PCODE: ET, alpha_3: ETH, ADM0_REF: Ethiopia}
-  - {ADM1_PCODE: HT01, ADM1_REF: West, ADM0_PCODE: HT, alpha_3: HTI, ADM0_REF: Haiti}
-  - {ADM1_PCODE: HT02, ADM1_REF: South East, ADM0_PCODE: HT, alpha_3: HTI, ADM0_REF: Haiti}
-  - {ADM1_PCODE: HT03, ADM1_REF: North, ADM0_PCODE: HT, alpha_3: HTI, ADM0_REF: Haiti}
-  - {ADM1_PCODE: HT04, ADM1_REF: North East, ADM0_PCODE: HT, alpha_3: HTI, ADM0_REF: Haiti}
-  - {ADM1_PCODE: HT05, ADM1_REF: Artibonite, ADM0_PCODE: HT, alpha_3: HTI, ADM0_REF: Haiti}
-  - {ADM1_PCODE: HT06, ADM1_REF: Centre, ADM0_PCODE: HT, alpha_3: HTI, ADM0_REF: Haiti}
-  - {ADM1_PCODE: HT07, ADM1_REF: South, ADM0_PCODE: HT, alpha_3: HTI, ADM0_REF: Haiti}
-  - {ADM1_PCODE: HT08, ADM1_REF: Grande'Anse, ADM0_PCODE: HT, alpha_3: HTI, ADM0_REF: Haiti}
-  - {ADM1_PCODE: HT09, ADM1_REF: North West, ADM0_PCODE: HT, alpha_3: HTI, ADM0_REF: Haiti}
-  - {ADM1_PCODE: HT10, ADM1_REF: Nippes, ADM0_PCODE: HT, alpha_3: HTI, ADM0_REF: Haiti}
-  - {ADM1_PCODE: IQG01, ADM1_REF: Al Anbar, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG02, ADM1_REF: Al Basrah, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG03, ADM1_REF: Al Muthanna, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG04, ADM1_REF: Al Najaf, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG05, ADM1_REF: Al Qadissiya, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG06, ADM1_REF: Al Sulaymaniyah, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG07, ADM1_REF: Babil, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG08, ADM1_REF: Baghdad, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG09, ADM1_REF: Duhok, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG10, ADM1_REF: Diyala, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG11, ADM1_REF: Erbil, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG12, ADM1_REF: Kerbala, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG13, ADM1_REF: Kirkuk, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG14, ADM1_REF: Maysan, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG15, ADM1_REF: Ninewa, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG16, ADM1_REF: Salah Al Din, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG17, ADM1_REF: Thi Qar, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: IQG18, ADM1_REF: Wassit, ADM0_PCODE: IQ, alpha_3: IRQ, ADM0_REF: Iraq}
-  - {ADM1_PCODE: LY01, ADM1_REF: East, ADM0_PCODE: LY, alpha_3: LBY, ADM0_REF: Libya}
-  - {ADM1_PCODE: LY02, ADM1_REF: West, ADM0_PCODE: LY, alpha_3: LBY, ADM0_REF: Libya}
-  - {ADM1_PCODE: LY03, ADM1_REF: South, ADM0_PCODE: LY, alpha_3: LBY, ADM0_REF: Libya}
-  - {ADM1_PCODE: ML01, ADM1_REF: Kayes, ADM0_PCODE: ML, alpha_3: MLI, ADM0_REF: Mali}
-  - {ADM1_PCODE: ML02, ADM1_REF: Koulikoro, ADM0_PCODE: ML, alpha_3: MLI, ADM0_REF: Mali}
-  - {ADM1_PCODE: ML03, ADM1_REF: Sikasso, ADM0_PCODE: ML, alpha_3: MLI, ADM0_REF: Mali}
-  - {ADM1_PCODE: ML04, ADM1_REF: Segou, ADM0_PCODE: ML, alpha_3: MLI, ADM0_REF: Mali}
-  - {ADM1_PCODE: ML05, ADM1_REF: Mopti, ADM0_PCODE: ML, alpha_3: MLI, ADM0_REF: Mali}
-  - {ADM1_PCODE: ML06, ADM1_REF: Tombouctou, ADM0_PCODE: ML, alpha_3: MLI, ADM0_REF: Mali}
-  - {ADM1_PCODE: ML07, ADM1_REF: Gao, ADM0_PCODE: ML, alpha_3: MLI, ADM0_REF: Mali}
-  - {ADM1_PCODE: ML08, ADM1_REF: Kidal, ADM0_PCODE: ML, alpha_3: MLI, ADM0_REF: Mali}
-  - {ADM1_PCODE: ML09, ADM1_REF: Bamako, ADM0_PCODE: ML, alpha_3: MLI, ADM0_REF: Mali}
-  - {ADM1_PCODE: MMR001, ADM1_REF: Kachin, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: MMR002, ADM1_REF: Kayah, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: MMR003, ADM1_REF: Kayin, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: MMR004, ADM1_REF: Chin, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: MMR005, ADM1_REF: Sagaing, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: MMR006, ADM1_REF: Tanintharyi, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: MMR009, ADM1_REF: Magway, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: MMR010, ADM1_REF: Mandalay, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: MMR011, ADM1_REF: Mon, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: MMR012, ADM1_REF: Rakhine, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: MMR013, ADM1_REF: Yangon, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: MMR017, ADM1_REF: Ayeyarwady, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: MMR018, ADM1_REF: Nay Pyi Taw, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: MMR111, ADM1_REF: Bago, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: MMR222, ADM1_REF: Shan, ADM0_PCODE: MM, alpha_3: MMR, ADM0_REF: Myanmar}
-  - {ADM1_PCODE: NER001, ADM1_REF: Agadez, ADM0_PCODE: NER, alpha_3: NER, ADM0_REF: Niger}
-  - {ADM1_PCODE: NER002, ADM1_REF: Diffa, ADM0_PCODE: NER, alpha_3: NER, ADM0_REF: Niger}
-  - {ADM1_PCODE: NER003, ADM1_REF: Dosso, ADM0_PCODE: NER, alpha_3: NER, ADM0_REF: Niger}
-  - {ADM1_PCODE: NER004, ADM1_REF: Maradi, ADM0_PCODE: NER, alpha_3: NER, ADM0_REF: Niger}
-  - {ADM1_PCODE: NER005, ADM1_REF: Tahoua, ADM0_PCODE: NER, alpha_3: NER, ADM0_REF: Niger}
-  - {ADM1_PCODE: NER006, ADM1_REF: Tillaberi, ADM0_PCODE: NER, alpha_3: NER, ADM0_REF: Niger}
-  - {ADM1_PCODE: NER007, ADM1_REF: Zinder, ADM0_PCODE: NER, alpha_3: NER, ADM0_REF: Niger}
-  - {ADM1_PCODE: NER008, ADM1_REF: Niamey, ADM0_PCODE: NER, alpha_3: NER, ADM0_REF: Niger}
-  - {ADM1_PCODE: NG001, ADM1_REF: Abia, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG002, ADM1_REF: Adamawa, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG003, ADM1_REF: Akwa Ibom, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG004, ADM1_REF: Anambra, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG005, ADM1_REF: Bauchi, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG006, ADM1_REF: Bayelsa, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG007, ADM1_REF: Benue, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG008, ADM1_REF: Borno, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG009, ADM1_REF: Cross River, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG010, ADM1_REF: Delta, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG011, ADM1_REF: Ebonyi, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG012, ADM1_REF: Edo, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG013, ADM1_REF: Ekiti, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG014, ADM1_REF: Enugu, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG015, ADM1_REF: Federal Capital Territory, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG016, ADM1_REF: Gombe, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG017, ADM1_REF: Imo, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG018, ADM1_REF: Jigawa, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG019, ADM1_REF: Kaduna, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG020, ADM1_REF: Kano, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG021, ADM1_REF: Katsina, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG022, ADM1_REF: Kebbi, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG023, ADM1_REF: Kogi, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG024, ADM1_REF: Kwara, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG025, ADM1_REF: Lagos, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG026, ADM1_REF: Nasarawa, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG027, ADM1_REF: Niger, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG028, ADM1_REF: Ogun, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG029, ADM1_REF: Ondo, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG030, ADM1_REF: Osun, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG031, ADM1_REF: Oyo, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG032, ADM1_REF: Plateau, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG033, ADM1_REF: Rivers, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG034, ADM1_REF: Sokoto, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG035, ADM1_REF: Taraba, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG036, ADM1_REF: Yobe, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: NG037, ADM1_REF: Zamfara, ADM0_PCODE: NG, alpha_3: NGA, ADM0_REF: Nigeria}
-  - {ADM1_PCODE: PS1, ADM1_REF: Gaza Strip, ADM0_PCODE: PS, alpha_3: PSE, ADM0_REF: State of Palestine}
-  - {ADM1_PCODE: PS2, ADM1_REF: No Mans Land, ADM0_PCODE: PS, alpha_3: PSE, ADM0_REF: State of Palestine}
-  - {ADM1_PCODE: PS3, ADM1_REF: West Bank, ADM0_PCODE: PS, alpha_3: PSE, ADM0_REF: State of Palestine}
-  - {ADM1_PCODE: SD01, ADM1_REF: Khartoum, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD02, ADM1_REF: North Darfur, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD03, ADM1_REF: South Darfur, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD04, ADM1_REF: West Darfur, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD05, ADM1_REF: East Darfur, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD06, ADM1_REF: Central Darfur, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD07, ADM1_REF: South Kordofan, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD08, ADM1_REF: Blue Nile, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD09, ADM1_REF: White Nile, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD10, ADM1_REF: Red Sea, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD11, ADM1_REF: Kassala, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD12, ADM1_REF: Gedaref, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD13, ADM1_REF: North Kordofan, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD14, ADM1_REF: Sennar, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD15, ADM1_REF: Aj Jazirah, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD16, ADM1_REF: River Nile, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD17, ADM1_REF: Northern, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD18, ADM1_REF: West Kordofan, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SD19, ADM1_REF: Abyei Pca, ADM0_PCODE: SD, alpha_3: SDN, ADM0_REF: Sudan}
-  - {ADM1_PCODE: SO11, ADM1_REF: Awdal, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO12, ADM1_REF: Woqooyi Galbeed, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO13, ADM1_REF: Togdheer, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO14, ADM1_REF: Sool, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO15, ADM1_REF: Sanaag, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO16, ADM1_REF: Bari, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO17, ADM1_REF: Nugaal, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO18, ADM1_REF: Mudug, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO19, ADM1_REF: Galgaduud, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO20, ADM1_REF: Hiraan, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO21, ADM1_REF: Middle Shabelle, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO22, ADM1_REF: Banadir, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO23, ADM1_REF: Lower Shabelle, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO24, ADM1_REF: Bay, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO25, ADM1_REF: Bakool, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO26, ADM1_REF: Gedo, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO27, ADM1_REF: Middle Juba, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SO28, ADM1_REF: Lower Juba, ADM0_PCODE: SO, alpha_3: SOM, ADM0_REF: Somalia}
-  - {ADM1_PCODE: SS01, ADM1_REF: Central Equatoria, ADM0_PCODE: SS, alpha_3: SSD, ADM0_REF: South Sudan}
-  - {ADM1_PCODE: SS02, ADM1_REF: Eastern Equatoria, ADM0_PCODE: SS, alpha_3: SSD, ADM0_REF: South Sudan}
-  - {ADM1_PCODE: SS03, ADM1_REF: Jonglei, ADM0_PCODE: SS, alpha_3: SSD, ADM0_REF: South Sudan}
-  - {ADM1_PCODE: SS04, ADM1_REF: Lakes, ADM0_PCODE: SS, alpha_3: SSD, ADM0_REF: South Sudan}
-  - {ADM1_PCODE: SS05, ADM1_REF: Northern Bahr El Ghazal, ADM0_PCODE: SS, alpha_3: SSD, ADM0_REF: South Sudan}
-  - {ADM1_PCODE: SS06, ADM1_REF: Unity, ADM0_PCODE: SS, alpha_3: SSD, ADM0_REF: South Sudan}
-  - {ADM1_PCODE: SS07, ADM1_REF: Upper Nile, ADM0_PCODE: SS, alpha_3: SSD, ADM0_REF: South Sudan}
-  - {ADM1_PCODE: SS08, ADM1_REF: Warrap, ADM0_PCODE: SS, alpha_3: SSD, ADM0_REF: South Sudan}
-  - {ADM1_PCODE: SS09, ADM1_REF: Western Bahr El Ghazal, ADM0_PCODE: SS, alpha_3: SSD, ADM0_REF: South Sudan}
-  - {ADM1_PCODE: SS10, ADM1_REF: Western Equatoria, ADM0_PCODE: SS, alpha_3: SSD, ADM0_REF: South Sudan}
-  - {ADM1_PCODE: SY01, ADM1_REF: Damascus, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
-  - {ADM1_PCODE: SY02, ADM1_REF: Aleppo, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
-  - {ADM1_PCODE: SY03, ADM1_REF: Rural Damascus, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
-  - {ADM1_PCODE: SY04, ADM1_REF: Homs, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
-  - {ADM1_PCODE: SY05, ADM1_REF: Hama, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
-  - {ADM1_PCODE: SY06, ADM1_REF: Lattakia, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
-  - {ADM1_PCODE: SY07, ADM1_REF: Idleb, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
-  - {ADM1_PCODE: SY08, ADM1_REF: Al Hasakeh, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
-  - {ADM1_PCODE: SY09, ADM1_REF: Deir Ez Zor, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
-  - {ADM1_PCODE: SY10, ADM1_REF: Tartous, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
-  - {ADM1_PCODE: SY11, ADM1_REF: Ar Raqqa, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
-  - {ADM1_PCODE: SY12, ADM1_REF: Dara, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
-  - {ADM1_PCODE: SY13, ADM1_REF: As Sweida, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
-  - {ADM1_PCODE: SY14, ADM1_REF: Quneitra, ADM0_PCODE: SY, alpha_3: SYR, ADM0_REF: Syrian Arab Republic}
-  - {ADM1_PCODE: TD01, ADM1_REF: Batha, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD02, ADM1_REF: Borkou, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD03, ADM1_REF: Chari Baguirmi, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD04, ADM1_REF: Guera, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD05, ADM1_REF: Hadjer Lamis, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD06, ADM1_REF: Kanem, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD07, ADM1_REF: Lac, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD08, ADM1_REF: Logone Occidental, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD09, ADM1_REF: Logone Oriental, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD10, ADM1_REF: Mandoul, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD11, ADM1_REF: Mayo Kebbi Est, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD12, ADM1_REF: Mayo Kebbi Ouest, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD13, ADM1_REF: Moyen Chari, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD14, ADM1_REF: Ouaddai, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD15, ADM1_REF: Salamat, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD16, ADM1_REF: Tandjile, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD17, ADM1_REF: Wadi Fira, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD18, ADM1_REF: Ndjamena, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD19, ADM1_REF: Barh El Gazel, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD20, ADM1_REF: Ennedi Est, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD21, ADM1_REF: Sila, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD22, ADM1_REF: Tibesti, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: TD23, ADM1_REF: Ennedi Ouest, ADM0_PCODE: TD, alpha_3: TCD, ADM0_REF: Chad}
-  - {ADM1_PCODE: UA01, ADM1_REF: Avtonomna Respublika Krym, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA05, ADM1_REF: Vinnytska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA07, ADM1_REF: Volynska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA12, ADM1_REF: Dnipropetrovska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA14, ADM1_REF: Donetska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA18, ADM1_REF: Zhytomyrska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA21, ADM1_REF: Zakarpatska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA23, ADM1_REF: Zaporizka, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA26, ADM1_REF: Ivano Frankivska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA32, ADM1_REF: Kyivska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA35, ADM1_REF: Kirovohradska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA44, ADM1_REF: Luhanska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA46, ADM1_REF: Lvivska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA48, ADM1_REF: Mykolaivska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA51, ADM1_REF: Odeska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA53, ADM1_REF: Poltavska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA56, ADM1_REF: Rivnenska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA59, ADM1_REF: Sumska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA61, ADM1_REF: Ternopilska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA63, ADM1_REF: Kharkivska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA65, ADM1_REF: Khersonska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA68, ADM1_REF: Khmelnytska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA71, ADM1_REF: Cherkaska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA73, ADM1_REF: Chernivetska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA74, ADM1_REF: Chernihivska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA80, ADM1_REF: Kyivska, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: UA85, ADM1_REF: Sevastopol, ADM0_PCODE: UA, alpha_3: UKR, ADM0_REF: Ukraine}
-  - {ADM1_PCODE: VE01, ADM1_REF: Distrito Federal, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE02, ADM1_REF: Amazonas, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE03, ADM1_REF: Anzoategui, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE04, ADM1_REF: Apure, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE05, ADM1_REF: Aragua, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE06, ADM1_REF: Barinas, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE07, ADM1_REF: Bolivar, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE08, ADM1_REF: Carabobo, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE09, ADM1_REF: Cojedes, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE10, ADM1_REF: Delta Amacuro, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE11, ADM1_REF: Falcon, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE12, ADM1_REF: Guarico, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE13, ADM1_REF: Lara, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE14, ADM1_REF: Merida, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE15, ADM1_REF: Miranda, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE16, ADM1_REF: Monagas, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE17, ADM1_REF: Nueva Esparta, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE18, ADM1_REF: Portuguesa, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE19, ADM1_REF: Sucre, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE20, ADM1_REF: Tachira, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE21, ADM1_REF: Trujillo, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE22, ADM1_REF: Yaracuy, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE23, ADM1_REF: Zulia, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: VE24, ADM1_REF: Vargas, ADM0_PCODE: VE, alpha_3: VEN, ADM0_REF: Venezuela (Bolivarian Republic of)}
-  - {ADM1_PCODE: YE11, ADM1_REF: Ibb, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE12, ADM1_REF: Abyan, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE13, ADM1_REF: Sanaa City, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE14, ADM1_REF: Al Bayda, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE15, ADM1_REF: Taiz, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE16, ADM1_REF: Al Jawf, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE17, ADM1_REF: Hajjah, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE18, ADM1_REF: Al Hodeidah, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE19, ADM1_REF: Hadramawt, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE20, ADM1_REF: Dhamar, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE21, ADM1_REF: Shabwah, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE22, ADM1_REF: Sadah, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE23, ADM1_REF: Sanaa, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE24, ADM1_REF: Aden, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE25, ADM1_REF: Lahj, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE26, ADM1_REF: Marib, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE27, ADM1_REF: Al Mahwit, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE28, ADM1_REF: Al Maharah, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE29, ADM1_REF: Amran, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE30, ADM1_REF: Ad Dali, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE31, ADM1_REF: Raymah, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: YE32, ADM1_REF: Socotra, ADM0_PCODE: YE, alpha_3: YEM, ADM0_REF: Yemen}
-  - {ADM1_PCODE: ZW10, ADM1_REF: Bulawayo, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
-  - {ADM1_PCODE: ZW11, ADM1_REF: Manicaland, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
-  - {ADM1_PCODE: ZW12, ADM1_REF: Mashonaland Central, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
-  - {ADM1_PCODE: ZW13, ADM1_REF: Mashonaland East, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
-  - {ADM1_PCODE: ZW14, ADM1_REF: Mashonaland West, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
-  - {ADM1_PCODE: ZW15, ADM1_REF: Matabeleland North, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
-  - {ADM1_PCODE: ZW16, ADM1_REF: Matabeleland South, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
-  - {ADM1_PCODE: ZW17, ADM1_REF: Midlands, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
-  - {ADM1_PCODE: ZW18, ADM1_REF: Masvingo, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
-  - {ADM1_PCODE: ZW19, ADM1_REF: Harare, ADM0_PCODE: ZW, alpha_3: ZWE, ADM0_REF: Zimbabwe}
+  - {country: Afghanistan, iso3: AFG, pcode: AF17, name: Badakhshan}
+  - {country: Afghanistan, iso3: AFG, pcode: AF31, name: Badghis}
+  - {country: Afghanistan, iso3: AFG, pcode: AF09, name: Baghlan}
+  - {country: Afghanistan, iso3: AFG, pcode: AF21, name: Balkh}
+  - {country: Afghanistan, iso3: AFG, pcode: AF10, name: Bamyan}
+  - {country: Afghanistan, iso3: AFG, pcode: AF24, name: Daykundi}
+  - {country: Afghanistan, iso3: AFG, pcode: AF33, name: Farah}
+  - {country: Afghanistan, iso3: AFG, pcode: AF29, name: Faryab}
+  - {country: Afghanistan, iso3: AFG, pcode: AF11, name: Ghazni}
+  - {country: Afghanistan, iso3: AFG, pcode: AF23, name: Ghor}
+  - {country: Afghanistan, iso3: AFG, pcode: AF30, name: Hilmand}
+  - {country: Afghanistan, iso3: AFG, pcode: AF32, name: Hirat}
+  - {country: Afghanistan, iso3: AFG, pcode: AF28, name: Jawzjan}
+  - {country: Afghanistan, iso3: AFG, pcode: AF01, name: Kabul}
+  - {country: Afghanistan, iso3: AFG, pcode: AF27, name: Kandahar}
+  - {country: Afghanistan, iso3: AFG, pcode: AF02, name: Kapisa}
+  - {country: Afghanistan, iso3: AFG, pcode: AF14, name: Khost}
+  - {country: Afghanistan, iso3: AFG, pcode: AF15, name: Kunar}
+  - {country: Afghanistan, iso3: AFG, pcode: AF19, name: Kunduz}
+  - {country: Afghanistan, iso3: AFG, pcode: AF07, name: Laghman}
+  - {country: Afghanistan, iso3: AFG, pcode: AF05, name: Logar}
+  - {country: Afghanistan, iso3: AFG, pcode: AF04, name: Maidan Wardak}
+  - {country: Afghanistan, iso3: AFG, pcode: AF06, name: Nangarhar}
+  - {country: Afghanistan, iso3: AFG, pcode: AF34, name: Nimroz}
+  - {country: Afghanistan, iso3: AFG, pcode: AF16, name: Nuristan}
+  - {country: Afghanistan, iso3: AFG, pcode: AF12, name: Paktika}
+  - {country: Afghanistan, iso3: AFG, pcode: AF13, name: Paktya}
+  - {country: Afghanistan, iso3: AFG, pcode: AF08, name: Panjsher}
+  - {country: Afghanistan, iso3: AFG, pcode: AF03, name: Parwan}
+  - {country: Afghanistan, iso3: AFG, pcode: AF20, name: Samangan}
+  - {country: Afghanistan, iso3: AFG, pcode: AF22, name: Sar E Pul}
+  - {country: Afghanistan, iso3: AFG, pcode: AF18, name: Takhar}
+  - {country: Afghanistan, iso3: AFG, pcode: AF25, name: Uruzgan}
+  - {country: Afghanistan, iso3: AFG, pcode: AF26, name: Zabul}
+  - {country: Burkina Faso, iso3: BFA, pcode: BF46, name: Boucle Du Mouhoun}
+  - {country: Burkina Faso, iso3: BFA, pcode: BF47, name: Cascades}
+  - {country: Burkina Faso, iso3: BFA, pcode: BF13, name: Centre}
+  - {country: Burkina Faso, iso3: BFA, pcode: BF48, name: Centre Est}
+  - {country: Burkina Faso, iso3: BFA, pcode: BF49, name: Centre Nord}
+  - {country: Burkina Faso, iso3: BFA, pcode: BF50, name: Centre Ouest}
+  - {country: Burkina Faso, iso3: BFA, pcode: BF51, name: Centre Sud}
+  - {country: Burkina Faso, iso3: BFA, pcode: BF52, name: Est}
+  - {country: Burkina Faso, iso3: BFA, pcode: BF53, name: Hauts Bassins}
+  - {country: Burkina Faso, iso3: BFA, pcode: BF54, name: Nord}
+  - {country: Burkina Faso, iso3: BFA, pcode: BF55, name: Plateau Central}
+  - {country: Burkina Faso, iso3: BFA, pcode: BF56, name: Sahel}
+  - {country: Burkina Faso, iso3: BFA, pcode: BF57, name: Sud Ouest}
+  - {country: Burundi, iso3: BDI, pcode: BDI001, name: Bubanza}
+  - {country: Burundi, iso3: BDI, pcode: BDI017, name: Bujumbura Mairie}
+  - {country: Burundi, iso3: BDI, pcode: BDI002, name: Bujumbura Rural}
+  - {country: Burundi, iso3: BDI, pcode: BDI003, name: Bururi}
+  - {country: Burundi, iso3: BDI, pcode: BDI004, name: Cankuzo}
+  - {country: Burundi, iso3: BDI, pcode: BDI005, name: Cibitoke}
+  - {country: Burundi, iso3: BDI, pcode: BDI006, name: Gitega}
+  - {country: Burundi, iso3: BDI, pcode: BDI007, name: Karuzi}
+  - {country: Burundi, iso3: BDI, pcode: BDI008, name: Kayanza}
+  - {country: Burundi, iso3: BDI, pcode: BDI009, name: Kirundo}
+  - {country: Burundi, iso3: BDI, pcode: BDI010, name: Makamba}
+  - {country: Burundi, iso3: BDI, pcode: BDI011, name: Muramvya}
+  - {country: Burundi, iso3: BDI, pcode: BDI012, name: Muyinga}
+  - {country: Burundi, iso3: BDI, pcode: BDI013, name: Mwaro}
+  - {country: Burundi, iso3: BDI, pcode: BDI014, name: Ngozi}
+  - {country: Burundi, iso3: BDI, pcode: BDI018, name: Rumonge}
+  - {country: Burundi, iso3: BDI, pcode: BDI015, name: Rutana}
+  - {country: Burundi, iso3: BDI, pcode: BDI016, name: Ruyigi}
+  - {country: Cameroon, iso3: CMR, pcode: CM001, name: Adamawa}
+  - {country: Cameroon, iso3: CMR, pcode: CM002, name: Centre}
+  - {country: Cameroon, iso3: CMR, pcode: CM003, name: East}
+  - {country: Cameroon, iso3: CMR, pcode: CM004, name: Far North}
+  - {country: Cameroon, iso3: CMR, pcode: CM005, name: Littoral}
+  - {country: Cameroon, iso3: CMR, pcode: CM006, name: North}
+  - {country: Cameroon, iso3: CMR, pcode: CM007, name: North West}
+  - {country: Cameroon, iso3: CMR, pcode: CM009, name: South}
+  - {country: Cameroon, iso3: CMR, pcode: CM010, name: South West}
+  - {country: Cameroon, iso3: CMR, pcode: CM008, name: West}
+  - {country: Central African Republic, iso3: CAF, pcode: CF51, name: Bamingui Bangoran}
+  - {country: Central African Republic, iso3: CAF, pcode: CF71, name: Bangui}
+  - {country: Central African Republic, iso3: CAF, pcode: CF61, name: Basse Kotto}
+  - {country: Central African Republic, iso3: CAF, pcode: CF63, name: Haut Mbomou}
+  - {country: Central African Republic, iso3: CAF, pcode: CF52, name: Haute Kotto}
+  - {country: Central African Republic, iso3: CAF, pcode: CF41, name: Kemo}
+  - {country: Central African Republic, iso3: CAF, pcode: CF12, name: Lobaye}
+  - {country: Central African Republic, iso3: CAF, pcode: CF21, name: Mambere Kadei}
+  - {country: Central African Republic, iso3: CAF, pcode: CF62, name: Mbomou}
+  - {country: Central African Republic, iso3: CAF, pcode: CF42, name: Nana Gribizi}
+  - {country: Central African Republic, iso3: CAF, pcode: CF22, name: Nana Mambere}
+  - {country: Central African Republic, iso3: CAF, pcode: CF11, name: Ombella Mpoko}
+  - {country: Central African Republic, iso3: CAF, pcode: CF43, name: Ouaka}
+  - {country: Central African Republic, iso3: CAF, pcode: CF32, name: Ouham}
+  - {country: Central African Republic, iso3: CAF, pcode: CF31, name: Ouham Pende}
+  - {country: Central African Republic, iso3: CAF, pcode: CF23, name: Sangha Mbaere}
+  - {country: Central African Republic, iso3: CAF, pcode: CF53, name: Vakaga}
+  - {country: Chad, iso3: TCD, pcode: TD19, name: Barh El Gazel}
+  - {country: Chad, iso3: TCD, pcode: TD01, name: Batha}
+  - {country: Chad, iso3: TCD, pcode: TD02, name: Borkou}
+  - {country: Chad, iso3: TCD, pcode: TD03, name: Chari Baguirmi}
+  - {country: Chad, iso3: TCD, pcode: TD20, name: Ennedi Est}
+  - {country: Chad, iso3: TCD, pcode: TD23, name: Ennedi Ouest}
+  - {country: Chad, iso3: TCD, pcode: TD04, name: Guera}
+  - {country: Chad, iso3: TCD, pcode: TD05, name: Hadjer Lamis}
+  - {country: Chad, iso3: TCD, pcode: TD06, name: Kanem}
+  - {country: Chad, iso3: TCD, pcode: TD07, name: Lac}
+  - {country: Chad, iso3: TCD, pcode: TD08, name: Logone Occidental}
+  - {country: Chad, iso3: TCD, pcode: TD09, name: Logone Oriental}
+  - {country: Chad, iso3: TCD, pcode: TD10, name: Mandoul}
+  - {country: Chad, iso3: TCD, pcode: TD11, name: Mayo Kebbi Est}
+  - {country: Chad, iso3: TCD, pcode: TD12, name: Mayo Kebbi Ouest}
+  - {country: Chad, iso3: TCD, pcode: TD13, name: Moyen Chari}
+  - {country: Chad, iso3: TCD, pcode: TD18, name: Ndjamena}
+  - {country: Chad, iso3: TCD, pcode: TD14, name: Ouaddai}
+  - {country: Chad, iso3: TCD, pcode: TD15, name: Salamat}
+  - {country: Chad, iso3: TCD, pcode: TD21, name: Sila}
+  - {country: Chad, iso3: TCD, pcode: TD16, name: Tandjile}
+  - {country: Chad, iso3: TCD, pcode: TD22, name: Tibesti}
+  - {country: Chad, iso3: TCD, pcode: TD17, name: Wadi Fira}
+  - {country: Colombia, iso3: COL, pcode: CO91, name: Amazonas}
+  - {country: Colombia, iso3: COL, pcode: CO05, name: Antioquia}
+  - {country: Colombia, iso3: COL, pcode: CO81, name: Arauca}
+  - {country: Colombia, iso3: COL, pcode: CO88, name: "Archipielago de San Andres, Providencia y Santa Catalina"}
+  - {country: Colombia, iso3: COL, pcode: CO08, name: Atlantico}
+  - {country: Colombia, iso3: COL, pcode: CO11, name: "Bogota, D.C."}
+  - {country: Colombia, iso3: COL, pcode: CO13, name: Bolivar}
+  - {country: Colombia, iso3: COL, pcode: CO15, name: Boyaca}
+  - {country: Colombia, iso3: COL, pcode: CO17, name: Caldas}
+  - {country: Colombia, iso3: COL, pcode: CO18, name: Caqueta}
+  - {country: Colombia, iso3: COL, pcode: CO85, name: Casanare}
+  - {country: Colombia, iso3: COL, pcode: CO19, name: Cauca}
+  - {country: Colombia, iso3: COL, pcode: CO20, name: Cesar}
+  - {country: Colombia, iso3: COL, pcode: CO27, name: Choco}
+  - {country: Colombia, iso3: COL, pcode: CO23, name: Cordoba}
+  - {country: Colombia, iso3: COL, pcode: CO25, name: Cundinamarca}
+  - {country: Colombia, iso3: COL, pcode: CO94, name: Guainia}
+  - {country: Colombia, iso3: COL, pcode: CO95, name: Guaviare}
+  - {country: Colombia, iso3: COL, pcode: CO41, name: Huila}
+  - {country: Colombia, iso3: COL, pcode: CO44, name: La Guajira}
+  - {country: Colombia, iso3: COL, pcode: CO47, name: Magdalena}
+  - {country: Colombia, iso3: COL, pcode: CO50, name: Meta}
+  - {country: Colombia, iso3: COL, pcode: CO52, name: Narino}
+  - {country: Colombia, iso3: COL, pcode: CO54, name: Norte de Santander}
+  - {country: Colombia, iso3: COL, pcode: CO86, name: Putumayo}
+  - {country: Colombia, iso3: COL, pcode: CO63, name: Quindio}
+  - {country: Colombia, iso3: COL, pcode: CO66, name: Risaralda}
+  - {country: Colombia, iso3: COL, pcode: CO68, name: Santander}
+  - {country: Colombia, iso3: COL, pcode: CO70, name: Sucre}
+  - {country: Colombia, iso3: COL, pcode: CO73, name: Tolima}
+  - {country: Colombia, iso3: COL, pcode: CO76, name: Valle del Cauca}
+  - {country: Colombia, iso3: COL, pcode: CO97, name: Vaupes}
+  - {country: Colombia, iso3: COL, pcode: CO99, name: Vichada}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD52, name: Bas Uele}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD41, name: Equateur}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD71, name: Haut Katanga}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD73, name: Haut Lomami}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD53, name: Haut Uele}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD54, name: Ituri}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD92, name: Kasai}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD91, name: Kasai Central}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD82, name: Kasai Oriental}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD10, name: Kinshasa}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD20, name: Kongo Central}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD31, name: Kwango}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD32, name: Kwilu}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD81, name: Lomami}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD72, name: Lualaba}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD33, name: Mai Ndombe}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD63, name: Maniema}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD44, name: Mongala}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD61, name: Nord Kivu}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD43, name: Nord Ubangi}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD83, name: Sankuru}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD62, name: Sud Kivu}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD42, name: Sud Ubangi}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD74, name: Tanganyika}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD51, name: Tshopo}
+  - {country: Democratic Republic of the Congo, iso3: COD, pcode: CD45, name: Tshuapa}
+  - {country: El Salvador, iso3: SLV, pcode: SV01, name: Ahuachapan}
+  - {country: El Salvador, iso3: SLV, pcode: SV02, name: Cabanas}
+  - {country: El Salvador, iso3: SLV, pcode: SV03, name: Chalatenango}
+  - {country: El Salvador, iso3: SLV, pcode: SV04, name: Cuscatlan}
+  - {country: El Salvador, iso3: SLV, pcode: SV05, name: La Libertad}
+  - {country: El Salvador, iso3: SLV, pcode: SV06, name: La Paz}
+  - {country: El Salvador, iso3: SLV, pcode: SV07, name: La Union}
+  - {country: El Salvador, iso3: SLV, pcode: SV08, name: Morazan}
+  - {country: El Salvador, iso3: SLV, pcode: SV09, name: San Miguel}
+  - {country: El Salvador, iso3: SLV, pcode: SV10, name: San Salvador}
+  - {country: El Salvador, iso3: SLV, pcode: SV11, name: San Vicente}
+  - {country: El Salvador, iso3: SLV, pcode: SV12, name: Santa Ana}
+  - {country: El Salvador, iso3: SLV, pcode: SV13, name: Sonsonate}
+  - {country: El Salvador, iso3: SLV, pcode: SV14, name: Usulutan}
+  - {country: Ethiopia, iso3: ETH, pcode: ET14, name: Addis Ababa}
+  - {country: Ethiopia, iso3: ETH, pcode: ET02, name: Afar}
+  - {country: Ethiopia, iso3: ETH, pcode: ET03, name: Amhara}
+  - {country: Ethiopia, iso3: ETH, pcode: ET06, name: Benishangul Gumz}
+  - {country: Ethiopia, iso3: ETH, pcode: ET15, name: Dire Dawa}
+  - {country: Ethiopia, iso3: ETH, pcode: ET12, name: Gambela}
+  - {country: Ethiopia, iso3: ETH, pcode: ET13, name: Harari}
+  - {country: Ethiopia, iso3: ETH, pcode: ET04, name: Oromia}
+  - {country: Ethiopia, iso3: ETH, pcode: ET07, name: Snnp}
+  - {country: Ethiopia, iso3: ETH, pcode: ET05, name: Somali}
+  - {country: Ethiopia, iso3: ETH, pcode: ET01, name: Tigray}
+  - {country: Guatemala, iso3: GTM, pcode: GT16, name: Alta Verapaz}
+  - {country: Guatemala, iso3: GTM, pcode: GT15, name: Baja Verapaz}
+  - {country: Guatemala, iso3: GTM, pcode: GT04, name: Chimaltenango}
+  - {country: Guatemala, iso3: GTM, pcode: GT20, name: Chiquimula}
+  - {country: Guatemala, iso3: GTM, pcode: GT02, name: El Progreso}
+  - {country: Guatemala, iso3: GTM, pcode: GT05, name: Escuintla}
+  - {country: Guatemala, iso3: GTM, pcode: GT01, name: Guatemala}
+  - {country: Guatemala, iso3: GTM, pcode: GT13, name: Huehuetenango}
+  - {country: Guatemala, iso3: GTM, pcode: GT18, name: Izabal}
+  - {country: Guatemala, iso3: GTM, pcode: GT21, name: Jalapa}
+  - {country: Guatemala, iso3: GTM, pcode: GT22, name: Jutiapa}
+  - {country: Guatemala, iso3: GTM, pcode: GT17, name: Peten}
+  - {country: Guatemala, iso3: GTM, pcode: GT09, name: Quetzaltenango}
+  - {country: Guatemala, iso3: GTM, pcode: GT14, name: Quiche}
+  - {country: Guatemala, iso3: GTM, pcode: GT11, name: Retalhuleu}
+  - {country: Guatemala, iso3: GTM, pcode: GT03, name: Sacatepequez}
+  - {country: Guatemala, iso3: GTM, pcode: GT12, name: San Marcos}
+  - {country: Guatemala, iso3: GTM, pcode: GT06, name: Santa Rosa}
+  - {country: Guatemala, iso3: GTM, pcode: GT07, name: Solola}
+  - {country: Guatemala, iso3: GTM, pcode: GT10, name: Suchitepequez}
+  - {country: Guatemala, iso3: GTM, pcode: GT08, name: Totonicapan}
+  - {country: Guatemala, iso3: GTM, pcode: GT19, name: Zacapa}
+  - {country: Haiti, iso3: HTI, pcode: HT05, name: Artibonite}
+  - {country: Haiti, iso3: HTI, pcode: HT06, name: Centre}
+  - {country: Haiti, iso3: HTI, pcode: HT08, name: "Grande'Anse"}
+  - {country: Haiti, iso3: HTI, pcode: HT10, name: Nippes}
+  - {country: Haiti, iso3: HTI, pcode: HT03, name: North}
+  - {country: Haiti, iso3: HTI, pcode: HT04, name: North East}
+  - {country: Haiti, iso3: HTI, pcode: HT09, name: North West}
+  - {country: Haiti, iso3: HTI, pcode: HT07, name: South}
+  - {country: Haiti, iso3: HTI, pcode: HT02, name: South East}
+  - {country: Haiti, iso3: HTI, pcode: HT01, name: West}
+  - {country: Honduras, iso3: HND, pcode: HN01, name: Atlantida}
+  - {country: Honduras, iso3: HND, pcode: HN06, name: Choluteca}
+  - {country: Honduras, iso3: HND, pcode: HN02, name: Colon}
+  - {country: Honduras, iso3: HND, pcode: HN03, name: Comayagua}
+  - {country: Honduras, iso3: HND, pcode: HN04, name: Copan}
+  - {country: Honduras, iso3: HND, pcode: HN05, name: Cortes}
+  - {country: Honduras, iso3: HND, pcode: HN07, name: El Paraiso}
+  - {country: Honduras, iso3: HND, pcode: HN08, name: Francisco Morazan}
+  - {country: Honduras, iso3: HND, pcode: HN09, name: Gracias a Dios}
+  - {country: Honduras, iso3: HND, pcode: HN10, name: Intibuca}
+  - {country: Honduras, iso3: HND, pcode: HN11, name: Islas de La Bahia}
+  - {country: Honduras, iso3: HND, pcode: HN12, name: La Paz}
+  - {country: Honduras, iso3: HND, pcode: HN13, name: Lempira}
+  - {country: Honduras, iso3: HND, pcode: HN14, name: Ocotepeque}
+  - {country: Honduras, iso3: HND, pcode: HN15, name: Olancho}
+  - {country: Honduras, iso3: HND, pcode: HN16, name: Santa Barbara}
+  - {country: Honduras, iso3: HND, pcode: HN17, name: Valle}
+  - {country: Honduras, iso3: HND, pcode: HN18, name: Yoro}
+  - {country: Iraq, iso3: IRQ, pcode: IQG01, name: Al Anbar}
+  - {country: Iraq, iso3: IRQ, pcode: IQG02, name: Al Basrah}
+  - {country: Iraq, iso3: IRQ, pcode: IQG03, name: Al Muthanna}
+  - {country: Iraq, iso3: IRQ, pcode: IQG04, name: Al Najaf}
+  - {country: Iraq, iso3: IRQ, pcode: IQG05, name: Al Qadissiya}
+  - {country: Iraq, iso3: IRQ, pcode: IQG06, name: Al Sulaymaniyah}
+  - {country: Iraq, iso3: IRQ, pcode: IQG07, name: Babil}
+  - {country: Iraq, iso3: IRQ, pcode: IQG08, name: Baghdad}
+  - {country: Iraq, iso3: IRQ, pcode: IQG10, name: Diyala}
+  - {country: Iraq, iso3: IRQ, pcode: IQG09, name: Duhok}
+  - {country: Iraq, iso3: IRQ, pcode: IQG11, name: Erbil}
+  - {country: Iraq, iso3: IRQ, pcode: IQG12, name: Kerbala}
+  - {country: Iraq, iso3: IRQ, pcode: IQG13, name: Kirkuk}
+  - {country: Iraq, iso3: IRQ, pcode: IQG14, name: Maysan}
+  - {country: Iraq, iso3: IRQ, pcode: IQG15, name: Ninewa}
+  - {country: Iraq, iso3: IRQ, pcode: IQG16, name: Salah Al Din}
+  - {country: Iraq, iso3: IRQ, pcode: IQG17, name: Thi Qar}
+  - {country: Iraq, iso3: IRQ, pcode: IQG18, name: Wassit}
+  - {country: Libya, iso3: LBY, pcode: LY01, name: East}
+  - {country: Libya, iso3: LBY, pcode: LY03, name: South}
+  - {country: Libya, iso3: LBY, pcode: LY02, name: West}
+  - {country: Mali, iso3: MLI, pcode: ML09, name: Bamako}
+  - {country: Mali, iso3: MLI, pcode: ML07, name: Gao}
+  - {country: Mali, iso3: MLI, pcode: ML01, name: Kayes}
+  - {country: Mali, iso3: MLI, pcode: ML08, name: Kidal}
+  - {country: Mali, iso3: MLI, pcode: ML02, name: Koulikoro}
+  - {country: Mali, iso3: MLI, pcode: ML05, name: Mopti}
+  - {country: Mali, iso3: MLI, pcode: ML04, name: Segou}
+  - {country: Mali, iso3: MLI, pcode: ML03, name: Sikasso}
+  - {country: Mali, iso3: MLI, pcode: ML06, name: Tombouctou}
+  - {country: Mozambique, iso3: MOZ, pcode: MZ01, name: Cabo Delgado}
+  - {country: Mozambique, iso3: MOZ, pcode: MZ02, name: Gaza}
+  - {country: Mozambique, iso3: MOZ, pcode: MZ03, name: Inhambane}
+  - {country: Mozambique, iso3: MOZ, pcode: MZ04, name: Manica}
+  - {country: Mozambique, iso3: MOZ, pcode: MZ05, name: Maputo}
+  - {country: Mozambique, iso3: MOZ, pcode: MZ06, name: Maputo City}
+  - {country: Mozambique, iso3: MOZ, pcode: MZ07, name: Nampula}
+  - {country: Mozambique, iso3: MOZ, pcode: MZ08, name: Niassa}
+  - {country: Mozambique, iso3: MOZ, pcode: MZ09, name: Sofala}
+  - {country: Mozambique, iso3: MOZ, pcode: MZ10, name: Tete}
+  - {country: Mozambique, iso3: MOZ, pcode: MZ11, name: Zambezia}
+  - {country: Myanmar, iso3: MMR, pcode: MMR017, name: Ayeyarwady}
+  - {country: Myanmar, iso3: MMR, pcode: MMR111, name: Bago}
+  - {country: Myanmar, iso3: MMR, pcode: MMR004, name: Chin}
+  - {country: Myanmar, iso3: MMR, pcode: MMR001, name: Kachin}
+  - {country: Myanmar, iso3: MMR, pcode: MMR002, name: Kayah}
+  - {country: Myanmar, iso3: MMR, pcode: MMR003, name: Kayin}
+  - {country: Myanmar, iso3: MMR, pcode: MMR009, name: Magway}
+  - {country: Myanmar, iso3: MMR, pcode: MMR010, name: Mandalay}
+  - {country: Myanmar, iso3: MMR, pcode: MMR011, name: Mon}
+  - {country: Myanmar, iso3: MMR, pcode: MMR018, name: Nay Pyi Taw}
+  - {country: Myanmar, iso3: MMR, pcode: MMR012, name: Rakhine}
+  - {country: Myanmar, iso3: MMR, pcode: MMR005, name: Sagaing}
+  - {country: Myanmar, iso3: MMR, pcode: MMR222, name: Shan}
+  - {country: Myanmar, iso3: MMR, pcode: MMR006, name: Tanintharyi}
+  - {country: Myanmar, iso3: MMR, pcode: MMR013, name: Yangon}
+  - {country: Niger, iso3: NER, pcode: NER001, name: Agadez}
+  - {country: Niger, iso3: NER, pcode: NER002, name: Diffa}
+  - {country: Niger, iso3: NER, pcode: NER003, name: Dosso}
+  - {country: Niger, iso3: NER, pcode: NER004, name: Maradi}
+  - {country: Niger, iso3: NER, pcode: NER008, name: Niamey}
+  - {country: Niger, iso3: NER, pcode: NER005, name: Tahoua}
+  - {country: Niger, iso3: NER, pcode: NER006, name: Tillaberi}
+  - {country: Niger, iso3: NER, pcode: NER007, name: Zinder}
+  - {country: Nigeria, iso3: NGA, pcode: NG001, name: Abia}
+  - {country: Nigeria, iso3: NGA, pcode: NG002, name: Adamawa}
+  - {country: Nigeria, iso3: NGA, pcode: NG003, name: Akwa Ibom}
+  - {country: Nigeria, iso3: NGA, pcode: NG004, name: Anambra}
+  - {country: Nigeria, iso3: NGA, pcode: NG005, name: Bauchi}
+  - {country: Nigeria, iso3: NGA, pcode: NG006, name: Bayelsa}
+  - {country: Nigeria, iso3: NGA, pcode: NG007, name: Benue}
+  - {country: Nigeria, iso3: NGA, pcode: NG008, name: Borno}
+  - {country: Nigeria, iso3: NGA, pcode: NG009, name: Cross River}
+  - {country: Nigeria, iso3: NGA, pcode: NG010, name: Delta}
+  - {country: Nigeria, iso3: NGA, pcode: NG011, name: Ebonyi}
+  - {country: Nigeria, iso3: NGA, pcode: NG012, name: Edo}
+  - {country: Nigeria, iso3: NGA, pcode: NG013, name: Ekiti}
+  - {country: Nigeria, iso3: NGA, pcode: NG014, name: Enugu}
+  - {country: Nigeria, iso3: NGA, pcode: NG015, name: Federal Capital Territory}
+  - {country: Nigeria, iso3: NGA, pcode: NG016, name: Gombe}
+  - {country: Nigeria, iso3: NGA, pcode: NG017, name: Imo}
+  - {country: Nigeria, iso3: NGA, pcode: NG018, name: Jigawa}
+  - {country: Nigeria, iso3: NGA, pcode: NG019, name: Kaduna}
+  - {country: Nigeria, iso3: NGA, pcode: NG020, name: Kano}
+  - {country: Nigeria, iso3: NGA, pcode: NG021, name: Katsina}
+  - {country: Nigeria, iso3: NGA, pcode: NG022, name: Kebbi}
+  - {country: Nigeria, iso3: NGA, pcode: NG023, name: Kogi}
+  - {country: Nigeria, iso3: NGA, pcode: NG024, name: Kwara}
+  - {country: Nigeria, iso3: NGA, pcode: NG025, name: Lagos}
+  - {country: Nigeria, iso3: NGA, pcode: NG026, name: Nasarawa}
+  - {country: Nigeria, iso3: NGA, pcode: NG027, name: Niger}
+  - {country: Nigeria, iso3: NGA, pcode: NG028, name: Ogun}
+  - {country: Nigeria, iso3: NGA, pcode: NG029, name: Ondo}
+  - {country: Nigeria, iso3: NGA, pcode: NG030, name: Osun}
+  - {country: Nigeria, iso3: NGA, pcode: NG031, name: Oyo}
+  - {country: Nigeria, iso3: NGA, pcode: NG032, name: Plateau}
+  - {country: Nigeria, iso3: NGA, pcode: NG033, name: Rivers}
+  - {country: Nigeria, iso3: NGA, pcode: NG034, name: Sokoto}
+  - {country: Nigeria, iso3: NGA, pcode: NG035, name: Taraba}
+  - {country: Nigeria, iso3: NGA, pcode: NG036, name: Yobe}
+  - {country: Nigeria, iso3: NGA, pcode: NG037, name: Zamfara}
+  - {country: Pakistan, iso3: PAK, pcode: PK7, name: Balochistan}
+  - {country: Pakistan, iso3: PAK, pcode: PK5, name: Federal Capital Territory}
+  - {country: Pakistan, iso3: PAK, pcode: PK2, name: Khyber Pakhtunkhwa}
+  - {country: Pakistan, iso3: PAK, pcode: PK6, name: Punjab}
+  - {country: Pakistan, iso3: PAK, pcode: PK8, name: Sindh}
+  - {country: Somalia, iso3: SOM, pcode: SO11, name: Awdal}
+  - {country: Somalia, iso3: SOM, pcode: SO25, name: Bakool}
+  - {country: Somalia, iso3: SOM, pcode: SO22, name: Banadir}
+  - {country: Somalia, iso3: SOM, pcode: SO16, name: Bari}
+  - {country: Somalia, iso3: SOM, pcode: SO24, name: Bay}
+  - {country: Somalia, iso3: SOM, pcode: SO19, name: Galgaduud}
+  - {country: Somalia, iso3: SOM, pcode: SO26, name: Gedo}
+  - {country: Somalia, iso3: SOM, pcode: SO20, name: Hiraan}
+  - {country: Somalia, iso3: SOM, pcode: SO28, name: Lower Juba}
+  - {country: Somalia, iso3: SOM, pcode: SO23, name: Lower Shabelle}
+  - {country: Somalia, iso3: SOM, pcode: SO27, name: Middle Juba}
+  - {country: Somalia, iso3: SOM, pcode: SO21, name: Middle Shabelle}
+  - {country: Somalia, iso3: SOM, pcode: SO18, name: Mudug}
+  - {country: Somalia, iso3: SOM, pcode: SO17, name: Nugaal}
+  - {country: Somalia, iso3: SOM, pcode: SO15, name: Sanaag}
+  - {country: Somalia, iso3: SOM, pcode: SO14, name: Sool}
+  - {country: Somalia, iso3: SOM, pcode: SO13, name: Togdheer}
+  - {country: Somalia, iso3: SOM, pcode: SO12, name: Woqooyi Galbeed}
+  - {country: South Sudan, iso3: SSD, pcode: SS01, name: Central Equatoria}
+  - {country: South Sudan, iso3: SSD, pcode: SS02, name: Eastern Equatoria}
+  - {country: South Sudan, iso3: SSD, pcode: SS03, name: Jonglei}
+  - {country: South Sudan, iso3: SSD, pcode: SS04, name: Lakes}
+  - {country: South Sudan, iso3: SSD, pcode: SS05, name: Northern Bahr El Ghazal}
+  - {country: South Sudan, iso3: SSD, pcode: SS06, name: Unity}
+  - {country: South Sudan, iso3: SSD, pcode: SS07, name: Upper Nile}
+  - {country: South Sudan, iso3: SSD, pcode: SS08, name: Warrap}
+  - {country: South Sudan, iso3: SSD, pcode: SS09, name: Western Bahr El Ghazal}
+  - {country: South Sudan, iso3: SSD, pcode: SS10, name: Western Equatoria}
+  - {country: State of Palestine, iso3: PSE, pcode: PS1, name: Gaza Strip}
+  - {country: State of Palestine, iso3: PSE, pcode: PS2, name: No Mans Land}
+  - {country: State of Palestine, iso3: PSE, pcode: PS3, name: West Bank}
+  - {country: Sudan, iso3: SDN, pcode: SD19, name: Abyei Pca}
+  - {country: Sudan, iso3: SDN, pcode: SD15, name: Aj Jazirah}
+  - {country: Sudan, iso3: SDN, pcode: SD08, name: Blue Nile}
+  - {country: Sudan, iso3: SDN, pcode: SD06, name: Central Darfur}
+  - {country: Sudan, iso3: SDN, pcode: SD05, name: East Darfur}
+  - {country: Sudan, iso3: SDN, pcode: SD12, name: Gedaref}
+  - {country: Sudan, iso3: SDN, pcode: SD11, name: Kassala}
+  - {country: Sudan, iso3: SDN, pcode: SD01, name: Khartoum}
+  - {country: Sudan, iso3: SDN, pcode: SD02, name: North Darfur}
+  - {country: Sudan, iso3: SDN, pcode: SD13, name: North Kordofan}
+  - {country: Sudan, iso3: SDN, pcode: SD17, name: Northern}
+  - {country: Sudan, iso3: SDN, pcode: SD10, name: Red Sea}
+  - {country: Sudan, iso3: SDN, pcode: SD16, name: River Nile}
+  - {country: Sudan, iso3: SDN, pcode: SD14, name: Sennar}
+  - {country: Sudan, iso3: SDN, pcode: SD03, name: South Darfur}
+  - {country: Sudan, iso3: SDN, pcode: SD07, name: South Kordofan}
+  - {country: Sudan, iso3: SDN, pcode: SD04, name: West Darfur}
+  - {country: Sudan, iso3: SDN, pcode: SD18, name: West Kordofan}
+  - {country: Sudan, iso3: SDN, pcode: SD09, name: White Nile}
+  - {country: Syrian Arab Republic, iso3: SYR, pcode: SY08, name: Al Hasakeh}
+  - {country: Syrian Arab Republic, iso3: SYR, pcode: SY02, name: Aleppo}
+  - {country: Syrian Arab Republic, iso3: SYR, pcode: SY11, name: Ar Raqqa}
+  - {country: Syrian Arab Republic, iso3: SYR, pcode: SY13, name: As Sweida}
+  - {country: Syrian Arab Republic, iso3: SYR, pcode: SY01, name: Damascus}
+  - {country: Syrian Arab Republic, iso3: SYR, pcode: SY12, name: Dara}
+  - {country: Syrian Arab Republic, iso3: SYR, pcode: SY09, name: Deir Ez Zor}
+  - {country: Syrian Arab Republic, iso3: SYR, pcode: SY05, name: Hama}
+  - {country: Syrian Arab Republic, iso3: SYR, pcode: SY04, name: Homs}
+  - {country: Syrian Arab Republic, iso3: SYR, pcode: SY07, name: Idleb}
+  - {country: Syrian Arab Republic, iso3: SYR, pcode: SY06, name: Lattakia}
+  - {country: Syrian Arab Republic, iso3: SYR, pcode: SY14, name: Quneitra}
+  - {country: Syrian Arab Republic, iso3: SYR, pcode: SY03, name: Rural Damascus}
+  - {country: Syrian Arab Republic, iso3: SYR, pcode: SY10, name: Tartous}
+  - {country: Ukraine, iso3: UKR, pcode: UA01, name: Avtonomna Respublika Krym}
+  - {country: Ukraine, iso3: UKR, pcode: UA71, name: Cherkaska}
+  - {country: Ukraine, iso3: UKR, pcode: UA74, name: Chernihivska}
+  - {country: Ukraine, iso3: UKR, pcode: UA73, name: Chernivetska}
+  - {country: Ukraine, iso3: UKR, pcode: UA12, name: Dnipropetrovska}
+  - {country: Ukraine, iso3: UKR, pcode: UA14, name: Donetska}
+  - {country: Ukraine, iso3: UKR, pcode: UA26, name: Ivano Frankivska}
+  - {country: Ukraine, iso3: UKR, pcode: UA63, name: Kharkivska}
+  - {country: Ukraine, iso3: UKR, pcode: UA65, name: Khersonska}
+  - {country: Ukraine, iso3: UKR, pcode: UA68, name: Khmelnytska}
+  - {country: Ukraine, iso3: UKR, pcode: UA35, name: Kirovohradska}
+  - {country: Ukraine, iso3: UKR, pcode: UA80, name: Kyivska}
+  - {country: Ukraine, iso3: UKR, pcode: UA32, name: Kyivska}
+  - {country: Ukraine, iso3: UKR, pcode: UA44, name: Luhanska}
+  - {country: Ukraine, iso3: UKR, pcode: UA46, name: Lvivska}
+  - {country: Ukraine, iso3: UKR, pcode: UA48, name: Mykolaivska}
+  - {country: Ukraine, iso3: UKR, pcode: UA51, name: Odeska}
+  - {country: Ukraine, iso3: UKR, pcode: UA53, name: Poltavska}
+  - {country: Ukraine, iso3: UKR, pcode: UA56, name: Rivnenska}
+  - {country: Ukraine, iso3: UKR, pcode: UA85, name: Sevastopol}
+  - {country: Ukraine, iso3: UKR, pcode: UA59, name: Sumska}
+  - {country: Ukraine, iso3: UKR, pcode: UA61, name: Ternopilska}
+  - {country: Ukraine, iso3: UKR, pcode: UA05, name: Vinnytska}
+  - {country: Ukraine, iso3: UKR, pcode: UA07, name: Volynska}
+  - {country: Ukraine, iso3: UKR, pcode: UA21, name: Zakarpatska}
+  - {country: Ukraine, iso3: UKR, pcode: UA23, name: Zaporizka}
+  - {country: Ukraine, iso3: UKR, pcode: UA18, name: Zhytomyrska}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE02, name: Amazonas}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE03, name: Anzoategui}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE04, name: Apure}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE05, name: Aragua}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE06, name: Barinas}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE07, name: Bolivar}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE08, name: Carabobo}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE09, name: Cojedes}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE10, name: Delta Amacuro}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE01, name: Distrito Federal}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE11, name: Falcon}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE12, name: Guarico}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE13, name: Lara}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE14, name: Merida}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE15, name: Miranda}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE16, name: Monagas}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE17, name: Nueva Esparta}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE18, name: Portuguesa}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE19, name: Sucre}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE20, name: Tachira}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE21, name: Trujillo}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE24, name: Vargas}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE22, name: Yaracuy}
+  - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE23, name: Zulia}
+  - {country: Yemen, iso3: YEM, pcode: YE12, name: Abyan}
+  - {country: Yemen, iso3: YEM, pcode: YE30, name: Ad Dali}
+  - {country: Yemen, iso3: YEM, pcode: YE24, name: Aden}
+  - {country: Yemen, iso3: YEM, pcode: YE14, name: Al Bayda}
+  - {country: Yemen, iso3: YEM, pcode: YE18, name: Al Hodeidah}
+  - {country: Yemen, iso3: YEM, pcode: YE16, name: Al Jawf}
+  - {country: Yemen, iso3: YEM, pcode: YE28, name: Al Maharah}
+  - {country: Yemen, iso3: YEM, pcode: YE27, name: Al Mahwit}
+  - {country: Yemen, iso3: YEM, pcode: YE29, name: Amran}
+  - {country: Yemen, iso3: YEM, pcode: YE20, name: Dhamar}
+  - {country: Yemen, iso3: YEM, pcode: YE19, name: Hadramawt}
+  - {country: Yemen, iso3: YEM, pcode: YE17, name: Hajjah}
+  - {country: Yemen, iso3: YEM, pcode: YE11, name: Ibb}
+  - {country: Yemen, iso3: YEM, pcode: YE25, name: Lahj}
+  - {country: Yemen, iso3: YEM, pcode: YE26, name: Marib}
+  - {country: Yemen, iso3: YEM, pcode: YE31, name: Raymah}
+  - {country: Yemen, iso3: YEM, pcode: YE22, name: Sadah}
+  - {country: Yemen, iso3: YEM, pcode: YE23, name: Sanaa}
+  - {country: Yemen, iso3: YEM, pcode: YE13, name: Sanaa City}
+  - {country: Yemen, iso3: YEM, pcode: YE21, name: Shabwah}
+  - {country: Yemen, iso3: YEM, pcode: YE32, name: Socotra}
+  - {country: Yemen, iso3: YEM, pcode: YE15, name: Taiz}
+  - {country: Zimbabwe, iso3: ZWE, pcode: ZW10, name: Bulawayo}
+  - {country: Zimbabwe, iso3: ZWE, pcode: ZW19, name: Harare}
+  - {country: Zimbabwe, iso3: ZWE, pcode: ZW11, name: Manicaland}
+  - {country: Zimbabwe, iso3: ZWE, pcode: ZW12, name: Mashonaland Central}
+  - {country: Zimbabwe, iso3: ZWE, pcode: ZW13, name: Mashonaland East}
+  - {country: Zimbabwe, iso3: ZWE, pcode: ZW14, name: Mashonaland West}
+  - {country: Zimbabwe, iso3: ZWE, pcode: ZW18, name: Masvingo}
+  - {country: Zimbabwe, iso3: ZWE, pcode: ZW15, name: Matabeleland North}
+  - {country: Zimbabwe, iso3: ZWE, pcode: ZW16, name: Matabeleland South}
+  - {country: Zimbabwe, iso3: ZWE, pcode: ZW17, name: Midlands}
 
 admin1_name_mappings:
   "Nord-Ouest": "HT09"
