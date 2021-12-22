@@ -13,7 +13,7 @@ def get_education_closures(
 ):
     name = "education_closures"
     if scrapers and not any(scraper in name for scraper in scrapers):
-        return list(), list(), list(), list(), list(), list()
+        return list(), list(), list(), list(), list(), list(), list()
     datasetinfo = configuration[name]
     output_cols = ["School Closure"]
     output_hxltags = ["#impact+type"]

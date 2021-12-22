@@ -37,15 +37,10 @@ def get_fallbacks(
     use_fallbacks(name, fallbacks, output_cols, output_hxltags, results)
     return (results["headers"], results["values"], results["sources"])
 
-from typing import Dict, List
-
-from hdx.scraper.scrapers import use_fallbacks
-
 
 def get_fallbacks(
     name: str,
     fallbacks: Dict,
-    levels: List[str],
     output_cols: Dict[str, List[str]],
     output_hxltags: Dict[str, List[str]],
 ):
@@ -66,13 +61,17 @@ def get_fallbacks(
     Args:
         name (str): Name of mini scraper
         fallbacks (Dict): Fallbacks dictionary
-        levels
-        output_cols (List[str]): Names of output columns
-        output_hxltags (List[str]): HXL hashtags of output columns
+        output_cols (Dict[str, List[str]]): Names of output columns for each level
+        output_hxltags (Dict[str, List[str]]): HXL hashtags of output columns for each level
 
     Returns:
-        Tuple: Output headers, values and sources
+        Tuple: Output headers, values and sources per level
     """
-    results = dict()
-    use_fallbacks(name, fallbacks, output_cols, output_hxltags, results)
-    return (results["headers"], results["values"], results["sources"])
+    all_results = list()
+    for level in sorted(output_hxltags.keys()):
+        results = dict()
+        use_fallbacks(name, fallbacks, output_cols, output_hxltags, results)
+        all_results.append(results["headers"])
+        all_results.append(results["values"])
+        all_results.append(results["sources"])
+    return tuple(all_results)
