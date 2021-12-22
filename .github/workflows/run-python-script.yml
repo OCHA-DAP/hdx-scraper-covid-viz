@@ -32,6 +32,7 @@ jobs:
       run: |
         python run.py
     - name: Commit updated data bundle
+      if: always()
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         file_pattern: out*.json
