@@ -140,15 +140,6 @@ def get_indicators(
     region = Region(
         configuration["regional"], today, downloader, gho_countries, hrp_countries
     )
-    admin1_info = list()
-    for row in configuration["admin1_info"]:
-        newrow = {
-            "pcode": row["ADM1_PCODE"],
-            "name": row["ADM1_REF"],
-            "iso3": row["alpha_3"],
-        }
-        admin1_info.append(newrow)
-    configuration["admin1_info"] = admin1_info
     adminone = AdminOne(configuration)
     pcodes = adminone.pcodes
     population_lookup = dict()
