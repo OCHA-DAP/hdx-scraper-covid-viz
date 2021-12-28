@@ -5,155 +5,134 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from hdx.data.dataset import Dataset
 from hdx.location.country import Country
-from hdx.scraper.readers import read_tabular
 from hdx.scraper.utils import get_date_from_dataset_date
-from hdx.utilities.dictandlist import dict_of_lists_add
-from hdx.utilities.downloader import DownloadError
+from hdx.utilities.downloader import Download
 
 logger = logging.getLogger(__name__)
 
 
-def get_data(downloader, url, today, countryiso2):
-    for page in range(1, 3):
-        try:
-            _, data = read_tabular(
-                downloader,
-                {
-                    "url": url % (today.year, page, countryiso2),
-                    "sheet": "IPC",
-                    "headers": [4, 6],
-                    "format": "xlsx",
-                },
-                fill_merged_cells=True,
-            )
-            data = list(data)
-        except DownloadError:
-            data = list()
-        adm1_names = set()
-        found_data = False
-        for row in data:
-            area = row["Area"]
-            if any(
-                v is not None
-                for v in [
-                    row["Current Phase P3+ #"],
-                    row["First Projection Phase P3+ #"],
-                    row["Second Projection Phase P3+ #"],
-                ]
-            ):
-                found_data = True
-            if not area or area == row["Country"]:
-                continue
-            adm1_name = row["Level 1 Name"]
-            if adm1_name:
-                adm1_names.add(adm1_name)
-        if found_data is True:
-            return data, adm1_names
-    return None, None
-
-
-def get_period(today, row, projections):
+def get_period(today, projections):
     today = today.date()
-    analysis_period = ""
-    for projection in projections:
-        current_period = row[f"{projection} Analysis Period"]
-        if current_period == "":
+    projection_number = None
+    for i, projection in enumerate(projections):
+        if projection == "":
             continue
-        start = datetime.strptime(current_period[0:8], "%b %Y").date()
-        end = datetime.strptime(current_period[11:19], "%b %Y").date()
-        end = end + relativedelta(day=31)
+        start = datetime.strptime(projection[0:8], "%b %Y").date()
+        end = datetime.strptime(projection[11:19], "%b %Y").date() + relativedelta(
+            day=31
+        )
         if today < end:
-            analysis_period = projection
+            projection_number = i
             break
-    if analysis_period == "":
-        for projection in reversed(projections):
-            if row[f"{projection} Analysis Period"] != "":
-                analysis_period = projection
+    if projection_number is None:
+        for i, projection in reversed(list(enumerate(projections))):
+            if projection != "":
+                projection_number = i
                 break
-    return analysis_period, start.strftime("%Y-%m-%d"), end.strftime("%Y-%m-%d")
+    return projection_number, start.strftime("%Y-%m-%d"), end.strftime("%Y-%m-%d")
 
 
-def get_ipc(configuration, today, gho_countries, adminone, downloader, scrapers=None):
+def get_ipc(configuration, today, gho_countries, adminone, other_auths, scrapers=None):
     name = inspect.currentframe().f_code.co_name
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list(), list(), list()
     ipc_configuration = configuration["ipc"]
-    url = ipc_configuration["url"]
-    phases = ["3", "4", "5", "P3+"]
-    projections = ["Current", "First Projection", "Second Projection"]
-    national_populations = {phase: dict() for phase in phases}
-    national_analysed = dict()
-    national_period = dict()
-    national_start = dict()
-    national_end = dict()
-    subnational_populations = {phase: dict() for phase in phases}
-    for countryiso3 in gho_countries:
-        countryiso2 = Country.get_iso2_from_iso3(countryiso3)
-        data, adm1_names = get_data(downloader, url, today, countryiso2)
-        if not data:
-            continue
-        row = data[0]
-        analysis_period, start, end = get_period(today, row, projections)
-        for phase in phases:
-            national_populations[phase][countryiso3] = row[
-                f"{analysis_period} Phase {phase} #"
-            ]
-        national_analysed[countryiso3] = row["Current Population Analysed #"]
-        national_period[countryiso3] = analysis_period
-        national_start[countryiso3] = start
-        national_end[countryiso3] = end
-        for row in data[1:]:
-            country = row["Country"]
-            if adm1_names:
-                if country not in adm1_names:
-                    continue
-                adm1_name = country
-            else:
-                adm1_name = row["Area"]
-                if not adm1_name or adm1_name == country:
-                    continue
-            pcode, _ = adminone.get_pcode(countryiso3, adm1_name, "IPC")
-            if not pcode:
+    base_url = ipc_configuration["url"]
+    with Download(
+        rate_limit={"calls": 1, "period": 0.1},
+        extra_params_dict={"key": other_auths["ipc"]},
+    ) as downloader:
+        countryisos = set()
+        downloader.download(f"{base_url}/analyses?type=A")
+        for analysis in downloader.get_json():
+            countryiso2 = analysis["country"]
+            countryiso3 = Country.get_iso3_from_iso2(countryiso2)
+            if countryiso3 not in gho_countries:
                 continue
-            for phase in phases:
-                population = row[f"{analysis_period} Phase {phase} #"]
-                if population:
-                    dict_of_lists_add(subnational_populations[phase], pcode, population)
-    for phase in phases:
-        subnational_population = subnational_populations[phase]
-        for pcode in subnational_population:
-            populations = subnational_population[pcode]
-            if len(populations) == 1:
-                subnational_population[pcode] = populations[0]
+            countryisos.add((countryiso3, countryiso2))
+        phases = ["3", "4", "5"]
+        national_populations = {phase: dict() for phase in phases}
+        national_populations["P3+"] = dict()
+        national_analysed = dict()
+        national_period = dict()
+        national_start = dict()
+        national_end = dict()
+        subnational_populations = dict()
+        projection_names = ["Current", "First Projection", "Second Projection"]
+        projection_mappings = ["", "_projected", "_second_projected"]
+        analysis_dates = set()
+        for countryiso3, countryiso2 in sorted(countryisos):
+            downloader.download(f"{base_url}/population?country={countryiso2}")
+            country_data = downloader.get_json()
+            if country_data:
+                country_data = country_data[-1]
             else:
-                population_in_pcode = 0
-                for i, population in enumerate(populations):
-                    population_in_pcode += population
-                subnational_population[pcode] = population_in_pcode
-    logger.info("Processed IPC")
+                continue
+            analysis_dates.add(country_data["analysis_date"])
+            projections = list()
+            projections.append(country_data["current_period_dates"])
+            projections.append(country_data["projected_period_dates"])
+            projections.append(country_data["second_projected_period_dates"])
+            projection_number, start, end = get_period(today, projections)
+            sum = 0
+            projection_mapping = projection_mappings[projection_number]
+            for phase in phases:
+                population = country_data[
+                    f"phase{phase}_population{projection_mapping}"
+                ]
+                national_populations[phase][countryiso3] = population
+                sum += population
+            national_populations["P3+"][countryiso3] = sum
+            national_analysed[countryiso3] = country_data[
+                f"estimated_population{projection_mapping}"
+            ]
+            national_period[countryiso3] = projection_names[projection_number]
+            national_start[countryiso3] = start
+            national_end[countryiso3] = end
+            areas = country_data.get("areas", country_data.get("groups"))
+            if areas:
+                for area in areas:
+                    pcode, _ = adminone.get_pcode(countryiso3, area["name"], "IPC")
+                    if not pcode:
+                        continue
+                    sum = 0
+                    for phase in phases:
+                        pop = area.get(f"phase{phase}_population{projection_mapping}")
+                        if pop:
+                            sum += pop
+                    cur_sum = subnational_populations.get(pcode)
+                    if cur_sum:
+                        subnational_populations[pcode] = cur_sum + sum
+                    else:
+                        subnational_populations[pcode] = sum
     dataset = Dataset.read_from_hdx(ipc_configuration["dataset"])
     date = get_date_from_dataset_date(dataset, today=today)
+    #    analysis_dates = [(datetime.strptime(date, "%b %Y").date() + relativedelta(day=31)) for date in analysis_dates]
+    #    date = sorted(analysis_dates)[-1]
     headers = [f"FoodInsecurityIPC{phase}" for phase in phases]
+    headers.append("FoodInsecurityIPCP3+")
     headers.append("FoodInsecurityIPCAnalysedNum")
     headers.append("FoodInsecurityIPCAnalysisPeriod")
     headers.append("FoodInsecurityIPCAnalysisPeriodStart")
     headers.append("FoodInsecurityIPCAnalysisPeriodEnd")
-    hxltags = [f"#affected+food+ipc+p{phase}+num" for phase in phases[:-1]]
+    hxltags = [f"#affected+food+ipc+p{phase}+num" for phase in phases]
     hxltags.append("#affected+food+ipc+p3plus+num")
     hxltags.append("#affected+food+ipc+analysed+num")
     hxltags.append("#date+ipc+period")
     hxltags.append("#date+ipc+start")
     hxltags.append("#date+ipc+end")
     national_outputs = [national_populations[phase] for phase in phases]
+    national_outputs.append(national_populations["P3+"])
     national_outputs.append(national_analysed)
     national_outputs.append(national_period)
     national_outputs.append(national_start)
     national_outputs.append(national_end)
-    subnational_outputs = [subnational_populations[phase] for phase in phases]
+    subnational_outputs = [subnational_populations]
+    logger.info("Processed IPC")
     return (
         [headers, hxltags],
         national_outputs,
-        [headers[:-4], hxltags[:-4]],
+        [["FoodInsecurityIPCP3+"], ["#affected+food+ipc+p3plus+num"]],
         subnational_outputs,
         [
             (hxltag, date, dataset["dataset_source"], dataset.get_hdx_url())

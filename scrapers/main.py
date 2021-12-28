@@ -279,7 +279,7 @@ def get_indicators(
     extend_sources(sources, covid_sources)
 
     ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(
-        configuration, today, gho_countries, adminone, downloader, scrapers
+        configuration, today, gho_countries, adminone, other_auths, scrapers
     )
     if "national" in tabs:
         (
