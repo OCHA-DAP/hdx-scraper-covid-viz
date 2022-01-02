@@ -1227,7 +1227,8 @@ scraper_global:
 
 # subnational
 ipc:
-  url: "https://ahurwiae3i.execute-api.us-east-1.amazonaws.com/v1"
+#  url: "https://ahurwiae3i.execute-api.us-east-1.amazonaws.com/v1"
+  url: "http://mapipcissprd.us-east-1.elasticbeanstalk.com/api/public/population-tracking-tool/data/2017,%d/?page=%d&limit=1&condition=A&export=true&country=%s"
   dataset: "ipc-country-data"
 
 scraper_subnational:
