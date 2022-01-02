@@ -16,7 +16,7 @@ from .food_prices import add_food_prices
 from .fts import get_fts
 from .inform import get_inform
 from .iom_dtm import get_iom_dtm
-from .ipc import get_ipc
+from .ipc_old import get_ipc
 from .monthly_report import get_monthly_report_source
 from .unhcr import get_unhcr
 from .unhcr_myanmar_idps import patch_unhcr_myanmar_idps
@@ -218,8 +218,11 @@ def get_indicators(
     )
     extend_sources(sources, covid_sources)
 
+    # ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(
+    #     configuration, today, gho_countries, adminone, other_auths, scrapers
+    # )
     ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(
-        configuration, today, gho_countries, adminone, other_auths, scrapers
+        configuration, today, gho_countries, adminone, downloader, scrapers
     )
     if "national" in tabs:
         (
