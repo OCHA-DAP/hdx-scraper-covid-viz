@@ -252,16 +252,17 @@ def get_indicators(
             configuration, today, gho_countries, downloader, scrapers
         )
         (
-            closures_rheaders,
-            closures_rcolumns,
-            closures_rsources,
-            closures_headers,
-            closures_columns,
-            closures_sources,
+            closures_results,
             fully_closed,
         ) = get_education_closures(
             configuration, today, gho_countries, region, downloader, fallbacks, scrapers
         )
+        closures_rheaders = closures_results["regional"]["headers"]
+        closures_rcolumns = closures_results["regional"]["values"]
+        closures_rsources = closures_results["regional"]["sources"]
+        closures_headers = closures_results["national"]["headers"]
+        closures_columns = closures_results["national"]["values"]
+        closures_sources = closures_results["national"]["sources"]
         (
             enrolment_rheaders,
             enrolment_rcolumns,

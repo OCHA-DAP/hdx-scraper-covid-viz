@@ -5,13 +5,29 @@ from hdx.scraper.scrapers import use_fallbacks
 from hdx.utilities.dateparse import default_date, parse_date
 from hdx.utilities.downloader import DownloadError
 
+from scrapers.utils import add_to_results
+
 logger = logging.getLogger(__name__)
+
+headers = {"national": [["School Closure"], ["#impact+type"]],
+           "regional": [["No. closed countries"], ["#status+country+closed"]]}
+
+
+def _get_fully_closed(closures):
+    fully_closed = list()
+    for countryiso, closure in closures.items():
+        if closure.lower() == "closed due to covid-19":
+            fully_closed.append(countryiso)
+    return fully_closed
+
 
 def _get_education_closures(
     datasetinfo, today, countryiso3s, regionlookup, downloader, results
 ):
     closures_headers, closures_iterator = read(downloader, datasetinfo)
-    closures = dict()
+    values = {"national": [dict()], "regional": [dict()]}
+    closures = values["national"][0]
+    closed_countries = values["regional"][0]
     country_dates = dict()
     for row in closures_iterator:
         countryiso = row["ISO"]
@@ -27,68 +43,47 @@ def _get_education_closures(
             continue
         country_dates[countryiso] = date
         closures[countryiso] = row["Status"]
-    fully_closed = list()
-    for countryiso, closure in closures.items():
-        if closure.lower() == "closed due to covid-19":
-            fully_closed.append(countryiso)
-    closed_countries = dict()
-    for countryiso in closures:
+    fully_closed = _get_fully_closed(closures)
+    for countryiso in values:
         for region in regionlookup.iso3_to_region_and_hrp[countryiso]:
             if countryiso in fully_closed:
                 closed_countries[region] = closed_countries.get(region, 0) + 1
-    results["headers"] = [output_cols, output_hxltags]
-    results["values"] = [closures]
-    results["sources"] = [
-                             (
-                                 output_hxltags[0],
-                                 datasetinfo["date"],
-                                 datasetinfo["source"],
-                                 datasetinfo["source_url"],
-                             )
-                         ],
 
-    results["values"] = [closed_countries]
+    add_to_results(headers, values, datasetinfo, results)
+    return fully_closed
 
 
 def get_education_closures(
-    configuration, today, countryiso3s, regionlookup, downloader, fallbacks=None, scrapers=None
+    configuration,
+    today,
+    countryiso3s,
+    regionlookup,
+    downloader,
+    fallbacks=None,
+    scrapers=None,
 ):
     name = "education_closures"
     if scrapers and not any(scraper in name for scraper in scrapers):
         return list(), list(), list(), list(), list(), list(), list()
     datasetinfo = configuration[name]
     results = {"national": dict(), "regional": dict()}
-    output_cols = {"national": ["School Closure"], "regional": ["No. closed countries"]}
-    output_hxltags = {"national": ["#impact+type"], "regional": ["No. closed countries"]}
     try:
-        _get_education_closures(datasetinfo, today, countryiso3s, regionlookup, downloader, results)
+        fully_closed = _get_education_closures(
+            datasetinfo, today, countryiso3s, regionlookup, downloader, results
+        )
     except DownloadError:
-        level = "national"
-        use_fallbacks(name, fallbacks[level], output_cols[level], output_hxltags[level], results[level])
-        level = "regional"
-        use_fallbacks(name, fallbacks[level], output_cols[level], output_hxltags[level], results[level])
+        for level in results:
+            use_fallbacks(
+                name,
+                fallbacks[level],
+                headers[level][0],
+                headers[level][1],
+                results[level],
+            )
+        fully_closed = _get_fully_closed(results["national"]["values"][0])
 
     logger.info("Processed education closures")
     return (
-        [["No. closed countries"], ["#status+country+closed"]],
-        [closed_countries],
-        [
-            (
-                "#status+country+closed",
-                datasetinfo["date"],
-                datasetinfo["source"],
-                datasetinfo["source_url"],
-            )
-        ],
-        [["School Closure"], ["#impact+type"]],
-        [closures],
-        [
-            (
-                "#impact+type",
-                datasetinfo["date"],
-                datasetinfo["source"],
-                datasetinfo["source_url"],
-            )
-        ],
+        results,
         fully_closed,
     )

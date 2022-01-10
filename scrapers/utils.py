@@ -1,6 +1,20 @@
 from hdx.location.country import Country
 
 
+def add_to_results(headers, values, datasetinfo, results):
+    for level in headers:
+        results[level]["headers"] = headers[level]
+        results[level]["values"] = values[level]
+        results[level]["sources"] = [
+            (
+                x,
+                datasetinfo["date"],
+                datasetinfo["source"],
+                datasetinfo["source_url"],
+            ) for x in headers[level][1]
+        ]
+
+
 def extend_headers(headers, *args):
     result = [list(), list()]
     for i, header in enumerate(headers[:2]):
