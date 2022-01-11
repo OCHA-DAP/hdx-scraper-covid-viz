@@ -76,7 +76,7 @@ def main(
     gsheet_auth,
     updatesheets,
     updatetabs,
-    scrapers,
+    scrapers_to_run,
     basic_auths,
     other_auths,
     nojson,
@@ -92,8 +92,8 @@ def main(
             retriever = Retrieve(
                 downloader, temp_folder, "saved_data", temp_folder, save, use_saved
             )
-            if scrapers:
-                logger.info(f"Updating only scrapers: {scrapers}")
+            if scrapers_to_run:
+                logger.info(f"Updating only scrapers: {scrapers_to_run}")
             tabs = configuration["tabs"]
             if updatetabs is None:
                 updatetabs = list(tabs.keys())
@@ -123,7 +123,7 @@ def main(
                 retriever,
                 outputs,
                 updatetabs,
-                scrapers,
+                scrapers_to_run,
                 basic_auths,
                 other_auths,
                 countries_override,
@@ -163,9 +163,9 @@ if __name__ == "__main__":
     else:
         updatetabs = None
     if args.scrapers:
-        scrapers = args.scrapers.split(",")
+        scrapers_to_run = args.scrapers.split(",")
     else:
-        scrapers = None
+        scrapers_to_run = None
     basic_auths = dict()
     ba = args.basic_auths
     if ba is None:
@@ -197,7 +197,7 @@ if __name__ == "__main__":
         gsheet_auth=gsheet_auth,
         updatesheets=updatesheets,
         updatetabs=updatetabs,
-        scrapers=scrapers,
+        scrapers_to_run=scrapers_to_run,
         basic_auths=basic_auths,
         other_auths=other_auths,
         nojson=args.nojson,

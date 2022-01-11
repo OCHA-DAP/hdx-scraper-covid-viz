@@ -53,7 +53,7 @@ class TestCovid:
                     retriever,
                     outputs,
                     tabs,
-                    scrapers=[
+                    scrapers_to_run=[
                         "ifi",
                         "who_global",
                         "who_national",
@@ -97,7 +97,7 @@ class TestCovid:
                     retriever,
                     outputs,
                     tabs,
-                    scrapers=[
+                    scrapers_to_run=[
                         "ifi",
                         "who_global",
                         "who_national",

@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 from hdx.data.dataset import Dataset
 from hdx.location.country import Country
 from hdx.scraper.readers import read_tabular
-from hdx.scraper.utils import get_date_from_dataset_date
+from hdx.scraper.utils import get_isodate_from_dataset_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.downloader import DownloadError
 
@@ -132,7 +132,7 @@ def get_ipc(configuration, today, gho_countries, adminone, downloader, scrapers=
                 subnational_population[pcode] = population_in_pcode
     logger.info("Processed IPC")
     dataset = Dataset.read_from_hdx(ipc_configuration["dataset"])
-    date = get_date_from_dataset_date(dataset, today=today)
+    date = get_isodate_from_dataset_date(dataset, today=today)
     headers = [f"FoodInsecurityIPC{phase}" for phase in phases]
     headers.append("FoodInsecurityIPCAnalysedNum")
     headers.append("FoodInsecurityIPCAnalysisPeriod")

@@ -1,6 +1,7 @@
 import logging
 
 from hdx.scraper.readers import read
+from hdx.scraper.utils import get_sources_from_datasetinfo
 from hdx.utilities.text import get_fraction_str
 
 logger = logging.getLogger(__name__)
@@ -98,24 +99,8 @@ def get_education_enrolment(
     return (
         [grheaders, grhxltags],
         [affected_learners_total, percentage_affected_learners],
-        [
-            (
-                hxltag,
-                datasetinfo["date"],
-                datasetinfo["source"],
-                datasetinfo["source_url"],
-            )
-            for hxltag in hxltags
-        ],
+        get_sources_from_datasetinfo(datasetinfo, hxltags),
         [headers, hxltags],
         [learners_012, learners_3, affected_learners],
-        [
-            (
-                hxltag,
-                datasetinfo["date"],
-                datasetinfo["source"],
-                datasetinfo["source_url"],
-            )
-            for hxltag in hxltags
-        ],
+        get_sources_from_datasetinfo(datasetinfo, hxltags),
     )

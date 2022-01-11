@@ -1,6 +1,7 @@
 import logging
 
 from hdx.scraper.readers import read
+from hdx.scraper.utils import get_sources_from_datasetinfo
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.text import get_numeric_if_possible
 
@@ -49,13 +50,5 @@ def get_covax_deliveries(configuration, today, countryiso3s, downloader, scraper
     return (
         [["Vaccine", "Funder", "Doses"], hxltags],
         [producers, funders, doses],
-        [
-            (
-                hxltag,
-                datasetinfo["date"],
-                datasetinfo["source"],
-                datasetinfo["source_url"],
-            )
-            for hxltag in hxltags
-        ],
+        get_sources_from_datasetinfo(datasetinfo, hxltags),
     )
