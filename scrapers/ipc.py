@@ -5,7 +5,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from hdx.data.dataset import Dataset
 from hdx.location.country import Country
-from hdx.scraper.utils import get_date_from_dataset_date
+from hdx.scraper.utils import get_isodate_from_dataset_date
 from hdx.utilities.downloader import Download
 
 logger = logging.getLogger(__name__)
@@ -106,7 +106,7 @@ def get_ipc(configuration, today, gho_countries, adminone, other_auths, scrapers
                     else:
                         subnational_populations[pcode] = sum
     dataset = Dataset.read_from_hdx(ipc_configuration["dataset"])
-    date = get_date_from_dataset_date(dataset, today=today)
+    date = get_isodate_from_dataset_date(dataset, today=today)
     #    analysis_dates = [(datetime.strptime(date, "%b %Y").date() + relativedelta(day=31)) for date in analysis_dates]
     #    date = sorted(analysis_dates)[-1]
     headers = [f"FoodInsecurityIPC{phase}" for phase in phases]

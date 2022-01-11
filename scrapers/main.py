@@ -5,7 +5,7 @@ from hdx.data.dataset import Dataset
 from hdx.location.adminone import AdminOne
 from hdx.location.country import Country
 from hdx.scraper.scrapers import run_scrapers
-from hdx.scraper.utils import get_date_from_dataset_date
+from hdx.scraper.utils import get_isodate_from_dataset_date
 from hdx.utilities.loader import LoadError, load_json
 from utilities.region import Region
 
@@ -193,9 +193,9 @@ def get_indicators(
     scraper_configuration = configuration[f"scraper_{level}"]
     results = run_scrapers(
         scraper_configuration,
+        level,
         gho_countries,
         adminone,
-        level,
         downloader,
         basic_auths,
         today=today,
@@ -232,13 +232,14 @@ def get_indicators(
         regional_headers,
         population_columns,
     )
+
     level = "subnational"
     scraper_configuration = configuration[f"scraper_{level}"]
     results = run_scrapers(
         scraper_configuration,
+        level,
         gho_countries,
         adminone,
-        level,
         downloader,
         basic_auths,
         today=today,
@@ -339,9 +340,9 @@ def get_indicators(
         scraper_configuration = configuration[f"scraper_{level}"]
         results = run_scrapers(
             scraper_configuration,
+            level,
             gho_countries,
             adminone,
-            level,
             downloader,
             basic_auths,
             today=today,
@@ -434,9 +435,9 @@ def get_indicators(
                 scraper_configuration = configuration[f"scraper_{level}"]
                 results = run_scrapers(
                     scraper_configuration,
+                    level,
                     gho_countries,
                     adminone,
-                    level,
                     downloader,
                     basic_auths,
                     today=today,
@@ -478,9 +479,9 @@ def get_indicators(
         scraper_configuration = configuration[f"scraper_{level}"]
         results = run_scrapers(
             scraper_configuration,
+            level,
             gho_countries,
             adminone,
-            level,
             downloader,
             basic_auths,
             today=today,
@@ -531,7 +532,7 @@ def get_indicators(
         if dataset_name:
             dataset = Dataset.read_from_hdx(dataset_name)
             if date is None:
-                date = get_date_from_dataset_date(dataset, today=today)
+                date = get_isodate_from_dataset_date(dataset, today=today)
             if source is None:
                 source = dataset["dataset_source"]
             if source_url is None:

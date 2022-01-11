@@ -16,7 +16,7 @@ def get_monthly_report_source(configuration):
                 break
         if not resource:
             raise ValueError("No monthly report resource found!")
-    last_modified = parse_date(resource["last_modified"]).isoformat()[:10]
+    last_modified = parse_date(resource["last_modified"]).strftime("%Y-%m-%d")
 
     return (
         monthly_report_configuration["hxltag"],

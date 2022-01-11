@@ -1,6 +1,7 @@
 import logging
 
 from hdx.scraper.readers import read
+from hdx.scraper.utils import get_sources_from_datasetinfo
 from hdx.utilities.dateparse import default_date, parse_date
 
 logger = logging.getLogger(__name__)
@@ -39,27 +40,15 @@ def get_education_closures(
         for region in regionlookup.iso3_to_region_and_hrp[countryiso]:
             if countryiso in fully_closed:
                 closed_countries[region] = closed_countries.get(region, 0) + 1
+    rhxltags = ["#status+country+closed"]
+    hxltags = ["#impact+type"]
     logger.info("Processed education closures")
     return (
-        [["No. closed countries"], ["#status+country+closed"]],
+        [["No. closed countries"], rhxltags],
         [closed_countries],
-        [
-            (
-                "#status+country+closed",
-                datasetinfo["date"],
-                datasetinfo["source"],
-                datasetinfo["source_url"],
-            )
-        ],
-        [["School Closure"], ["#impact+type"]],
+        get_sources_from_datasetinfo(datasetinfo, rhxltags),
+        [["School Closure"], hxltags],
         [closures],
-        [
-            (
-                "#impact+type",
-                datasetinfo["date"],
-                datasetinfo["source"],
-                datasetinfo["source_url"],
-            )
-        ],
+        get_sources_from_datasetinfo(datasetinfo, hxltags),
         fully_closed,
     )

@@ -1,6 +1,7 @@
 import logging
 
 from hdx.scraper.readers import read_hdx
+from hdx.scraper.utils import get_sources_from_datasetinfo
 from scrapers import calculate_ratios
 
 logger = logging.getLogger(__name__)
@@ -55,13 +56,5 @@ def add_vaccination_campaigns(
     return (
         [["Vaccinations Postponed", "Vaccination Ratio"], hxltags],
         [affected_campaigns_per_country, ratios],
-        [
-            (
-                hxltag,
-                datasetinfo["date"],
-                datasetinfo["source"],
-                datasetinfo["source_url"],
-            )
-            for hxltag in hxltags
-        ],
+        get_sources_from_datasetinfo(datasetinfo, hxltags),
     )

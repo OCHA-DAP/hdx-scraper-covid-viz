@@ -154,7 +154,7 @@ def get_inform(configuration, today, countryiso3s, other_auths, scrapers=None):
             trend = "increasing"
         trend_valuedict[countryiso3] = trend
     logger.info("Processed INFORM")
-    source_date = max_date.date().isoformat()
+    source_date = max_date.strftime("%Y-%m-%d")
     output_cols = inform_configuration["output_cols"] + [
         inform_configuration["trend_output_col"]
     ]

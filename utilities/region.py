@@ -220,7 +220,9 @@ class Region:
                         continue
                     valdicts[j].update(gvaldicts[i])
 
-        add_population(population_lookup, regional_headers, valdicts)
+        add_population(
+            population_lookup, {"headers": regional_headers, "values": valdicts}
+        )
         logger.info("Processed regional")
         return regional_headers, valdicts
 
