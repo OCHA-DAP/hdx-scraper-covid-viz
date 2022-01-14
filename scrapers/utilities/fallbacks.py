@@ -110,12 +110,12 @@ class Fallbacks:
             results[level]["sources"] = srcs
 
         try:
-            values = scraper.run(datasetinfo)
+            scraper.run(datasetinfo)
             for level in levels:
                 sources = get_sources_from_datasetinfo(
                     datasetinfo, scraper.headers[level][1]
                 )
-                set_results(level, values[level], sources)
+                set_results(level, scraper.values[level], sources)
             logger.info(f"Processed {scraper.name}")
         except Exception:
             for level in levels:

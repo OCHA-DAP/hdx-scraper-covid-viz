@@ -185,6 +185,8 @@ def get_indicators(
         inform_headers, inform_columns, inform_sources = get_inform(
             configuration, today, gho_countries, other_auths, scrapers_to_run
         )
+
+
         covax_headers, covax_columns, covax_sources = get_covax_deliveries(
             configuration, today, gho_countries, downloader, scrapers_to_run
         )
