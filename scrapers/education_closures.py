@@ -34,7 +34,7 @@ class EducationClosures(BaseScraper):
 
     def run(self, datasetinfo: Dict):
         closures_headers, closures_iterator = read(self.downloader, datasetinfo)
-        values = {"national": [dict()], "regional": [dict()]}
+        values = {"national": (dict(),), "regional": (dict(),)}
         closures = values["national"][0]
         closed_countries = values["regional"][0]
         country_dates = dict()
@@ -53,7 +53,7 @@ class EducationClosures(BaseScraper):
             country_dates[countryiso] = date
             closures[countryiso] = row["Status"]
         fully_closed = self.get_fully_closed(closures)
-        for countryiso in values:
+        for countryiso in closures:
             for region in self.regionlookup.iso3_to_region_and_hrp[countryiso]:
                 if countryiso in fully_closed:
                     closed_countries[region] = closed_countries.get(region, 0) + 1

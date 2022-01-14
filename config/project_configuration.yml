@@ -796,7 +796,6 @@ covax_deliveries:
 education_closures:
   format: "csv"
   dataset: "global-school-closures-covid19"
-  url: "blah"
   resource: "School closure evolution"
   headers: 1
 
