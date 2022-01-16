@@ -796,7 +796,6 @@ covax_deliveries:
 education_closures:
   format: "csv"
   dataset: "global-school-closures-covid19"
-  url: "blah"
   resource: "School closure evolution"
   headers: 1
 
@@ -2196,7 +2195,12 @@ admin1_name_mappings:
   "Province5": "PK7"
   "Province8": "PK5"
   "KP": "PK2"
+  "KPK": "PK2"
+  "ICT": "PK5"
   "MAPUTO PROVINCIA": "MZ05"
+  "Maputo provincia": "MZ05"
+  "maputo provincia": "MZ05"
+  "Maputo Prov�ncia": "MZ05"
   "Provincia de Maputo": "MZ05"
   "GUATEMALA CENTRAL": "GT01"
   "GUATEMALA NOR-OCCIDENTE": "GT01"

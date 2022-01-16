@@ -102,7 +102,7 @@ class Fallbacks:
             return None
         datasetinfo = self.configuration[scraper.name]
         levels = list(scraper.headers.keys())
-        results = {level: {dict()} for level in levels}
+        results = {level: dict() for level in levels}
 
         def set_results(level, vals, srcs):
             results[level]["headers"] = scraper.headers[level]

@@ -192,9 +192,7 @@ def get_indicators(
         )
 
         education_closures = EducationClosures(today, gho_countries, region, downloader)
-        closures_results = Fallbacks.with_fallbacks(
-            configuration, education_closures, scrapers_to_run
-        )
+        closures_results = fallbacks.with_fallbacks(education_closures, scrapers_to_run)
         if closures_results:
             fully_closed = education_closures.get_fully_closed(
                 closures_results["national"]["values"][0]
