@@ -9,7 +9,10 @@ class BaseScraper(Abstract):
     headers = abstract_class_property(Dict[str, Tuple])
 
     def __init__(self):
-        self.values = {level: (dict() for _ in value[0]) for level, value in self.headers.items()}
+        self.values: Dict[str, Tuple] = {
+            level: tuple(dict() for _ in value[0])
+            for level, value in self.headers.items()
+        }
 
     @classmethod
     def get_headers(cls, level: str) -> Tuple[Tuple]:
@@ -24,7 +27,7 @@ class BaseScraper(Abstract):
         """
         return cls.headers[level]
 
-    def get_values(self, level: str) -> Dict[str, Tuple]:
+    def get_values(self, level: str) -> Tuple:
         """
         Get values for a particular level like national or subnational
 
@@ -32,7 +35,7 @@ class BaseScraper(Abstract):
             level (str): Level for which to get headers
 
         Returns:
-            Dict[str, Tuple]: Scraper headers
+            Tuple: Scraper values
         """
         return self.values[level]
 
@@ -47,5 +50,4 @@ class BaseScraper(Abstract):
 
         Returns:
             Dict[str, Tuple]: Results at each level
-
         """

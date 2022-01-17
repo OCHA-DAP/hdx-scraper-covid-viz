@@ -53,7 +53,7 @@ class EducationClosures(BaseScraper):
             country_dates[countryiso] = date
             closures[countryiso] = row["Status"]
         fully_closed = self.get_fully_closed(closures)
-        for countryiso in self.values:
+        for countryiso in closures:
             for region in self.regionlookup.iso3_to_region_and_hrp[countryiso]:
                 if countryiso in fully_closed:
                     closed_countries[region] = closed_countries.get(region, 0) + 1

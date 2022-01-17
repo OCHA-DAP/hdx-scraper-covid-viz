@@ -93,16 +93,19 @@ class Fallbacks:
             self.fallbacks_used.extend(fb)
         return results
 
-    def with_fallbacks(
+    def run_custom_scraper(
         self,
         scraper,
         scrapers_to_run,
     ):
-        if scrapers_to_run and not any(x in scraper.name for x in scrapers_to_run):
-            return None
-        datasetinfo = self.configuration[scraper.name]
         levels = list(scraper.headers.keys())
-        results = {level: dict() for level in levels}
+        results = {
+            level: {"headers": tuple(), "values": tuple(), "sources": tuple()}
+            for level in levels
+        }
+        if scrapers_to_run and not any(x in scraper.name for x in scrapers_to_run):
+            return results
+        datasetinfo = self.configuration[scraper.name]
 
         def set_results(level, vals, srcs):
             results[level]["headers"] = scraper.headers[level]
@@ -127,6 +130,26 @@ class Fallbacks:
             self.fallbacks_used.append(scraper.name)
             logger.exception(f"Using fallbacks for {scraper.name}")
         return results
+
+    def run_custom_scrapers(
+        self,
+        scrapers,
+        scrapers_to_run,
+    ):
+        levels = list()
+        for scraper in scrapers:
+            levels.extend(scraper.headers.keys())
+        all_results = {
+            level: {"headers": list(), "values": list(), "sources": list()}
+            for level in set(levels)
+        }
+        for scraper in scrapers:
+            results = self.run_custom_scraper(scraper, scrapers_to_run)
+            for level in scraper.headers.keys():
+                all_results[level]["headers"].extend(results[level]["headers"])
+                all_results[level]["values"].extend(results[level]["values"])
+                all_results[level]["sources"].extend(results[level]["sources"])
+        return all_results
 
     def get_fallbacks_used(self):
         return self.fallbacks_used

@@ -8,14 +8,14 @@ from scrapers.utilities.extensions import extend_columns, extend_headers, extend
 from scrapers.utilities.fallbacks import Fallbacks
 from scrapers.utilities.region import Region
 
-from .covax_deliveries import get_covax_deliveries
+from .covax_deliveries import CovaxDeliveries
 from .education_closures import EducationClosures
-from .education_enrolment import get_education_enrolment
+from .education_enrolment import EducationEnrolment
 from .food_prices import add_food_prices
 from .fts import get_fts
 from .inform import get_inform
 from .iom_dtm import get_iom_dtm
-from .ipc_old import get_ipc
+from .ipc_old import get_ipc, IPC
 from .monthly_report import get_monthly_report_source
 from .unhcr import get_unhcr
 from .unhcr_myanmar_idps import patch_unhcr_myanmar_idps
@@ -155,9 +155,11 @@ def get_indicators(
     # ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(
     #     configuration, today, gho_countries, adminone, other_auths, scrapers
     # )
-    ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(
-        configuration, today, gho_countries, adminone, downloader, scrapers_to_run
-    )
+    # ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(
+    #     configuration, today, gho_countries, adminone, downloader, scrapers_to_run
+    # )
+    ipc = IPC(today, gho_countries, adminone, downloader)
+    custom_scrapers = [ipc]
     if "national" in tabs:
         (
             fts_wheaders,
@@ -186,48 +188,32 @@ def get_indicators(
             configuration, today, gho_countries, other_auths, scrapers_to_run
         )
 
+        covax_deliveries = CovaxDeliveries(today, gho_countries, downloader)
 
-        covax_headers, covax_columns, covax_sources = get_covax_deliveries(
-            configuration, today, gho_countries, downloader, scrapers_to_run
-        )
+        custom_scrapers.append(covax_deliveries)
 
         education_closures = EducationClosures(today, gho_countries, region, downloader)
-        closures_results = fallbacks.with_fallbacks(education_closures, scrapers_to_run)
-        if closures_results:
+        closures_results = fallbacks.run_custom_scraper(
+            education_closures, scrapers_to_run
+        )
+        if closures_results["national"]["values"]:
             fully_closed = education_closures.get_fully_closed(
                 closures_results["national"]["values"][0]
             )
-            closures_rheaders = closures_results["regional"]["headers"]
-            closures_rcolumns = closures_results["regional"]["values"]
-            closures_rsources = closures_results["regional"]["sources"]
-            closures_headers = closures_results["national"]["headers"]
-            closures_columns = closures_results["national"]["values"]
-            closures_sources = closures_results["national"]["sources"]
         else:
             fully_closed = tuple()
-            closures_rheaders = tuple()
-            closures_rcolumns = tuple()
-            closures_rsources = tuple()
-            closures_headers = tuple()
-            closures_columns = tuple()
-            closures_sources = tuple()
 
-        (
-            enrolment_rheaders,
-            enrolment_rcolumns,
-            enrolment_rsources,
-            enrolment_headers,
-            enrolment_columns,
-            enrolment_sources,
-        ) = get_education_enrolment(
-            configuration,
-            fully_closed,
-            gho_countries,
-            region,
-            downloader,
-            scrapers_to_run,
+        education_enrolment = EducationEnrolment(
+            fully_closed, gho_countries, region, downloader
+        )
+        enrolment_results = fallbacks.run_custom_scraper(
+            education_enrolment, scrapers_to_run
         )
         results = fallbacks.run_generic_scrapers("national", scrapers_to_run)
+
+        custom_results = fallbacks.run_custom_scrapers(
+            custom_scrapers, scrapers_to_run
+        )
         national_headers = extend_headers(
             national,
             covid_headers,
@@ -238,9 +224,9 @@ def get_indicators(
             unhcr_headers,
             inform_headers,
             ipc_headers,
-            covax_headers,
-            closures_headers,
-            enrolment_headers,
+            ["national"]["headers"],
+            closures_results["national"]["headers"],
+            enrolment_results["national"]["headers"],
         )
         national_columns = extend_columns(
             "national",
@@ -258,9 +244,9 @@ def get_indicators(
             unhcr_columns,
             inform_columns,
             ipc_columns,
-            covax_columns,
-            closures_columns,
-            enrolment_columns,
+            ["national"]["values"],
+            closures_results["national"]["values"],
+            enrolment_results["national"]["values"],
         )
         extend_sources(
             sources,
@@ -270,9 +256,9 @@ def get_indicators(
             fts_sources,
             unhcr_sources,
             inform_sources,
-            covax_sources,
-            closures_sources,
-            enrolment_sources,
+            ["national"]["sources"],
+            closures_results["national"]["sources"],
+            enrolment_results["national"]["sources"],
         )
         patch_unhcr_myanmar_idps(
             configuration, national, downloader, scrapers=scrapers_to_run
@@ -289,7 +275,10 @@ def get_indicators(
                 (fts_wheaders, fts_wcolumns),
             )
             regional_headers = extend_headers(
-                regional, regional_headers, closures_rheaders, enrolment_rheaders
+                regional,
+                regional_headers,
+                closures_results["regional"]["headers"],
+                enrolment_results["regional"]["headers"],
             )
             regional_columns = extend_columns(
                 "regional",
@@ -300,11 +289,15 @@ def get_indicators(
                 None,
                 regional_headers,
                 regional_columns,
-                closures_rcolumns,
-                enrolment_rcolumns,
+                closures_results["regional"]["values"],
+                enrolment_results["regional"]["values"],
             )
             update_tab("regional", regional)
-            extend_sources(sources, closures_rsources, enrolment_rsources)
+            extend_sources(
+                sources,
+                closures_results["regional"]["sources"],
+                enrolment_results["regional"]["sources"],
+            )
             if "world" in tabs:
                 rgheaders, rgcolumns = region.get_world(
                     regional_headers, regional_columns
