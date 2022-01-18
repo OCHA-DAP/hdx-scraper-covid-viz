@@ -32,6 +32,7 @@ def get_whowhatwhere(configuration, today_str, adminone, downloader, scrapers=No
             logger.warning(
                 f"Could not download resource data for {countryiso3}. Check dataset name."
             )
+            continue
         try:
             data = hxl.data(resource["url"]).cache()
             data.display_tags
