@@ -1,7 +1,7 @@
 import logging
+from typing import Dict
 
 from hdx.scraper.readers import read
-from hdx.scraper.utils import get_sources_from_datasetinfo
 from hdx.utilities.text import get_fraction_str
 from scrapers.base_scraper import BaseScraper
 
@@ -42,11 +42,9 @@ class EducationEnrolment(BaseScraper):
         self.regionlookup = regionlookup
         self.downloader = downloader
 
-    def get_education_enrolment(self, datasetinfo):
+    def run(self, datasetinfo: Dict) -> None:
         learners_headers, learners_iterator = read(self.downloader, datasetinfo)
-        learners_012 = self.get_values("national")[0]
-        learners_3 = self.get_values("national")[1]
-        affected_learners = self.get_values("national")[2]
+        learners_012, learners_3, affected_learners = self.get_values("national")
         all_learners = dict()
 
         for row in learners_iterator:

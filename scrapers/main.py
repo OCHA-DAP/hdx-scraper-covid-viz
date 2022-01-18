@@ -11,15 +11,15 @@ from scrapers.utilities.region import Region
 from .covax_deliveries import CovaxDeliveries
 from .education_closures import EducationClosures
 from .education_enrolment import EducationEnrolment
-from .food_prices import add_food_prices
-from .fts import get_fts
-from .inform import get_inform
+from .food_prices import FoodPrices, add_food_prices
+from .fts import FTS, get_fts
+from .inform import Inform, get_inform
 from .iom_dtm import get_iom_dtm
-from .ipc_old import get_ipc, IPC
+from .ipc_old import IPC, get_ipc
 from .monthly_report import get_monthly_report_source
-from .unhcr import get_unhcr
+from .unhcr import UNHCR, get_unhcr
 from .unhcr_myanmar_idps import patch_unhcr_myanmar_idps
-from .vaccination_campaigns import add_vaccination_campaigns
+from .vaccination_campaigns import VaccinationCampaigns, add_vaccination_campaigns
 from .who_covid import get_who_covid
 from .whowhatwhere import get_whowhatwhere
 
@@ -152,45 +152,23 @@ def get_indicators(
     )
     extend_sources(sources, covid_sources)
 
-    # ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(
-    #     configuration, today, gho_countries, adminone, other_auths, scrapers
-    # )
-    # ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(
-    #     configuration, today, gho_countries, adminone, downloader, scrapers_to_run
-    # )
     ipc = IPC(today, gho_countries, adminone, downloader)
-    custom_scrapers = [ipc]
+    ipc_results = fallbacks.run_custom_scraper(ipc, scrapers_to_run)
     if "national" in tabs:
-        (
-            fts_wheaders,
-            fts_wcolumns,
-            fts_wsources,
-            fts_headers,
-            fts_columns,
-            fts_sources,
-        ) = get_fts(
-            configuration, today, today_str, gho_countries, basic_auths, scrapers_to_run
+        fts = FTS(today, today_str, gho_countries, basic_auths)
+        fts_results = fallbacks.run_custom_scraper(fts, scrapers_to_run)
+        food_prices = FoodPrices(today, gho_countries, retriever, basic_auths)
+        food_results = fallbacks.run_custom_scraper(food_prices, scrapers_to_run)
+        vaccination_campaigns = VaccinationCampaigns(
+            today, gho_countries, downloader, outputs
         )
-        food_headers, food_columns, food_sources = add_food_prices(
-            configuration, today, gho_countries, retriever, basic_auths, scrapers_to_run
-        )
-        (
-            campaign_headers,
-            campaign_columns,
-            campaign_sources,
-        ) = add_vaccination_campaigns(
-            configuration, today, gho_countries, downloader, outputs, scrapers_to_run
-        )
-        unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(
-            configuration, today, today_str, gho_countries, downloader, scrapers_to_run
-        )
-        inform_headers, inform_columns, inform_sources = get_inform(
-            configuration, today, gho_countries, other_auths, scrapers_to_run
-        )
-
+        campaigns_results = fallbacks.run_custom_scraper(vaccination_campaigns, scrapers_to_run)
+        unhcr = UNHCR(today, today_str, gho_countries, downloader)
+        unhcr_results = fallbacks.run_custom_scraper(unhcr, scrapers_to_run)
+        inform = Inform(today, gho_countries, other_auths)
+        inform_results = fallbacks.run_custom_scraper(inform, scrapers_to_run)
         covax_deliveries = CovaxDeliveries(today, gho_countries, downloader)
-
-        custom_scrapers.append(covax_deliveries)
+        covax_results = fallbacks.run_custom_scraper(covax_deliveries, scrapers_to_run)
 
         education_closures = EducationClosures(today, gho_countries, region, downloader)
         closures_results = fallbacks.run_custom_scraper(
@@ -209,22 +187,21 @@ def get_indicators(
         enrolment_results = fallbacks.run_custom_scraper(
             education_enrolment, scrapers_to_run
         )
-        results = fallbacks.run_generic_scrapers("national", scrapers_to_run)
-
-        custom_results = fallbacks.run_custom_scrapers(
-            custom_scrapers, scrapers_to_run
+        generic_national_results = fallbacks.run_generic_scrapers(
+            "national", scrapers_to_run
         )
+
         national_headers = extend_headers(
             national,
             covid_headers,
-            results["headers"],
-            food_headers,
-            campaign_headers,
-            fts_headers,
-            unhcr_headers,
-            inform_headers,
-            ipc_headers,
-            ["national"]["headers"],
+            generic_national_results["headers"],
+            food_results["national"]["headers"],
+            campaigns_results["national"]["headers"],
+            fts_results["national"]["headers"],
+            unhcr_results["national"]["headers"],
+            inform_results["national"]["headers"],
+            ipc_results["national"]["headers"],
+            covax_results["national"]["headers"],
             closures_results["national"]["headers"],
             enrolment_results["national"]["headers"],
         )
@@ -237,31 +214,24 @@ def get_indicators(
             None,
             national_headers,
             covid_columns,
-            results["values"],
-            food_columns,
-            campaign_columns,
-            fts_columns,
-            unhcr_columns,
-            inform_columns,
-            ipc_columns,
-            ["national"]["values"],
+            generic_national_results["values"],
+            custom_national_results["national"]["values"],
+            ipc_results["national"]["values"],
+            covax_results["national"]["values"],
             closures_results["national"]["values"],
             enrolment_results["national"]["values"],
         )
         extend_sources(
             sources,
-            results["sources"],
-            food_sources,
-            campaign_sources,
-            fts_sources,
-            unhcr_sources,
-            inform_sources,
-            ["national"]["sources"],
+            generic_national_results["sources"],
+            custom_national_results["national"]["sources"],
+            ipc_results["national"]["sources"],
+            covax_results["national"]["sources"],
             closures_results["national"]["sources"],
             enrolment_results["national"]["sources"],
         )
         patch_unhcr_myanmar_idps(
-            configuration, national, downloader, scrapers=scrapers_to_run
+            configuration, national, downloader, fallbacks, scrapers=scrapers_to_run
         )
         update_tab("national", national)
 

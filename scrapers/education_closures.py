@@ -33,7 +33,7 @@ class EducationClosures(BaseScraper):
                 fully_closed.append(countryiso)
         return fully_closed
 
-    def run(self, datasetinfo: Dict):
+    def run(self, datasetinfo: Dict) -> None:
         closures_headers, closures_iterator = read(self.downloader, datasetinfo)
         closures = self.get_values("national")[0]
         closed_countries = self.get_values("regional")[0]

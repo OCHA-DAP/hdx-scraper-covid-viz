@@ -742,6 +742,7 @@ unhcr_myanmar_idps:
 
 fts:
   url: "https://api.hpc.tools/v"
+  source: "OCHA"
   source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
 
 food_prices:
@@ -756,6 +757,7 @@ vaccination_campaigns:
 
 unhcr:
   url: "https://data.unhcr.org/population/?population_collection=%d&geo_id=%s"
+  source: "UNHCR"
   source_url: "https://data.humdata.org/organization/unhcr"
   population_collections:
     - 4
@@ -769,18 +771,6 @@ inform:
   url: "https://api.acaps.org/api/v1/inform-severity-index/%s/?page=1"
   dataset: "inform-global-crisis-severity-index"
   format: "xlsx"
-  input_cols:
-    - "INFORM Severity Index"
-    - "INFORM Severity category"
-  output_cols:
-    - "INFORM Severity Index"
-    - "INFORM Severity category"
-  output_hxltags:
-    - "#severity+inform+num"
-    - "#severity+inform+type"
-  trend_input_col: "INFORM Severity Index"
-  trend_output_col: "Trend over 3 months"
-  trend_hxltag: "#severity+inform+trend"
 
 who_covid:
   format: "csv"

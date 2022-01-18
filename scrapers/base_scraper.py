@@ -40,14 +40,13 @@ class BaseScraper(Abstract):
         return self.values[level]
 
     @abstractmethod
-    def run(self, datasetinfo: Dict) -> Dict[str, Tuple]:
+    def run(self, datasetinfo: Dict):
         """
-        Run scraper and return results of the form
-        {"national": ({"AFG": 1, "PSE": 3}, {"AFG": 1000, "PSE": 500}, ...))
+        Run scraper
 
         Args:
             datasetinfo (Dict): Information about dataset
 
         Returns:
-            Dict[str, Tuple]: Results at each level
+            None
         """

@@ -1,4 +1,5 @@
 import logging
+from typing import Dict
 
 from hdx.scraper.readers import read
 from hdx.utilities.dictandlist import dict_of_lists_add
@@ -27,7 +28,7 @@ class CovaxDeliveries(BaseScraper):
         self.countryiso3s = countryiso3s
         self.downloader = downloader
 
-    def run(self, datasetinfo):
+    def run(self, datasetinfo: Dict) -> None:
         headers, iterator = read(self.downloader, datasetinfo, today=self.today)
         hxlrow = next(iterator)
         doses_lookup = dict()
