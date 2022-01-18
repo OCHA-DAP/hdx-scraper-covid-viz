@@ -1,5 +1,6 @@
+import logging
 from copy import deepcopy
-from typing import Dict, Tuple
+from typing import Dict
 
 import numpy
 import pandas as pd
@@ -8,7 +9,7 @@ from hdx.scraper.readers import read_hdx_metadata
 from hdx.utilities.text import number_format
 from scrapers.base_scraper import BaseScraper
 
-MIN_CUMULATIVE_CASES = 100
+logger = logging.getLogger(__name__)
 
 
 class WHOCovid(BaseScraper):
@@ -35,8 +36,11 @@ class WHOCovid(BaseScraper):
     national_headers = base_headers + list(weekly_hxltags.keys())
     national_hxltags = base_hxltags + list(weekly_hxltags.values())
 
-    headers = {"national": (tuple(national_headers), tuple(national_hxltags)),
-               "global": (tuple(base_headers), tuple(base_hxltags))}
+    headers = {
+        "national": (tuple(national_headers), tuple(national_hxltags)),
+        "global": (tuple(base_headers), tuple(base_hxltags)),
+        "gho": (tuple(base_headers), tuple(base_hxltags)),
+    }
 
     def __init__(
         self,
@@ -70,7 +74,6 @@ class WHOCovid(BaseScraper):
         ]
         df.insert(1, "ISO_3_CODE", df["Country_code"].apply(Country.get_iso3_from_iso2))
         df = df.drop(columns=["Country_code"])
-        source_date = df["Date_reported"].max()
 
         # cumulative
         df_cumulative = df.sort_values(by=["Date_reported"]).drop_duplicates(
@@ -93,6 +96,7 @@ class WHOCovid(BaseScraper):
         )  # goes on to be output as covid series tab
 
         df["Date_reported"] = pd.to_datetime(df["Date_reported"])
+        source_date = df["Date_reported"].max()
 
         # adding global GHO by date
         df_gho_all = df.groupby("Date_reported").sum()
@@ -289,9 +293,12 @@ class WHOCovid(BaseScraper):
             national_columns.append(
                 dict(zip(df_national["ISO_3_CODE"], df_national[header].map(fn)))
             )
-
-        global_cases = {"global": int(df_world["Cumulative_cases"])}
-        global_deaths = {"global": int(df_world["Cumulative_deaths"])}
-        gho_cases = {"global": int(df_gho["Cumulative_cases"])}
-        gho_deaths = {"global": int(df_gho["Cumulative_deaths"])}
-        )
+        datasetinfo["date"] = source_date
+        self.values["national"] = tuple(national_columns)
+        global_values = self.get_values("global")
+        global_values[0]["global"] = int(df_world["Cumulative_cases"])
+        global_values[1]["global"] = int(df_world["Cumulative_deaths"])
+        gho_values = self.get_values("gho")
+        gho_values[0]["global"] = int(df_gho["Cumulative_cases"])
+        gho_values[1]["global"] = int(df_gho["Cumulative_deaths"])
+        logger.info("Processed WHO Covid")

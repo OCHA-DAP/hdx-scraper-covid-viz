@@ -43,13 +43,15 @@ class FTS(BaseScraper):
             ),
             tuple(national_hxltags),
         ),
-        "global": (("RequiredFunding", "Funding", "PercentFunded"), tuple(base_hxltags)),
+        "global": (
+            ("RequiredFunding", "Funding", "PercentFunded"),
+            tuple(base_hxltags),
+        ),
     }
 
-    def __init__(self, today, today_str, countryiso3s, basic_auths):
+    def __init__(self, today, countryiso3s, basic_auths):
         super().__init__()
         self.today = today
-        self.today_str = today_str
         self.countryiso3s = countryiso3s
         self.basic_auths = basic_auths
 
@@ -302,5 +304,5 @@ class FTS(BaseScraper):
             global_values[0]["global"] = total_allreq
             global_values[1]["global"] = total_allfund
             global_values[2]["global"] = total_allpercent
-            datasetinfo["date"] = self.today_str
+            datasetinfo["date"] = self.today
             logger.info("Processed FTS")

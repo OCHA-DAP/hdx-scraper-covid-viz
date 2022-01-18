@@ -1,4 +1,3 @@
-import inspect
 import logging
 from os.path import join
 
@@ -18,10 +17,9 @@ class UNHCR(BaseScraper):
         )
     }
 
-    def __init__(self, today, today_str, countryiso3s, downloader):
+    def __init__(self, today, countryiso3s, downloader):
         super().__init__()
         self.today = today
-        self.today_str = today_str
         self.countryiso3s = countryiso3s
         self.downloader = downloader
 
@@ -54,5 +52,5 @@ class UNHCR(BaseScraper):
                     valuedicts[1][countryiso3] = date
                 else:
                     valuedicts[0][countryiso3] += int(individuals)
-        datasetinfo["date"] = self.today_str
+        datasetinfo["date"] = self.today
         logger.info("Processed UNHCR")

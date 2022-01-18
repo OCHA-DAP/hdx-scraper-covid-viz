@@ -9,6 +9,10 @@ class BaseScraper(Abstract):
     headers = abstract_class_property(Dict[str, Tuple])
 
     def __init__(self):
+        """
+        Create values member variable for inheriting scrapers to populate. It is of
+        form: {"national": ({"AFG": 1.2, "PSE": 1.4}, {"AFG": 123, "PSE": 241}, ...)}}
+        """
         self.values: Dict[str, Tuple] = {
             level: tuple(dict() for _ in value[0])
             for level, value in self.headers.items()
