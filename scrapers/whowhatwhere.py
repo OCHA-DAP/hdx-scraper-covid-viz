@@ -2,6 +2,8 @@ import inspect
 import logging
 
 import hxl
+from hdx.data.dataset import Dataset
+from hdx.data.hdxobject import HDXError
 from hdx.utilities.dictandlist import dict_of_sets_add
 
 logger = logging.getLogger(__name__)
@@ -19,12 +21,20 @@ def get_whowhatwhere(configuration, today_str, adminone, downloader, scrapers=No
     orgdict = dict()
     for ds_row in rows:
         countryiso3 = ds_row["Country ISO"]
-        url = ds_row["Most Recent 3W HXLated"]
-        if not url:
+        dataset_name = ds_row["Dataset Name"]
+        if not dataset_name:
             logger.warning(f"No 3w data for {countryiso3}.")
             continue
         try:
-            data = hxl.data(url).cache()
+            dataset = Dataset.read_from_hdx(dataset_name)
+            resource = dataset.get_resource(0)
+        except HDXError:
+            logger.warning(
+                f"Could not download resource data for {countryiso3}. Check dataset name."
+            )
+            continue
+        try:
+            data = hxl.data(resource["url"]).cache()
             data.display_tags
         except hxl.HXLException:
             logger.warning(
@@ -55,6 +65,8 @@ def get_whowhatwhere(configuration, today_str, adminone, downloader, scrapers=No
                     pcode, _ = adminone.get_pcode(countryiso3, location, "3W")
             if pcode:
                 pcode = pcode.strip().upper()
+                if pcode not in adminone.pcodes and len(pcode) != adminone.pcode_lengths.get(countryiso3):
+                    pcode = adminone.convert_pcode_length(countryiso3, pcode, "whowhatwhere")
                 org = row.get("#org")
                 if org:
                     org = org.strip().lower()
