@@ -43,8 +43,8 @@ class CovaxDeliveries(BaseScraper):
             nodoses = get_numeric_if_possible(newrow["#capacity+vaccine+doses"])
             if nodoses:
                 doses_lookup[key] = doses_lookup.get(key, 0) + nodoses
-        funders = self.get_values("national")[0]
-        producers = self.get_values("national")[1]
+        producers = self.get_values("national")[0]
+        funders = self.get_values("national")[1]
         doses = self.get_values("national")[2]
         for key in sorted(doses_lookup):
             countryiso, pipeline, producer, funder = key.split("|")
