@@ -1,8 +1,7 @@
 from hdx.utilities.text import get_fraction_str
 
 
-def calculate_ratios(items_per_country, affected_items_per_country):
-    ratios = dict()
+def calculate_ratios(ratios, items_per_country, affected_items_per_country):
     for countryiso in items_per_country:
         if countryiso in affected_items_per_country:
             ratios[countryiso] = get_fraction_str(

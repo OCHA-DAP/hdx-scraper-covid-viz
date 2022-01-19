@@ -5,23 +5,23 @@ from hdx.location.adminone import AdminOne
 from hdx.location.country import Country
 from hdx.scraper.utils import get_isodate_from_dataset_date
 from scrapers.utilities.extensions import extend_columns, extend_headers, extend_sources
-from scrapers.utilities.fallbacks import Fallbacks
 from scrapers.utilities.region import Region
+from scrapers.utilities.runner import Runner
 
-from .covax_deliveries import get_covax_deliveries
+from .covax_deliveries import CovaxDeliveries
 from .education_closures import EducationClosures
-from .education_enrolment import get_education_enrolment
-from .food_prices import add_food_prices
-from .fts import get_fts
-from .inform import get_inform
-from .iom_dtm import get_iom_dtm
-from .ipc_old import get_ipc
+from .education_enrolment import EducationEnrolment
+from .food_prices import FoodPrices
+from .fts import FTS
+from .inform import Inform
+from .iom_dtm import IOMDTM
+from .ipc_old import IPC
 from .monthly_report import get_monthly_report_source
-from .unhcr import get_unhcr
+from .unhcr import UNHCR
 from .unhcr_myanmar_idps import patch_unhcr_myanmar_idps
-from .vaccination_campaigns import add_vaccination_campaigns
-from .who_covid import get_who_covid
-from .whowhatwhere import get_whowhatwhere
+from .vaccination_campaigns import VaccinationCampaigns
+from .who_covid import WHOCovid
+from .whowhatwhere import WhoWhatWhere
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +60,6 @@ def get_indicators(
         country_name_mappings=configuration["country_name_mappings"],
     )
 
-    today_str = today.strftime("%Y-%m-%d")
     if countries_override:
         gho_countries = countries_override
         hrp_countries = countries_override
@@ -75,14 +74,13 @@ def get_indicators(
     adminone = AdminOne(configuration)
     pcodes = adminone.pcodes
     population_lookup = dict()
-    fallbacks = Fallbacks(
+    runner = Runner(
         configuration,
         gho_countries,
         adminone,
         downloader,
         basic_auths,
         today,
-        today_str,
         population_lookup,
         fallbacks_root,
     )
@@ -92,7 +90,7 @@ def get_indicators(
         for output in outputs.values():
             output.update_tab(name, data)
 
-    results = fallbacks.run_generic_scrapers("national", ["population"])
+    results = runner.run_generic_scrapers("national", ["population"])
     national_headers = extend_headers(national, results["headers"])
     national_columns = extend_columns(
         "national",
@@ -121,7 +119,7 @@ def get_indicators(
         population_columns,
     )
 
-    results = fallbacks.run_generic_scrapers("subnational", ["population"])
+    results = runner.run_generic_scrapers("subnational", ["population"])
     subnational_headers = extend_headers(subnational, results["headers"])
     extend_columns(
         "subnational",
@@ -133,112 +131,65 @@ def get_indicators(
         subnational_headers,
         results["values"],
     )
-    (
-        covid_wheaders,
-        covid_wcolumns,
-        covid_ghocolumns,
-        covid_headers,
-        covid_columns,
-        covid_sources,
-    ) = get_who_covid(
-        configuration,
-        today,
-        outputs,
-        hrp_countries,
-        gho_countries,
-        region,
-        population_lookup,
-        scrapers_to_run,
+    who_covid = WHOCovid(
+        today, outputs, hrp_countries, gho_countries, region, population_lookup
     )
-    extend_sources(sources, covid_sources)
+    who_results = runner.run_custom_scraper(who_covid, scrapers_to_run)
 
-    # ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(
-    #     configuration, today, gho_countries, adminone, other_auths, scrapers
-    # )
-    ipc_headers, ipc_columns, ipc_sheaders, ipc_scolumns, ipc_sources = get_ipc(
-        configuration, today, gho_countries, adminone, downloader, scrapers_to_run
-    )
+    ipc = IPC(today, gho_countries, adminone, downloader)
+    ipc_results = runner.run_custom_scraper(ipc, scrapers_to_run)
     if "national" in tabs:
-        (
-            fts_wheaders,
-            fts_wcolumns,
-            fts_wsources,
-            fts_headers,
-            fts_columns,
-            fts_sources,
-        ) = get_fts(
-            configuration, today, today_str, gho_countries, basic_auths, scrapers_to_run
+        fts = FTS(today, gho_countries, basic_auths)
+        fts_results = runner.run_custom_scraper(fts, scrapers_to_run)
+        food_prices = FoodPrices(today, gho_countries, retriever, basic_auths)
+        food_results = runner.run_custom_scraper(food_prices, scrapers_to_run)
+        vaccination_campaigns = VaccinationCampaigns(
+            today, gho_countries, downloader, outputs
         )
-        food_headers, food_columns, food_sources = add_food_prices(
-            configuration, today, gho_countries, retriever, basic_auths, scrapers_to_run
+        campaigns_results = runner.run_custom_scraper(
+            vaccination_campaigns, scrapers_to_run
         )
-        (
-            campaign_headers,
-            campaign_columns,
-            campaign_sources,
-        ) = add_vaccination_campaigns(
-            configuration, today, gho_countries, downloader, outputs, scrapers_to_run
-        )
-        unhcr_headers, unhcr_columns, unhcr_sources = get_unhcr(
-            configuration, today, today_str, gho_countries, downloader, scrapers_to_run
-        )
-        inform_headers, inform_columns, inform_sources = get_inform(
-            configuration, today, gho_countries, other_auths, scrapers_to_run
-        )
-        covax_headers, covax_columns, covax_sources = get_covax_deliveries(
-            configuration, today, gho_countries, downloader, scrapers_to_run
-        )
+        unhcr = UNHCR(today, gho_countries, downloader)
+        unhcr_results = runner.run_custom_scraper(unhcr, scrapers_to_run)
+        inform = Inform(today, gho_countries, other_auths)
+        inform_results = runner.run_custom_scraper(inform, scrapers_to_run)
+        covax_deliveries = CovaxDeliveries(today, gho_countries, downloader)
+        covax_results = runner.run_custom_scraper(covax_deliveries, scrapers_to_run)
 
         education_closures = EducationClosures(today, gho_countries, region, downloader)
-        closures_results = fallbacks.with_fallbacks(education_closures, scrapers_to_run)
-        if closures_results:
+        closures_results = runner.run_custom_scraper(
+            education_closures, scrapers_to_run
+        )
+        if closures_results["national"]["values"]:
             fully_closed = education_closures.get_fully_closed(
                 closures_results["national"]["values"][0]
             )
-            closures_rheaders = closures_results["regional"]["headers"]
-            closures_rcolumns = closures_results["regional"]["values"]
-            closures_rsources = closures_results["regional"]["sources"]
-            closures_headers = closures_results["national"]["headers"]
-            closures_columns = closures_results["national"]["values"]
-            closures_sources = closures_results["national"]["sources"]
         else:
             fully_closed = tuple()
-            closures_rheaders = tuple()
-            closures_rcolumns = tuple()
-            closures_rsources = tuple()
-            closures_headers = tuple()
-            closures_columns = tuple()
-            closures_sources = tuple()
 
-        (
-            enrolment_rheaders,
-            enrolment_rcolumns,
-            enrolment_rsources,
-            enrolment_headers,
-            enrolment_columns,
-            enrolment_sources,
-        ) = get_education_enrolment(
-            configuration,
-            fully_closed,
-            gho_countries,
-            region,
-            downloader,
-            scrapers_to_run,
+        education_enrolment = EducationEnrolment(
+            fully_closed, gho_countries, region, downloader
         )
-        results = fallbacks.run_generic_scrapers("national", scrapers_to_run)
+        enrolment_results = runner.run_custom_scraper(
+            education_enrolment, scrapers_to_run
+        )
+        generic_national_results = runner.run_generic_scrapers(
+            "national", scrapers_to_run
+        )
+
         national_headers = extend_headers(
             national,
-            covid_headers,
-            results["headers"],
-            food_headers,
-            campaign_headers,
-            fts_headers,
-            unhcr_headers,
-            inform_headers,
-            ipc_headers,
-            covax_headers,
-            closures_headers,
-            enrolment_headers,
+            who_results["national"]["headers"],
+            generic_national_results["headers"],
+            food_results["national"]["headers"],
+            campaigns_results["national"]["headers"],
+            fts_results["national"]["headers"],
+            unhcr_results["national"]["headers"],
+            inform_results["national"]["headers"],
+            ipc_results["national"]["headers"],
+            covax_results["national"]["headers"],
+            closures_results["national"]["headers"],
+            enrolment_results["national"]["headers"],
         )
         national_columns = extend_columns(
             "national",
@@ -248,32 +199,34 @@ def get_indicators(
             region,
             None,
             national_headers,
-            covid_columns,
-            results["values"],
-            food_columns,
-            campaign_columns,
-            fts_columns,
-            unhcr_columns,
-            inform_columns,
-            ipc_columns,
-            covax_columns,
-            closures_columns,
-            enrolment_columns,
+            who_results["national"]["values"],
+            generic_national_results["values"],
+            food_results["national"]["values"],
+            campaigns_results["national"]["values"],
+            fts_results["national"]["values"],
+            unhcr_results["national"]["values"],
+            inform_results["national"]["values"],
+            ipc_results["national"]["values"],
+            covax_results["national"]["values"],
+            closures_results["national"]["values"],
+            enrolment_results["national"]["values"],
         )
         extend_sources(
             sources,
-            results["sources"],
-            food_sources,
-            campaign_sources,
-            fts_sources,
-            unhcr_sources,
-            inform_sources,
-            covax_sources,
-            closures_sources,
-            enrolment_sources,
+            who_results["national"]["sources"],
+            generic_national_results["sources"],
+            food_results["national"]["sources"],
+            campaigns_results["national"]["sources"],
+            fts_results["national"]["sources"],
+            unhcr_results["national"]["sources"],
+            inform_results["national"]["sources"],
+            ipc_results["national"]["sources"],
+            covax_results["national"]["sources"],
+            closures_results["national"]["sources"],
+            enrolment_results["national"]["sources"],
         )
         patch_unhcr_myanmar_idps(
-            configuration, national, downloader, scrapers=scrapers_to_run
+            configuration, national, downloader, runner, scrapers=scrapers_to_run
         )
         update_tab("national", national)
 
@@ -283,11 +236,14 @@ def get_indicators(
                 national_headers,
                 national_columns,
                 None,
-                (covid_wheaders, covid_wcolumns),
-                (fts_wheaders, fts_wcolumns),
+                (who_results["global"]["headers"], who_results["global"]["values"]),
+                (fts_results["global"]["headers"], fts_results["global"]["values"]),
             )
             regional_headers = extend_headers(
-                regional, regional_headers, closures_rheaders, enrolment_rheaders
+                regional,
+                regional_headers,
+                closures_results["regional"]["headers"],
+                enrolment_results["regional"]["headers"],
             )
             regional_columns = extend_columns(
                 "regional",
@@ -298,18 +254,26 @@ def get_indicators(
                 None,
                 regional_headers,
                 regional_columns,
-                closures_rcolumns,
-                enrolment_rcolumns,
+                closures_results["regional"]["values"],
+                enrolment_results["regional"]["values"],
             )
             update_tab("regional", regional)
-            extend_sources(sources, closures_rsources, enrolment_rsources)
+            extend_sources(
+                sources,
+                closures_results["regional"]["sources"],
+                enrolment_results["regional"]["sources"],
+            )
             if "world" in tabs:
                 rgheaders, rgcolumns = region.get_world(
                     regional_headers, regional_columns
                 )
-                results = fallbacks.run_generic_scrapers("global", scrapers_to_run)
+                results = runner.run_generic_scrapers("global", scrapers_to_run)
                 world_headers = extend_headers(
-                    world, covid_wheaders, fts_wheaders, results["headers"], rgheaders
+                    world,
+                    who_results["gho"]["headers"],
+                    fts_results["global"]["headers"],
+                    results["headers"],
+                    rgheaders,
                 )
                 extend_columns(
                     "global",
@@ -319,32 +283,28 @@ def get_indicators(
                     None,
                     None,
                     world_headers,
-                    covid_ghocolumns,
-                    fts_wcolumns,
+                    who_results["gho"]["values"],
+                    fts_results["global"]["values"],
                     results["values"],
                     rgcolumns,
                 )
-                extend_sources(sources, fts_wsources, results["sources"])
+                extend_sources(
+                    sources, fts_results["global"]["sources"], results["sources"]
+                )
                 update_tab("world", world)
 
     if "subnational" in tabs:
-        (
-            whowhatwhere_headers,
-            whowhatwhere_columns,
-            whowhatwhere_sources,
-        ) = get_whowhatwhere(
-            configuration, today_str, adminone, downloader, scrapers_to_run
-        )
-        iomdtm_headers, iomdtm_columns, iomdtm_sources = get_iom_dtm(
-            configuration, today_str, adminone, downloader, scrapers_to_run
-        )
-        results = fallbacks.run_generic_scrapers("subnational", scrapers_to_run)
+        whowhatwhere = WhoWhatWhere(today, adminone, downloader)
+        whowhatwhere_results = runner.run_custom_scraper(whowhatwhere, scrapers_to_run)
+        iomdtm = IOMDTM(today, adminone, downloader)
+        iomdtm_results = runner.run_custom_scraper(iomdtm, scrapers_to_run)
+        results = runner.run_generic_scrapers("subnational", scrapers_to_run)
         subnational_headers = extend_headers(
             subnational,
-            ipc_sheaders,
+            ipc_results["subnational"]["headers"],
             results["headers"],
-            whowhatwhere_headers,
-            iomdtm_headers,
+            whowhatwhere_results["subnational"]["headers"],
+            iomdtm_results["subnational"]["headers"],
         )
         extend_columns(
             "subnational",
@@ -354,16 +314,19 @@ def get_indicators(
             None,
             adminone,
             subnational_headers,
-            ipc_scolumns,
+            ipc_results["subnational"]["values"],
             results["values"],
-            whowhatwhere_columns,
-            iomdtm_columns,
+            whowhatwhere_results["subnational"]["values"],
+            iomdtm_results["subnational"]["values"],
         )
         extend_sources(
-            sources, results["sources"], whowhatwhere_sources, iomdtm_sources
+            sources,
+            results["sources"],
+            whowhatwhere_results["subnational"]["sources"],
+            iomdtm_results["subnational"]["sources"],
         )
         update_tab("subnational", subnational)
-    extend_sources(sources, ipc_sources)
+    extend_sources(sources, ipc_results["subnational"]["sources"])
 
     adminone.output_matches()
     adminone.output_ignored()
@@ -373,7 +336,7 @@ def get_indicators(
         date = sourceinfo.get("date")
         if date is None:
             if sourceinfo.get("force_date_today", False):
-                date = today_str
+                date = today.strftime("%Y-%m-%d")
         source = sourceinfo.get("source")
         source_url = sourceinfo.get("source_url")
         dataset_name = sourceinfo.get("dataset")
@@ -390,7 +353,7 @@ def get_indicators(
     sources = [list(elem) for elem in dict.fromkeys(sources)]
     update_tab("sources", sources)
 
-    fallbacks_used = fallbacks.get_fallbacks_used()
+    fallbacks_used = runner.get_fallbacks_used()
     if fallbacks_used:
         logger.error(f"Fallbacks were used: {', '.join(fallbacks_used)}")
         fail = True

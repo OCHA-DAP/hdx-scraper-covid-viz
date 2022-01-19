@@ -742,6 +742,7 @@ unhcr_myanmar_idps:
 
 fts:
   url: "https://api.hpc.tools/v"
+  source: "OCHA"
   source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
 
 food_prices:
@@ -756,6 +757,7 @@ vaccination_campaigns:
 
 unhcr:
   url: "https://data.unhcr.org/population/?population_collection=%d&geo_id=%s"
+  source: "UNHCR"
   source_url: "https://data.humdata.org/organization/unhcr"
   population_collections:
     - 4
@@ -769,18 +771,6 @@ inform:
   url: "https://api.acaps.org/api/v1/inform-severity-index/%s/?page=1"
   dataset: "inform-global-crisis-severity-index"
   format: "xlsx"
-  input_cols:
-    - "INFORM Severity Index"
-    - "INFORM Severity category"
-  output_cols:
-    - "INFORM Severity Index"
-    - "INFORM Severity category"
-  output_hxltags:
-    - "#severity+inform+num"
-    - "#severity+inform+type"
-  trend_input_col: "INFORM Severity Index"
-  trend_output_col: "Trend over 3 months"
-  trend_hxltag: "#severity+inform+trend"
 
 who_covid:
   format: "csv"
@@ -1513,9 +1503,13 @@ scraper_subnational:
     output_hxltags:
       - "#severity+malnutrition+num+subnational"
 
-3w_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=1662282962&single=true&output=csv"
+whowhatwhere:
+  source: "OCHA"
+  url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=1662282962&single=true&output=csv"
 
-iom_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSnUZoKtEvfchPq-zonhd1-DAujIzo0u68vX_BlUvex43Seyc881kNE89xQp7KAolXmxX-aq3aPCl-x/pub?gid=0&single=true&output=csv"
+iom_dtm:
+  source: "IOM"
+  url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSnUZoKtEvfchPq-zonhd1-DAujIzo0u68vX_BlUvex43Seyc881kNE89xQp7KAolXmxX-aq3aPCl-x/pub?gid=0&single=true&output=csv"
 
 gho:
   - ABW
