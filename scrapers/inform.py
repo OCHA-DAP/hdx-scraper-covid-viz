@@ -68,7 +68,7 @@ class Inform(BaseScraper):
         return countries_index
 
     def get_columns_by_date(self, date, base_url, downloader, crisis_types, not_found):
-        input_col = self.get_headers("national")[0]
+        input_col = self.get_headers("national")[0][0]
         countries_index = self.download_data(date, base_url, [input_col], downloader)
         valuedict = dict()
         for countryiso3, type_of_crisis in crisis_types.items():
@@ -85,9 +85,9 @@ class Inform(BaseScraper):
         return valuedict
 
     def get_latest_columns(self, date, base_url, downloader):
-        input_cols = self.get_headers("national")[:1]
+        input_cols = self.get_headers("national")[0][:2]
         countries_index = self.download_data(date, base_url, input_cols, downloader)
-        valuedicts = self.get_values("national")[:1]
+        valuedicts = self.get_values("national")[:2]
         crisis_types = dict()
         max_date = default_date
         for countryiso3, country_data in countries_index.items():
@@ -159,6 +159,5 @@ class Inform(BaseScraper):
             else:
                 trend = "increasing"
             trend_valuedict[countryiso3] = trend
-        source_date = max_date.strftime("%Y-%m-%d")
-        datasetinfo["date"] = source_date
+        datasetinfo["date"] = max_date
         logger.info("Processed INFORM")

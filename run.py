@@ -21,7 +21,7 @@ setup_logging()
 logger = logging.getLogger()
 
 
-VERSION = 3.0
+VERSION = 4.0
 
 
 def parse_args():

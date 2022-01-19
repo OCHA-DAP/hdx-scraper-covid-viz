@@ -84,4 +84,5 @@ class IOMDTM(BaseScraper):
             else:
                 idps[pcode] = sum(idpsdict[countrypcode])
         datasetinfo["date"] = self.today
+        datasetinfo["source_url"] = iom_url
         logger.info("Processed IOM DTMs")

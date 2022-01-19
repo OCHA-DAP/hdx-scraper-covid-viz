@@ -96,4 +96,5 @@ class WhoWhatWhere(BaseScraper):
             else:
                 orgcount[pcode] = len(orgdict[countrypcode])
         datasetinfo["date"] = self.today
+        datasetinfo["source_url"] = threew_url
         logger.info("Processed 3W")
