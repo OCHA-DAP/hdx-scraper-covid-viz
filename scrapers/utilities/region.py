@@ -234,5 +234,7 @@ class Region:
         )
         global_columns = list()
         for column in world_columns:
-            global_columns.append({"global": column["GHO"]})
+            value = column.get("GHO")
+            if value is not None:
+                global_columns.append({"global": value})
         return world_headers, global_columns
