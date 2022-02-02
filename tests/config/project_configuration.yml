@@ -1064,13 +1064,17 @@ gho:
   - ECU
   - EGY
   - ETH
+  - GTM
   - GUY
+  - HND
   - HTI
+  - IRN
   - IRQ
   - JOR
   - KEN
   - LBN
   - LBY
+  - MDG
   - MEX
   - MLI
   - MMR
@@ -1084,20 +1088,23 @@ gho:
   - PSE
   - RWA
   - SDN
+  - SLV
   - SOM
   - SSD
   - SYR
   - TCD
+  - TJK
+  - TKM
   - TTO
   - TUR
   - TZA
   - UGA
   - UKR
   - URY
+  - UZB
   - VEN
   - YEM
   - ZMB
-  - ZWE
 
 HRPs:
   - AFG
@@ -1108,6 +1115,8 @@ HRPs:
   - COD
   - COL
   - ETH
+  - GTM
+  - HND
   - HTI
   - IRQ
   - LBY
@@ -1116,9 +1125,9 @@ HRPs:
   - MOZ
   - NER
   - NGA
-  - PAK
   - PSE
   - SDN
+  - SLV
   - SOM
   - SSD
   - SYR
@@ -1126,7 +1135,6 @@ HRPs:
   - UKR
   - VEN
   - YEM
-  - ZWE
 
 country_name_overrides:
   PSE: "oPt"
@@ -1300,6 +1308,28 @@ admin1_info:
 - {country: Ethiopia, iso3: ETH, pcode: ET13, name: Harari}
 - {country: Ethiopia, iso3: ETH, pcode: ET14, name: Addis Ababa}
 - {country: Ethiopia, iso3: ETH, pcode: ET15, name: Dire Dawa}
+- {country: Guatemala, iso3: GTM, pcode: GT01, name: Guatemala}
+- {country: Guatemala, iso3: GTM, pcode: GT02, name: El Progreso}
+- {country: Guatemala, iso3: GTM, pcode: GT03, name: Sacatepequez}
+- {country: Guatemala, iso3: GTM, pcode: GT04, name: Chimaltenango}
+- {country: Guatemala, iso3: GTM, pcode: GT05, name: Escuintla}
+- {country: Guatemala, iso3: GTM, pcode: GT06, name: Santa Rosa}
+- {country: Guatemala, iso3: GTM, pcode: GT07, name: Solola}
+- {country: Guatemala, iso3: GTM, pcode: GT08, name: Totonicapan}
+- {country: Guatemala, iso3: GTM, pcode: GT09, name: Quetzaltenango}
+- {country: Guatemala, iso3: GTM, pcode: GT10, name: Suchitepequez}
+- {country: Guatemala, iso3: GTM, pcode: GT11, name: Retalhuleu}
+- {country: Guatemala, iso3: GTM, pcode: GT12, name: San Marcos}
+- {country: Guatemala, iso3: GTM, pcode: GT13, name: Huehuetenango}
+- {country: Guatemala, iso3: GTM, pcode: GT14, name: Quiche}
+- {country: Guatemala, iso3: GTM, pcode: GT15, name: Baja Verapaz}
+- {country: Guatemala, iso3: GTM, pcode: GT16, name: Alta Verapaz}
+- {country: Guatemala, iso3: GTM, pcode: GT17, name: Peten}
+- {country: Guatemala, iso3: GTM, pcode: GT18, name: Izabal}
+- {country: Guatemala, iso3: GTM, pcode: GT19, name: Zacapa}
+- {country: Guatemala, iso3: GTM, pcode: GT20, name: Chiquimula}
+- {country: Guatemala, iso3: GTM, pcode: GT21, name: Jalapa}
+- {country: Guatemala, iso3: GTM, pcode: GT22, name: Jutiapa}
 - {country: Haiti, iso3: HTI, pcode: HT01, name: West}
 - {country: Haiti, iso3: HTI, pcode: HT02, name: South East}
 - {country: Haiti, iso3: HTI, pcode: HT03, name: North}
@@ -1310,6 +1340,24 @@ admin1_info:
 - {country: Haiti, iso3: HTI, pcode: HT08, name: "Grande'Anse"}
 - {country: Haiti, iso3: HTI, pcode: HT09, name: North West}
 - {country: Haiti, iso3: HTI, pcode: HT10, name: Nippes}
+- { country: Honduras, iso3: HND, pcode: HN01, name: Atlantida }
+- { country: Honduras, iso3: HND, pcode: HN02, name: Colon }
+- { country: Honduras, iso3: HND, pcode: HN03, name: Comayagua }
+- { country: Honduras, iso3: HND, pcode: HN04, name: Copan }
+- { country: Honduras, iso3: HND, pcode: HN05, name: Cortes }
+- { country: Honduras, iso3: HND, pcode: HN06, name: Choluteca }
+- { country: Honduras, iso3: HND, pcode: HN07, name: El Paraiso }
+- { country: Honduras, iso3: HND, pcode: HN08, name: Francisco Morazan }
+- { country: Honduras, iso3: HND, pcode: HN09, name: Gracias a Dios }
+- { country: Honduras, iso3: HND, pcode: HN10, name: Intibuca }
+- { country: Honduras, iso3: HND, pcode: HN11, name: Islas de La Bahia }
+- { country: Honduras, iso3: HND, pcode: HN12, name: La Paz }
+- { country: Honduras, iso3: HND, pcode: HN13, name: Lempira }
+- { country: Honduras, iso3: HND, pcode: HN14, name: Ocotepeque }
+- { country: Honduras, iso3: HND, pcode: HN15, name: Olancho }
+- { country: Honduras, iso3: HND, pcode: HN16, name: Santa Barbara }
+- { country: Honduras, iso3: HND, pcode: HN17, name: Valle }
+- { country: Honduras, iso3: HND, pcode: HN18, name: Yoro }
 - {country: Iraq, iso3: IRQ, pcode: IQG01, name: Al Anbar}
 - {country: Iraq, iso3: IRQ, pcode: IQG02, name: Al Basrah}
 - {country: Iraq, iso3: IRQ, pcode: IQG03, name: Al Muthanna}
@@ -1355,6 +1403,17 @@ admin1_info:
 - {country: Myanmar, iso3: MMR, pcode: MMR018, name: Nay Pyi Taw}
 - {country: Myanmar, iso3: MMR, pcode: MMR111, name: Bago}
 - {country: Myanmar, iso3: MMR, pcode: MMR222, name: Shan}
+- {country: Mozambique, iso3: MOZ, pcode: MZ01, name: Cabo Delgado}
+- {country: Mozambique, iso3: MOZ, pcode: MZ02, name: Gaza}
+- {country: Mozambique, iso3: MOZ, pcode: MZ03, name: Inhambane}
+- {country: Mozambique, iso3: MOZ, pcode: MZ04, name: Manica}
+- {country: Mozambique, iso3: MOZ, pcode: MZ05, name: Maputo}
+- {country: Mozambique, iso3: MOZ, pcode: MZ06, name: Maputo City}
+- {country: Mozambique, iso3: MOZ, pcode: MZ07, name: Nampula}
+- {country: Mozambique, iso3: MOZ, pcode: MZ08, name: Niassa}
+- {country: Mozambique, iso3: MOZ, pcode: MZ09, name: Sofala}
+- {country: Mozambique, iso3: MOZ, pcode: MZ10, name: Tete}
+- {country: Mozambique, iso3: MOZ, pcode: MZ11, name: Zambezia}
 - {country: Niger, iso3: NER, pcode: NER001, name: Agadez}
 - {country: Niger, iso3: NER, pcode: NER002, name: Diffa}
 - {country: Niger, iso3: NER, pcode: NER003, name: Dosso}
@@ -1450,6 +1509,20 @@ admin1_info:
 - {country: South Sudan, iso3: SSD, pcode: SS08, name: Warrap}
 - {country: South Sudan, iso3: SSD, pcode: SS09, name: Western Bahr El Ghazal}
 - {country: South Sudan, iso3: SSD, pcode: SS10, name: Western Equatoria}
+- {country: El Salvador, iso3: SLV, pcode: SV01, name: Ahuachapan}
+- {country: El Salvador, iso3: SLV, pcode: SV02, name: Cabanas}
+- {country: El Salvador, iso3: SLV, pcode: SV03, name: Chalatenango}
+- {country: El Salvador, iso3: SLV, pcode: SV04, name: Cuscatlan}
+- {country: El Salvador, iso3: SLV, pcode: SV05, name: La Libertad}
+- {country: El Salvador, iso3: SLV, pcode: SV06, name: La Paz}
+- {country: El Salvador, iso3: SLV, pcode: SV07, name: La Union}
+- {country: El Salvador, iso3: SLV, pcode: SV08, name: Morazan}
+- {country: El Salvador, iso3: SLV, pcode: SV09, name: San Miguel}
+- {country: El Salvador, iso3: SLV, pcode: SV10, name: San Salvador}
+- {country: El Salvador, iso3: SLV, pcode: SV11, name: San Vicente}
+- {country: El Salvador, iso3: SLV, pcode: SV12, name: Santa Ana}
+- {country: El Salvador, iso3: SLV, pcode: SV13, name: Sonsonate}
+- {country: El Salvador, iso3: SLV, pcode: SV14, name: Usulutan}
 - {country: Syrian Arab Republic, iso3: SYR, pcode: SY01, name: Damascus}
 - {country: Syrian Arab Republic, iso3: SYR, pcode: SY02, name: Aleppo}
 - {country: Syrian Arab Republic, iso3: SYR, pcode: SY03, name: Rural Damascus}
@@ -1560,16 +1633,6 @@ admin1_info:
 - {country: Yemen, iso3: YEM, pcode: YE30, name: Ad Dali}
 - {country: Yemen, iso3: YEM, pcode: YE31, name: Raymah}
 - {country: Yemen, iso3: YEM, pcode: YE32, name: Socotra}
-- {country: Zimbabwe, iso3: ZWE, pcode: ZW10, name: Bulawayo}
-- {country: Zimbabwe, iso3: ZWE, pcode: ZW11, name: Manicaland}
-- {country: Zimbabwe, iso3: ZWE, pcode: ZW12, name: Mashonaland Central}
-- {country: Zimbabwe, iso3: ZWE, pcode: ZW13, name: Mashonaland East}
-- {country: Zimbabwe, iso3: ZWE, pcode: ZW14, name: Mashonaland West}
-- {country: Zimbabwe, iso3: ZWE, pcode: ZW15, name: Matabeleland North}
-- {country: Zimbabwe, iso3: ZWE, pcode: ZW16, name: Matabeleland South}
-- {country: Zimbabwe, iso3: ZWE, pcode: ZW17, name: Midlands}
-- {country: Zimbabwe, iso3: ZWE, pcode: ZW18, name: Masvingo}
-- {country: Zimbabwe, iso3: ZWE, pcode: ZW19, name: Harare}
 
 admin1_name_mappings:
   "Nord-Ouest": "HT09"
@@ -1610,7 +1673,6 @@ admin1_name_mappings:
   "ben-gumz": "ET06"
   "Rural-Dam": "SY03"
   "al-qunitara": "SY14"
-  "harare /chitungwiza": "ZW19"
   "B MOUHOUN": "BF46"
   "H BASSINS": "BF53"
   "P CENTRAL": "BF55"
