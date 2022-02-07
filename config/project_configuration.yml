@@ -726,6 +726,15 @@ scraper_national:
       "GAVI COVID Delivery Support (early access)": "get_numeric_if_possible(GAVI COVID Delivery Support (early access))"
       "GAVI CDS (early access) Disbursed": "get_numeric_if_possible(GAVI CDS (early access) Disbursed)"
       "TOTAL (WB+GAVI) ($m)": "get_numeric_if_possible(TOTAL (WB+GAVI) ($m))"
+    sum_cols:
+      - formula: "Amount ($m)"
+        mustbepopulated: False
+      - formula: "GAVI COVID Delivery Support (early access)"
+        mustbepopulated: False
+      - formula: "GAVI CDS (early access) Disbursed"
+        mustbepopulated: False
+      - formula: "TOTAL (WB+GAVI) ($m)"
+        mustbepopulated: False
     output_cols:
       - "WorldBankFinancingApproved"
       - "GAVIFinancingApproved"
