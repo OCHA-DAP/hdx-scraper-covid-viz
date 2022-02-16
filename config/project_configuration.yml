@@ -745,6 +745,29 @@ scraper_national:
       - "#value+financing+gavi+approved"
       - "#value+financing+gavi+disbursed"
       - "#value+financing+approved"
+  closure_duration:
+    format: "xlsx"
+    dataset: "global-school-closures-covid19"
+    sheet: 1
+    headers: 1
+    adm_cols:
+      - "Country"
+    input_cols:
+      - "Duration of FULL and PARTIAL school closures (in weeks)"
+      - "Duration of FULL closures (in weeks)"
+      - "Duration of PARTIAL closures (in weeks)"
+      - "Duration of Academic breaks (in weeks)"
+    output_cols:
+      - "Full Partial Closure Duration"
+      - "Full Closure Duration"
+      - "Partial Closure Duration"
+      - "Academic break Duration"
+    output_hxltags:
+      - "#impact+full_partial+weeks"
+      - "#impact+full+weeks"
+      - "#impact+partial+weeks"
+      - "#impact+academic_break+weeks"
+
 
 unhcr_myanmar_idps:
   url: "https://data.unhcr.org/population/?widget_id=264111&geo_id=693&population_group=5407,4999"
