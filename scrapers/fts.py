@@ -1,12 +1,11 @@
 import logging
 import re
-from typing import Dict
 
 from dateutil.relativedelta import relativedelta
+from hdx.scraper.base_scraper import BaseScraper
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.downloader import Download
 from hdx.utilities.text import earliest_index, get_fraction_str, multiple_replace
-from scrapers.base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 
@@ -16,41 +15,43 @@ class FTSException(Exception):
 
 
 class FTS(BaseScraper):
-    name = "fts"
-    base_hxltags = [
-        "#value+funding+hrp+required+usd",
-        "#value+funding+hrp+total+usd",
-        "#value+funding+hrp+pct",
-    ]
-    national_hxltags = base_hxltags + [
-        "#value+covid+funding+hrp+total+usd",
-        "#value+funding+other+plan_name",
-        "#value+funding+other+required+usd",
-        "#value+funding+other+total+usd",
-        "#value+funding+other+pct",
-    ]
-    headers = {
-        "national": (
-            (
-                "RequiredHRPFunding",
-                "HRPFunding",
-                "HRPPercentFunded",
-                "HRPCovidFunding",
-                "OtherPlans",
-                "RequiredOtherPlansFunding",
-                "OtherPlansFunding",
-                "OtherPlansPercentFunded",
-            ),
-            tuple(national_hxltags),
-        ),
-        "global": (
-            ("RequiredFunding", "Funding", "PercentFunded"),
-            tuple(base_hxltags),
-        ),
-    }
+    def __init__(self, datasetinfo, today, countryiso3s, basic_auths):
+        base_hxltags = [
+            "#value+funding+hrp+required+usd",
+            "#value+funding+hrp+total+usd",
+            "#value+funding+hrp+pct",
+        ]
+        national_hxltags = base_hxltags + [
+            "#value+covid+funding+hrp+total+usd",
+            "#value+funding+other+plan_name",
+            "#value+funding+other+required+usd",
+            "#value+funding+other+total+usd",
+            "#value+funding+other+pct",
+        ]
 
-    def __init__(self, today, countryiso3s, basic_auths):
-        super().__init__()
+        super().__init__(
+            "fts",
+            datasetinfo,
+            {
+                "national": (
+                    (
+                        "RequiredHRPFunding",
+                        "HRPFunding",
+                        "HRPPercentFunded",
+                        "HRPCovidFunding",
+                        "OtherPlans",
+                        "RequiredOtherPlansFunding",
+                        "OtherPlansFunding",
+                        "OtherPlansPercentFunded",
+                    ),
+                    tuple(national_hxltags),
+                ),
+                "global": (
+                    ("RequiredFunding", "Funding", "PercentFunded"),
+                    tuple(base_hxltags),
+                ),
+            },
+        )
         self.today = today
         self.countryiso3s = countryiso3s
         self.basic_auths = basic_auths
@@ -167,7 +168,7 @@ class FTS(BaseScraper):
             logger.info(f'Plan name "{name}" simplified from "{origname}"')
         return name
 
-    def run(self, datasetinfo: Dict) -> None:
+    def run(self) -> None:
         (
             hrp_requirements,
             hrp_funding,
@@ -195,7 +196,7 @@ class FTS(BaseScraper):
             else:
                 dict_of_lists_add(other_funding, iso3, None)
 
-        base_url = datasetinfo["url"]
+        base_url = self.datasetinfo["url"]
 
         with Download(
             basic_auth=self.basic_auths.get("fts"), rate_limit={"calls": 1, "period": 1}
@@ -304,5 +305,4 @@ class FTS(BaseScraper):
             global_values[0]["global"] = total_allreq
             global_values[1]["global"] = total_allfund
             global_values[2]["global"] = total_allpercent
-            datasetinfo["date"] = self.today
-            logger.info("Processed FTS")
+            self.datasetinfo["date"] = self.today

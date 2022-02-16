@@ -1,49 +1,51 @@
 import logging
-from typing import Dict
 
-from hdx.scraper.readers import read
+from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.utilities.readers import read
 from hdx.utilities.text import get_fraction_str
-from scrapers.base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 
 
 class EducationEnrolment(BaseScraper):
-    name = "education_enrolment"
-    headers = {
-        "national": (
-            (
-                "No. pre-primary to upper-secondary learners",
-                "No. tertiary learners",
-                "No. affected learners",
-            ),
-            (
-                "#population+learners+pre_primary_to_secondary",
-                "#population+learners+tertiary",
-                "#affected+learners",
-            ),
-        ),
-        "regional": (
-            (
-                "No. affected learners",
-                "Percentage affected learners",
-            ),
-            (
-                "#affected+learners",
-                "#affected+learners+pct",
-            ),
-        ),
-    }
-
-    def __init__(self, fully_closed, countryiso3s, regionlookup, downloader):
-        super().__init__()
-        self.fully_closed = fully_closed
+    def __init__(
+        self, datasetinfo, closures, countryiso3s, regionlookup, downloader
+    ):
+        super().__init__(
+            "education_enrolment",
+            datasetinfo,
+            {
+                "national": (
+                    (
+                        "No. pre-primary to upper-secondary learners",
+                        "No. tertiary learners",
+                        "No. affected learners",
+                    ),
+                    (
+                        "#population+learners+pre_primary_to_secondary",
+                        "#population+learners+tertiary",
+                        "#affected+learners",
+                    ),
+                ),
+                "regional": (
+                    (
+                        "No. affected learners",
+                        "Percentage affected learners",
+                    ),
+                    (
+                        "#affected+learners",
+                        "#affected+learners+pct",
+                    ),
+                ),
+            },
+        )
+        self.closures = closures
         self.countryiso3s = countryiso3s
         self.regionlookup = regionlookup
         self.downloader = downloader
 
-    def run(self, datasetinfo: Dict) -> None:
-        learners_headers, learners_iterator = read(self.downloader, datasetinfo)
+    def run(self) -> None:
+        learners_headers, learners_iterator = read(self.downloader, self.datasetinfo)
         learners_012, learners_3, affected_learners = self.get_values("national")
         all_learners = dict()
 
@@ -86,7 +88,7 @@ class EducationEnrolment(BaseScraper):
                 no_learners = l_3
             if no_learners is not None:
                 all_learners[countryiso] = no_learners
-                if countryiso in self.fully_closed:
+                if countryiso in self.closures.fully_closed:
                     affected_learners[countryiso] = no_learners
         affected_learners_total = self.get_values("regional")[0]
         learners_total = dict()
@@ -107,4 +109,3 @@ class EducationEnrolment(BaseScraper):
             percentage_affected_learners[region] = get_fraction_str(
                 no_learners, learners_total[region]
             )
-        logger.info("Processed education enrolment")

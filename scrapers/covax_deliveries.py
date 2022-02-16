@@ -1,35 +1,35 @@
 import logging
-from typing import Dict
 
-from hdx.scraper.readers import read
+from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.utilities.readers import read
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.text import get_numeric_if_possible
-from scrapers.base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 
 
 class CovaxDeliveries(BaseScraper):
-    name = "covax_deliveries"
-    headers = {
-        "national": (
-            ("Vaccine", "Funder", "Doses"),
-            (
-                "#meta+vaccine+producer",
-                "#meta+vaccine+funder",
-                "#capacity+vaccine+doses",
-            ),
+    def __init__(self, datasetinfo, today, countryiso3s, downloader):
+        super().__init__(
+            "covax_deliveries",
+            datasetinfo,
+            {
+                "national": (
+                    ("Vaccine", "Funder", "Doses"),
+                    (
+                        "#meta+vaccine+producer",
+                        "#meta+vaccine+funder",
+                        "#capacity+vaccine+doses",
+                    ),
+                )
+            },
         )
-    }
-
-    def __init__(self, today, countryiso3s, downloader):
-        super().__init__()
         self.today = today
         self.countryiso3s = countryiso3s
         self.downloader = downloader
 
-    def run(self, datasetinfo: Dict) -> None:
-        headers, iterator = read(self.downloader, datasetinfo, today=self.today)
+    def run(self) -> None:
+        headers, iterator = read(self.downloader, self.datasetinfo, today=self.today)
         hxlrow = next(iterator)
         doses_lookup = dict()
         for row in iterator:
@@ -57,4 +57,3 @@ class CovaxDeliveries(BaseScraper):
             producers[countryiso] = "|".join(producers[countryiso])
             funders[countryiso] = "|".join(funders[countryiso])
             doses[countryiso] = "|".join(doses[countryiso])
-        logger.info("Processed covax deliveries")

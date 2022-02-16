@@ -1,30 +1,30 @@
 import logging
-from typing import Dict
 
 from dateutil.relativedelta import relativedelta
-from hdx.scraper.readers import read_hdx_metadata
+from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.utilities.readers import read_hdx_metadata
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.downloader import Download
 from hdx.utilities.text import number_format
-from scrapers.base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 
 
 class FoodPrices(BaseScraper):
-    name = "food_prices"
-    headers = {"national": (("Food Prices Ratio",), ("#value+food+num+ratio",))}
-
-    def __init__(self, today, countryiso3s, retriever, basic_auths):
-        super().__init__()
+    def __init__(self, datasetinfo, today, countryiso3s, retriever, basic_auths):
+        super().__init__(
+            "food_prices",
+            datasetinfo,
+            {"national": (("Food Prices Ratio",), ("#value+food+num+ratio",))},
+        )
         self.today = today
         self.countryiso3s = countryiso3s
         self.retriever = retriever
         self.basic_auths = basic_auths
 
-    def run(self, datasetinfo: Dict) -> None:
-        read_hdx_metadata(datasetinfo, today=self.today)
-        base_url = datasetinfo["base_url"]
+    def run(self) -> None:
+        read_hdx_metadata(self.datasetinfo, today=self.today)
+        base_url = self.datasetinfo["base_url"]
         if self.retriever.use_saved:
             headers = None
         else:
@@ -134,4 +134,3 @@ class FoodPrices(BaseScraper):
                 country_ratio += market_ratio
             country_ratio /= len(commodities_per_market)
             ratios[countryiso3] = number_format(country_ratio, trailing_zeros=False)
-        logger.info("Processed WFP")

@@ -1,3 +1,2 @@
-abstractcp==0.9.8
-hdx-python-scraper[pandas]==1.4.2
+hdx-python-scraper[pandas]==1.4.4
 -r docker-requirements.txt

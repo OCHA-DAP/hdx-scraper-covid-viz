@@ -3,37 +3,37 @@ from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
 from hdx.location.country import Country
-from hdx.scraper.readers import read_hdx_metadata, read_tabular
+from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.utilities.readers import read_hdx_metadata, read_tabular
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.downloader import DownloadError
-from scrapers.base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 
 
 class IPC(BaseScraper):
-    name = "ipc"
-    phases = ["3", "4", "5", "P3+"]
-    projections = ["Current", "First Projection", "Second Projection"]
-    colheaders = [f"FoodInsecurityIPC{phase}" for phase in phases]
-    colheaders.append("FoodInsecurityIPCAnalysedNum")
-    colheaders.append("FoodInsecurityIPCAnalysisPeriod")
-    colheaders.append("FoodInsecurityIPCAnalysisPeriodStart")
-    colheaders.append("FoodInsecurityIPCAnalysisPeriodEnd")
-    hxltags = [f"#affected+food+ipc+p{phase}+num" for phase in phases[:-1]]
-    hxltags.append("#affected+food+ipc+p3plus+num")
-    hxltags.append("#affected+food+ipc+analysed+num")
-    hxltags.append("#date+ipc+period")
-    hxltags.append("#date+ipc+start")
-    hxltags.append("#date+ipc+end")
-
-    headers = {
-        "national": (tuple(colheaders), tuple(hxltags)),
-        "subnational": (tuple(colheaders[:-4]), tuple(hxltags[:-4])),
-    }
-
-    def __init__(self, today, gho_countries, adminone, downloader):
-        super().__init__()
+    def __init__(self, datasetinfo, today, gho_countries, adminone, downloader):
+        self.phases = ["3", "4", "5", "P3+"]
+        self.projections = ["Current", "First Projection", "Second Projection"]
+        colheaders = [f"FoodInsecurityIPC{phase}" for phase in self.phases]
+        colheaders.append("FoodInsecurityIPCAnalysedNum")
+        colheaders.append("FoodInsecurityIPCAnalysisPeriod")
+        colheaders.append("FoodInsecurityIPCAnalysisPeriodStart")
+        colheaders.append("FoodInsecurityIPCAnalysisPeriodEnd")
+        hxltags = [f"#affected+food+ipc+p{phase}+num" for phase in self.phases[:-1]]
+        hxltags.append("#affected+food+ipc+p3plus+num")
+        hxltags.append("#affected+food+ipc+analysed+num")
+        hxltags.append("#date+ipc+period")
+        hxltags.append("#date+ipc+start")
+        hxltags.append("#date+ipc+end")
+        super().__init__(
+            "ipc",
+            datasetinfo,
+            {
+                "national": (tuple(colheaders), tuple(hxltags)),
+                "subnational": (tuple(colheaders[:-4]), tuple(hxltags[:-4])),
+            },
+        )
         self.today = today
         self.gho_countries = gho_countries
         self.adminone = adminone
@@ -99,8 +99,8 @@ class IPC(BaseScraper):
                     break
         return analysis_period, start.strftime("%Y-%m-%d"), end.strftime("%Y-%m-%d")
 
-    def run(self, datasetinfo):
-        url = datasetinfo["url"]
+    def run(self):
+        url = self.datasetinfo["url"]
         national_populations = {phase: dict() for phase in self.phases}
         national_analysed = dict()
         national_period = dict()
@@ -152,7 +152,7 @@ class IPC(BaseScraper):
                     for i, population in enumerate(populations):
                         population_in_pcode += population
                     subnational_population[pcode] = population_in_pcode
-        read_hdx_metadata(datasetinfo)
+        read_hdx_metadata(self.datasetinfo)
         national_outputs = [national_populations[phase] for phase in self.phases]
         national_outputs.append(national_analysed)
         national_outputs.append(national_period)
@@ -162,4 +162,3 @@ class IPC(BaseScraper):
         self.values["subnational"] = tuple(
             subnational_populations[phase] for phase in self.phases
         )
-        logger.info("Processed IPC")

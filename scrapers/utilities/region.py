@@ -1,17 +1,16 @@
 import logging
 import sys
 
-from hdx.scraper.readers import read_hdx
-from hdx.scraper.utils import add_population
+from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.utilities.readers import read_hdx
 from hdx.utilities.dictandlist import dict_of_lists_add, dict_of_sets_add
 from hdx.utilities.text import get_fraction_str, get_numeric_if_possible, number_format
 
 logger = logging.getLogger(__name__)
 
 
-class Region:
-    def __init__(self, region_config, today, downloader, gho_countries, hrp_countries):
-        self.region_config = region_config
+class Region(BaseScraper):
+    def __init__(self, region_config, today, downloader, gho_countries, hrp_countries, runner):
         _, iterator = read_hdx(downloader, region_config, today=today)
         self.iso3_to_region = dict()
         self.iso3_to_region_and_hrp = dict()
@@ -35,6 +34,19 @@ class Region:
         for countryiso in gho_countries:
             dict_of_sets_add(self.iso3_to_region_and_hrp, countryiso, region)
         self.hrp_countries = hrp_countries
+        process_cols = self.datasetinfo["process_cols"]
+        self.desired_headers = ["population"] + process_cols.keys()
+        headers = runner.get_headers(levels=("national",), headers=self.desired_headers)["national"]
+        ordered_headers = (list(), list())
+        for header in self.desired_headers:
+            try:
+                index = headers[0].index(header)
+                ordered_headers[0].append(header)
+                ordered_headers[1].append(headers[1][index])
+            except ValueError:
+                logger.error(f"Regional header {header} not found in national headers!")
+        self.runner = runner
+        super().__init__("region", region_config, {"regional": ordered_headers})
 
     @staticmethod
     def get_float_or_int(valuestr):
@@ -146,69 +158,70 @@ class Region:
 
     def get_regional(
         self,
-        regionlookup,
-        national_headers,
-        national_columns,
         population_lookup=None,
         *args,
     ):
-        if population_lookup is None:
-            process_cols = self.region_config["process_cols"]
-        else:
-            process_cols = {"Population": {"action": "sum"}}
-        desired_headers = process_cols.keys()
-        message = "Regional header {} not found in national headers!"
-        regional_headers, regional_columns = self.get_headers_and_columns(
-            desired_headers, national_headers, national_columns, message
-        )
+        process_cols = {"Population": {"action": "sum"}}
+        process_cols.update(self.datasetinfo["process_cols"])
+        national_results = self.runner.get_results(levels="national")["national"]
+        headers = national_results["headers"]
+        values = national_results["values"]
+        national_values = list()
+        for header in self.desired_headers:
+            try:
+                index = headers[0].index(header)
+                national_values.append(values[index])
+            except ValueError:
+                pass
         valdicts = list()
+        regional_headers = self.get_headers("regional")
         for i, header in enumerate(regional_headers[0]):
             valdict = dict()
             valdicts.append(valdict)
             process_info = process_cols[header]
-            column = regional_columns[i]
+            column = national_values[i]
             for countryiso in column:
-                for region in regionlookup.iso3_to_region_and_hrp[countryiso]:
+                for region in self.iso3_to_region_and_hrp[countryiso]:
                     if not self.should_process(process_info, region, countryiso):
                         continue
                     dict_of_lists_add(valdict, region, column[countryiso])
             self.process(process_info, valdicts, regional_headers, i)
+            self.add_population()
 
-        if population_lookup is None:
-            multi_cols = self.region_config.get("multi_cols", list())
-            for header in multi_cols:
-                multi_info = multi_cols[header]
-                input_headers = multi_info["headers"]
-                ignore = False
-                for input_header in input_headers:
-                    if input_header not in national_headers[0]:
-                        logger.error(message.format(input_header))
-                        ignore = True
-                        break
-                if ignore:
-                    continue
-                regional_headers[0].append(header)
-                regional_headers[1].append(multi_info["hxltag"])
-                found_region_countries = set()
-                valdict = dict()
-                valdicts.append(valdict)
-                for i, orig_header in enumerate(input_headers):
-                    index = national_headers[0].index(orig_header)
-                    column = national_columns[index]
-                    for countryiso in column:
-                        for region in regionlookup.iso3_to_region_and_hrp[countryiso]:
-                            if not self.should_process(multi_info, region, countryiso):
-                                continue
-                            key = f"{region}|{countryiso}"
-                            if key in found_region_countries:
-                                continue
-                            value = column[countryiso]
-                            if value:
-                                found_region_countries.add(key)
-                                dict_of_lists_add(valdict, region, value)
-                self.process(
-                    multi_info, valdicts, regional_headers, len(regional_headers[0]) - 1
-                )
+        multi_cols = self.region_config.get("multi_cols", list())
+        for header in multi_cols:
+            multi_info = multi_cols[header]
+            input_headers = multi_info["headers"]
+            ignore = False
+            for input_header in input_headers:
+                if input_header not in headers[0]:
+                    logger.error(message.format(input_header))
+                    ignore = True
+                    break
+            if ignore:
+                continue
+            regional_headers[0].append(header)
+            regional_headers[1].append(multi_info["hxltag"])
+            found_region_countries = set()
+            valdict = dict()
+            valdicts.append(valdict)
+            for i, orig_header in enumerate(input_headers):
+                index = national_headers[0].index(orig_header)
+                column = national_columns[index]
+                for countryiso in column:
+                    for region in regionlookup.iso3_to_region_and_hrp[countryiso]:
+                        if not self.should_process(multi_info, region, countryiso):
+                            continue
+                        key = f"{region}|{countryiso}"
+                        if key in found_region_countries:
+                            continue
+                        value = column[countryiso]
+                        if value:
+                            found_region_countries.add(key)
+                            dict_of_lists_add(valdict, region, value)
+            self.process(
+                multi_info, valdicts, regional_headers, len(regional_headers[0]) - 1
+            )
 
         for arg in args:
             gheaders, gvaldicts = arg
@@ -220,14 +233,14 @@ class Region:
                         continue
                     valdicts[j].update(gvaldicts[i])
 
-        add_population(
+        self.add_population(
             population_lookup, {"headers": regional_headers, "values": valdicts}
         )
         logger.info("Processed regional")
         return regional_headers, valdicts
 
     def get_world(self, regional_headers, regional_columns):
-        desired_headers = self.region_config["global"]
+        desired_headers = self.datasetinfo["global"]
         message = "Regional header {} to be used as global not found!"
         world_headers, world_columns = self.get_headers_and_columns(
             desired_headers, regional_headers, regional_columns, message

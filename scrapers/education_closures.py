@@ -1,22 +1,29 @@
 import logging
 from typing import Dict
 
-from hdx.scraper.readers import read
 from hdx.utilities.dateparse import default_date, parse_date
-from scrapers.base_scraper import BaseScraper
+
+from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.utilities.readers import read
 
 logger = logging.getLogger(__name__)
 
 
 class EducationClosures(BaseScraper):
-    name = "education_closures"
-    headers = {
-        "national": (("School Closure",), ("#impact+type",)),
-        "regional": (("No. closed countries",), ("#status+country+closed",)),
-    }
-
-    def __init__(self, today, countryiso3s, regionlookup, downloader):
-        super().__init__()
+    def __init__(
+        self, datasetinfo: Dict, today, countryiso3s, regionlookup, downloader
+    ):
+        super().__init__(
+            "education_closures",
+            datasetinfo,
+            {
+                "national": (("School Closure",), ("#impact+type",)),
+                "regional": (
+                    ("No. closed countries",),
+                    ("#status+country+closed",),
+                ),
+            },
+        )
         self.today = today
         self.countryiso3s = countryiso3s
         self.regionlookup = regionlookup
@@ -33,8 +40,10 @@ class EducationClosures(BaseScraper):
                 fully_closed.append(countryiso)
         return fully_closed
 
-    def run(self, datasetinfo: Dict) -> None:
-        closures_headers, closures_iterator = read(self.downloader, datasetinfo)
+    def run(self) -> None:
+        closures_headers, closures_iterator = read(
+            self.downloader, self.datasetinfo
+        )
         closures = self.get_values("national")[0]
         closed_countries = self.get_values("regional")[0]
         country_dates = dict()
@@ -52,8 +61,13 @@ class EducationClosures(BaseScraper):
                 continue
             country_dates[countryiso] = date
             closures[countryiso] = row["Status"]
-        fully_closed = self.get_fully_closed(closures)
+        self.fully_closed = self.get_fully_closed(closures)
         for countryiso in closures:
             for region in self.regionlookup.iso3_to_region_and_hrp[countryiso]:
-                if countryiso in fully_closed:
-                    closed_countries[region] = closed_countries.get(region, 0) + 1
+                if countryiso in self.fully_closed:
+                    closed_countries[region] = (
+                        closed_countries.get(region, 0) + 1
+                    )
+
+    def run_after_fallbacks(self) -> None:
+        self.fully_closed = self.get_fully_closed(self.get_values("national")[0])

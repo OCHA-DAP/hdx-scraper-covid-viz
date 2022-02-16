@@ -1,26 +1,26 @@
 import logging
-from typing import Dict
 
 import hxl
 from hdx.data.dataset import Dataset
+from hdx.scraper.base_scraper import BaseScraper
 from hdx.utilities.dictandlist import dict_of_lists_add
-from scrapers.base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 
 
 class IOMDTM(BaseScraper):
-    name = "iom_dtm"
-    headers = {"subnational": (("IDPs",), ("#affected+idps+ind",))}
-
-    def __init__(self, today, adminone, downloader):
-        super().__init__()
+    def __init__(self, datasetinfo, today, adminone, downloader):
+        super().__init__(
+            "iom_dtm",
+            datasetinfo,
+            {"subnational": (("IDPs",), ("#affected+idps+ind",))},
+        )
         self.today = today
         self.adminone = adminone
         self.downloader = downloader
 
-    def run(self, datasetinfo: Dict) -> None:
-        iom_url = datasetinfo["url"]
+    def run(self) -> None:
+        iom_url = self.datasetinfo["url"]
         headers, iterator = self.downloader.get_tabular_rows(
             iom_url, headers=1, dict_form=True, format="csv"
         )
@@ -83,6 +83,5 @@ class IOMDTM(BaseScraper):
                 logger.error(f"PCode {pcode} in {countryiso3} does not exist!")
             else:
                 idps[pcode] = sum(idpsdict[countrypcode])
-        datasetinfo["date"] = self.today
-        datasetinfo["source_url"] = iom_url
-        logger.info("Processed IOM DTMs")
+        self.datasetinfo["date"] = self.today
+        self.datasetinfo["source_url"] = iom_url

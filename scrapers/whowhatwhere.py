@@ -1,27 +1,27 @@
 import logging
-from typing import Dict
 
 import hxl
 from hdx.data.dataset import Dataset
 from hdx.data.hdxobject import HDXError
+from hdx.scraper.base_scraper import BaseScraper
 from hdx.utilities.dictandlist import dict_of_sets_add
-from scrapers.base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 
 
 class WhoWhatWhere(BaseScraper):
-    name = "whowhatwhere"
-    headers = {"subnational": (("OrgCountAdm1",), ("#org+count+num",))}
-
-    def __init__(self, today, adminone, downloader):
-        super().__init__()
+    def __init__(self, datasetinfo, today, adminone, downloader):
+        super().__init__(
+            "whowhatwhere",
+            datasetinfo,
+            {"subnational": (("OrgCountAdm1",), ("#org+count+num",))},
+        )
         self.today = today
         self.adminone = adminone
         self.downloader = downloader
 
-    def run(self, datasetinfo: Dict) -> None:
-        threew_url = datasetinfo["url"]
+    def run(self) -> None:
+        threew_url = self.datasetinfo["url"]
         headers, iterator = self.downloader.get_tabular_rows(
             threew_url, headers=1, dict_form=True, format="csv"
         )
@@ -95,6 +95,5 @@ class WhoWhatWhere(BaseScraper):
                 logger.error(f"PCode {pcode} in {countryiso3} does not exist!")
             else:
                 orgcount[pcode] = len(orgdict[countrypcode])
-        datasetinfo["date"] = self.today
-        datasetinfo["source_url"] = threew_url
-        logger.info("Processed 3W")
+        self.datasetinfo["date"] = self.today
+        self.datasetinfo["source_url"] = threew_url

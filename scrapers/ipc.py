@@ -5,7 +5,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from hdx.data.dataset import Dataset
 from hdx.location.country import Country
-from hdx.scraper.utils import get_isodate_from_dataset_date
+from hdx.scraper.utilities import get_isodate_from_dataset_date
 from hdx.utilities.downloader import Download
 
 logger = logging.getLogger(__name__)
