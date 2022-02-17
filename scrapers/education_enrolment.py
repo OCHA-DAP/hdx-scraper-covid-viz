@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class EducationEnrolment(BaseScraper):
     def __init__(
-        self, datasetinfo, closures, countryiso3s, regionlookup, downloader
+        self, datasetinfo, closures, countryiso3s, iso3_to_region_and_hrp, downloader
     ):
         super().__init__(
             "education_enrolment",
@@ -41,7 +41,7 @@ class EducationEnrolment(BaseScraper):
         )
         self.closures = closures
         self.countryiso3s = countryiso3s
-        self.regionlookup = regionlookup
+        self.iso3_to_region_and_hrp = iso3_to_region_and_hrp
         self.downloader = downloader
 
     def run(self) -> None:
@@ -95,7 +95,7 @@ class EducationEnrolment(BaseScraper):
         for countryiso in all_learners:
             country_learners = all_learners[countryiso]
             country_affected_learners = affected_learners.get(countryiso)
-            for region in self.regionlookup.iso3_to_region_and_hrp[countryiso]:
+            for region in self.iso3_to_region_and_hrp[countryiso]:
                 learners_total[region] = (
                     learners_total.get(region, 0) + country_learners
                 )

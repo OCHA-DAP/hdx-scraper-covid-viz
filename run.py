@@ -1,16 +1,15 @@
 import argparse
 import logging
-import sys
 from datetime import datetime
 from os import getenv
 from os.path import join
 
 from hdx.api.configuration import Configuration
 from hdx.facades.keyword_arguments import facade
-from hdx.scraper.exceloutput import ExcelOutput
-from hdx.scraper.googlesheets import GoogleSheets
-from hdx.scraper.jsonoutput import JsonOutput
-from hdx.scraper.nooutput import NoOutput
+from hdx.scraper.outputs.base import BaseOutput
+from hdx.scraper.outputs.excelfile import ExcelFile
+from hdx.scraper.outputs.googlesheets import GoogleSheets
+from hdx.scraper.outputs.json import JsonFile
 from hdx.utilities.downloader import Download
 from hdx.utilities.easy_logging import setup_logging
 from hdx.utilities.errors_onexit import ErrorsOnExit
@@ -102,24 +101,24 @@ def main(
                     logger.info("Updating all tabs")
                 else:
                     logger.info(f"Updating only these tabs: {updatetabs}")
-                noout = NoOutput(updatetabs)
+                noout = BaseOutput(updatetabs)
                 if excel_path:
-                    excelout = ExcelOutput(excel_path, tabs, updatetabs)
+                    excelout = ExcelFile(excel_path, tabs, updatetabs)
                 else:
                     excelout = noout
                 if gsheet_auth:
                     gsheets = GoogleSheets(
-                        configuration, gsheet_auth, updatesheets, tabs, updatetabs
+                        configuration["googlesheets"], gsheet_auth, updatesheets, tabs, updatetabs
                     )
                 else:
                     gsheets = noout
                 if nojson:
                     jsonout = noout
                 else:
-                    jsonout = JsonOutput(configuration, updatetabs)
+                    jsonout = JsonFile(configuration["json"], updatetabs)
                 outputs = {"gsheets": gsheets, "excel": excelout, "json": jsonout}
                 today = datetime.now()
-                countries_to_save, fail = get_indicators(
+                countries_to_save = get_indicators(
                     configuration,
                     today,
                     retriever,

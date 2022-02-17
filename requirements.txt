@@ -1,2 +1,2 @@
-hdx-python-scraper[pandas]==1.4.4
+git+git://github.com/OCHA-DAP/hdx-python-scraper.git#egg=hdx-python-scraper
 -r docker-requirements.txt

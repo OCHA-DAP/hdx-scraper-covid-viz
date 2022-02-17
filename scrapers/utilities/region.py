@@ -34,8 +34,8 @@ class Region(BaseScraper):
         for countryiso in gho_countries:
             dict_of_sets_add(self.iso3_to_region_and_hrp, countryiso, region)
         self.hrp_countries = hrp_countries
-        process_cols = self.datasetinfo["process_cols"]
-        self.desired_headers = ["population"] + process_cols.keys()
+        process_cols = region_config["process_cols"]
+        self.desired_headers = ["population"] + list(process_cols.keys())
         headers = runner.get_headers(levels=("national",), headers=self.desired_headers)["national"]
         ordered_headers = (list(), list())
         for header in self.desired_headers:
@@ -156,11 +156,7 @@ class Region(BaseScraper):
                     toeval = toeval.replace(regional_headers[0][j], str(value))
                 valdict[region] = eval(toeval)
 
-    def get_regional(
-        self,
-        population_lookup=None,
-        *args,
-    ):
+    def run(self):
         process_cols = {"Population": {"action": "sum"}}
         process_cols.update(self.datasetinfo["process_cols"])
         national_results = self.runner.get_results(levels="national")["national"]
@@ -173,11 +169,10 @@ class Region(BaseScraper):
                 national_values.append(values[index])
             except ValueError:
                 pass
-        valdicts = list()
+        valdicts = self.get_values("regional")
         regional_headers = self.get_headers("regional")
         for i, header in enumerate(regional_headers[0]):
-            valdict = dict()
-            valdicts.append(valdict)
+            valdict = valdicts[i]
             process_info = process_cols[header]
             column = national_values[i]
             for countryiso in column:
@@ -186,7 +181,6 @@ class Region(BaseScraper):
                         continue
                     dict_of_lists_add(valdict, region, column[countryiso])
             self.process(process_info, valdicts, regional_headers, i)
-            self.add_population()
 
         multi_cols = self.region_config.get("multi_cols", list())
         for header in multi_cols:
@@ -195,7 +189,7 @@ class Region(BaseScraper):
             ignore = False
             for input_header in input_headers:
                 if input_header not in headers[0]:
-                    logger.error(message.format(input_header))
+                    logger.error(f"Regional header {input_header} not found in national headers!")
                     ignore = True
                     break
             if ignore:
@@ -206,10 +200,10 @@ class Region(BaseScraper):
             valdict = dict()
             valdicts.append(valdict)
             for i, orig_header in enumerate(input_headers):
-                index = national_headers[0].index(orig_header)
-                column = national_columns[index]
+                index = headers[0].index(orig_header)
+                column = values[index]
                 for countryiso in column:
-                    for region in regionlookup.iso3_to_region_and_hrp[countryiso]:
+                    for region in self.iso3_to_region_and_hrp[countryiso]:
                         if not self.should_process(multi_info, region, countryiso):
                             continue
                         key = f"{region}|{countryiso}"
@@ -223,21 +217,17 @@ class Region(BaseScraper):
                 multi_info, valdicts, regional_headers, len(regional_headers[0]) - 1
             )
 
-        for arg in args:
-            gheaders, gvaldicts = arg
-            if gheaders:
-                for i, header in enumerate(gheaders[1]):
-                    try:
-                        j = regional_headers[1].index(header)
-                    except ValueError:
-                        continue
-                    valdicts[j].update(gvaldicts[i])
-
-        self.add_population(
-            population_lookup, {"headers": regional_headers, "values": valdicts}
-        )
-        logger.info("Processed regional")
-        return regional_headers, valdicts
+        self.add_population()
+        # for arg in args:
+        #     gheaders, gvaldicts = arg
+        #     if gheaders:
+        #         for i, header in enumerate(gheaders[1]):
+        #             try:
+        #                 j = regional_headers[1].index(header)
+        #             except ValueError:
+        #                 continue
+        #             valdicts[j].update(gvaldicts[i])
+        #
 
     def get_world(self, regional_headers, regional_columns):
         desired_headers = self.datasetinfo["global"]

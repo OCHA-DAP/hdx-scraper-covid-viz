@@ -52,6 +52,7 @@ class WhoWhatWhere(BaseScraper):
             except Exception:
                 logger.exception(f"Error reading 3w data for {countryiso3}!")
                 raise
+            self.source_urls.add(dataset.get_hdx_url())
             pcodes_found = False
             for row in data:
                 pcode = row.get("#adm1+code")
@@ -97,3 +98,6 @@ class WhoWhatWhere(BaseScraper):
                 orgcount[pcode] = len(orgdict[countrypcode])
         self.datasetinfo["date"] = self.today
         self.datasetinfo["source_url"] = threew_url
+
+    def add_source_urls(self) -> None:
+        pass
