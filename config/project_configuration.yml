@@ -719,31 +719,51 @@ scraper_national:
     input_cols:
       - "Amount ($m)"
       - "GAVI COVID Delivery Support (early access)"
+      - "GAVI (Needs Based) Approved"
       - "GAVI CDS (early access) Disbursed"
+      - "GAVI (Needs Based) Disbursed"
       - "TOTAL (WB+GAVI) ($m)"
     input_transforms:
       "Amount ($m)": "get_numeric_if_possible(Amount ($m))"
       "GAVI COVID Delivery Support (early access)": "get_numeric_if_possible(GAVI COVID Delivery Support (early access))"
+      "GAVI (Needs Based) Approved": "get_numeric_if_possible(GAVI (Needs Based) Approved)"
       "GAVI CDS (early access) Disbursed": "get_numeric_if_possible(GAVI CDS (early access) Disbursed)"
+      "GAVI (Needs Based) Disbursed": "get_numeric_if_possible(GAVI (Needs Based) Disbursed)"
       "TOTAL (WB+GAVI) ($m)": "get_numeric_if_possible(TOTAL (WB+GAVI) ($m))"
     sum_cols:
       - formula: "Amount ($m)"
         mustbepopulated: False
       - formula: "GAVI COVID Delivery Support (early access)"
         mustbepopulated: False
+      - formula: "GAVI COVID Delivery Support (early access)"
+        mustbepopulated: False
+      - formula: "GAVI (Needs Based) Approved"
+        mustbepopulated: False
       - formula: "GAVI CDS (early access) Disbursed"
+        mustbepopulated: False
+      - formula: "GAVI CDS (early access) Disbursed"
+        mustbepopulated: False
+      - formula: "GAVI (Needs Based) Disbursed"
         mustbepopulated: False
       - formula: "TOTAL (WB+GAVI) ($m)"
         mustbepopulated: False
     output_cols:
       - "WorldBankFinancingApproved"
       - "GAVIFinancingApproved"
+      - "GAVIFinancingEarlyAccessApproved"
+      - "GAVIFinancingNeedsApproved"
       - "GAVIFinancingDisbursed"
+      - "GAVIFinancingEarlyAccessDisbursed"
+      - "GAVIFinancingNeedsDisbursed"
       - "WorldBankGAVIFinancingTotal"
     output_hxltags:
       - "#value+financing+worldbank+approved"
       - "#value+financing+gavi+approved"
+      - "#value+financing+gavi+earlyaccess+approved"
+      - "#value+financing+gavi+needs+approved"
       - "#value+financing+gavi+disbursed"
+      - "#value+financing+gavi+earlyaccess+disbursed"
+      - "#value+financing+gavi+needs+disbursed"
       - "#value+financing+approved"
   closure_duration:
     format: "xlsx"
@@ -910,7 +930,15 @@ regional:
       action: "sum"
     "GAVIFinancingApproved":
       action: "sum"
+    "GAVIFinancingEarlyAccessApproved":
+      action: "sum"
+    "GAVIFinancingNeedsApproved":
+      action: "sum"
     "GAVIFinancingDisbursed":
+      action: "sum"
+    "GAVIFinancingEarlyAccessDisbursed":
+      action: "sum"
+    "GAVIFinancingNeedsDisbursed":
       action: "sum"
     "WorldBankGAVIFinancingTotal":
       action: "sum"
@@ -941,7 +969,11 @@ regional:
     - "DosesAllocated"
     - "WorldBankFinancingApproved"
     - "GAVIFinancingApproved"
+    - "GAVIFinancingEarlyAccessApproved"
+    - "GAVIFinancingNeedsApproved"
     - "GAVIFinancingDisbursed"
+    - "GAVIFinancingEarlyAccessDisbursed"
+    - "GAVIFinancingNeedsDisbursed"
     - "WorldBankGAVIFinancingTotal"
 
 scraper_global:
