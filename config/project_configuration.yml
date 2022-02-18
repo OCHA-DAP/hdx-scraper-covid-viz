@@ -718,43 +718,43 @@ scraper_national:
       - "ISO3"
     input_cols:
       - "Amount ($m)"
-      - "GAVI COVID Delivery Support (early access)"
-      - "GAVI (Needs Based) Approved"
+      - "GAVI CDS (early access) Approved"
+      - "GAVI CDS (needs based) Approved"
       - "GAVI CDS (early access) Disbursed"
-      - "GAVI (Needs Based) Disbursed"
+      - "GAVI CDS (needs based) Disbursed"
       - "TOTAL (WB+GAVI) ($m)"
     input_transforms:
       "Amount ($m)": "get_numeric_if_possible(Amount ($m))"
-      "GAVI COVID Delivery Support (early access)": "get_numeric_if_possible(GAVI COVID Delivery Support (early access))"
-      "GAVI (Needs Based) Approved": "get_numeric_if_possible(GAVI (Needs Based) Approved)"
+      "GAVI CDS (early access) Approved": "get_numeric_if_possible(GAVI CDS (early access) Approved)"
+      "GAVI CDS (needs based) Approved": "get_numeric_if_possible(GAVI CDS (needs based) Approved)"
       "GAVI CDS (early access) Disbursed": "get_numeric_if_possible(GAVI CDS (early access) Disbursed)"
-      "GAVI (Needs Based) Disbursed": "get_numeric_if_possible(GAVI (Needs Based) Disbursed)"
+      "GAVI CDS (needs based) Disbursed": "get_numeric_if_possible(GAVI CDS (needs based) Disbursed)"
       "TOTAL (WB+GAVI) ($m)": "get_numeric_if_possible(TOTAL (WB+GAVI) ($m))"
     sum_cols:
       - formula: "Amount ($m)"
         mustbepopulated: False
-      - formula: "GAVI COVID Delivery Support (early access)"
+      - formula: "GAVI CDS (early access) Approved"
         mustbepopulated: False
-      - formula: "GAVI COVID Delivery Support (early access)"
+      - formula: "GAVI CDS (early access) Approved"
         mustbepopulated: False
-      - formula: "GAVI (Needs Based) Approved"
-        mustbepopulated: False
-      - formula: "GAVI CDS (early access) Disbursed"
+      - formula: "GAVI CDS (needs based) Approved"
         mustbepopulated: False
       - formula: "GAVI CDS (early access) Disbursed"
         mustbepopulated: False
-      - formula: "GAVI (Needs Based) Disbursed"
+      - formula: "GAVI CDS (early access) Disbursed"
+        mustbepopulated: False
+      - formula: "GAVI CDS (needs based) Disbursed"
         mustbepopulated: False
       - formula: "TOTAL (WB+GAVI) ($m)"
         mustbepopulated: False
     output_cols:
       - "WorldBankFinancingApproved"
       - "GAVIFinancingApproved"
-      - "GAVIFinancingEarlyAccessApproved"
-      - "GAVIFinancingNeedsApproved"
+      - "GAVICDSEarlyAccessApproved"
+      - "GAVICDSNeedsApproved"
       - "GAVIFinancingDisbursed"
-      - "GAVIFinancingEarlyAccessDisbursed"
-      - "GAVIFinancingNeedsDisbursed"
+      - "GAVICDSEarlyAccessDisbursed"
+      - "GAVICDSNeedsDisbursed"
       - "WorldBankGAVIFinancingTotal"
     output_hxltags:
       - "#value+financing+worldbank+approved"
@@ -930,15 +930,15 @@ regional:
       action: "sum"
     "GAVIFinancingApproved":
       action: "sum"
-    "GAVIFinancingEarlyAccessApproved":
+    "GAVICDSEarlyAccessApproved":
       action: "sum"
-    "GAVIFinancingNeedsApproved":
+    "GAVICDSNeedsApproved":
       action: "sum"
     "GAVIFinancingDisbursed":
       action: "sum"
-    "GAVIFinancingEarlyAccessDisbursed":
+    "GAVICDSEarlyAccessDisbursed":
       action: "sum"
-    "GAVIFinancingNeedsDisbursed":
+    "GAVICDSNeedsDisbursed":
       action: "sum"
     "WorldBankGAVIFinancingTotal":
       action: "sum"
@@ -969,11 +969,11 @@ regional:
     - "DosesAllocated"
     - "WorldBankFinancingApproved"
     - "GAVIFinancingApproved"
-    - "GAVIFinancingEarlyAccessApproved"
-    - "GAVIFinancingNeedsApproved"
+    - "GAVICDSEarlyAccessApproved"
+    - "GAVICDSNeedsApproved"
     - "GAVIFinancingDisbursed"
-    - "GAVIFinancingEarlyAccessDisbursed"
-    - "GAVIFinancingNeedsDisbursed"
+    - "GAVICDSEarlyAccessDisbursed"
+    - "GAVICDSNeedsDisbursed"
     - "WorldBankGAVIFinancingTotal"
 
 scraper_global:
