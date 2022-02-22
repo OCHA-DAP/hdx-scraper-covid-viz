@@ -814,6 +814,8 @@ regional:
   iso3: "ISO3"
   region: "Regional_office"
   process_cols:
+    "Population":
+      action: "sum"
     "Cumulative_cases":
       action: "sum"
     "Cumulative_deaths":
@@ -891,8 +893,6 @@ regional:
       action: "sum"
     "WorldBankGAVIFinancingTotal":
       action: "sum"
-
-  multi_cols:
     "FoodInsecurityP3+":
       action: "sum"
       hxltag: "#affected+food+ipc+p3plus+num"

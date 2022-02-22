@@ -4,9 +4,11 @@ from hdx.data.dataset import Dataset
 from hdx.location.adminone import AdminOne
 from hdx.location.country import Country
 from hdx.scraper.runner import Runner
+from hdx.scraper.utilities import get_isodate_from_dataset_date
 
-from scrapers.utilities.extensions import extend_columns, extend_headers, extend_sources
-from scrapers.utilities.region import Region
+from scrapers.utilities.update_tabs import update_national, update_world, \
+    update_regional
+from scrapers.utilities.region_aggregation import RegionAggregation
 
 from .covax_deliveries import CovaxDeliveries
 from .education_closures import EducationClosures
@@ -40,16 +42,6 @@ def get_indicators(
     errors_on_exit=None,
     use_live=True,
 ):
-    world = [list(), list()]
-    regional = [["regionnames"], ["#region+name"]]
-    national = [
-        ["iso3", "countryname", "ishrp", "region"],
-        ["#country+code", "#country+name", "#meta+ishrp", "#region+name"],
-    ]
-    subnational = [
-        ["iso3", "countryname", "adm1_pcode", "adm1_name"],
-        ["#country+code", "#country+name", "#adm1+code", "#adm1+name"],
-    ]
     sources = [
         ("Indicator", "Date", "Source", "Url"),
         ("#indicator+name", "#date", "#meta+source", "#meta+url"),
@@ -75,31 +67,31 @@ def get_indicators(
     configuration["countries_fuzzy_try"] = hrp_countries
     downloader = retriever.downloader
     adminone = AdminOne(configuration)
+    RegionLookups.load(configuration["regional"], today, downloader, gho_countries, hrp_countries)
     population_lookup = dict()
+    if scrapers_to_run is not None:
+        scrapers_to_run = ["population"] + scrapers_to_run + ["region"]
     runner = Runner(
         gho_countries,
         adminone,
         downloader,
         basic_auths,
         today,
-        errors_on_exit=errors_on_exit
-    )
-    RegionLookups.load(configuration["regional"], today, downloader, gho_countries, hrp_countries)
-    region = Region(
-        configuration["regional"], today, downloader, gho_countries, hrp_countries, runner
+        errors_on_exit=errors_on_exit,
+        scrapers_to_run=scrapers_to_run
     )
     configurable_scrapers = dict()
     for level in "national", "subnational", "global":
         suffix = f"_{level}"
         configurable_scrapers[level] = runner.add_configurables(configuration[f"scraper{suffix}"], level, suffix=suffix)
-    runner.add_instance_variables("idps",
+    runner.add_instance_variables("idps_national",
                                   overrideinfo=configuration["unhcr_myanmar_idps"])
-    runner.add_post_run("idps", idps_post_run)
+    runner.add_post_run("idps_national", idps_post_run)
 
     who_covid = WHOCovid(configuration["who_covid"],
-        today, outputs, hrp_countries, gho_countries, region.iso3_to_region, population_lookup
+        today, outputs, hrp_countries, gho_countries, RegionLookups.iso3_to_region, population_lookup
     )    
-    ipc = IPC(configuration[""], today, gho_countries, adminone, downloader)
+    ipc = IPC(configuration["ipc"], today, gho_countries, adminone, downloader)
     
     fts = FTS(configuration["fts"], today, gho_countries, basic_auths)
     food_prices = FoodPrices(configuration["food_prices"], today, gho_countries, retriever, basic_auths)
@@ -109,9 +101,9 @@ def get_indicators(
     unhcr = UNHCR(configuration["unhcr"], today, gho_countries, downloader)
     inform = Inform(configuration["inform"], today, gho_countries, other_auths)
     covax_deliveries = CovaxDeliveries(configuration["covax_deliveries"], today, gho_countries, downloader)
-    education_closures = EducationClosures(configuration["education_closures"], today, gho_countries, region.iso3_to_region_and_hrp, downloader)
+    education_closures = EducationClosures(configuration["education_closures"], today, gho_countries, RegionLookups.iso3_to_region_and_hrp, downloader)
     education_enrolment = EducationEnrolment(configuration["education_enrolment"],
-        education_closures, gho_countries, region.iso3_to_region_and_hrp, downloader
+        education_closures, gho_countries, RegionLookups.iso3_to_region_and_hrp, downloader
     )
 
     # national_headers = extend_headers(
@@ -230,7 +222,7 @@ def get_indicators(
     # update_tab("world", world)
 
     whowhatwhere = WhoWhatWhere(configuration["whowhatwhere"], today, adminone, downloader)
-    iomdtm = IOMDTM(configuration["iomdtm"], today, adminone, downloader)
+    iomdtm = IOMDTM(configuration["iom_dtm"], today, adminone, downloader)
     global_names = ["who_covid", "fts"] + configurable_scrapers["global"]
 
     # subnational_headers = extend_headers(
@@ -265,9 +257,16 @@ def get_indicators(
 
     runner.add_custom(who_covid)
 
-#    runner.add_customs((who_covid, ipc, fts, food_prices, vaccination_campaigns, unhcr, inform, covax_deliveries, education_closures, education_enrolment, whowhatwhere, iomdtm, regional))
+#    runner.add_customs((who_covid, ipc, fts, food_prices, vaccination_campaigns, unhcr, inform, covax_deliveries, education_closures, education_enrolment, whowhatwhere, iomdtm))
+    region = RegionAggregation(
+        configuration["regional"], hrp_countries, RegionLookups.iso3_to_region_and_hrp, runner
+    )
+    runner.add_custom(region)
     runner.run()
-    results = runner.get_results()
+
+    update_world(runner, outputs)
+    update_regional(runner, RegionLookups.regions + ["global"], outputs)
+    update_national(runner, region, hrp_countries, gho_countries, outputs)
 
     adminone.output_matches()
     adminone.output_ignored()

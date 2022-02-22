@@ -2,51 +2,47 @@ import logging
 import sys
 
 from hdx.scraper.base_scraper import BaseScraper
-from hdx.scraper.utilities.readers import read_hdx
-from hdx.utilities.dictandlist import dict_of_lists_add, dict_of_sets_add
+from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.text import get_fraction_str, get_numeric_if_possible, number_format
 
 logger = logging.getLogger(__name__)
 
 
-class Region(BaseScraper):
-    def __init__(self, region_config, today, downloader, gho_countries, hrp_countries, runner):
-        _, iterator = read_hdx(downloader, region_config, today=today)
-        self.iso3_to_region = dict()
-        self.iso3_to_region_and_hrp = dict()
-        regions = set()
-        for row in iterator:
-            countryiso = row[region_config["iso3"]]
-            if countryiso and countryiso in gho_countries:
-                region = row[region_config["region"]]
-                if region == "NO COVERAGE":
-                    continue
-                regions.add(region)
-                dict_of_sets_add(self.iso3_to_region_and_hrp, countryiso, region)
-                self.iso3_to_region[countryiso] = region
-        self.regions = sorted(list(regions))
-        region = "HRPs"
-        self.regions.insert(0, region)
-        for countryiso in hrp_countries:
-            dict_of_sets_add(self.iso3_to_region_and_hrp, countryiso, region)
-        region = "GHO"
-        self.regions.insert(0, region)
-        for countryiso in gho_countries:
-            dict_of_sets_add(self.iso3_to_region_and_hrp, countryiso, region)
+class RegionAggregation(BaseScraper):
+    def __init__(self, region_config, hrp_countries, iso3_to_region_and_hrp, runner):
         self.hrp_countries = hrp_countries
+        self.iso3_to_region_and_hrp = iso3_to_region_and_hrp
         process_cols = region_config["process_cols"]
-        self.desired_headers = ["population"] + list(process_cols.keys())
-        headers = runner.get_headers(levels=("national",), headers=self.desired_headers)["national"]
-        ordered_headers = (list(), list())
-        for header in self.desired_headers:
-            try:
-                index = headers[0].index(header)
-                ordered_headers[0].append(header)
-                ordered_headers[1].append(headers[1][index])
-            except ValueError:
-                logger.error(f"Regional header {header} not found in national headers!")
+        national_headers = runner.get_headers(levels="national",)["national"]
+        self.national_headers = list()
+        output_headers = (list(), list())
+        for header, process_info in process_cols.items():
+            input_headers = process_info.get("headers")
+            if input_headers:
+                exists = True
+                for i, input_header in enumerate(input_headers):
+                    try:
+                        national_headers[0].index(input_header)
+                    except ValueError:
+                        logger.error(
+                            f"Regional header {header} not found in national headers!")
+                        exists = False
+                        break
+                if not exists:
+                    continue
+                self.national_headers.extend(input_headers)
+                output_headers[0].append(header)
+                output_headers[1].append(process_info["hxltag"])
+            else:
+                try:
+                    index = national_headers[0].index(header)
+                    self.national_headers.append(header)
+                    output_headers[0].append(header)
+                    output_headers[1].append(national_headers[1][index])
+                except ValueError:
+                    logger.error(f"Regional header {header} not found in national headers!")
         self.runner = runner
-        super().__init__("region", region_config, {"regional": ordered_headers})
+        super().__init__("region_aggregation", region_config, {"regional": output_headers})
 
     @staticmethod
     def get_float_or_int(valuestr):
@@ -99,11 +95,11 @@ class Region(BaseScraper):
         return True
 
     @classmethod
-    def process(cls, process_info, valdicts, regional_headers, index):
-        valdict = valdicts[-1]
+    def process(cls, process_info, output_valdicts, index, regional_headers):
+        output_values = output_valdicts[index]
         action = process_info["action"]
         if action == "sum" or action == "mean":
-            for region, valuelist in valdict.items():
+            for region, valuelist in output_values.items():
                 total = ""
                 novals = 0
                 for valuestr in valuelist:
@@ -123,11 +119,11 @@ class Region(BaseScraper):
                     if not isinstance(total, str):
                         total /= novals
                 if isinstance(total, float):
-                    valdict[region] = number_format(total, trailing_zeros=False)
+                    output_values[region] = number_format(total, trailing_zeros=False)
                 else:
-                    valdict[region] = total
+                    output_values[region] = total
         elif action == "range":
-            for region, valuelist in valdict.items():
+            for region, valuelist in output_values.items():
                 min = sys.maxsize
                 max = -min
                 for valuestr in valuelist:
@@ -138,84 +134,59 @@ class Region(BaseScraper):
                         if value < min:
                             min = value
                 if min == sys.maxsize or max == -sys.maxsize:
-                    valdict[region] = ""
+                    output_values[region] = ""
                 else:
                     if isinstance(max, float):
                         max = number_format(max, trailing_zeros=False)
                     if isinstance(min, float):
                         min = number_format(min, trailing_zeros=False)
-                    valdict[region] = f"{str(min)}-{str(max)}"
+                    output_values[region] = f"{str(min)}-{str(max)}"
         elif action == "eval":
             formula = process_info["formula"]
-            for region, valuelist in valdict.items():
+            for region, valuelist in output_values.items():
                 toeval = formula
                 for j in range(index):
-                    value = valdicts[j].get(region, "")
+                    value = output_valdicts[j].get(region, "")
                     if value == "":
                         value = None
                     toeval = toeval.replace(regional_headers[0][j], str(value))
-                valdict[region] = eval(toeval)
+                output_values[region] = eval(toeval)
 
     def run(self):
-        process_cols = {"Population": {"action": "sum"}}
-        process_cols.update(self.datasetinfo["process_cols"])
         national_results = self.runner.get_results(levels="national")["national"]
         headers = national_results["headers"]
         values = national_results["values"]
-        national_values = list()
-        for header in self.desired_headers:
+        national_values = dict()
+        for national_header in self.national_headers:
             try:
-                index = headers[0].index(header)
-                national_values.append(values[index])
+                index = headers[0].index(national_header)
+                national_values[national_header] = values[index]
             except ValueError:
                 pass
-        valdicts = self.get_values("regional")
         regional_headers = self.get_headers("regional")
-        for i, header in enumerate(regional_headers[0]):
-            valdict = valdicts[i]
-            process_info = process_cols[header]
-            column = national_values[i]
-            for countryiso in column:
-                for region in self.iso3_to_region_and_hrp[countryiso]:
-                    if not self.should_process(process_info, region, countryiso):
-                        continue
-                    dict_of_lists_add(valdict, region, column[countryiso])
-            self.process(process_info, valdicts, regional_headers, i)
-
-        multi_cols = self.region_config.get("multi_cols", list())
-        for header in multi_cols:
-            multi_info = multi_cols[header]
-            input_headers = multi_info["headers"]
-            ignore = False
+        output_valdicts = self.get_values("regional")
+        process_cols = self.datasetinfo["process_cols"]
+        for i, output_header in enumerate(regional_headers[0]):
+            output_values = output_valdicts[i]
+            process_info = process_cols[output_header]
+            input_valdicts = list()
+            input_headers = process_info.get("headers", [output_header])
             for input_header in input_headers:
-                if input_header not in headers[0]:
-                    logger.error(f"Regional header {input_header} not found in national headers!")
-                    ignore = True
-                    break
-            if ignore:
-                continue
-            regional_headers[0].append(header)
-            regional_headers[1].append(multi_info["hxltag"])
+                input_valdicts.append(national_values[input_header])
             found_region_countries = set()
-            valdict = dict()
-            valdicts.append(valdict)
-            for i, orig_header in enumerate(input_headers):
-                index = headers[0].index(orig_header)
-                column = values[index]
-                for countryiso in column:
+            for input_values in input_valdicts:
+                for countryiso in input_values:
                     for region in self.iso3_to_region_and_hrp[countryiso]:
-                        if not self.should_process(multi_info, region, countryiso):
+                        if not self.should_process(process_info, region, countryiso):
                             continue
                         key = f"{region}|{countryiso}"
                         if key in found_region_countries:
                             continue
-                        value = column[countryiso]
+                        value = input_values[countryiso]
                         if value:
                             found_region_countries.add(key)
-                            dict_of_lists_add(valdict, region, value)
-            self.process(
-                multi_info, valdicts, regional_headers, len(regional_headers[0]) - 1
-            )
+                            dict_of_lists_add(output_values, region, value)
+            self.process(process_info, output_valdicts, i, regional_headers)
 
         self.add_population()
         # for arg in args:

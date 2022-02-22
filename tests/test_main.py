@@ -4,8 +4,8 @@ from os.path import join
 import pytest
 from hdx.api.configuration import Configuration
 from hdx.api.locations import Locations
-from hdx.scraper.jsonoutput import JsonOutput
-from hdx.scraper.nooutput import NoOutput
+from hdx.scraper.outputs.base import BaseOutput
+from hdx.scraper.outputs.json import JsonFile
 from hdx.utilities.dateparse import parse_date
 from hdx.utilities.downloader import Download
 from hdx.utilities.path import temp_dir
@@ -43,11 +43,11 @@ class TestCovid:
                     downloader, tempdir, folder, tempdir, save=False, use_saved=True
                 )
                 tabs = configuration["tabs"]
-                noout = NoOutput(tabs)
-                jsonout = JsonOutput(configuration, tabs)
+                noout = BaseOutput(tabs)
+                jsonout = JsonFile(configuration["json"], tabs)
                 outputs = {"gsheets": noout, "excel": noout, "json": jsonout}
                 today = parse_date("2021-05-03")
-                countries_to_save, fail = get_indicators(
+                countries_to_save = get_indicators(
                     configuration,
                     today,
                     retriever,
@@ -64,10 +64,10 @@ class TestCovid:
                         "cadre_harmonise",
                         "access",
                         "food_prices",
+                        "region",
                     ],
                     use_live=False,
                 )
-                assert fail is False
                 filepaths = jsonout.save(tempdir, countries_to_save=countries_to_save)
                 assert filecmp.cmp(filepaths[0], join(folder, "test_scraper_all.json"))
                 assert filecmp.cmp(filepaths[1], join(folder, "test_scraper.json"))
@@ -87,11 +87,11 @@ class TestCovid:
                     downloader, tempdir, folder, tempdir, save=False, use_saved=True
                 )
                 tabs = configuration["tabs"]
-                noout = NoOutput(tabs)
-                jsonout = JsonOutput(configuration, tabs)
+                noout = BaseOutput(tabs)
+                jsonout = JsonFile(configuration["json"], tabs)
                 outputs = {"gsheets": noout, "excel": noout, "json": jsonout}
                 today = parse_date("2021-05-03")
-                countries_to_save, fail = get_indicators(
+                countries_to_save = get_indicators(
                     configuration,
                     today,
                     retriever,
@@ -112,7 +112,6 @@ class TestCovid:
                     use_live=False,
                     fallbacks_root=folder,
                 )
-                assert fail is True
                 filepaths = jsonout.save(tempdir, countries_to_save=countries_to_save)
                 assert filecmp.cmp(filepaths[0], join(folder, "test_scraper_all.json"))
                 assert filecmp.cmp(filepaths[1], join(folder, "test_scraper.json"))

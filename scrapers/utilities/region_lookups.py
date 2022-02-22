@@ -1,5 +1,4 @@
 import logging
-import sys
 
 from hdx.scraper.utilities.readers import read_hdx
 from hdx.utilities.dictandlist import dict_of_sets_add

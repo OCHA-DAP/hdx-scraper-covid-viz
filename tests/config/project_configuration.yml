@@ -371,6 +371,25 @@ scraper_national:
       - "SchoolClosure"
     output_hxltags:
       - "#impact+type"
+  idps:
+    format: "csv"
+    dataset: "idmc-internally-displaced-persons-idps"
+    headers: 1
+    use_hxl: True
+    date_col: "#date+year"
+    date_type: "year"
+    input_cols:
+      - "#affected+idps+ind+stock+conflict"
+      - "#affected+idps+ind+stock+disaster"
+    input_transforms:
+      "#affected+idps+ind+stock+conflict": "int(#affected+idps+ind+stock+conflict) if #affected+idps+ind+stock+conflict else 0"
+      "#affected+idps+ind+stock+disaster": "int(#affected+idps+ind+stock+disaster) if #affected+idps+ind+stock+disaster else 0"
+    process_cols:
+      - "#affected+idps+ind+stock+conflict + #affected+idps+ind+stock+disaster"
+    output_cols:
+      - "TotalIDPs"
+    output_hxltags:
+      - "#affected+displaced"
   travel:
     format: "csv"
     dataset: "covid-19-global-travel-restrictions-and-airline-information"
@@ -619,10 +638,37 @@ unhcr:
   url: "https://data2.unhcr.org/population/?population_collection=4&geo_id="
   source_url: "https://data.humdata.org/organization/unhcr"
 
+unhcr_myanmar_idps:
+  url: "https://data.unhcr.org/population/?widget_id=264111&geo_id=693&population_group=5407,4999"
+
+inform:
+  url: "https://api.acaps.org/api/v1/inform-severity-index/%s/?page=1"
+  dataset: "inform-global-crisis-severity-index"
+  format: "xlsx"
+
 who_covid:
   format: "csv"
   dataset: "coronavirus-covid-19-cases-and-deaths"
   url: "tests/fixtures/WHO-COVID-19-global-data.csv"
+  headers: 1
+
+covax_deliveries:
+  format: "csv"
+  dataset: "covid-19-vaccine-doses-in-hrp-countries"
+  url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVzu79PPTfaA2syevOQfyRRjy63dJWitqu0fFbXIQCzoUn9K9TiMWMRvFGg1RBsnLmgYugzSEiAye2/pub?gid=1635331605&single=true&output=csv"
+  headers: 1
+
+education_closures:
+  format: "csv"
+  dataset: "global-school-closures-covid19"
+  resource: "School Closures"
+  headers: 1
+
+education_enrolment:
+  format: "xlsx"
+  dataset: "global-school-closures-covid19"
+  resource: "Enrollment data"
+  sheet: 1
   headers: 1
 
 # regional
@@ -1040,6 +1086,14 @@ scraper_subnational:
       - "Malnutrition Estimate"
     output_hxltags:
       - "#severity+malnutrition+num+subnational"
+
+whowhatwhere:
+  source: "OCHA"
+  url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRt_YtlKjmZLhAq5GDA05fmfnMbA_4SL32fWtH6PttLxpWZMuv1KeeoAW69d_P1If3pggf6_XRGXeuQ/pub?gid=1662282962&single=true&output=csv"
+
+iom_dtm:
+  source: "IOM"
+  url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSnUZoKtEvfchPq-zonhd1-DAujIzo0u68vX_BlUvex43Seyc881kNE89xQp7KAolXmxX-aq3aPCl-x/pub?gid=0&single=true&output=csv"
 
 gho:
   - ABW
