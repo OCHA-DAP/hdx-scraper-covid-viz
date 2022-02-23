@@ -718,33 +718,58 @@ scraper_national:
       - "ISO3"
     input_cols:
       - "Amount ($m)"
-      - "GAVI COVID Delivery Support (early access)"
+      - "GAVI CDS (early access) Approved"
+      - "GAVI CDS (needs based) Approved"
       - "GAVI CDS (early access) Disbursed"
+      - "GAVI CDS (needs based) Disbursed"
       - "TOTAL (WB+GAVI) ($m)"
     input_transforms:
       "Amount ($m)": "get_numeric_if_possible(Amount ($m))"
-      "GAVI COVID Delivery Support (early access)": "get_numeric_if_possible(GAVI COVID Delivery Support (early access))"
+      "GAVI CDS (early access) Approved": "get_numeric_if_possible(GAVI CDS (early access) Approved)"
+      "GAVI CDS (needs based) Approved": "get_numeric_if_possible(GAVI CDS (needs based) Approved)"
       "GAVI CDS (early access) Disbursed": "get_numeric_if_possible(GAVI CDS (early access) Disbursed)"
+      "GAVI CDS (needs based) Disbursed": "get_numeric_if_possible(GAVI CDS (needs based) Disbursed)"
       "TOTAL (WB+GAVI) ($m)": "get_numeric_if_possible(TOTAL (WB+GAVI) ($m))"
     sum_cols:
       - formula: "Amount ($m)"
         mustbepopulated: False
-      - formula: "GAVI COVID Delivery Support (early access)"
+      - formula: "GAVI CDS (early access) Approved"
+        mustbepopulated: False
+      - formula: "GAVI CDS (needs based) Approved"
         mustbepopulated: False
       - formula: "GAVI CDS (early access) Disbursed"
+        mustbepopulated: False
+      - formula: "GAVI CDS (needs based) Disbursed"
         mustbepopulated: False
       - formula: "TOTAL (WB+GAVI) ($m)"
         mustbepopulated: False
     output_cols:
       - "WorldBankFinancingApproved"
-      - "GAVIFinancingApproved"
-      - "GAVIFinancingDisbursed"
+      - "GAVICDSEarlyAccessApproved"
+      - "GAVICDSNeedsApproved"
+      - "GAVICDSEarlyAccessDisbursed"
+      - "GAVICDSNeedsDisbursed"
       - "WorldBankGAVIFinancingTotal"
     output_hxltags:
       - "#value+financing+worldbank+approved"
-      - "#value+financing+gavi+approved"
-      - "#value+financing+gavi+disbursed"
+      - "#value+financing+gavi+earlyaccess+approved"
+      - "#value+financing+gavi+needs+approved"
+      - "#value+financing+gavi+earlyaccess+disbursed"
+      - "#value+financing+gavi+needs+disbursed"
       - "#value+financing+approved"
+  closure_duration:
+    format: "xlsx"
+    dataset: "global-school-closures-covid19"
+    sheet: 1
+    headers: 1
+    adm_cols:
+      - "Country"
+    input_cols:
+      - "Duration of FULL and PARTIAL school closures (in weeks)"
+    output_cols:
+      - "Full Partial Closure Duration"
+    output_hxltags:
+      - "#impact+full_partial+weeks"
 
 unhcr_myanmar_idps:
   url: "https://data.unhcr.org/population/?widget_id=264111&geo_id=693&population_group=5407,4999"
@@ -887,9 +912,13 @@ regional:
       action: "sum"
     "WorldBankFinancingApproved":
       action: "sum"
-    "GAVIFinancingApproved":
+    "GAVICDSEarlyAccessApproved":
       action: "sum"
-    "GAVIFinancingDisbursed":
+    "GAVICDSNeedsApproved":
+      action: "sum"
+    "GAVICDSEarlyAccessDisbursed":
+      action: "sum"
+    "GAVICDSNeedsDisbursed":
       action: "sum"
     "WorldBankGAVIFinancingTotal":
       action: "sum"
@@ -917,8 +946,10 @@ regional:
     - "NoChildrenSAM"
     - "DosesAllocated"
     - "WorldBankFinancingApproved"
-    - "GAVIFinancingApproved"
-    - "GAVIFinancingDisbursed"
+    - "GAVICDSEarlyAccessApproved"
+    - "GAVICDSNeedsApproved"
+    - "GAVICDSEarlyAccessDisbursed"
+    - "GAVICDSNeedsDisbursed"
     - "WorldBankGAVIFinancingTotal"
 
 scraper_global:
