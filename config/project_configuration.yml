@@ -735,11 +735,7 @@ scraper_national:
         mustbepopulated: False
       - formula: "GAVI CDS (early access) Approved"
         mustbepopulated: False
-      - formula: "GAVI CDS (early access) Approved"
-        mustbepopulated: False
       - formula: "GAVI CDS (needs based) Approved"
-        mustbepopulated: False
-      - formula: "GAVI CDS (early access) Disbursed"
         mustbepopulated: False
       - formula: "GAVI CDS (early access) Disbursed"
         mustbepopulated: False
@@ -749,19 +745,15 @@ scraper_national:
         mustbepopulated: False
     output_cols:
       - "WorldBankFinancingApproved"
-      - "GAVIFinancingApproved"
       - "GAVICDSEarlyAccessApproved"
       - "GAVICDSNeedsApproved"
-      - "GAVIFinancingDisbursed"
       - "GAVICDSEarlyAccessDisbursed"
       - "GAVICDSNeedsDisbursed"
       - "WorldBankGAVIFinancingTotal"
     output_hxltags:
       - "#value+financing+worldbank+approved"
-      - "#value+financing+gavi+approved"
       - "#value+financing+gavi+earlyaccess+approved"
       - "#value+financing+gavi+needs+approved"
-      - "#value+financing+gavi+disbursed"
       - "#value+financing+gavi+earlyaccess+disbursed"
       - "#value+financing+gavi+needs+disbursed"
       - "#value+financing+approved"
@@ -774,19 +766,10 @@ scraper_national:
       - "Country"
     input_cols:
       - "Duration of FULL and PARTIAL school closures (in weeks)"
-      - "Duration of FULL closures (in weeks)"
-      - "Duration of PARTIAL closures (in weeks)"
-      - "Duration of Academic breaks (in weeks)"
     output_cols:
       - "Full Partial Closure Duration"
-      - "Full Closure Duration"
-      - "Partial Closure Duration"
-      - "Academic break Duration"
     output_hxltags:
       - "#impact+full_partial+weeks"
-      - "#impact+full+weeks"
-      - "#impact+partial+weeks"
-      - "#impact+academic_break+weeks"
 
 
 unhcr_myanmar_idps:
@@ -928,13 +911,9 @@ regional:
       action: "sum"
     "WorldBankFinancingApproved":
       action: "sum"
-    "GAVIFinancingApproved":
-      action: "sum"
     "GAVICDSEarlyAccessApproved":
       action: "sum"
     "GAVICDSNeedsApproved":
-      action: "sum"
-    "GAVIFinancingDisbursed":
       action: "sum"
     "GAVICDSEarlyAccessDisbursed":
       action: "sum"
@@ -968,10 +947,8 @@ regional:
     - "NoChildrenSAM"
     - "DosesAllocated"
     - "WorldBankFinancingApproved"
-    - "GAVIFinancingApproved"
     - "GAVICDSEarlyAccessApproved"
     - "GAVICDSNeedsApproved"
-    - "GAVIFinancingDisbursed"
     - "GAVICDSEarlyAccessDisbursed"
     - "GAVICDSNeedsDisbursed"
     - "WorldBankGAVIFinancingTotal"
