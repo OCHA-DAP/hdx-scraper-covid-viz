@@ -64,7 +64,6 @@ class TestCovid:
                         "cadre_harmonise",
                         "access",
                         "food_prices",
-                        "region",
                     ],
                     use_live=False,
                 )
@@ -110,7 +109,6 @@ class TestCovid:
                         "food_prices",
                     ],
                     use_live=False,
-                    fallbacks_root=folder,
                 )
                 filepaths = jsonout.save(tempdir, countries_to_save=countries_to_save)
                 assert filecmp.cmp(filepaths[0], join(folder, "test_scraper_all.json"))

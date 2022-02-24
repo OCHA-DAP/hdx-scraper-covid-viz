@@ -20,7 +20,6 @@ class WHOCovid(BaseScraper):
         hrp_countries,
         gho_countries,
         iso3_to_region,
-        population_lookup,
     ):
         base_headers = ["Cumulative_cases", "Cumulative_deaths"]
         base_hxltags = ["#affected+infected", "#affected+killed"]
@@ -58,7 +57,6 @@ class WHOCovid(BaseScraper):
         self.hrp_countries = hrp_countries
         self.gho_countries = gho_countries
         self.iso3_to_region = iso3_to_region
-        self.population_lookup = population_lookup
 
     def get_who_data(self, url):
         df = pd.read_csv(url, keep_default_na=False)
@@ -160,7 +158,7 @@ class WHOCovid(BaseScraper):
         df_series = df_series.drop(["New_cases", "New_deaths"], axis=1)
 
         self.outputs["gsheets"].update_tab(
-            series_name, df_series, series_headers_hxltags, 1000
+            series_name, df_series, series_headers_hxltags, limit=1000
         )  # 1000 rows in gsheets!/;
         self.outputs["excel"].update_tab(series_name, df_series, series_headers_hxltags)
         self.outputs["json"].update_tab(

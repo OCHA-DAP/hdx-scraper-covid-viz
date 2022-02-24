@@ -9,14 +9,19 @@ logger = logging.getLogger(__name__)
 
 
 class RegionAggregation(BaseScraper):
-    def __init__(self, region_config, hrp_countries, iso3_to_region_and_hrp, runner):
-        self.hrp_countries = hrp_countries
-        self.iso3_to_region_and_hrp = iso3_to_region_and_hrp
+    def __init__(self, name, datasetinfo, headers):
+        super().__init__(name, datasetinfo, {"regional": headers})
+
+    @classmethod
+    def get_regional_scrapers(cls, region_config, hrp_countries, iso3_to_region_and_hrp, runner):
+        cls.hrp_countries = hrp_countries
+        cls.iso3_to_region_and_hrp = iso3_to_region_and_hrp
+        cls.runner = runner
         process_cols = region_config["process_cols"]
         national_headers = runner.get_headers(levels="national",)["national"]
-        self.national_headers = list()
-        output_headers = (list(), list())
+        regional_scrapers = list()
         for header, process_info in process_cols.items():
+            name = f"{header}_regional"
             input_headers = process_info.get("headers")
             if input_headers:
                 exists = True
@@ -30,20 +35,17 @@ class RegionAggregation(BaseScraper):
                         break
                 if not exists:
                     continue
-                self.national_headers.extend(input_headers)
-                output_headers[0].append(header)
-                output_headers[1].append(process_info["hxltag"])
+                scraper = RegionAggregation(name, process_info, ((header,), (process_info["hxltag"],)))
+                regional_scrapers.append(scraper)
             else:
                 try:
                     index = national_headers[0].index(header)
-                    self.national_headers.append(header)
-                    output_headers[0].append(header)
-                    output_headers[1].append(national_headers[1][index])
+                    scraper = RegionAggregation(name, process_info, (national_headers[1][index],))
+                    regional_scrapers.append(scraper)
                 except ValueError:
                     logger.error(f"Regional header {header} not found in national headers!")
-        self.runner = runner
-        super().__init__("region_aggregation", region_config, {"regional": output_headers})
-
+        return regional_scrapers
+    
     @staticmethod
     def get_float_or_int(valuestr):
         if not valuestr or valuestr == "N/A":
