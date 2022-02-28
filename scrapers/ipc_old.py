@@ -2,6 +2,7 @@ import logging
 from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
+from hdx.data.hdxobject import HDXError
 from hdx.location.country import Country
 from hdx.scraper.readers import read_hdx_metadata, read_tabular
 from hdx.utilities.dictandlist import dict_of_lists_add
@@ -107,11 +108,17 @@ class IPC(BaseScraper):
         national_start = dict()
         national_end = dict()
         subnational_populations = {phase: dict() for phase in self.phases}
+        failure_counter = 0
         for countryiso3 in self.gho_countries:
             countryiso2 = Country.get_iso2_from_iso3(countryiso3)
             data, adm1_names = self.get_data(url, countryiso2)
             if not data:
+                failure_counter += 1
+                if failure_counter == 7:
+                    raise HDXError("IPC is broken!")
                 continue
+            else:
+                failure_counter = 0
             row = data[0]
             analysis_period, start, end = self.get_period(row, self.projections)
             for phase in self.phases:
