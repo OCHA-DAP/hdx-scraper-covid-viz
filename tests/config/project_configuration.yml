@@ -101,7 +101,7 @@ scraper_national:
     output_hxltags:
       - "#population"
 # only for testing dividing by population
-  who_national:
+  worldhealthorg:
     format: "csv"
     dataset: "coronavirus-covid-19-cases-and-deaths"
     url: "tests/fixtures/WHO-COVID-19-global-data.csv"
@@ -124,7 +124,7 @@ scraper_national:
       - "#affected+infected+per100000"
       - "#affected+killed+per100000"
 # A fake one where we sum all values in cumulative column across dates which in practice makes no sense
-  who_national2:
+  worldhealthorg2:
     format: "csv"
     dataset: "coronavirus-covid-19-cases-and-deaths"
     url: "tests/fixtures/WHO-COVID-19-global-data.csv"
@@ -197,7 +197,7 @@ scraper_national:
       - "EconomicExposure"
     output_hxltags:
       - "#severity+economic+num"
-  ifi_national:
+  ifi:
     format: "csv"
     url: "tests/fixtures/Tracker COVID - Country Summary_HDX.csv"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
@@ -409,7 +409,7 @@ scraper_national:
     output_hxltags:
       - "#severity+travel"
       - "#severity+date+travel"
-  cerf_national:
+  cerf:
     format: "csv"
     dataset: "cerf-covid-19-allocations"
     force_date_today: True
@@ -680,6 +680,8 @@ regional:
   iso3: "ISO3"
   region: "Regional_office"
   process_cols:
+    "Population":
+      action: "sum"
     "Cumulative_cases":
       action: "sum"
     "Cumulative_deaths":
@@ -732,7 +734,7 @@ regional:
 
 
 scraper_global:
-  cerf_global:
+  cerf:
     format: "csv"
     dataset: "cerf-covid-19-allocations"
     force_date_today: True
@@ -764,7 +766,7 @@ scraper_global:
           - "CERFCovidFunding"
         output_hxltags:
           - "#value+cerf+covid+funding+total+usd"
-  ifi_global:
+  ifi:
     format: "csv"
     url: "tests/fixtures/Tracker COVID - Country Summary_HDX.csv"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
@@ -795,6 +797,21 @@ ipc:
   dataset: "ipc-country-data"
 
 scraper_subnational:
+  ghrp:
+    source: "Multiple sources"
+    format: "csv"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3_uBOV_uRDSxOggfBus_pkCs6Iw9lm0nAxzwG14YF_frpm13WPKiM1oNnQ9zrUA/pub?gid=1565793974&single=true&output=csv"
+    dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
+    headers: 1
+    adm_cols:
+      - "alpha_3"
+      - "ADM1_PCODE"
+    input_cols:
+      - "POPULATION"
+    output_cols:
+      - "Population"
+    output_hxltags:
+      - "#population"
   cadre_harmonise:
     format: "xlsx"
     dataset: "cadre-harmonise"
@@ -854,21 +871,6 @@ scraper_subnational:
       - "#affected+ch+food+p5+pct"
       - "#affected+ch+food+p3plus+pct"
       - "#affected+ch+food+analysed+pct"
-  ghrp:
-    source: "Multiple sources"
-    format: "csv"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3_uBOV_uRDSxOggfBus_pkCs6Iw9lm0nAxzwG14YF_frpm13WPKiM1oNnQ9zrUA/pub?gid=1565793974&single=true&output=csv"
-    dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
-    headers: 1
-    adm_cols:
-      - "alpha_3"
-      - "ADM1_PCODE"
-    input_cols:
-      - "POPULATION"
-    output_cols:
-      - "Population"
-    output_hxltags:
-      - "#population"
   healthfac:
     source: "HOT"
     format: "csv"
@@ -897,7 +899,7 @@ scraper_subnational:
 #      - "NoDisplaced"
 #    output_hxltags:
 #      - "#affected+displaced"
-  who_subnational:
+  worldhealthorg:
     source: "WHO"
     format: "csv"
     url: "tests/fixtures/Vaccine coverage at subnational level - Data.csv"

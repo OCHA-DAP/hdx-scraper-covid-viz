@@ -7,8 +7,9 @@ from scrapers.utilities.region_aggregation import RegionAggregation
 from scrapers.utilities.update_tabs import (
     update_national,
     update_regional,
+    update_sources,
     update_subnational,
-    update_world, update_sources,
+    update_world,
 )
 
 from .covax_deliveries import CovaxDeliveries
@@ -122,20 +123,17 @@ def get_indicators(
         RegionLookups.iso3_to_region_and_hrp,
         downloader,
     )
-    national_names = (
-        configurable_scrapers["national"]
-        + [
-            "food_prices",
-            "vaccination_campaigns",
-            "fts",
-            "unhcr",
-            "inform",
-            "ipc",
-            "covax_deliveries",
-            "education_closures",
-            "education_enrolment",
-        ]
-    )
+    national_names = configurable_scrapers["national"] + [
+        "food_prices",
+        "vaccination_campaigns",
+        "fts",
+        "unhcr",
+        "inform",
+        "ipc",
+        "covax_deliveries",
+        "education_closures",
+        "education_enrolment",
+    ]
     national_names.insert(1, "who_covid")
 
     whowhatwhere = WhoWhatWhere(
@@ -144,9 +142,10 @@ def get_indicators(
     iomdtm = IOMDTM(configuration["iom_dtm"], today, adminone, downloader)
     global_names = ["who_covid", "fts"] + configurable_scrapers["global"]
 
-    subnational_names = (
-        configurable_scrapers["subnational"] + ["whowhatwhere", "iomdtm"]
-    )
+    subnational_names = configurable_scrapers["subnational"] + [
+        "whowhatwhere",
+        "iomdtm",
+    ]
     subnational_names.insert(1, "ipc")
 
     runner.add_customs(
@@ -165,14 +164,20 @@ def get_indicators(
             iomdtm,
         )
     )
-    region = RegionAggregation(
+    regional_scrapers = RegionAggregation.get_regional_scrapers(
         configuration["regional"],
         hrp_countries,
         RegionLookups.iso3_to_region_and_hrp,
         runner,
     )
-    runner.add_custom(region)
-    runner.run()
+    runner.add_customs(regional_scrapers)
+    runner.run(
+        prioritise_scrapers=(
+            "population_national",
+            "population_subnational",
+            "population_regional",
+        )
+    )
 
     if "world" in tabs:
         update_world(runner, global_names, outputs, {"who_covid": {"global": "gho"}})
@@ -180,7 +185,12 @@ def get_indicators(
         update_regional(runner, RegionLookups.regions + ["global"], outputs)
     if "national" in tabs:
         update_national(
-            runner, national_names, region, hrp_countries, gho_countries, outputs
+            runner,
+            national_names,
+            RegionLookups.iso3_to_region_and_hrp,
+            hrp_countries,
+            gho_countries,
+            outputs,
         )
     if "subnational" in tabs:
         update_subnational(runner, subnational_names, adminone, outputs)

@@ -39,12 +39,12 @@ def update_regional(runner, regions, outputs):
     update_tab(outputs, "regional", rows)
 
 
-def update_national(runner, names, region, hrp_countries, gho_countries, outputs):
+def update_national(runner, names, iso3_to_region_and_hrp, hrp_countries, gho_countries, outputs):
     name_fn = lambda adm: Country.get_country_name_from_iso3(adm)
     ishrp_fn = lambda adm: "Y" if adm in hrp_countries else "N"
 
     def region_fn(adm):
-        regions = sorted(list(region.iso3_to_region_and_hrp[adm]))
+        regions = sorted(list(iso3_to_region_and_hrp[adm]))
         regions.remove("GHO")
         return "|".join(regions)
 

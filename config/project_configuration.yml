@@ -192,7 +192,7 @@ scraper_national:
     output_hxltags:
       - "#severity+travel"
       - "#severity+date+travel"
-  allocations_national:
+  allocations:
     source:
       "#value+cbpf+funding+total+usd": "CBPF"
       "#value+cbpf+funding+gmempty+total+usd": "CBPF"
@@ -953,7 +953,7 @@ regional:
     - "WorldBankGAVIFinancingTotal"
 
 scraper_global:
-  allocations_global:
+  allocations:
     source:
       "#value+cbpf+funding+total+usd": "CBPF"
       "#value+cbpf+funding+gmempty+total+usd": "CBPF"
@@ -1155,7 +1155,7 @@ scraper_global:
           - "CERFFundingGM4"
         output_hxltags:
           - "#value+cerf+funding+gm4+total+usd"
-  contributions_global:
+  contributions:
     source:
       "#value+cbpf+funding+total+usd": "CBPF"
       "default_source": "CERF"
@@ -1347,7 +1347,7 @@ scraper_subnational:
       - "NoHealthFacilities"
     output_hxltags:
       - "#loc+count+health"
-  who_subnational:
+  worldhealthorg:
     source: "WHO"
     format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRfjaIXE1hvEIXD66g6cuCbPrGdZkx6vLIgXO_znVbjQ-OgwfaI1kJPhxhgjw2Yg08CmtBuMLAZkTnu/pub?gid=337443769&single=true&output=csv"
