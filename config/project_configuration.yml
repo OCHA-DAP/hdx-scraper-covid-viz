@@ -1,6 +1,7 @@
 tabs:
   world: "WorldData"
   regional: "RegionalData"
+  regional_reqfund: "RegionalReqFund"
   national: "NationalData"
   subnational: "SubnationalData"
   covid_series: "CovidSeries"

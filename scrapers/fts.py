@@ -29,6 +29,13 @@ class FTS(BaseScraper):
         "#value+funding+other+total+usd",
         "#value+funding+other+pct",
     ]
+    reg_reqfund_hxltags = {
+        "Plan Name": "#value+funding+regional+plan_name",
+        "Requirements": "#value+funding+regional+required+usd",
+        "Funding": "#value+funding+regional+total+usd",
+        "PercentFunded": "#value+funding+regional+pct",
+    }
+
     headers = {
         "national": (
             (
@@ -49,9 +56,10 @@ class FTS(BaseScraper):
         ),
     }
 
-    def __init__(self, today, countryiso3s, basic_auths):
+    def __init__(self, today, outputs, countryiso3s, basic_auths):
         super().__init__()
         self.today = today
+        self.outputs = outputs
         self.countryiso3s = countryiso3s
         self.basic_auths = basic_auths
 
@@ -81,7 +89,7 @@ class FTS(BaseScraper):
     def get_requirements_and_funding_location(
         self, base_url, plan, countryid_iso3mapping, downloader
     ):
-        allreqs, allfunds = dict(), dict()
+        countryreqs, countryfunds = dict(), dict()
         plan_id = plan["id"]
         url = f"{base_url}1/fts/flow/custom-search?planid={plan_id}&groupby=location"
         data = self.download_data(url, downloader)
@@ -99,11 +107,11 @@ class FTS(BaseScraper):
                 continue
             req = reqobj.get("revisedRequirements")
             if req:
-                allreqs[countryiso] = req
+                countryreqs[countryiso] = req
                 if req != totalreq:
                     countryreq_is_totalreq = False
         if countryreq_is_totalreq:
-            allreqs = dict()
+            countryreqs = dict()
             logger.info(
                 f"{plan_id} has same country requirements as total requirements!"
             )
@@ -121,8 +129,8 @@ class FTS(BaseScraper):
                         continue
                     if countryiso not in self.countryiso3s:
                         continue
-                    allfunds[countryiso] = fundobj["totalFunding"]
-        return allreqs, allfunds
+                    countryfunds[countryiso] = fundobj["totalFunding"]
+        return countryreqs, countryfunds
 
     @staticmethod
     def map_planname(origname):
@@ -209,6 +217,10 @@ class FTS(BaseScraper):
             funding_data = self.download_data(url, downloader)
             fundingtotals = funding_data["report3"]["fundingTotals"]
             fundingobjects = fundingtotals["objects"]
+            reg_reqfund_output = [
+                list(self.reg_reqfund_hxltags.keys()),
+                list(self.reg_reqfund_hxltags.values()),
+            ]
             for plan in plans:
                 plan_id = str(plan["id"])
                 plan_name = plan["name"]
@@ -216,8 +228,10 @@ class FTS(BaseScraper):
                 funding = plan.get("funding")
                 if funding:
                     allfund = funding["totalFunding"]
+                    allpct = get_fraction_str(funding["progress"], 100)
                 else:
                     allfund = None
+                    allpct = None
                 if plan.get("customLocationCode") == "COVD":
                     continue
 
@@ -235,10 +249,6 @@ class FTS(BaseScraper):
                     if not countryiso or countryiso not in self.countryiso3s:
                         continue
                     plan_type = plan["planType"]["name"].lower()
-                    if funding:
-                        allpct = get_fraction_str(funding["progress"], 100)
-                    else:
-                        allpct = None
                     if plan_type == "humanitarian response plan":
                         if allreq:
                             hrp_requirements[countryiso] = allreq
@@ -257,26 +267,34 @@ class FTS(BaseScraper):
                         add_other_requirements_and_funding(
                             countryiso, plan_name, allreq, allfund, allpct
                         )
+                        if plan_type == "regional response plan":
+                            reg_reqfund_output.append(
+                                [plan_name, allreq, allfund, allpct]
+                            )
                 else:
-                    allreqs, allfunds = self.get_requirements_and_funding_location(
+                    (
+                        countryreqs,
+                        countryfunds,
+                    ) = self.get_requirements_and_funding_location(
                         base_url, plan, countryid_iso3mapping, downloader
                     )
                     plan_name = self.map_planname(plan_name)
-                    for countryiso in allfunds:
-                        allfund = allfunds[countryiso]
-                        allreq = allreqs.get(countryiso)
-                        if allreq:
-                            allpct = get_fraction_str(allfund, allreq)
+                    reg_reqfund_output.append([plan_name, allreq, allfund, allpct])
+                    for countryiso in countryfunds:
+                        countryfund = countryfunds[countryiso]
+                        countryreq = countryreqs.get(countryiso)
+                        if countryreq:
+                            countrypct = get_fraction_str(countryfund, countryreq)
                         else:
-                            allpct = None
+                            countrypct = None
                         add_other_requirements_and_funding(
-                            countryiso, plan_name, allreq, allfund, allpct
+                            countryiso, plan_name, countryreq, countryfund, countrypct
                         )
-                    for countryiso in allreqs:
-                        if countryiso in allfunds:
+                    for countryiso in countryreqs:
+                        if countryiso in countryfunds:
                             continue
                         add_other_requirements_and_funding(
-                            countryiso, plan_name, allreqs[countryiso], None, None
+                            countryiso, plan_name, countryreqs[countryiso], None, None
                         )
 
             def create_output(vallist):
@@ -304,5 +322,9 @@ class FTS(BaseScraper):
             global_values[0]["global"] = total_allreq
             global_values[1]["global"] = total_allfund
             global_values[2]["global"] = total_allpercent
+            tabname = "regional_reqfund"
+            self.outputs["gsheets"].update_tab(tabname, reg_reqfund_output)
+            self.outputs["excel"].update_tab(tabname, reg_reqfund_output)
+            self.outputs["json"].update_tab(tabname, reg_reqfund_output)
             datasetinfo["date"] = self.today
             logger.info("Processed FTS")

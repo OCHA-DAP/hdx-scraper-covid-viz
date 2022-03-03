@@ -139,7 +139,7 @@ def get_indicators(
     ipc = IPC(today, gho_countries, adminone, downloader)
     ipc_results = runner.run_custom_scraper(ipc, scrapers_to_run)
     if "national" in tabs:
-        fts = FTS(today, gho_countries, basic_auths)
+        fts = FTS(today, outputs, gho_countries, basic_auths)
         fts_results = runner.run_custom_scraper(fts, scrapers_to_run)
         food_prices = FoodPrices(today, gho_countries, retriever, basic_auths)
         food_results = runner.run_custom_scraper(food_prices, scrapers_to_run)
