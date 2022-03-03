@@ -158,7 +158,8 @@ class IPC(BaseScraper):
         national_outputs.append(national_period)
         national_outputs.append(national_start)
         national_outputs.append(national_end)
-        self.values["national"] = tuple(national_outputs)
-        self.values["subnational"] = tuple(
-            subnational_populations[phase] for phase in self.phases
-        )
+        for i, values in enumerate(self.get_values("national")):
+            values.update(national_outputs[i])
+        subnational_outputs = tuple(subnational_populations[phase] for phase in self.phases)
+        for i, values in enumerate(self.get_values("subnational")):
+            values.update(subnational_outputs[i])

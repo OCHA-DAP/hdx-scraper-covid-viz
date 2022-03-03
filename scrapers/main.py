@@ -61,8 +61,6 @@ def get_indicators(
     RegionLookups.load(
         configuration["regional"], today, downloader, gho_countries, hrp_countries
     )
-    if scrapers_to_run is not None:
-        scrapers_to_run = ["population"] + scrapers_to_run + ["region_aggregation"]
     runner = Runner(
         gho_countries,
         adminone,
@@ -170,7 +168,7 @@ def get_indicators(
         RegionLookups.iso3_to_region_and_hrp,
         runner,
     )
-    runner.add_customs(regional_scrapers)
+    runner.add_customs(regional_scrapers, add_to_run=True)
     runner.run(
         prioritise_scrapers=(
             "population_national",

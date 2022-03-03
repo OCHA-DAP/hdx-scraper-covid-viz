@@ -4,6 +4,7 @@ import sys
 from hdx.scraper.base_scraper import BaseScraper
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.text import get_fraction_str, get_numeric_if_possible, number_format
+from slugify import slugify
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +27,7 @@ class RegionAggregation(BaseScraper):
         for index, national_header in enumerate(national_headers[0]):
             cls.national_values[national_header] = national_values[index]
         for header, process_info in process_cols.items():
-            name = f"{header.lower()}_regional"
+            name = f"{slugify(header.lower(), separator='_')}_regional"
             input_headers = process_info.get("headers")
             if input_headers:
                 exists = True

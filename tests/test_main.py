@@ -54,6 +54,7 @@ class TestCovid:
                     outputs,
                     tabs,
                     scrapers_to_run=[
+                        "population_national",
                         "ifi",
                         "worldhealthorg_national",
                         "worldhealthorg2_national",
@@ -62,7 +63,7 @@ class TestCovid:
                         "sadd",
                         "covidtests",
                         "cadre_harmonise",
-                        "access",
+                        "access_national",
                         "food_prices",
                     ],
                     use_live=False,
@@ -97,6 +98,7 @@ class TestCovid:
                     outputs,
                     tabs,
                     scrapers_to_run=[
+                        "population_national",
                         "ifi",
                         "worldhealthorg_national",
                         "worldhealthorg2_national",
@@ -105,7 +107,7 @@ class TestCovid:
                         "sadd",
                         "ctfallbacks",
                         "cadre_harmonise",
-                        "access",
+                        "access_national",
                         "food_prices",
                     ],
                     use_live=False,

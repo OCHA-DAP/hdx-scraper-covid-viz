@@ -293,7 +293,8 @@ class WHOCovid(BaseScraper):
                 dict(zip(df_national["ISO_3_CODE"], df_national[header].map(fn)))
             )
         self.datasetinfo["date"] = source_date
-        self.values["national"] = tuple(national_columns)
+        for i, values in enumerate(self.get_values("national")):
+            values.update(national_columns[i])
         global_values = self.get_values("global")
         global_values[0]["global"] = int(df_world["Cumulative_cases"])
         global_values[1]["global"] = int(df_world["Cumulative_deaths"])
