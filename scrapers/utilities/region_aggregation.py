@@ -186,7 +186,7 @@ class RegionAggregation(BaseScraper):
                     if key in found_region_countries:
                         continue
                     value = input_values[countryiso]
-                    if value:
+                    if value is not None:
                         found_region_countries.add(key)
                         dict_of_lists_add(output_values, region, value)
         self.process(output_values)
