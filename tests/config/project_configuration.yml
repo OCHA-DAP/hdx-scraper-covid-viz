@@ -442,10 +442,10 @@ scraper_national:
       - "deaths_male_pct"
       - "deaths_female_pct"
     input_transforms:
-      "Cases (% male)": "number_format(get_numeric_if_possible(cases_male_pct))"
-      "Cases (% female)": "number_format(get_numeric_if_possible(cases_female_pct))"
-      "Deaths (% male)": "number_format(get_numeric_if_possible(deaths_male_pct))"
-      "Deaths (% female)": "number_format(get_numeric_if_possible(deaths_female_pct))"
+      "Cases (% male)": "number_format(get_numeric_if_possible(cases_male_pct), trailing_zeros=False)"
+      "Cases (% female)": "number_format(get_numeric_if_possible(cases_female_pct), trailing_zeros=False)"
+      "Deaths (% male)": "number_format(get_numeric_if_possible(deaths_male_pct), trailing_zeros=False)"
+      "Deaths (% female)": "number_format(get_numeric_if_possible(deaths_female_pct), trailing_zeros=False)"
     output_cols:
       - "Cases (% male)"
       - "Cases (% female)"
