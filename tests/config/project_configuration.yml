@@ -430,27 +430,22 @@ scraper_national:
     date: "2020-08-07"
     url: "tests/fixtures/covid-19-sex-disaggregated-data.csv"
     headers: 1
-    external_filter:
-      url: "https://github.com/OCHA-DAP/hdx-scraper-covid-viz/raw/main/tests/fixtures/sadd-countries-to-include.csv"
-      hxltags:
-        - "#country+code+v_iso2"
+#    external_filter:
+#      url: "https://github.com/OCHA-DAP/hdx-scraper-covid-viz/raw/main/tests/fixtures/sadd-countries-to-include.csv"
+#      hxltags:
+#        - "#country+name"
     adm_cols:
-      - "Country code"
+      - "country"
     input_cols:
-      - "Cases (% male)"
-      - "Cases (% female)"
-      - "Deaths (% male)"
-      - "Deaths (% female)"
+      - "cases_male_pct"
+      - "cases_female_pct"
+      - "deaths_male_pct"
+      - "deaths_female_pct"
     input_transforms:
-      "Cases (% male)": "get_numeric_if_possible(Cases (% male))"
-      "Cases (% female)": "get_numeric_if_possible(Cases (% female))"
-      "Deaths (% male)": "get_numeric_if_possible(Deaths (% male))"
-      "Deaths (% female)": "get_numeric_if_possible(Deaths (% female))"
-    process_cols:
-      - "number_format(Cases (% male))"
-      - "number_format(Cases (% female))"
-      - "number_format(Deaths (% male))"
-      - "number_format(Deaths (% female))"
+      "Cases (% male)": "number_format(get_numeric_if_possible(cases_male_pct))"
+      "Cases (% female)": "number_format(get_numeric_if_possible(cases_female_pct))"
+      "Deaths (% male)": "number_format(get_numeric_if_possible(deaths_male_pct))"
+      "Deaths (% female)": "number_format(get_numeric_if_possible(deaths_female_pct))"
     output_cols:
       - "Cases (% male)"
       - "Cases (% female)"
