@@ -29,17 +29,47 @@ def update_tab(outputs, name, data):
         output.update_tab(name, data)
 
 
-def update_world(runner, names, outputs, overrides):
-    rows = runner.get_rows("global", ("global",), names=names, overrides=overrides)
-    update_tab(outputs, "world", rows)
+def get_global_rows(runner, names, overrides):
+    return runner.get_rows("global", ("global",), names=names, overrides=overrides)
 
 
-def update_regional(runner, regions, outputs):
-    rows = runner.get_rows("regional", regions, regional_headers, (lambda adm: adm,))
-    update_tab(outputs, "regional", rows)
+def get_regional_rows(runner, regions):
+    return runner.get_rows("regional", regions, regional_headers, (lambda adm: adm,))
 
 
-def update_national(runner, names, iso3_to_region_and_hrp, hrp_countries, gho_countries, outputs):
+def update_world(outputs, global_rows, regional_rows=tuple(), gho_to_world=tuple()):
+    adm_header = regional_rows[1].index("#region+name")
+    for row in regional_rows[2:]:
+        if row[adm_header] == "GHO":
+            for i, header in enumerate(regional_rows[0]):
+                if header in gho_to_world:
+                    global_rows[0].append(header)
+                    global_rows[1].append(regional_rows[1][i])
+                    global_rows[2].append(row[i])
+    update_tab(outputs, "world", global_rows)
+
+
+def update_regional(
+    outputs, regional_rows, global_rows=tuple(), additional_global_headers=tuple()
+):
+    global_values = dict()
+    for i, header in enumerate(global_rows[0]):
+        if header in additional_global_headers:
+            global_values[header] = global_rows[2][i]
+    adm_header = regional_rows[1].index("#region+name")
+    for row in regional_rows[2:]:
+        if row[adm_header] == "global":
+            for i, header in enumerate(regional_rows[0]):
+                value = global_values.get(header)
+                if value is None:
+                    continue
+                row[i] = value
+    update_tab(outputs, "regional", regional_rows)
+
+
+def update_national(
+    runner, names, iso3_to_region_and_hrp, hrp_countries, gho_countries, outputs
+):
     name_fn = lambda adm: Country.get_country_name_from_iso3(adm)
     ishrp_fn = lambda adm: "Y" if adm in hrp_countries else "N"
 
@@ -49,7 +79,9 @@ def update_national(runner, names, iso3_to_region_and_hrp, hrp_countries, gho_co
         return "|".join(regions)
 
     fns = (lambda adm: adm, name_fn, ishrp_fn, region_fn)
-    rows = runner.get_rows("national", gho_countries, national_headers, fns, names=names)
+    rows = runner.get_rows(
+        "national", gho_countries, national_headers, fns, names=names
+    )
     update_tab(outputs, "national", rows)
 
 
@@ -64,7 +96,9 @@ def update_subnational(runner, names, adminone, outputs):
         lambda adm: adm,
         lambda adm: adminone.pcode_to_name[adm],
     )
-    rows = runner.get_rows("subnational", adminone.pcodes, subnational_headers, fns, names=names)
+    rows = runner.get_rows(
+        "subnational", adminone.pcodes, subnational_headers, fns, names=names
+    )
     update_tab(outputs, "subnational", rows)
 
 
