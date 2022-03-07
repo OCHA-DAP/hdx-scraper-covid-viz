@@ -316,9 +316,9 @@ class FTS(BaseScraper):
             total_allfund = data["totals"]["totalFunding"]
             total_allpercent = get_fraction_str(data["totals"]["progress"], 100)
             global_values = self.get_values("global")
-            global_values[0]["global"] = total_allreq
-            global_values[1]["global"] = total_allfund
-            global_values[2]["global"] = total_allpercent
+            global_values[0]["value"] = total_allreq
+            global_values[1]["value"] = total_allfund
+            global_values[2]["value"] = total_allpercent
             tabname = "regional_reqfund"
             for output in self.outputs.values():
                 output.update_tab(tabname, reg_reqfund_output)

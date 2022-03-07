@@ -6,6 +6,7 @@ from hdx.api.configuration import Configuration
 from hdx.api.locations import Locations
 from hdx.scraper.outputs.base import BaseOutput
 from hdx.scraper.outputs.json import JsonFile
+from hdx.scraper.utilities.fallbacks import Fallbacks
 from hdx.utilities.dateparse import parse_date
 from hdx.utilities.downloader import Download
 from hdx.utilities.path import temp_dir
@@ -88,9 +89,22 @@ class TestCovid:
                 )
                 tabs = configuration["tabs"]
                 noout = BaseOutput(tabs)
-                jsonout = JsonFile(configuration["json"], tabs)
+                json_configuration = configuration["json"]
+                jsonout = JsonFile(json_configuration, tabs)
                 outputs = {"gsheets": noout, "excel": noout, "json": jsonout}
                 today = parse_date("2021-05-03")
+                fallbacks_path = join(folder, json_configuration["filepath"])
+                levels_mapping = {
+                    "global": "world_data",
+                    "regional": "regional_data",
+                    "national": "national_data",
+                    "subnational": "subnational_data",
+                }
+                Fallbacks.add(
+                    fallbacks_path,
+                    levels_mapping=levels_mapping,
+                    sources_key="sources_data",
+                )
                 countries_to_save = get_indicators(
                     configuration,
                     today,

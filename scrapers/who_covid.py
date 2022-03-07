@@ -296,8 +296,8 @@ class WHOCovid(BaseScraper):
         for i, values in enumerate(self.get_values("national")):
             values.update(national_columns[i])
         global_values = self.get_values("global")
-        global_values[0]["global"] = int(df_world["Cumulative_cases"])
-        global_values[1]["global"] = int(df_world["Cumulative_deaths"])
+        global_values[0]["value"] = int(df_world["Cumulative_cases"])
+        global_values[1]["value"] = int(df_world["Cumulative_deaths"])
         gho_values = self.get_values("gho")
-        gho_values[0]["global"] = int(df_gho["Cumulative_cases"])
-        gho_values[1]["global"] = int(df_gho["Cumulative_deaths"])
+        gho_values[0]["value"] = int(df_gho["Cumulative_cases"])
+        gho_values[1]["value"] = int(df_gho["Cumulative_deaths"])

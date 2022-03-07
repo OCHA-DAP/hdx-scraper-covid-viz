@@ -30,7 +30,7 @@ def update_tab(outputs, name, data):
 
 
 def get_global_rows(runner, names, overrides):
-    return runner.get_rows("global", ("global",), names=names, overrides=overrides)
+    return runner.get_rows("global", ("value",), names=names, overrides=overrides)
 
 
 def get_regional_rows(runner, regions):
