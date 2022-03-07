@@ -5,6 +5,8 @@ from hdx.location.country import Country
 from hdx.scraper.runner import Runner
 from scrapers.utilities.region_aggregation import RegionAggregation
 from scrapers.utilities.update_tabs import (
+    get_global_rows,
+    get_regional_rows,
     update_national,
     update_regional,
     update_sources,
@@ -177,10 +179,28 @@ def get_indicators(
         )
     )
 
+    global_rows = get_global_rows(
+        runner, global_names, {"who_covid": {"gho": "global"}}
+    )
+    regional_rows = get_regional_rows(runner, RegionLookups.regions + ["global"])
     if "world" in tabs:
-        update_world(runner, global_names, outputs, {"who_covid": {"global": "gho"}})
+        update_world(
+            outputs, global_rows, regional_rows, configuration["regional"]["global"]
+        )
     if "regional" in tabs:
-        update_regional(runner, RegionLookups.regions + ["global"], outputs)
+        additional_global_headers = (
+            "Cumulative_cases",
+            "Cumulative_deaths",
+            "RequiredHRPFunding",
+            "HRPFunding",
+            "HRPPercentFunded",
+        )
+        update_regional(
+            outputs,
+            regional_rows,
+            global_rows,
+            additional_global_headers,
+        )
     if "national" in tabs:
         update_national(
             runner,

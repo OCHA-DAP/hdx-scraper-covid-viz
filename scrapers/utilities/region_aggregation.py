@@ -21,7 +21,9 @@ class RegionAggregation(BaseScraper):
         cls.iso3_to_region_and_hrp = iso3_to_region_and_hrp
         cls.runner = runner
         process_cols = region_config["process_cols"]
-        national_results = runner.get_results(levels="national", has_run=False)["national"]
+        national_results = runner.get_results(levels="national", has_run=False)[
+            "national"
+        ]
         national_headers = national_results["headers"]
         national_values = national_results["values"]
         for index, national_header in enumerate(national_headers[0]):
@@ -186,7 +188,7 @@ class RegionAggregation(BaseScraper):
                     if key in found_region_countries:
                         continue
                     value = input_values[countryiso]
-                    if value:
+                    if value is not None:
                         found_region_countries.add(key)
                         dict_of_lists_add(output_values, region, value)
         self.process(output_values)
