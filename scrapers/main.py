@@ -73,10 +73,14 @@ def get_indicators(
         scrapers_to_run=scrapers_to_run,
     )
     configurable_scrapers = dict()
-    for level in "national", "subnational", "global":
-        suffix = f"_{level}"
-        configurable_scrapers[level] = runner.add_configurables(
-            configuration[f"scraper{suffix}"], level, suffix=suffix
+    for level_name in "national", "subnational", "global":
+        if level_name == "global":
+            level = "single"
+        else:
+            level = level_name
+        suffix = f"_{level_name}"
+        configurable_scrapers[level_name] = runner.add_configurables(
+            configuration[f"scraper{suffix}"], level, level_name, suffix=suffix
         )
     runner.add_instance_variables(
         "idps_national", overrideinfo=configuration["unhcr_myanmar_idps"]
