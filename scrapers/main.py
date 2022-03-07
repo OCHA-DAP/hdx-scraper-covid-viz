@@ -93,7 +93,7 @@ def get_indicators(
     )
     ipc = IPC(configuration["ipc"], today, gho_countries, adminone, downloader)
 
-    fts = FTS(configuration["fts"], today, gho_countries, basic_auths)
+    fts = FTS(configuration["fts"], today, outputs, gho_countries, basic_auths)
     food_prices = FoodPrices(
         configuration["food_prices"], today, gho_countries, retriever, basic_auths
     )
@@ -183,9 +183,14 @@ def get_indicators(
         runner, global_names, {"who_covid": {"gho": "global"}}
     )
     regional_rows = get_regional_rows(runner, RegionLookups.regions + ["global"])
-    if "world" in tabs:
-        update_world(
-            outputs, global_rows, regional_rows, configuration["regional"]["global"]
+    if "national" in tabs:
+        update_national(
+            runner,
+            national_names,
+            RegionLookups.iso3_to_region_and_hrp,
+            hrp_countries,
+            gho_countries,
+            outputs,
         )
     if "regional" in tabs:
         additional_global_headers = (
@@ -201,14 +206,9 @@ def get_indicators(
             global_rows,
             additional_global_headers,
         )
-    if "national" in tabs:
-        update_national(
-            runner,
-            national_names,
-            RegionLookups.iso3_to_region_and_hrp,
-            hrp_countries,
-            gho_countries,
-            outputs,
+    if "world" in tabs:
+        update_world(
+            outputs, global_rows, regional_rows, configuration["regional"]["global"]
         )
     if "subnational" in tabs:
         update_subnational(runner, subnational_names, adminone, outputs)
