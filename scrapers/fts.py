@@ -15,7 +15,7 @@ class FTSException(Exception):
 
 
 class FTS(BaseScraper):
-    def __init__(self, datasetinfo, today, countryiso3s, basic_auths):
+    def __init__(self, datasetinfo, today, outputs, countryiso3s, basic_auths):
         base_hxltags = [
             "#value+funding+hrp+required+usd",
             "#value+funding+hrp+total+usd",
@@ -28,6 +28,12 @@ class FTS(BaseScraper):
             "#value+funding+other+total+usd",
             "#value+funding+other+pct",
         ]
+        reg_reqfund_hxltags = {
+            "Plan Name": "#value+funding+regional+plan_name",
+            "Requirements": "#value+funding+regional+required+usd",
+            "Funding": "#value+funding+regional+total+usd",
+            "PercentFunded": "#value+funding+regional+pct",
+        }
 
         super().__init__(
             "fts",
@@ -53,6 +59,7 @@ class FTS(BaseScraper):
             },
         )
         self.today = today
+        self.outputs = outputs
         self.countryiso3s = countryiso3s
         self.basic_auths = basic_auths
 
@@ -210,6 +217,10 @@ class FTS(BaseScraper):
             funding_data = self.download_data(url, downloader)
             fundingtotals = funding_data["report3"]["fundingTotals"]
             fundingobjects = fundingtotals["objects"]
+            reg_reqfund_output = [
+                list(self.reg_reqfund_hxltags.keys()),
+                list(self.reg_reqfund_hxltags.values()),
+            ]
             for plan in plans:
                 plan_id = str(plan["id"])
                 plan_name = plan["name"]
@@ -217,8 +228,10 @@ class FTS(BaseScraper):
                 funding = plan.get("funding")
                 if funding:
                     allfund = funding["totalFunding"]
+                    allpct = get_fraction_str(funding["progress"], 100)
                 else:
                     allfund = None
+                    allpct = None
                 if plan.get("customLocationCode") == "COVD":
                     continue
 
@@ -236,10 +249,6 @@ class FTS(BaseScraper):
                     if not countryiso or countryiso not in self.countryiso3s:
                         continue
                     plan_type = plan["planType"]["name"].lower()
-                    if funding:
-                        allpct = get_fraction_str(funding["progress"], 100)
-                    else:
-                        allpct = None
                     if plan_type == "humanitarian response plan":
                         if allreq:
                             hrp_requirements[countryiso] = allreq
@@ -258,11 +267,16 @@ class FTS(BaseScraper):
                         add_other_requirements_and_funding(
                             countryiso, plan_name, allreq, allfund, allpct
                         )
+                        if plan_type == "regional response plan":
+                            reg_reqfund_output.append(
+                                [plan_name, allreq, allfund, allpct]
+                            )
                 else:
                     allreqs, allfunds = self.get_requirements_and_funding_location(
                         base_url, plan, countryid_iso3mapping, downloader
                     )
                     plan_name = self.map_planname(plan_name)
+                    reg_reqfund_output.append([plan_name, allreq, allfund, allpct])
                     for countryiso in allfunds:
                         allfund = allfunds[countryiso]
                         allreq = allreqs.get(countryiso)
@@ -305,4 +319,7 @@ class FTS(BaseScraper):
             global_values[0]["global"] = total_allreq
             global_values[1]["global"] = total_allfund
             global_values[2]["global"] = total_allpercent
+            tabname = "regional_reqfund"
+            for output in self.outputs.values():
+                output.update_tab(tabname, reg_reqfund_output)
             self.datasetinfo["date"] = self.today
