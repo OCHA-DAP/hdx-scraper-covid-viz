@@ -1,31 +1,35 @@
 import logging
-from typing import Dict
 
 from dateutil.relativedelta import relativedelta
-from hdx.scraper.readers import read_hdx_metadata
+from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.utilities.readers import read_hdx_metadata
 from hdx.utilities.dateparse import default_date, parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.downloader import Download
-from scrapers.base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 
 
 class Inform(BaseScraper):
-    name = "inform"
-    headers = {
-        "national": (
-            (
-                "INFORM Severity Index",
-                "INFORM Severity category",
-                "Trend over 3 months",
-            ),
-            ("#severity+inform+num", "#severity+inform+type", "#severity+inform+trend"),
+    def __init__(self, datasetinfo, today, countryiso3s, other_auths):
+        super().__init__(
+            "inform",
+            datasetinfo,
+            {
+                "national": (
+                    (
+                        "INFORM Severity Index",
+                        "INFORM Severity category",
+                        "Trend over 3 months",
+                    ),
+                    (
+                        "#severity+inform+num",
+                        "#severity+inform+type",
+                        "#severity+inform+trend",
+                    ),
+                )
+            },
         )
-    }
-
-    def __init__(self, today, countryiso3s, other_auths):
-        super().__init__()
         self.today = today
         self.countryiso3s = countryiso3s
         self.other_auths = other_auths
@@ -105,9 +109,9 @@ class Inform(BaseScraper):
                     max_date = date
         return valuedicts, crisis_types, max_date
 
-    def run(self, datasetinfo: Dict) -> None:
-        read_hdx_metadata(datasetinfo)
-        base_url = datasetinfo["url"]
+    def run(self) -> None:
+        read_hdx_metadata(self.datasetinfo)
+        base_url = self.datasetinfo["url"]
         with Download(
             rate_limit={"calls": 1, "period": 0.1},
             headers={"Authorization": self.other_auths["inform"]},
@@ -159,5 +163,4 @@ class Inform(BaseScraper):
             else:
                 trend = "increasing"
             trend_valuedict[countryiso3] = trend
-        datasetinfo["date"] = max_date
-        logger.info("Processed INFORM")
+        self.datasetinfo["date"] = max_date

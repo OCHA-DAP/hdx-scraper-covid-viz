@@ -1,18 +1,18 @@
 import argparse
 import logging
-import sys
 from datetime import datetime
 from os import getenv
 from os.path import join
 
 from hdx.api.configuration import Configuration
 from hdx.facades.keyword_arguments import facade
-from hdx.scraper.exceloutput import ExcelOutput
-from hdx.scraper.googlesheets import GoogleSheets
-from hdx.scraper.jsonoutput import JsonOutput
-from hdx.scraper.nooutput import NoOutput
+from hdx.scraper.outputs.base import BaseOutput
+from hdx.scraper.outputs.excelfile import ExcelFile
+from hdx.scraper.outputs.googlesheets import GoogleSheets
+from hdx.scraper.outputs.json import JsonFile
 from hdx.utilities.downloader import Download
 from hdx.utilities.easy_logging import setup_logging
+from hdx.utilities.errors_onexit import ErrorsOnExit
 from hdx.utilities.path import temp_dir
 from hdx.utilities.retriever import Retrieve
 from scrapers.main import get_indicators
@@ -87,52 +87,52 @@ def main(
 ):
     logger.info(f"##### hdx-scraper-covid-viz version {VERSION:.1f} ####")
     configuration = Configuration.read()
-    with temp_dir() as temp_folder:
-        with Download(rate_limit={"calls": 1, "period": 0.1}) as downloader:
-            retriever = Retrieve(
-                downloader, temp_folder, "saved_data", temp_folder, save, use_saved
-            )
-            if scrapers_to_run:
-                logger.info(f"Updating only scrapers: {scrapers_to_run}")
-            tabs = configuration["tabs"]
-            if updatetabs is None:
-                updatetabs = list(tabs.keys())
-                logger.info("Updating all tabs")
-            else:
-                logger.info(f"Updating only these tabs: {updatetabs}")
-            noout = NoOutput(updatetabs)
-            if excel_path:
-                excelout = ExcelOutput(excel_path, tabs, updatetabs)
-            else:
-                excelout = noout
-            if gsheet_auth:
-                gsheets = GoogleSheets(
-                    configuration, gsheet_auth, updatesheets, tabs, updatetabs
+    with ErrorsOnExit() as errors_on_exit:
+        with temp_dir() as temp_folder:
+            with Download(rate_limit={"calls": 1, "period": 0.1}) as downloader:
+                retriever = Retrieve(
+                    downloader, temp_folder, "saved_data", temp_folder, save, use_saved
                 )
-            else:
-                gsheets = noout
-            if nojson:
-                jsonout = noout
-            else:
-                jsonout = JsonOutput(configuration, updatetabs)
-            outputs = {"gsheets": gsheets, "excel": excelout, "json": jsonout}
-            today = datetime.now()
-            countries_to_save, fail = get_indicators(
-                configuration,
-                today,
-                retriever,
-                outputs,
-                updatetabs,
-                scrapers_to_run,
-                basic_auths,
-                other_auths,
-                countries_override,
-            )
-            jsonout.add_additional_json(downloader, today=today)
-            jsonout.save(countries_to_save=countries_to_save)
-            excelout.save()
-            if fail:
-                sys.exit(1)
+                if scrapers_to_run:
+                    logger.info(f"Updating only scrapers: {scrapers_to_run}")
+                tabs = configuration["tabs"]
+                if updatetabs is None:
+                    updatetabs = list(tabs.keys())
+                    logger.info("Updating all tabs")
+                else:
+                    logger.info(f"Updating only these tabs: {updatetabs}")
+                noout = BaseOutput(updatetabs)
+                if excel_path:
+                    excelout = ExcelFile(excel_path, tabs, updatetabs)
+                else:
+                    excelout = noout
+                if gsheet_auth:
+                    gsheets = GoogleSheets(
+                        configuration["googlesheets"], gsheet_auth, updatesheets, tabs, updatetabs
+                    )
+                else:
+                    gsheets = noout
+                if nojson:
+                    jsonout = noout
+                else:
+                    jsonout = JsonFile(configuration["json"], updatetabs)
+                outputs = {"gsheets": gsheets, "excel": excelout, "json": jsonout}
+                today = datetime.now()
+                countries_to_save = get_indicators(
+                    configuration,
+                    today,
+                    retriever,
+                    outputs,
+                    updatetabs,
+                    scrapers_to_run,
+                    basic_auths,
+                    other_auths,
+                    countries_override,
+                    errors_on_exit,
+                )
+                jsonout.add_additional_json(downloader, today=today)
+                jsonout.save(countries_to_save=countries_to_save)
+                excelout.save()
 
 
 if __name__ == "__main__":

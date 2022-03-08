@@ -193,7 +193,7 @@ scraper_national:
     output_hxltags:
       - "#severity+travel"
       - "#severity+date+travel"
-  allocations_national:
+  allocations:
     source:
       "#value+cbpf+funding+total+usd": "CBPF"
       "#value+cbpf+funding+gmempty+total+usd": "CBPF"
@@ -772,7 +772,6 @@ scraper_national:
     output_hxltags:
       - "#impact+full_partial+weeks"
 
-
 unhcr_myanmar_idps:
   url: "https://data.unhcr.org/population/?widget_id=264111&geo_id=693&population_group=5407,4999"
 
@@ -841,6 +840,8 @@ regional:
   iso3: "ISO3"
   region: "Regional_office"
   process_cols:
+    "Population":
+      action: "sum"
     "Cumulative_cases":
       action: "sum"
     "Cumulative_deaths":
@@ -877,11 +878,14 @@ regional:
       action: "sum"
     "RequiredHRPFunding":
       action: "sum"
+      rename: "RequiredFunding"
     "HRPFunding":
       action: "sum"
+      rename: "Funding"
     "HRPPercentFunded":
       action: "eval"
-      formula: "get_fraction_str(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
+      rename: "PercentFunded"
+      formula: "get_fraction_str(Funding, RequiredFunding) if Funding is not None and RequiredFunding is not None else ''"
     "% of visas pending or denied":
       action: "mean"
     "% of travel authorizations or movements denied":
@@ -922,8 +926,6 @@ regional:
       action: "sum"
     "WorldBankGAVIFinancingTotal":
       action: "sum"
-
-  multi_cols:
     "FoodInsecurityP3+":
       action: "sum"
       hxltag: "#affected+food+ipc+p3plus+num"
@@ -955,7 +957,7 @@ regional:
     - "WorldBankGAVIFinancingTotal"
 
 scraper_global:
-  allocations_global:
+  allocations:
     source:
       "#value+cbpf+funding+total+usd": "CBPF"
       "#value+cbpf+funding+gmempty+total+usd": "CBPF"
@@ -1157,7 +1159,7 @@ scraper_global:
           - "CERFFundingGM4"
         output_hxltags:
           - "#value+cerf+funding+gm4+total+usd"
-  contributions_global:
+  contributions:
     source:
       "#value+cbpf+funding+total+usd": "CBPF"
       "default_source": "CERF"
@@ -1349,7 +1351,7 @@ scraper_subnational:
       - "NoHealthFacilities"
     output_hxltags:
       - "#loc+count+health"
-  who_subnational:
+  worldhealthorg:
     source: "WHO"
     format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRfjaIXE1hvEIXD66g6cuCbPrGdZkx6vLIgXO_znVbjQ-OgwfaI1kJPhxhgjw2Yg08CmtBuMLAZkTnu/pub?gid=337443769&single=true&output=csv"

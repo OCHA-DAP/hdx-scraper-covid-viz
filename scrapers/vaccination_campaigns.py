@@ -1,30 +1,33 @@
 import logging
 
-from hdx.scraper.readers import read_hdx
-from scrapers.base_scraper import BaseScraper
+from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.utilities.readers import read_hdx
 from scrapers.utilities import calculate_ratios
 
 logger = logging.getLogger(__name__)
 
 
 class VaccinationCampaigns(BaseScraper):
-    name = "vaccination_campaigns"
-    headers = {
-        "national": (
-            ("Vaccinations Postponed", "Vaccination Ratio"),
-            ("#vaccination+postponed+num", "#vaccination+num+ratio"),
+    def __init__(self, datasetinfo, today, countryiso3s, downloader, outputs):
+        super().__init__(
+            "vaccination_campaigns",
+            datasetinfo,
+            {
+                "national": (
+                    ("Vaccinations Postponed", "Vaccination Ratio"),
+                    ("#vaccination+postponed+num", "#vaccination+num+ratio"),
+                )
+            },
         )
-    }
-
-    def __init__(self, today, countryiso3s, downloader, outputs):
-        super().__init__()
         self.today = today
         self.countryiso3s = countryiso3s
         self.downloader = downloader
         self.outputs = outputs
 
-    def run(self, datasetinfo):
-        headers, iterator = read_hdx(self.downloader, datasetinfo, today=self.today)
+    def run(self):
+        headers, iterator = read_hdx(
+            self.downloader, self.datasetinfo, today=self.today
+        )
         hxlrow = next(iterator)
         campaigns_per_country = dict()
         affected_campaigns_per_country = self.get_values("national")[0]
@@ -64,4 +67,3 @@ class VaccinationCampaigns(BaseScraper):
                 affected_campaigns_per_country[countryiso] = 0
         ratios = self.get_values("national")[1]
         calculate_ratios(ratios, campaigns_per_country, affected_campaigns_per_country2)
-        logger.info("Processed vaccination campaigns")

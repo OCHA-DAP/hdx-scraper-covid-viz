@@ -1,12 +1,20 @@
 import logging
+from os.path import join
 
-from hdx.data.dataset import Dataset
 from hdx.location.adminone import AdminOne
 from hdx.location.country import Country
-from hdx.scraper.utils import get_isodate_from_dataset_date
-from scrapers.utilities.extensions import extend_columns, extend_headers, extend_sources
-from scrapers.utilities.region import Region
-from scrapers.utilities.runner import Runner
+from hdx.scraper.runner import Runner
+from hdx.scraper.utilities.fallbacks import Fallbacks
+from scrapers.utilities.region_aggregation import RegionAggregation
+from scrapers.utilities.update_tabs import (
+    get_global_rows,
+    get_regional_rows,
+    update_national,
+    update_regional,
+    update_sources,
+    update_subnational,
+    update_world,
+)
 
 from .covax_deliveries import CovaxDeliveries
 from .education_closures import EducationClosures
@@ -16,9 +24,9 @@ from .fts import FTS
 from .inform import Inform
 from .iom_dtm import IOMDTM
 from .ipc_old import IPC
-from .monthly_report import get_monthly_report_source
 from .unhcr import UNHCR
-from .unhcr_myanmar_idps import patch_unhcr_myanmar_idps
+from .unhcr_myanmar_idps import idps_post_run
+from .utilities.region_lookups import RegionLookups
 from .vaccination_campaigns import VaccinationCampaigns
 from .who_covid import WHOCovid
 from .whowhatwhere import WhoWhatWhere
@@ -36,24 +44,10 @@ def get_indicators(
     basic_auths=dict(),
     other_auths=dict(),
     countries_override=None,
+    errors_on_exit=None,
     use_live=True,
     fallbacks_root="",
 ):
-    world = [list(), list()]
-    regional = [["regionnames"], ["#region+name"]]
-    national = [
-        ["iso3", "countryname", "ishrp", "region"],
-        ["#country+code", "#country+name", "#meta+ishrp", "#region+name"],
-    ]
-    subnational = [
-        ["iso3", "countryname", "adm1_pcode", "adm1_name"],
-        ["#country+code", "#country+name", "#adm1+code", "#adm1+name"],
-    ]
-    sources = [
-        ("Indicator", "Date", "Source", "Url"),
-        ("#indicator+name", "#date", "#meta+source", "#meta+url"),
-    ]
-
     Country.countriesdata(
         use_live=use_live,
         country_name_overrides=configuration["country_name_overrides"],
@@ -68,295 +62,192 @@ def get_indicators(
         hrp_countries = configuration["HRPs"]
     configuration["countries_fuzzy_try"] = hrp_countries
     downloader = retriever.downloader
-    region = Region(
+    adminone = AdminOne(configuration)
+    RegionLookups.load(
         configuration["regional"], today, downloader, gho_countries, hrp_countries
     )
-    adminone = AdminOne(configuration)
-    pcodes = adminone.pcodes
-    population_lookup = dict()
+    if fallbacks_root is not None:
+        fallbacks_path = join(fallbacks_root, configuration["json"]["filepath"])
+        levels_mapping = {
+            "global": "world_data",
+            "regional": "regional_data",
+            "national": "national_data",
+            "subnational": "subnational_data",
+        }
+        Fallbacks.add(
+            fallbacks_path,
+            levels_mapping=levels_mapping,
+            sources_key="sources_data",
+        )
     runner = Runner(
-        configuration,
         gho_countries,
         adminone,
         downloader,
         basic_auths,
         today,
-        population_lookup,
-        fallbacks_root,
+        errors_on_exit=errors_on_exit,
+        scrapers_to_run=scrapers_to_run,
     )
-
-    def update_tab(name, data):
-        logger.info(f"Updating tab: {name}")
-        for output in outputs.values():
-            output.update_tab(name, data)
-
-    results = runner.run_generic_scrapers("national", ["population"])
-    national_headers = extend_headers(national, results["headers"])
-    national_columns = extend_columns(
-        "national",
-        national,
-        gho_countries,
-        hrp_countries,
-        region,
-        None,
-        national_headers,
-        results["values"],
-    )
-    extend_sources(sources, results["sources"])
-    population_lookup["GHO"] = sum(population_lookup.values())
-    population_headers, population_columns = region.get_regional(
-        region, national_headers, national_columns, population_lookup=population_lookup
-    )
-    regional_headers = extend_headers(regional, population_headers)
-    extend_columns(
-        "regional",
-        regional,
-        region.regions,
-        None,
-        region,
-        None,
-        regional_headers,
-        population_columns,
-    )
-
-    results = runner.run_generic_scrapers("subnational", ["population"])
-    subnational_headers = extend_headers(subnational, results["headers"])
-    extend_columns(
-        "subnational",
-        subnational,
-        pcodes,
-        None,
-        None,
-        adminone,
-        subnational_headers,
-        results["values"],
-    )
-    who_covid = WHOCovid(
-        today, outputs, hrp_countries, gho_countries, region, population_lookup
-    )
-    who_results = runner.run_custom_scraper(who_covid, scrapers_to_run)
-
-    ipc = IPC(today, gho_countries, adminone, downloader)
-    ipc_results = runner.run_custom_scraper(ipc, scrapers_to_run)
-    if "national" in tabs:
-        fts = FTS(today, outputs, gho_countries, basic_auths)
-        fts_results = runner.run_custom_scraper(fts, scrapers_to_run)
-        food_prices = FoodPrices(today, gho_countries, retriever, basic_auths)
-        food_results = runner.run_custom_scraper(food_prices, scrapers_to_run)
-        vaccination_campaigns = VaccinationCampaigns(
-            today, gho_countries, downloader, outputs
-        )
-        campaigns_results = runner.run_custom_scraper(
-            vaccination_campaigns, scrapers_to_run
-        )
-        unhcr = UNHCR(today, gho_countries, downloader)
-        unhcr_results = runner.run_custom_scraper(unhcr, scrapers_to_run)
-        inform = Inform(today, gho_countries, other_auths)
-        inform_results = runner.run_custom_scraper(inform, scrapers_to_run)
-        covax_deliveries = CovaxDeliveries(today, gho_countries, downloader)
-        covax_results = runner.run_custom_scraper(covax_deliveries, scrapers_to_run)
-
-        education_closures = EducationClosures(today, gho_countries, region, downloader)
-        closures_results = runner.run_custom_scraper(
-            education_closures, scrapers_to_run
-        )
-        if closures_results["national"]["values"]:
-            fully_closed = education_closures.get_fully_closed(
-                closures_results["national"]["values"][0]
-            )
+    configurable_scrapers = dict()
+    for level_name in "national", "subnational", "global":
+        if level_name == "global":
+            level = "single"
         else:
-            fully_closed = tuple()
+            level = level_name
+        suffix = f"_{level_name}"
+        configurable_scrapers[level_name] = runner.add_configurables(
+            configuration[f"scraper{suffix}"], level, level_name, suffix=suffix
+        )
+    runner.add_instance_variables(
+        "idps_national", overrideinfo=configuration["unhcr_myanmar_idps"]
+    )
+    runner.add_post_run("idps_national", idps_post_run)
 
-        education_enrolment = EducationEnrolment(
-            fully_closed, gho_countries, region, downloader
-        )
-        enrolment_results = runner.run_custom_scraper(
-            education_enrolment, scrapers_to_run
-        )
-        generic_national_results = runner.run_generic_scrapers(
-            "national", scrapers_to_run
-        )
+    who_covid = WHOCovid(
+        configuration["who_covid"],
+        today,
+        outputs,
+        hrp_countries,
+        gho_countries,
+        RegionLookups.iso3_to_region,
+    )
+    ipc = IPC(configuration["ipc"], today, gho_countries, adminone, downloader)
 
-        national_headers = extend_headers(
-            national,
-            who_results["national"]["headers"],
-            generic_national_results["headers"],
-            food_results["national"]["headers"],
-            campaigns_results["national"]["headers"],
-            fts_results["national"]["headers"],
-            unhcr_results["national"]["headers"],
-            inform_results["national"]["headers"],
-            ipc_results["national"]["headers"],
-            covax_results["national"]["headers"],
-            closures_results["national"]["headers"],
-            enrolment_results["national"]["headers"],
+    fts = FTS(configuration["fts"], today, outputs, gho_countries, basic_auths)
+    food_prices = FoodPrices(
+        configuration["food_prices"], today, gho_countries, retriever, basic_auths
+    )
+    vaccination_campaigns = VaccinationCampaigns(
+        configuration["vaccination_campaigns"],
+        today,
+        gho_countries,
+        downloader,
+        outputs,
+    )
+    unhcr = UNHCR(configuration["unhcr"], today, gho_countries, downloader)
+    inform = Inform(configuration["inform"], today, gho_countries, other_auths)
+    covax_deliveries = CovaxDeliveries(
+        configuration["covax_deliveries"], today, gho_countries, downloader
+    )
+    education_closures = EducationClosures(
+        configuration["education_closures"],
+        today,
+        gho_countries,
+        RegionLookups.iso3_to_region_and_hrp,
+        downloader,
+    )
+    education_enrolment = EducationEnrolment(
+        configuration["education_enrolment"],
+        education_closures,
+        gho_countries,
+        RegionLookups.iso3_to_region_and_hrp,
+        downloader,
+    )
+    national_names = configurable_scrapers["national"] + [
+        "food_prices",
+        "vaccination_campaigns",
+        "fts",
+        "unhcr",
+        "inform",
+        "ipc",
+        "covax_deliveries",
+        "education_closures",
+        "education_enrolment",
+    ]
+    national_names.insert(1, "who_covid")
+
+    whowhatwhere = WhoWhatWhere(
+        configuration["whowhatwhere"], today, adminone, downloader
+    )
+    iomdtm = IOMDTM(configuration["iom_dtm"], today, adminone, downloader)
+    global_names = ["who_covid", "fts"] + configurable_scrapers["global"]
+
+    subnational_names = configurable_scrapers["subnational"] + [
+        "whowhatwhere",
+        "iom_dtm",
+    ]
+    subnational_names.insert(1, "ipc")
+
+    runner.add_customs(
+        (
+            who_covid,
+            ipc,
+            fts,
+            food_prices,
+            vaccination_campaigns,
+            unhcr,
+            inform,
+            covax_deliveries,
+            education_closures,
+            education_enrolment,
+            whowhatwhere,
+            iomdtm,
         )
-        national_columns = extend_columns(
-            "national",
-            national,
-            gho_countries,
+    )
+    regional_scrapers = RegionAggregation.get_regional_scrapers(
+        configuration["regional"],
+        hrp_countries,
+        RegionLookups.iso3_to_region_and_hrp,
+        runner,
+    )
+    regional_names = runner.add_customs(regional_scrapers, add_to_run=True)
+    runner.run(
+        prioritise_scrapers=(
+            "population_national",
+            "population_subnational",
+            "population_regional",
+        )
+    )
+    regional_names.extend(["education_closures", "education_enrolment"])
+
+    regional_rows = get_regional_rows(
+        runner, regional_names, RegionLookups.regions + ["global"]
+    )
+    if "national" in tabs:
+        update_national(
+            runner,
+            national_names,
+            RegionLookups.iso3_to_region_and_hrp,
             hrp_countries,
-            region,
-            None,
-            national_headers,
-            who_results["national"]["values"],
-            generic_national_results["values"],
-            food_results["national"]["values"],
-            campaigns_results["national"]["values"],
-            fts_results["national"]["values"],
-            unhcr_results["national"]["values"],
-            inform_results["national"]["values"],
-            ipc_results["national"]["values"],
-            covax_results["national"]["values"],
-            closures_results["national"]["values"],
-            enrolment_results["national"]["values"],
+            gho_countries,
+            outputs,
         )
-        extend_sources(
-            sources,
-            who_results["national"]["sources"],
-            generic_national_results["sources"],
-            food_results["national"]["sources"],
-            campaigns_results["national"]["sources"],
-            fts_results["national"]["sources"],
-            unhcr_results["national"]["sources"],
-            inform_results["national"]["sources"],
-            ipc_results["national"]["sources"],
-            covax_results["national"]["sources"],
-            closures_results["national"]["sources"],
-            enrolment_results["national"]["sources"],
+    if "regional" in tabs:
+        global_rows = get_global_rows(runner, ("who_covid", "fts"))
+        additional_global_headers = (
+            "Cumulative_cases",
+            "Cumulative_deaths",
+            "RequiredFunding",
+            "Funding",
+            "PercentFunded",
         )
-        patch_unhcr_myanmar_idps(
-            configuration, national, downloader, runner, scrapers=scrapers_to_run
+        update_regional(
+            outputs,
+            regional_rows,
+            global_rows,
+            additional_global_headers,
         )
-        update_tab("national", national)
-
-        if "regional" in tabs:
-            regional_headers, regional_columns = region.get_regional(
-                region,
-                national_headers,
-                national_columns,
-                None,
-                (who_results["global"]["headers"], who_results["global"]["values"]),
-                (fts_results["global"]["headers"], fts_results["global"]["values"]),
-            )
-            regional_headers = extend_headers(
-                regional,
-                regional_headers,
-                closures_results["regional"]["headers"],
-                enrolment_results["regional"]["headers"],
-            )
-            regional_columns = extend_columns(
-                "regional",
-                regional,
-                region.regions + ["global"],
-                None,
-                region,
-                None,
-                regional_headers,
-                regional_columns,
-                closures_results["regional"]["values"],
-                enrolment_results["regional"]["values"],
-            )
-            update_tab("regional", regional)
-            extend_sources(
-                sources,
-                closures_results["regional"]["sources"],
-                enrolment_results["regional"]["sources"],
-            )
-            if "world" in tabs:
-                rgheaders, rgcolumns = region.get_world(
-                    regional_headers, regional_columns
-                )
-                results = runner.run_generic_scrapers("global", scrapers_to_run)
-                world_headers = extend_headers(
-                    world,
-                    who_results["gho"]["headers"],
-                    fts_results["global"]["headers"],
-                    results["headers"],
-                    rgheaders,
-                )
-                extend_columns(
-                    "global",
-                    world,
-                    None,
-                    None,
-                    None,
-                    None,
-                    world_headers,
-                    who_results["gho"]["values"],
-                    fts_results["global"]["values"],
-                    results["values"],
-                    rgcolumns,
-                )
-                extend_sources(
-                    sources, fts_results["global"]["sources"], results["sources"]
-                )
-                update_tab("world", world)
-
+    if "world" in tabs:
+        global_rows = get_global_rows(
+            runner, global_names, {"who_covid": {"gho": "global"}}
+        )
+        update_world(
+            outputs, global_rows, regional_rows, configuration["regional"]["global"]
+        )
     if "subnational" in tabs:
-        whowhatwhere = WhoWhatWhere(today, adminone, downloader)
-        whowhatwhere_results = runner.run_custom_scraper(whowhatwhere, scrapers_to_run)
-        iomdtm = IOMDTM(today, adminone, downloader)
-        iomdtm_results = runner.run_custom_scraper(iomdtm, scrapers_to_run)
-        results = runner.run_generic_scrapers("subnational", scrapers_to_run)
-        subnational_headers = extend_headers(
-            subnational,
-            ipc_results["subnational"]["headers"],
-            results["headers"],
-            whowhatwhere_results["subnational"]["headers"],
-            iomdtm_results["subnational"]["headers"],
-        )
-        extend_columns(
-            "subnational",
-            subnational,
-            pcodes,
-            None,
-            None,
-            adminone,
-            subnational_headers,
-            ipc_results["subnational"]["values"],
-            results["values"],
-            whowhatwhere_results["subnational"]["values"],
-            iomdtm_results["subnational"]["values"],
-        )
-        extend_sources(
-            sources,
-            results["sources"],
-            whowhatwhere_results["subnational"]["sources"],
-            iomdtm_results["subnational"]["sources"],
-        )
-        update_tab("subnational", subnational)
-    extend_sources(sources, ipc_results["subnational"]["sources"])
+        update_subnational(runner, subnational_names, adminone, outputs)
 
     adminone.output_matches()
     adminone.output_ignored()
     adminone.output_errors()
 
-    for sourceinfo in configuration["additional_sources"]:
-        date = sourceinfo.get("date")
-        if date is None:
-            if sourceinfo.get("force_date_today", False):
-                date = today.strftime("%Y-%m-%d")
-        source = sourceinfo.get("source")
-        source_url = sourceinfo.get("source_url")
-        dataset_name = sourceinfo.get("dataset")
-        if dataset_name:
-            dataset = Dataset.read_from_hdx(dataset_name)
-            if date is None:
-                date = get_isodate_from_dataset_date(dataset, today=today)
-            if source is None:
-                source = dataset["dataset_source"]
-            if source_url is None:
-                source_url = dataset.get_hdx_url()
-        sources.append((sourceinfo["indicator"], date, source, source_url))
-    sources.append(get_monthly_report_source(configuration))
-    sources = [list(elem) for elem in dict.fromkeys(sources)]
-    update_tab("sources", sources)
-
-    fallbacks_used = runner.get_fallbacks_used()
-    if fallbacks_used:
-        logger.error(f"Fallbacks were used: {', '.join(fallbacks_used)}")
-        fail = True
-    else:
-        fail = False
-    return hrp_countries, fail
+    names = national_names
+    for name in global_names:
+        if name not in names:
+            names.append(name)
+    for name in subnational_names:
+        if name not in names:
+            names.append(name)
+    if "sources" in tabs:
+        update_sources(runner, names, configuration, today, outputs)
+    return hrp_countries

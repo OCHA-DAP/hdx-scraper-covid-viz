@@ -1,26 +1,25 @@
-import inspect
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-def patch_unhcr_myanmar_idps(
-    configuration, national, downloader, fallbacks, scrapers=None
-):
-    name = inspect.currentframe().f_code.co_name
-    if scrapers and not any(scraper in name for scraper in scrapers):
-        return
+def idps_post_run(self) -> None:
     try:
-        downloader.download(configuration["unhcr_myanmar_idps"]["url"])
-        number_idps = int(downloader.get_json()["data"][0]["individuals"])
-        index = national[1].index("#affected+displaced")
-        for i, row in enumerate(national[2:]):
-            if row[0] != "MMR":
+        url = self.overrideinfo["url"]
+        self.downloader.download(self.overrideinfo["url"])
+        number_idps = int(self.downloader.get_json()["data"][0]["individuals"])
+        index = self.get_headers("national")[1].index("#affected+displaced")
+        values = self.get_values("national")[index]
+        for key, current_idps in values.items():
+            if key != "MMR":
                 continue
-            current_idps = national[i + 2][index]
             logger.info(f"Replacing {current_idps} with {number_idps} for MMR IDPs!")
-            national[i + 2][index] = number_idps
+            values[key] = number_idps
+            self.get_source_urls().add(url)
             logger.info("Processed UNHCR Myanmar IDPs")
-    except Exception:
-        logger.exception("Not using UNHCR Myanmar IDPs override!")
-        fallbacks.get_fallbacks_used().append("UNHCR Myanmar IDPs override")
+            break
+    except Exception as ex:
+        msg = "Not using UNHCR Myanmar IDPs override!"
+        logger.exception(msg)
+        if self.errors_on_exit:
+            self.errors_on_exit.add(f"{msg} Error: {ex}")

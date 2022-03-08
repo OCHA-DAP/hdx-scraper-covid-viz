@@ -1,63 +1,62 @@
 import logging
 from copy import deepcopy
-from typing import Dict
 
 import numpy
 import pandas as pd
 from hdx.location.country import Country
-from hdx.scraper.readers import read_hdx_metadata
+from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.utilities.readers import read_hdx_metadata
 from hdx.utilities.text import number_format
-from scrapers.base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 
 
 class WHOCovid(BaseScraper):
-    name = "who_covid"
-    base_headers = ["Cumulative_cases", "Cumulative_deaths"]
-    base_hxltags = ["#affected+infected", "#affected+killed"]
-    trend_hxltags = {
-        "ISO_3_CODE": "#country+code",
-        "Date_reported": "#date+reported",
-        "weekly_cum_cases": "#affected+infected+cumulative+weekly",
-        "weekly_cum_deaths": "#affected+killed+cumulative+weekly",
-        "weekly_new_cases": "#affected+infected+new+weekly",
-        "weekly_new_deaths": "#affected+killed+new+weekly",
-        "weekly_new_cases_per_ht": "#affected+infected+new+per100000+weekly",
-        "weekly_new_deaths_per_ht": "#affected+killed+new+per100000+weekly",
-        "weekly_new_cases_change": "#affected+infected+new+change+weekly",
-        "weekly_new_deaths_change": "#affected+killed+new+change+weekly",
-        "weekly_new_cases_pc_change": "#affected+infected+new+pct+weekly",
-        "weekly_new_deaths_pc_change": "#affected+killed+new+pct+weekly",
-    }
-    weekly_hxltags = deepcopy(trend_hxltags)
-    del weekly_hxltags["ISO_3_CODE"]
-    del weekly_hxltags["Date_reported"]
-    national_headers = base_headers + list(weekly_hxltags.keys())
-    national_hxltags = base_hxltags + list(weekly_hxltags.values())
-
-    headers = {
-        "national": (tuple(national_headers), tuple(national_hxltags)),
-        "global": (tuple(base_headers), tuple(base_hxltags)),
-        "gho": (tuple(base_headers), tuple(base_hxltags)),
-    }
-
     def __init__(
         self,
+        datasetinfo,
         today,
         outputs,
         hrp_countries,
         gho_countries,
-        region,
-        population_lookup,
+        iso3_to_region,
     ):
-        super().__init__()
+        base_headers = ["Cumulative_cases", "Cumulative_deaths"]
+        base_hxltags = ["#affected+infected", "#affected+killed"]
+        self.trend_hxltags = {
+            "ISO_3_CODE": "#country+code",
+            "Date_reported": "#date+reported",
+            "weekly_cum_cases": "#affected+infected+cumulative+weekly",
+            "weekly_cum_deaths": "#affected+killed+cumulative+weekly",
+            "weekly_new_cases": "#affected+infected+new+weekly",
+            "weekly_new_deaths": "#affected+killed+new+weekly",
+            "weekly_new_cases_per_ht": "#affected+infected+new+per100000+weekly",
+            "weekly_new_deaths_per_ht": "#affected+killed+new+per100000+weekly",
+            "weekly_new_cases_change": "#affected+infected+new+change+weekly",
+            "weekly_new_deaths_change": "#affected+killed+new+change+weekly",
+            "weekly_new_cases_pc_change": "#affected+infected+new+pct+weekly",
+            "weekly_new_deaths_pc_change": "#affected+killed+new+pct+weekly",
+        }
+        self.weekly_hxltags = deepcopy(self.trend_hxltags)
+        del self.weekly_hxltags["ISO_3_CODE"]
+        del self.weekly_hxltags["Date_reported"]
+        national_headers = base_headers + list(self.weekly_hxltags.keys())
+        national_hxltags = base_hxltags + list(self.weekly_hxltags.values())
+
+        super().__init__(
+            "who_covid",
+            datasetinfo,
+            {
+                "national": (tuple(national_headers), tuple(national_hxltags)),
+                "global": (tuple(base_headers), tuple(base_hxltags)),
+                "gho": (tuple(base_headers), tuple(base_hxltags)),
+            },
+        )
         self.today = today
         self.outputs = outputs
         self.hrp_countries = hrp_countries
         self.gho_countries = gho_countries
-        self.region = region
-        self.population_lookup = population_lookup
+        self.iso3_to_region = iso3_to_region
 
     def get_who_data(self, url):
         df = pd.read_csv(url, keep_default_na=False)
@@ -111,7 +110,7 @@ class WHOCovid(BaseScraper):
 
         # adding regional by date
         dict_regions = pd.DataFrame(
-            self.region.iso3_to_region.items(), columns=["ISO3", "Regional_office"]
+            self.iso3_to_region.items(), columns=["ISO3", "Regional_office"]
         )
         df = pd.merge(
             left=df,
@@ -132,12 +131,12 @@ class WHOCovid(BaseScraper):
 
         return source_date, df_world, df_gho, df_series, df
 
-    def run(self, datasetinfo: Dict) -> None:
-        read_hdx_metadata(datasetinfo, today=self.today)
+    def run(self) -> None:
+        read_hdx_metadata(self.datasetinfo, today=self.today)
 
         # get WHO data
         source_date, df_world, df_gho, df_series, df_WHO = self.get_who_data(
-            datasetinfo["url"]
+            self.datasetinfo["url"]
         )
         df_pop = pd.DataFrame.from_records(
             list(self.population_lookup.items()), columns=["Country Code", "population"]
@@ -159,7 +158,7 @@ class WHOCovid(BaseScraper):
         df_series = df_series.drop(["New_cases", "New_deaths"], axis=1)
 
         self.outputs["gsheets"].update_tab(
-            series_name, df_series, series_headers_hxltags, 1000
+            series_name, df_series, series_headers_hxltags, limit=1000
         )  # 1000 rows in gsheets!/;
         self.outputs["excel"].update_tab(series_name, df_series, series_headers_hxltags)
         self.outputs["json"].update_tab(
@@ -293,12 +292,12 @@ class WHOCovid(BaseScraper):
             national_columns.append(
                 dict(zip(df_national["ISO_3_CODE"], df_national[header].map(fn)))
             )
-        datasetinfo["date"] = source_date
-        self.values["national"] = tuple(national_columns)
+        self.datasetinfo["date"] = source_date
+        for i, values in enumerate(self.get_values("national")):
+            values.update(national_columns[i])
         global_values = self.get_values("global")
-        global_values[0]["global"] = int(df_world["Cumulative_cases"])
-        global_values[1]["global"] = int(df_world["Cumulative_deaths"])
+        global_values[0]["value"] = int(df_world["Cumulative_cases"])
+        global_values[1]["value"] = int(df_world["Cumulative_deaths"])
         gho_values = self.get_values("gho")
-        gho_values[0]["global"] = int(df_gho["Cumulative_cases"])
-        gho_values[1]["global"] = int(df_gho["Cumulative_deaths"])
-        logger.info("Processed WHO Covid")
+        gho_values[0]["value"] = int(df_gho["Cumulative_cases"])
+        gho_values[1]["value"] = int(df_gho["Cumulative_deaths"])
