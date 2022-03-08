@@ -6,7 +6,6 @@ from hdx.api.configuration import Configuration
 from hdx.api.locations import Locations
 from hdx.scraper.outputs.base import BaseOutput
 from hdx.scraper.outputs.json import JsonFile
-from hdx.scraper.utilities.fallbacks import Fallbacks
 from hdx.utilities.dateparse import parse_date
 from hdx.utilities.downloader import Download
 from hdx.utilities.path import temp_dir
