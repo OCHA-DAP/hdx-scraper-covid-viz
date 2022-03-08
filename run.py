@@ -18,7 +18,7 @@ from hdx.utilities.retriever import Retrieve
 from scrapers.main import get_indicators
 
 setup_logging()
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 VERSION = 4.0
