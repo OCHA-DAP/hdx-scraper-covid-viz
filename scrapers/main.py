@@ -200,9 +200,9 @@ def get_indicators(
         additional_global_headers = (
             "Cumulative_cases",
             "Cumulative_deaths",
-            "RequiredHRPFunding",
-            "HRPFunding",
-            "HRPPercentFunded",
+            "RequiredFunding",
+            "Funding",
+            "PercentFunded",
         )
         update_regional(
             outputs,

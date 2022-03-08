@@ -1,3 +1,4 @@
+import copy
 import logging
 import sys
 
@@ -50,6 +51,9 @@ class RegionAggregation(BaseScraper):
             else:
                 try:
                     index = national_headers[0].index(header)
+                    process_info = copy.deepcopy(process_info)
+                    process_info["headers"] = header,
+                    header = process_info.get("rename", header)
                     headers = ((header,), (national_headers[1][index],))
                     scraper = RegionAggregation(
                         name, process_info, {"regional": headers}
@@ -161,21 +165,17 @@ class RegionAggregation(BaseScraper):
             for region, valuelist in output_values.items():
                 toeval = formula
                 for regional_scraper in self.regional_scrapers:
-                    header = regional_scraper.get_headers("regional")[0]
+                    header = regional_scraper.get_headers("regional")[0][0]
                     values = regional_scraper.get_values("regional")[0]
                     value = values.get(region, "")
-                    if value == "":
-                        value = None
                     toeval = toeval.replace(header, str(value))
                 output_values[region] = eval(toeval)
 
     def run(self):
-        regional_header = self.get_headers("regional")
-        output_header = regional_header[0][0]
         output_valdicts = self.get_values("regional")
         output_values = output_valdicts[0]
         input_valdicts = list()
-        input_headers = self.datasetinfo.get("headers", [output_header])
+        input_headers = self.datasetinfo["headers"]
         for input_header in input_headers:
             input_valdicts.append(self.national_values[input_header])
         found_region_countries = set()
@@ -192,16 +192,6 @@ class RegionAggregation(BaseScraper):
                         found_region_countries.add(key)
                         dict_of_lists_add(output_values, region, value)
         self.process(output_values)
-        # for arg in args:
-        #     gheaders, gvaldicts = arg
-        #     if gheaders:
-        #         for i, header in enumerate(gheaders[1]):
-        #             try:
-        #                 j = regional_headers[1].index(header)
-        #             except ValueError:
-        #                 continue
-        #             valdicts[j].update(gvaldicts[i])
-        #
 
     def get_world(self, regional_headers, regional_columns):
         desired_headers = self.datasetinfo["global"]

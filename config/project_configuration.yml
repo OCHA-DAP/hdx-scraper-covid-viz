@@ -877,11 +877,14 @@ regional:
       action: "sum"
     "RequiredHRPFunding":
       action: "sum"
+      rename: "RequiredFunding"
     "HRPFunding":
       action: "sum"
+      rename: "Funding"
     "HRPPercentFunded":
       action: "eval"
-      formula: "get_fraction_str(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
+      rename: "PercentFunded"
+      formula: "get_fraction_str(Funding, RequiredFunding) if Funding is not None and RequiredFunding is not None else ''"
     "% of visas pending or denied":
       action: "mean"
     "% of travel authorizations or movements denied":

@@ -28,7 +28,7 @@ class FTS(BaseScraper):
             "#value+funding+other+total+usd",
             "#value+funding+other+pct",
         ]
-        reg_reqfund_hxltags = {
+        self.reg_reqfund_hxltags = {
             "Plan Name": "#value+funding+regional+plan_name",
             "Requirements": "#value+funding+regional+required+usd",
             "Funding": "#value+funding+regional+total+usd",
