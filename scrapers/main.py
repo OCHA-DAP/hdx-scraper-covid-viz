@@ -1,8 +1,10 @@
 import logging
+from os.path import join
 
 from hdx.location.adminone import AdminOne
 from hdx.location.country import Country
 from hdx.scraper.runner import Runner
+from hdx.scraper.utilities.fallbacks import Fallbacks
 from scrapers.utilities.region_aggregation import RegionAggregation
 from scrapers.utilities.update_tabs import (
     get_global_rows,
@@ -44,6 +46,7 @@ def get_indicators(
     countries_override=None,
     errors_on_exit=None,
     use_live=True,
+    fallbacks_root="",
 ):
     Country.countriesdata(
         use_live=use_live,
@@ -63,6 +66,19 @@ def get_indicators(
     RegionLookups.load(
         configuration["regional"], today, downloader, gho_countries, hrp_countries
     )
+    if fallbacks_root is not None:
+        fallbacks_path = join(fallbacks_root, configuration["json"]["filepath"])
+        levels_mapping = {
+            "global": "world_data",
+            "regional": "regional_data",
+            "national": "national_data",
+            "subnational": "subnational_data",
+        }
+        Fallbacks.add(
+            fallbacks_path,
+            levels_mapping=levels_mapping,
+            sources_key="sources_data",
+        )
     runner = Runner(
         gho_countries,
         adminone,
@@ -148,7 +164,7 @@ def get_indicators(
 
     subnational_names = configurable_scrapers["subnational"] + [
         "whowhatwhere",
-        "iomdtm",
+        "iom_dtm",
     ]
     subnational_names.insert(1, "ipc")
 

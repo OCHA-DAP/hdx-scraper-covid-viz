@@ -68,6 +68,7 @@ class TestCovid:
                         "food_prices",
                     ],
                     use_live=False,
+                    fallbacks_root=None,
                 )
                 filepaths = jsonout.save(tempdir, countries_to_save=countries_to_save)
                 assert filecmp.cmp(filepaths[0], join(folder, "test_scraper_all.json"))
@@ -93,18 +94,6 @@ class TestCovid:
                 jsonout = JsonFile(json_configuration, tabs)
                 outputs = {"gsheets": noout, "excel": noout, "json": jsonout}
                 today = parse_date("2021-05-03")
-                fallbacks_path = join(folder, json_configuration["filepath"])
-                levels_mapping = {
-                    "global": "world_data",
-                    "regional": "regional_data",
-                    "national": "national_data",
-                    "subnational": "subnational_data",
-                }
-                Fallbacks.add(
-                    fallbacks_path,
-                    levels_mapping=levels_mapping,
-                    sources_key="sources_data",
-                )
                 countries_to_save = get_indicators(
                     configuration,
                     today,
@@ -125,6 +114,7 @@ class TestCovid:
                         "food_prices",
                     ],
                     use_live=False,
+                    fallbacks_root=folder,
                 )
                 filepaths = jsonout.save(tempdir, countries_to_save=countries_to_save)
                 assert filecmp.cmp(filepaths[0], join(folder, "test_scraper_all.json"))

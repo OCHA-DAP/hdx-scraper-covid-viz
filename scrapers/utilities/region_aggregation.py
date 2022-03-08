@@ -22,9 +22,10 @@ class RegionAggregation(BaseScraper):
         cls.iso3_to_region_and_hrp = iso3_to_region_and_hrp
         cls.runner = runner
         process_cols = region_config["process_cols"]
-        national_results = runner.get_results(levels="national", has_run=False)[
-            "national"
-        ]
+        national_results = runner.get_results(levels="national", has_run=False)
+        if not national_results:
+            return cls.regional_scrapers
+        national_results = national_results["national"]
         national_headers = national_results["headers"]
         national_values = national_results["values"]
         for index, national_header in enumerate(national_headers[0]):
@@ -52,7 +53,7 @@ class RegionAggregation(BaseScraper):
                 try:
                     index = national_headers[0].index(header)
                     process_info = copy.deepcopy(process_info)
-                    process_info["headers"] = header,
+                    process_info["headers"] = (header,)
                     header = process_info.get("rename", header)
                     headers = ((header,), (national_headers[1][index],))
                     scraper = RegionAggregation(
