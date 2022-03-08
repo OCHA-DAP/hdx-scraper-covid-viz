@@ -190,7 +190,7 @@ def get_indicators(
         RegionLookups.iso3_to_region_and_hrp,
         runner,
     )
-    runner.add_customs(regional_scrapers, add_to_run=True)
+    regional_names = runner.add_customs(regional_scrapers, add_to_run=True)
     runner.run(
         prioritise_scrapers=(
             "population_national",
@@ -198,11 +198,11 @@ def get_indicators(
             "population_regional",
         )
     )
+    regional_names.extend(["education_closures", "education_enrolment"])
 
-    global_rows = get_global_rows(
-        runner, global_names, {"who_covid": {"gho": "global"}}
+    regional_rows = get_regional_rows(
+        runner, regional_names, RegionLookups.regions + ["global"]
     )
-    regional_rows = get_regional_rows(runner, RegionLookups.regions + ["global"])
     if "national" in tabs:
         update_national(
             runner,
@@ -213,6 +213,7 @@ def get_indicators(
             outputs,
         )
     if "regional" in tabs:
+        global_rows = get_global_rows(runner, ("who_covid", "fts"))
         additional_global_headers = (
             "Cumulative_cases",
             "Cumulative_deaths",
@@ -227,6 +228,9 @@ def get_indicators(
             additional_global_headers,
         )
     if "world" in tabs:
+        global_rows = get_global_rows(
+            runner, global_names, {"who_covid": {"gho": "global"}}
+        )
         update_world(
             outputs, global_rows, regional_rows, configuration["regional"]["global"]
         )

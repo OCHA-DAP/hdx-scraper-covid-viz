@@ -29,12 +29,14 @@ def update_tab(outputs, name, data):
         output.update_tab(name, data)
 
 
-def get_global_rows(runner, names, overrides):
+def get_global_rows(runner, names, overrides=dict()):
     return runner.get_rows("global", ("value",), names=names, overrides=overrides)
 
 
-def get_regional_rows(runner, regions):
-    return runner.get_rows("regional", regions, regional_headers, (lambda adm: adm,))
+def get_regional_rows(runner, names, regions):
+    return runner.get_rows(
+        "regional", regions, regional_headers, (lambda adm: adm,), names=names
+    )
 
 
 def update_world(outputs, global_rows, regional_rows=tuple(), gho_to_world=tuple()):
