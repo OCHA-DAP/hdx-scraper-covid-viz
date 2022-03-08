@@ -89,7 +89,7 @@ class FTS(BaseScraper):
     def get_requirements_and_funding_location(
         self, base_url, plan, countryid_iso3mapping, downloader
     ):
-        countryreqs, countryfunds = dict(), dict()
+        allreqs, allfunds = dict(), dict()
         plan_id = plan["id"]
         url = f"{base_url}1/fts/flow/custom-search?planid={plan_id}&groupby=location"
         data = self.download_data(url, downloader)
@@ -107,11 +107,11 @@ class FTS(BaseScraper):
                 continue
             req = reqobj.get("revisedRequirements")
             if req:
-                countryreqs[countryiso] = req
+                allreqs[countryiso] = req
                 if req != totalreq:
                     countryreq_is_totalreq = False
         if countryreq_is_totalreq:
-            countryreqs = dict()
+            allreqs = dict()
             logger.info(
                 f"{plan_id} has same country requirements as total requirements!"
             )
@@ -129,8 +129,8 @@ class FTS(BaseScraper):
                         continue
                     if countryiso not in self.countryiso3s:
                         continue
-                    countryfunds[countryiso] = fundobj["totalFunding"]
-        return countryreqs, countryfunds
+                    allfunds[countryiso] = fundobj["totalFunding"]
+        return allreqs, allfunds
 
     @staticmethod
     def map_planname(origname):
@@ -272,10 +272,7 @@ class FTS(BaseScraper):
                                 [plan_name, allreq, allfund, allpct]
                             )
                 else:
-                    (
-                        countryreqs,
-                        countryfunds,
-                    ) = self.get_requirements_and_funding_location(
+                    allreqs, allfunds = self.get_requirements_and_funding_location(
                         base_url, plan, countryid_iso3mapping, downloader
                     )
                     plan_name = self.map_planname(plan_name)
@@ -286,15 +283,15 @@ class FTS(BaseScraper):
                         if allreq:
                             allpct = get_fraction_str(allfund, allreq)
                         else:
-                            countrypct = None
+                            allpct = None
                         add_other_requirements_and_funding(
-                            countryiso, plan_name, countryreq, countryfund, countrypct
+                            countryiso, plan_name, allreq, allfund, allpct
                         )
-                    for countryiso in countryreqs:
-                        if countryiso in countryfunds:
+                    for countryiso in allreqs:
+                        if countryiso in allfunds:
                             continue
                         add_other_requirements_and_funding(
-                            countryiso, plan_name, countryreqs[countryiso], None, None
+                            countryiso, plan_name, allreqs[countryiso], None, None
                         )
 
             def create_output(vallist):
