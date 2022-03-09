@@ -213,8 +213,8 @@ scraper_national:
       "#value+cbpf+funding+gm4+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
       "default_url": "https://data.humdata.org/dataset/cerf-allocations"
     format: "csv"
-    url: "https://cbpfgms.github.io/pfbi-data/download/full_pfmb_allocations.csv"
     dataset: "cerf-allocations"
+    url: "https://cbpfgms.github.io/pfbi-data/download/full_pfmb_allocations.csv"
     headers: 1
     sort:
       reverse: True
@@ -977,8 +977,8 @@ scraper_global:
       "#value+cbpf+funding+gm4+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
       "default_url": "https://data.humdata.org/dataset/cerf-allocations"
     format: "csv"
-    url: "https://cbpfgms.github.io/pfbi-data/download/full_pfmb_allocations.csv"
     dataset: "cerf-allocations"
+    url: "https://cbpfgms.github.io/pfbi-data/download/full_pfmb_allocations.csv"
     headers: 1
     sort:
       reverse: True
@@ -1167,8 +1167,8 @@ scraper_global:
       "#value+cbpf+funding+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
       "default_url": "https://data.humdata.org/dataset/cerf-allocations"
     format: "csv"
-    url: "https://cbpfgms.github.io/pfbi-data/download/pfmb_contributions.csv"
     dataset: "cerf-allocations"
+    url: "https://cbpfgms.github.io/pfbi-data/download/pfmb_contributions.csv"
     headers: 1
     sort:
       reverse: True
@@ -1266,8 +1266,8 @@ scraper_subnational:
     source: "WorldPop"
     source_url: "https://data.humdata.org/search?organization=worldpop&q=%22population%20counts%22"
     format: "csv"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3_uBOV_uRDSxOggfBus_pkCs6Iw9lm0nAxzwG14YF_frpm13WPKiM1oNnQ9zrUA/pub?gid=1565793974&single=true&output=csv"
     dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3_uBOV_uRDSxOggfBus_pkCs6Iw9lm0nAxzwG14YF_frpm13WPKiM1oNnQ9zrUA/pub?gid=1565793974&single=true&output=csv"
     headers: 1
     adm_cols:
       - "alpha_3"
