@@ -40,8 +40,8 @@ class UNHCR(BaseScraper):
                 continue
             for population_collection in population_collections:
                 url = base_url % (population_collection, code)
-                r = self.downloader.download(url)
                 logger.info(f"Downloading {url}")
+                r = self.downloader.download(url)
                 data = r.json()["data"][0]
                 individuals = data["individuals"]
                 if individuals is None:
