@@ -94,8 +94,8 @@ scraper_national:
   population:
     source: "WorldPop"
     source_url: "https://data.humdata.org/search?organization=worldpop&q=%22population%20counts%22"
-    format: "xls"
     url: "http://api.worldbank.org/v2/en/indicator/SP.POP.TOTL?downloadformat=excel&dataformat=list"
+    format: "xls"
     sheet: "Data"
     headers: 3
     prefilter: "Value != ''"
@@ -111,10 +111,9 @@ scraper_national:
     output_hxltags:
       - "#population"
   economicindex:
-    format: "xlsx"
     dataset: "covid-19-economic-exposure-index"
+    format: "xlsx"
     sheet: "economic exposure"
-    headers: 1
     adm_cols:
       - "Country"
     input_cols:
@@ -126,8 +125,8 @@ scraper_national:
     output_hxltags:
       - "#severity+economic+num"
   gam:
-    format: "xlsx"
     dataset: "world-global-expanded-database-on-severe-wasting"
+    format: "xlsx"
     sheet: "Trend"
     headers:
       - 3
@@ -145,9 +144,8 @@ scraper_national:
     output_hxltags:
       - "#severity+malnutrition+num+national"
   inneed:
-    format: "csv"
     dataset: "interagency-response-plans"
-    headers: 1
+    format: "csv"
     use_hxl: True
     input_cols:
       - "#inneed"
@@ -156,9 +154,8 @@ scraper_national:
     output_hxltags:
       - "#affected+inneed"
   idps:
-    format: "csv"
     dataset: "idmc-internally-displaced-persons-idps"
-    headers: 1
+    format: "csv"
     use_hxl: True
     date_col: "#date+year"
     date_type: "year"
@@ -175,9 +172,8 @@ scraper_national:
     output_hxltags:
       - "#affected+displaced"
   travel:
-    format: "csv"
     dataset: "covid-19-global-travel-restrictions-and-airline-information"
-    headers: 1
+    format: "csv"
     adm_cols:
       - "iso3"
     input_cols:
@@ -212,10 +208,9 @@ scraper_national:
       "#value+cbpf+funding+gm3+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
       "#value+cbpf+funding+gm4+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
       "default_url": "https://data.humdata.org/dataset/cerf-allocations"
-    format: "csv"
     dataset: "cerf-allocations"
     url: "https://cbpfgms.github.io/pfbi-data/download/full_pfmb_allocations.csv"
-    headers: 1
+    format: "csv"
     sort:
       reverse: True
       keys:
@@ -398,9 +393,8 @@ scraper_national:
         output_hxltags:
           - "#value+cerf+funding+gm4+total+usd"
   sadd:
-    format: "csv"
     dataset: "covid-19-sex-disaggregated-data-tracker"
-    headers: 1
+    format: "csv"
 # No longer needed
 #    external_filter:
       # Editable link https://docs.google.com/spreadsheets/d/1KReA4uWurU7KXHDaSrEcR7hUTUFuDKO-nZviZyaNdPI/edit#gid=434885896
@@ -430,17 +424,14 @@ scraper_national:
       - "#affected+killed+m+pct"
       - "#affected+f+killed+pct"
   oxcgrt:
-    format: "csv"
     dataset: "oxford-covid-19-government-response-tracker"
-    headers: 1
+    format: "csv"
     use_hxl: True
     date_col: "#date"
     date_type: "date"
   covidtests:
-    format: "xlsx"
     dataset: "total-covid-19-tests-performed-by-country"
-    headers: 1
-    sheet: 1
+    format: "xlsx"
     prefilter: "new_tests is not None and new_tests > 0"
     date_col: "date"
     date_type: "date"
@@ -462,10 +453,8 @@ scraper_national:
       - "#affected+tested+avg+per1000"
       - "#affected+tested+positive+pct"
   cadre_harmonise:
-    format: "xlsx"
     dataset: "cadre-harmonise"
-    headers: 1
-    sheet: 1
+    format: "xlsx"
     prefilter: "chtype == 'current'"
     sort:
       reverse: True
@@ -531,9 +520,8 @@ scraper_national:
       "#event+year+todate+num": "https://data.humdata.org/dataset/security-incidents-on-aid-workers"
       "#event+year+previous+todate+num": "https://data.humdata.org/dataset/security-incidents-on-aid-workers"
       "default_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
-    format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=574237756&single=true&output=csv"
-    headers: 1
+    format: "csv"
     use_hxl: True
     input_transforms:
       "#access+visas+pct": "get_numeric_if_possible(#access+visas+pct)"
@@ -542,9 +530,8 @@ scraper_national:
       "#activity+cbpf+project+insecurity+pct": "get_numeric_if_possible(#activity+cbpf+project+insecurity+pct)"
       "#population+education": "get_numeric_if_possible(#population+education)"
   unicef_sam:
-    format: "csv"
     dataset: "number-of-admissions-for-treatment-of-severe-acute-malnutrition-sam"
-    headers: 1
+    format: "csv"
     use_hxl: True
     adm_cols:
       - "#country+code"
@@ -558,9 +545,8 @@ scraper_national:
     output_hxltags:
       - "#affected+children+sam"
   covax:
-    format: "csv"
     dataset: "covid-19-vaccine-doses-in-hrp-countries"
-    headers: 1
+    format: "csv"
     use_hxl: True
     adm_cols:
       - "#country+code"
@@ -590,9 +576,8 @@ scraper_national:
       - "#targeted+doses+delivered+pct"
       - "#meta+source+doses+country+name"
   ourworldindata:
-    format: "csv"
     dataset: "covid-19-vaccinations"
-    headers: 1
+    format: "csv"
     use_hxl: True
     external_filter:
       url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVzu79PPTfaA2syevOQfyRRjy63dJWitqu0fFbXIQCzoUn9K9TiMWMRvFGg1RBsnLmgYugzSEiAye2/pub?gid=992438980&single=true&output=csv"
@@ -609,10 +594,9 @@ scraper_national:
     output_hxltags:
       - "#capacity+doses+administered+total"
   worldbank:
-    format: "xlsx"
     dataset: "harmonized-covid-19-household-monitoring-surveys"
+    format: "xlsx"
     sheet: "2. Harmonized Indicators"
-    headers: 1
     adm_cols:
       - "code"
     date_col:
@@ -670,9 +654,8 @@ scraper_national:
         output_hxltags:
           - "#affected+less_wages+hh+pct"
   covax_allocations:
-    format: "csv"
     dataset: "covax-round-6-allocations"
-    sheet: 1
+    format: "csv"
     headers: 2
     adm_cols:
       - "ISO3"
@@ -685,10 +668,9 @@ scraper_national:
     output_hxltags:
       - "#capacity+doses+forecast+covax"
   food_basket:
-    format: "csv"
     dataset: "cost-of-the-food-basket"
     url: "https://wfp.sharepoint.com/:x:/s/EconomicMarketAnalysis/EVeSfcSQAvtGtAE3aseaNHoB5uENuNW4anaJ84ryqQI8Qw?download=1"
-    headers: 1
+    format: "csv"
     prefilter: "MMFPSNDataLevel.strip() == 'National' and MMFPSNTotImpactQuarterlyChange != ''"
     sort:
       reverse: True
@@ -711,10 +693,9 @@ scraper_national:
     output_hxltags:
       - "#indicator+foodbasket+change+pct"
   financing:
-    format: "csv"
     dataset: "world-bank-and-gavi-vaccine-financing"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSKfpC4IaUs9iWc7TSrOoPNuR7cJ4civ8csvt8S_RcCXVG7xNxcyQ8Z-vSnJZ_lXYOTGlLh6Vnmn1Y/pub?gid=0&single=true&output=csv"
-    headers: 1
+    format: "csv"
     adm_cols:
       - "ISO3"
     input_cols:
@@ -759,10 +740,8 @@ scraper_national:
       - "#value+financing+gavi+needs+disbursed"
       - "#value+financing+approved"
   closure_duration:
-    format: "xlsx"
     dataset: "global-school-closures-covid19"
-    sheet: 1
-    headers: 1
+    format: "xlsx"
     adm_cols:
       - "Country"
     input_cols:
@@ -776,24 +755,23 @@ unhcr_myanmar_idps:
   url: "https://data.unhcr.org/population/?widget_id=264111&geo_id=693&population_group=5407,4999"
 
 fts:
-  url: "https://api.hpc.tools/v"
   source: "OCHA"
   source_url: "https://data.humdata.org/dataset/covid-19-data-visual-inputs"
+  url: "https://api.hpc.tools/v"
 
 food_prices:
-  format: "csv"
   dataset: "global-wfp-food-prices"
   base_url: "https://api.wfp.org"
+  format: "csv"
 
 vaccination_campaigns:
-  format: "csv"
   dataset: "immunization-campaigns-impacted"
-  headers: 1
+  format: "csv"
 
 unhcr:
-  url: "https://data2.unhcr.org/population/?population_collection=%d&geo_id=%s"
   source: "UNHCR"
   source_url: "https://data.humdata.org/organization/unhcr"
+  url: "https://data2.unhcr.org/population/?population_collection=%d&geo_id=%s"
   population_collections:
     - 4
     - 28
@@ -803,40 +781,33 @@ unhcr:
     - "VEN"
 
 inform:
-  url: "https://api.acaps.org/api/v1/inform-severity-index/%s/?page=1"
   dataset: "inform-global-crisis-severity-index"
+  url: "https://api.acaps.org/api/v1/inform-severity-index/%s/?page=1"
   format: "xlsx"
 
 who_covid:
-  format: "csv"
   dataset: "coronavirus-covid-19-cases-and-deaths"
-  headers: 1
+  format: "csv"
 
 covax_deliveries:
-  format: "csv"
   dataset: "covid-19-vaccine-doses-in-hrp-countries"
+  format: "csv"
   url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVzu79PPTfaA2syevOQfyRRjy63dJWitqu0fFbXIQCzoUn9K9TiMWMRvFGg1RBsnLmgYugzSEiAye2/pub?gid=1635331605&single=true&output=csv"
-  headers: 1
 
 education_closures:
-  format: "csv"
   dataset: "global-school-closures-covid19"
   resource: "School Closures"
-  headers: 1
+  format: "csv"
 
 education_enrolment:
-  format: "xlsx"
   dataset: "global-school-closures-covid19"
   resource: "Enrollment data"
-  sheet: 1
-  headers: 1
+  format: "xlsx"
 
 # regional
 regional:
-  format: "xlsx"
   dataset: "unocha-office-locations"
-  sheet: 1
-  headers: 1
+  format: "xlsx"
   iso3: "ISO3"
   region: "Regional_office"
   process_cols:
@@ -976,10 +947,9 @@ scraper_global:
       "#value+cbpf+funding+gm3+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
       "#value+cbpf+funding+gm4+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
       "default_url": "https://data.humdata.org/dataset/cerf-allocations"
-    format: "csv"
     dataset: "cerf-allocations"
     url: "https://cbpfgms.github.io/pfbi-data/download/full_pfmb_allocations.csv"
-    headers: 1
+    format: "csv"
     sort:
       reverse: True
       keys:
@@ -1166,10 +1136,9 @@ scraper_global:
     source_url:
       "#value+cbpf+funding+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
       "default_url": "https://data.humdata.org/dataset/cerf-allocations"
-    format: "csv"
     dataset: "cerf-allocations"
     url: "https://cbpfgms.github.io/pfbi-data/download/pfmb_contributions.csv"
-    headers: 1
+    format: "csv"
     sort:
       reverse: True
       keys:
@@ -1209,9 +1178,8 @@ scraper_global:
         output_hxltags:
           - "#value+cerf+contributions+total+usd"
   ourworldindata:
-    format: "csv"
     dataset: "covid-19-vaccinations"
-    headers: 1
+    format: "csv"
     use_hxl: True
     prefilter: "#country+code == 'OWID_WRL'"
     date_col: "#date"
@@ -1225,9 +1193,8 @@ scraper_global:
     output_hxltags:
       - "#capacity+doses+administered+total"
   inneed:
-    format: "csv"
     dataset: "interagency-response-plans"
-    headers: 1
+    format: "csv"
     use_hxl: True
     prefilter: "#meta+included == 'TRUE'"
     filter_cols:
@@ -1242,10 +1209,9 @@ scraper_global:
     output_hxltags:
       - "#affected+inneed"
   inneed_numcountries:
-    format: "csv"
     dataset: "interagency-response-plans"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSUJdFPpj3N6m4L5XiZSl1OQm7oVcclVM3IDQm1P6K5SfuBNIB2M0-BJhdR0KQ-w95lJUiC4wMWw9RP/pub?gid=881913165&single=true&output=csv"
-    headers: 1
+    format: "csv"
     use_hxl: True
     input_cols:
       - "#meta+countries+num"
@@ -1257,18 +1223,16 @@ scraper_global:
 
 # subnational
 ipc:
-#  url: "https://ahurwiae3i.execute-api.us-east-1.amazonaws.com/v1"
-  url: "http://map.ipcinfo.org/api/public/population-tracking-tool/data/2017,%d/?page=%d&limit=1&condition=A&export=true&country=%s"
   dataset: "ipc-country-data"
+  url: "http://map.ipcinfo.org/api/public/population-tracking-tool/data/2017,%d/?page=%d&limit=1&condition=A&export=true&country=%s"
 
 scraper_subnational:
   population:
     source: "WorldPop"
     source_url: "https://data.humdata.org/search?organization=worldpop&q=%22population%20counts%22"
-    format: "csv"
     dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3_uBOV_uRDSxOggfBus_pkCs6Iw9lm0nAxzwG14YF_frpm13WPKiM1oNnQ9zrUA/pub?gid=1565793974&single=true&output=csv"
-    headers: 1
+    format: "csv"
     adm_cols:
       - "alpha_3"
       - "ADM1_PCODE"
@@ -1281,10 +1245,8 @@ scraper_subnational:
     output_hxltags:
       - "#population"
   cadre_harmonise:
-    format: "xlsx"
     dataset: "cadre-harmonise"
-    headers: 1
-    sheet: 1
+    format: "xlsx"
     prefilter: "chtype == 'current'"
     sort:
       reverse: True
@@ -1339,9 +1301,8 @@ scraper_subnational:
       - "#affected+ch+food+analysed+num"
   healthfac:
     source: "HOT"
-    format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT-266S0iZDEvcQmxC2i7LNHWi4fUXtDkrwp8D6NMyHArxnegAYO9XXVnhuHaWvdxaoZTq7M6yGLaPX/pub?gid=1620744216&single=true&output=csv"
-    headers: 1
+    format: "csv"
     adm_cols:
       - "alpha_3"
       - "ADM1_PCODE"
@@ -1353,9 +1314,8 @@ scraper_subnational:
       - "#loc+count+health"
   worldhealthorg:
     source: "WHO"
-    format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRfjaIXE1hvEIXD66g6cuCbPrGdZkx6vLIgXO_znVbjQ-OgwfaI1kJPhxhgjw2Yg08CmtBuMLAZkTnu/pub?gid=337443769&single=true&output=csv"
-    headers: 1
+    format: "csv"
     adm_cols:
       - "iso"
       - "Admin1"
@@ -1518,8 +1478,8 @@ scraper_subnational:
         output_hxltags:
           - "#population+pct+pol3+vaccinated"
   gam:
-    format: "xlsx"
     dataset: "world-global-expanded-database-on-severe-wasting"
+    format: "xlsx"
     sheet: "Trend"
     headers:
       - 3
