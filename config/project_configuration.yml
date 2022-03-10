@@ -101,7 +101,6 @@ scraper_national:
     prefilter: "Value != ''"
     adm_cols:
       - "Country Code"
-    adm_exact: True
     date_col: "Year"
     date_type: "year"
     input_cols:
