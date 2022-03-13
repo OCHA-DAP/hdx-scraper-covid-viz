@@ -114,7 +114,7 @@ class Inform(BaseScraper):
         base_url = self.datasetinfo["url"]
         with Download(
             rate_limit={"calls": 1, "period": 0.1},
-            headers={"Authorization": self.other_auths["inform"]},
+            headers={"Authorization": self.other_auths[self.name]},
         ) as downloader:
             start_date = self.today - relativedelta(months=1)
             valuedictsfortoday, crisis_types, max_date = self.get_latest_columns(

@@ -426,7 +426,6 @@ scraper_national:
           TargetAmt: "float(TargetAmt)"
         sum_cols:
           - formula: "TargetAmt"
-            mustbepopulated: False
         output_cols:
           - "CBPFCovidFunding"
         output_hxltags:
@@ -438,7 +437,6 @@ scraper_national:
           TargetAmt: "float(TargetAmt)"
         sum_cols:
           - formula: "TargetAmt"
-            mustbepopulated: False
         output_cols:
           - "CERFCovidFunding"
         output_hxltags:
@@ -747,7 +745,6 @@ scraper_global:
           - "TargetAmt"
         sum_cols:
           - formula: "TargetAmt"
-            mustbepopulated: False
         input_transforms:
           TargetAmt: "float(TargetAmt)"
         output_cols:
@@ -759,7 +756,6 @@ scraper_global:
           - "TargetAmt"
         sum_cols:
           - formula: "TargetAmt"
-            mustbepopulated: False
         input_transforms:
           TargetAmt: "float(TargetAmt)"
         output_cols:

@@ -230,7 +230,6 @@ scraper_national:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CBPFFunding"
         output_hxltags:
@@ -242,7 +241,6 @@ scraper_national:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CBPFFundingGMEmpty"
         output_hxltags:
@@ -254,7 +252,6 @@ scraper_national:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CBPFFundingGM0"
         output_hxltags:
@@ -266,7 +263,6 @@ scraper_national:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CBPFFundingGM1"
         output_hxltags:
@@ -278,7 +274,6 @@ scraper_national:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CBPFFundingGM2"
         output_hxltags:
@@ -290,7 +285,6 @@ scraper_national:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CBPFFundingGM3"
         output_hxltags:
@@ -302,7 +296,6 @@ scraper_national:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CBPFFundingGM4"
         output_hxltags:
@@ -314,7 +307,6 @@ scraper_national:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CERFFunding"
         output_hxltags:
@@ -326,7 +318,6 @@ scraper_national:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CERFFundingGMEmpty"
         output_hxltags:
@@ -338,7 +329,6 @@ scraper_national:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CERFFundingGM0"
         output_hxltags:
@@ -350,7 +340,6 @@ scraper_national:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CERFFundingGM1"
         output_hxltags:
@@ -362,7 +351,6 @@ scraper_national:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CERFFundingGM2"
         output_hxltags:
@@ -374,7 +362,6 @@ scraper_national:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CERFFundingGM3"
         output_hxltags:
@@ -386,7 +373,6 @@ scraper_national:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CERFFundingGM4"
         output_hxltags:
@@ -482,15 +468,10 @@ scraper_national:
       "population": "get_numeric_if_possible(population)"
     sum_cols:
       - formula: "phase3"
-        mustbepopulated: False
       - formula: "phase4"
-        mustbepopulated: False
       - formula: "phase5"
-        mustbepopulated: False
       - formula: "phase35"
-        mustbepopulated: False
       - formula: "population"
-        mustbepopulated: False
     output_cols:
       - "FoodInsecurityCHP3"
       - "FoodInsecurityCHP4"
@@ -713,17 +694,11 @@ scraper_national:
       "TOTAL (WB+GAVI) ($m)": "get_numeric_if_possible(TOTAL (WB+GAVI) ($m))"
     sum_cols:
       - formula: "Amount ($m)"
-        mustbepopulated: False
       - formula: "GAVI CDS (early access) Approved"
-        mustbepopulated: False
       - formula: "GAVI CDS (needs based) Approved"
-        mustbepopulated: False
       - formula: "GAVI CDS (early access) Disbursed"
-        mustbepopulated: False
       - formula: "GAVI CDS (needs based) Disbursed"
-        mustbepopulated: False
       - formula: "TOTAL (WB+GAVI) ($m)"
-        mustbepopulated: False
     output_cols:
       - "WorldBankFinancingApproved"
       - "GAVICDSEarlyAccessApproved"
@@ -967,7 +942,6 @@ scraper_global:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CBPFFunding"
         output_hxltags:
@@ -979,7 +953,6 @@ scraper_global:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CBPFFundingGMEmpty"
         output_hxltags:
@@ -991,7 +964,6 @@ scraper_global:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CBPFFundingGM0"
         output_hxltags:
@@ -1003,7 +975,6 @@ scraper_global:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CBPFFundingGM1"
         output_hxltags:
@@ -1015,7 +986,6 @@ scraper_global:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CBPFFundingGM2"
         output_hxltags:
@@ -1027,7 +997,6 @@ scraper_global:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CBPFFundingGM3"
         output_hxltags:
@@ -1039,7 +1008,6 @@ scraper_global:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CBPFFundingGM4"
         output_hxltags:
@@ -1051,7 +1019,6 @@ scraper_global:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CERFFunding"
         output_hxltags:
@@ -1063,7 +1030,6 @@ scraper_global:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CERFFundingGMEmpty"
         output_hxltags:
@@ -1075,7 +1041,6 @@ scraper_global:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CERFFundingGM0"
         output_hxltags:
@@ -1087,7 +1052,6 @@ scraper_global:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CERFFundingGM1"
         output_hxltags:
@@ -1099,7 +1063,6 @@ scraper_global:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CERFFundingGM2"
         output_hxltags:
@@ -1111,7 +1074,6 @@ scraper_global:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CERFFundingGM3"
         output_hxltags:
@@ -1123,7 +1085,6 @@ scraper_global:
           Budget: "float(Budget)"
         sum_cols:
           - formula: "Budget"
-            mustbepopulated: False
         output_cols:
           - "CERFFundingGM4"
         output_hxltags:
@@ -1157,7 +1118,6 @@ scraper_global:
           PledgeAmt: "float(PledgeAmt)"
         sum_cols:
           - formula: "PaidAmt+PledgeAmt"
-            mustbepopulated: False
         output_cols:
           - "CBPFContributions"
         output_hxltags:
@@ -1171,7 +1131,6 @@ scraper_global:
           PledgeAmt: "float(PledgeAmt)"
         sum_cols:
           - formula: "PaidAmt+PledgeAmt"
-            mustbepopulated: False
         output_cols:
           - "CERFContributions"
         output_hxltags:
@@ -1202,7 +1161,6 @@ scraper_global:
       - "#inneed"
     sum_cols:
       - formula: "#inneed"
-        mustbepopulated: False
     output_cols:
       - "PeopleInNeed"
     output_hxltags:
@@ -1277,15 +1235,10 @@ scraper_subnational:
       "population": "get_numeric_if_possible(population)"
     sum_cols:
       - formula: "phase3"
-        mustbepopulated: False
       - formula: "phase4"
-        mustbepopulated: False
       - formula: "phase5"
-        mustbepopulated: False
       - formula: "phase35"
-        mustbepopulated: False
       - formula: "population"
-        mustbepopulated: False
     output_cols:
       - "FoodInsecurityCHP3"
       - "FoodInsecurityCHP4"
