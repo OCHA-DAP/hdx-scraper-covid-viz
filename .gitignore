@@ -45,6 +45,7 @@ coverage.xml
 *,cover
 .hypothesis/
 tests/*.log
+.pytest_cache/
 
 # Translations
 *.mo
@@ -62,8 +63,8 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
-documentation/
+documentation/_*/
+documentation/source/
 
 # PyBuilder
 target/
@@ -90,9 +91,8 @@ ENV/
 # Rope project settings
 .ropeproject
 
-# PyCharm
-.idea
+# IntelliJ
+.idea/
 
-# other
-*.bak
-ftscovid.csv
+# setuptools_scm
+_version.py
