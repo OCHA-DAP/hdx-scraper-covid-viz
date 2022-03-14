@@ -249,5 +249,5 @@ def get_indicators(
         if name not in names:
             names.append(name)
     if "sources" in tabs:
-        update_sources(runner, names, configuration, today, outputs)
+        update_sources(runner, names, configuration, outputs)
     return hrp_countries
