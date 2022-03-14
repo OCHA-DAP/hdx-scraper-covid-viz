@@ -452,22 +452,22 @@ scraper_national:
       hxltags:
         - "#country+code+v_iso2"
     adm_cols:
-      - "Country code"
+      - "country_code"
     input_cols:
-      - "Cases (% male)"
-      - "Cases (% female)"
-      - "Deaths (% male)"
-      - "Deaths (% female)"
+      - "cases_male_pct"
+      - "cases_female_pct"
+      - "deaths_male_pct"
+      - "deaths_female_pct"
     input_transforms:
-      "Cases (% male)": "get_numeric_if_possible(Cases (% male))"
-      "Cases (% female)": "get_numeric_if_possible(Cases (% female))"
-      "Deaths (% male)": "get_numeric_if_possible(Deaths (% male))"
-      "Deaths (% female)": "get_numeric_if_possible(Deaths (% female))"
+      "cases_male_pct": "get_numeric_if_possible(cases_male_pct)"
+      "cases_female_pct": "get_numeric_if_possible(cases_female_pct)"
+      "deaths_male_pct": "get_numeric_if_possible(deaths_male_pct)"
+      "deaths_female_pct": "get_numeric_if_possible(deaths_female_pct)"
     process_cols:
-      - "number_format(Cases (% male))"
-      - "number_format(Cases (% female))"
-      - "number_format(Deaths (% male))"
-      - "number_format(Deaths (% female))"
+      - "number_format(cases_male_pct)"
+      - "number_format(cases_female_pct)"
+      - "number_format(deaths_male_pct)"
+      - "number_format(deaths_female_pct)"
     output_cols:
       - "Cases (% male)"
       - "Cases (% female)"
