@@ -387,7 +387,7 @@ scraper_national:
 #      hxltags:
 #        - "#country+code+v_iso2"
     adm_cols:
-      - "country"
+      - "country_code"
     input_cols:
       - "cases_male_pct"
       - "cases_female_pct"
