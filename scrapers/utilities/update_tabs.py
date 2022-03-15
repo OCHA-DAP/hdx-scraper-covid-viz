@@ -1,8 +1,6 @@
 import logging
 
-from hdx.data.dataset import Dataset
 from hdx.location.country import Country
-from hdx.scraper.utilities import get_isodate_from_dataset_date
 
 from ..monthly_report import get_monthly_report_source
 

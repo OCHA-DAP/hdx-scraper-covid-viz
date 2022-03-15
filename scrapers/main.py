@@ -5,16 +5,6 @@ from hdx.location.adminone import AdminOne
 from hdx.location.country import Country
 from hdx.scraper.runner import Runner
 from hdx.scraper.utilities.fallbacks import Fallbacks
-from scrapers.utilities.region_aggregation import RegionAggregation
-from scrapers.utilities.update_tabs import (
-    get_global_rows,
-    get_regional_rows,
-    update_national,
-    update_regional,
-    update_sources,
-    update_subnational,
-    update_world,
-)
 
 from .covax_deliveries import CovaxDeliveries
 from .education_closures import EducationClosures
@@ -26,7 +16,17 @@ from .iom_dtm import IOMDTM
 from .ipc_old import IPC
 from .unhcr import UNHCR
 from .unhcr_myanmar_idps import idps_post_run
+from .utilities.region_aggregation import RegionAggregation
 from .utilities.region_lookups import RegionLookups
+from .utilities.update_tabs import (
+    get_global_rows,
+    get_regional_rows,
+    update_national,
+    update_regional,
+    update_sources,
+    update_subnational,
+    update_world,
+)
 from .vaccination_campaigns import VaccinationCampaigns
 from .who_covid import WHOCovid
 from .whowhatwhere import WhoWhatWhere
