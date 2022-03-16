@@ -569,10 +569,15 @@ scraper_national:
     date_type: "date"
     input_cols:
       - "#total+vaccinations"
+    process_cols:
+      - "#total+vaccinations"
+      - "number_format((#total+vaccinations / 2) / #population)"
     output_cols:
       - "TotalDosesAdministered"
+      - "PopulationCoverageAdministeredDoses"
     output_hxltags:
       - "#capacity+doses+administered+total"
+      - "#capacity+doses+administered+coverage+pct"
   worldbank:
     dataset: "harmonized-covid-19-household-monitoring-surveys"
     format: "xlsx"
