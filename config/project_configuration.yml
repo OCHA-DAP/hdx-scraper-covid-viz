@@ -792,118 +792,118 @@ regional:
 
   # Aggregation
   aggregate_gho:
-    "Population":
+    "#population":
       action: "sum"
-    "Cumulative_cases":
+    "#affected+infected":
       action: "sum"
-    "Cumulative_deaths":
+    "#affected+killed":
       action: "sum"
-    "PeopleInNeed":
+    "#affected+inneed":
       action: "sum"
-    "CBPFFunding":
+    "#value+cbpf+funding+total+usd":
       action: "sum"
-    "CBPFFundingGMEmpty":
+    "#value+cbpf+funding+gmempty+total+usd":
       action: "sum"
-    "CBPFFundingGM0":
+    "#value+cbpf+funding+gm0+total+usd":
       action: "sum"
-    "CBPFFundingGM1":
+    "#value+cbpf+funding+gm1+total+usd":
       action: "sum"
-    "CBPFFundingGM2":
+    "#value+cbpf+funding+gm2+total+usd":
       action: "sum"
-    "CBPFFundingGM3":
+    "#value+cbpf+funding+gm3+total+usd":
       action: "sum"
-    "CBPFFundingGM4":
+    "#value+cbpf+funding+gm4+total+usd":
       action: "sum"
-    "CERFFunding":
+    "#value+cerf+funding+total+usd":
       action: "sum"
-    "CERFFundingGMEmpty":
+    "#value+cerf+funding+gmempty+total+usd":
       action: "sum"
-    "CERFFundingGM0":
+    "#value+cerf+funding+gm0+total+usd":
       action: "sum"
-    "CERFFundingGM1":
+    "#value+cerf+funding+gm1+total+usd":
       action: "sum"
-    "CERFFundingGM2":
+    "#value+cerf+funding+gm2+total+usd":
       action: "sum"
-    "CERFFundingGM3":
+    "#value+cerf+funding+gm3+total+usd":
       action: "sum"
-    "CERFFundingGM4":
+    "#value+cerf+funding+gm4+total+usd":
       action: "sum"
-    "RequiredHRPFunding":
+    "#value+funding+hrp+required+usd":
+      output: "RequiredFunding"
       action: "sum"
-      rename: "RequiredFunding"
-    "HRPFunding":
+    "#value+funding+hrp+total+usd":
+      output: "Funding"
       action: "sum"
-      rename: "Funding"
-    "HRPPercentFunded":
+    "#value+funding+hrp+pct":
+      output: "PercentFunded"
       action: "eval"
-      rename: "PercentFunded"
-      formula: "get_fraction_str(Funding, RequiredFunding) if Funding is not None and RequiredFunding is not None else ''"
-    "% of visas pending or denied":
+      formula: "get_fraction_str(#value+funding+hrp+total+usd, #value+funding+hrp+required+usd) if #value+funding+hrp+total+usd is not None and #value+funding+hrp+required+usd is not None else ''"
+    "#access+visas+pct":
       action: "mean"
-    "% of travel authorizations or movements denied":
+    "#access+travel+pct":
       action: "mean"
-    "Number of incidents reported since start of year":
+    "#event+year+todate+num":
       action: "sum"
-    "% of CERF projects affected by insecurity and inaccessibility":
+    "#activity+cerf+project+insecurity+pct":
       action: "mean"
-    "% of CBPF projects affected by insecurity and inaccessibility":
+    "#activity+cbpf+project+insecurity+pct":
       action: "mean"
-    "Vaccinations Postponed":
+    "#vaccination+postponed+num":
       action: "sum"
-    "NoChildrenSAM":
+    "#affected+children+sam":
       action: "sum"
-    "DosesAllocated":
+    "#capacity+doses+forecast+covax":
       action: "sum"
-    "WorldBankFinancingApproved":
+    "#value+financing+worldbank+approved":
       action: "sum"
-    "GAVICDSEarlyAccessApproved":
+    "#value+financing+gavi+earlyaccess+approved":
       action: "sum"
-    "GAVICDSNeedsApproved":
+    "#value+financing+gavi+needs+approved":
       action: "sum"
-    "GAVICDSEarlyAccessDisbursed":
+    "#value+financing+gavi+earlyaccess+disbursed":
       action: "sum"
-    "GAVICDSNeedsDisbursed":
+    "#value+financing+gavi+needs+disbursed":
       action: "sum"
-    "WorldBankGAVIFinancingTotal":
+    "#value+financing+approved":
       action: "sum"
-    "FoodInsecurityP3+":
+    "#affected+food+ipc+p3plus+num":
+      output: "FoodInsecurityP3+"
       action: "sum"
-      output: "#affected+food+ipc+p3plus+num"
       input:
-        - "FoodInsecurityCHP3+"
-        - "FoodInsecurityIPCP3+"
+        - "#affected+ch+food+p3plus+num"
+        - "#affected+food+ipc+p3plus+num"
   aggregate_hrp:
-    "Covax Delivered Doses":
+    "#capacity+doses+delivered+covax":
       action: "sum"
-    "Other Delivered Doses":
+    "#capacity+doses+delivered+others":
       action: "sum"
-    "Total Delivered Doses":
+    "#capacity+doses+delivered+total":
       action: "sum"
-    "TotalDosesAdministered":
+    "#capacity+doses+administered+total":
       action: "sum"
 
   global:
-    - "% of visas pending or denied"
-    - "% of travel authorizations or movements denied"
-    - "Number of incidents reported since start of year"
-    - "% of CERF projects affected by insecurity and inaccessibility"
-    - "% of CBPF projects affected by insecurity and inaccessibility"
-    - "Vaccinations Postponed"
-    - "Covax Delivered Doses"
-    - "Other Delivered Doses"
-    - "Total Delivered Doses"
-    - "No. affected learners"
-    - "Percentage affected learners"
-    - "No. closed countries"
-    - "FoodInsecurityP3+"
-    - "NoChildrenSAM"
-    - "DosesAllocated"
-    - "WorldBankFinancingApproved"
-    - "GAVICDSEarlyAccessApproved"
-    - "GAVICDSNeedsApproved"
-    - "GAVICDSEarlyAccessDisbursed"
-    - "GAVICDSNeedsDisbursed"
-    - "WorldBankGAVIFinancingTotal"
+    - "#access+visas+pct"
+    - "#access+travel+pct"
+    - "#event+year+todate+num"
+    - "#activity+cerf+project+insecurity+pct"
+    - "#activity+cbpf+project+insecurity+pct"
+    - "#vaccination+postponed+num"
+    - "#capacity+doses+delivered+covax"
+    - "#capacity+doses+delivered+others"
+    - "#capacity+doses+delivered+total"
+    - "#affected+learners"
+    - "#affected+learners+pct"
+    - "#status+country+closed"
+    - "#affected+food+ipc+p3plus+num"
+    - "#affected+children+sam"
+    - "#capacity+doses+forecast+covax"
+    - "#value+financing+worldbank+approved"
+    - "#value+financing+gavi+earlyaccess+approved"
+    - "#value+financing+gavi+needs+approved"
+    - "#value+financing+gavi+earlyaccess+disbursed"
+    - "#value+financing+gavi+needs+disbursed"
+    - "#value+financing+approved"
 
 scraper_global:
   allocations:

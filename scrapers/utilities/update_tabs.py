@@ -44,10 +44,10 @@ def update_world(outputs, global_rows, regional_rows=tuple(), gho_to_world=tuple
         adm_header = regional_rows[1].index("#region+name")
         for row in regional_rows[2:]:
             if row[adm_header] == "GHO":
-                for i, header in enumerate(regional_rows[0]):
-                    if header in gho_to_world:
-                        global_rows[0].append(header)
-                        global_rows[1].append(regional_rows[1][i])
+                for i, hxltag in enumerate(regional_rows[1]):
+                    if hxltag in gho_to_world:
+                        global_rows[0].append(regional_rows[0][i])
+                        global_rows[1].append(hxltag)
                         global_rows[2].append(row[i])
     update_tab(outputs, "world", global_rows)
 

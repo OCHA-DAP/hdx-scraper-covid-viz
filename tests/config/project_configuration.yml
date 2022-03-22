@@ -656,58 +656,51 @@ regional:
 
   # Aggregation
   aggregate_gho:
-    "Population":
+    "#population":
       action: "sum"
-    "Cumulative_cases":
+    "#affected+infected":
       action: "sum"
-    "Cumulative_deaths":
+    "#affected+killed":
       action: "sum"
-    "IFI COVID19 total":
+    "#value+ifi+total":
       action: "sum"
-    "CBPFCovidFunding":
+    "#value+cbpf+covid+funding+total+usd":
       action: "sum"
-    "CERFCovidFunding":
+    "#value+cerf+covid+funding+total+usd":
       action: "sum"
-    "RequiredHRPFunding":
+    "#value+funding+hrp+required+usd":
       action: "sum"
-    "HRPFunding":
+    "#value+funding+hrp+total+usd":
       action: "sum"
-    "HRPPercentFunded":
+    "#value+funding+hrp+pct":
       action: "eval"
-      formula: "get_fraction_str(HRPFunding, RequiredHRPFunding) if HRPFunding is not None and RequiredHRPFunding is not None else ''"
-    "RequiredHRPCovidFunding":
+      formula: "get_fraction_str(#value+funding+hrp+total+usd, #value+funding+hrp+required+usd) if #value+funding+hrp+total+usd is not None and #value+funding+hrp+required+usd is not None else ''"
+    "#value+covid+funding+hrp+total+usd":
       action: "sum"
-    "HRPCovidFunding":
+    "#value+funding+other+required+usd":
       action: "sum"
-    "HRPCovidPercentFunded":
+    "#value+funding+other+total+usd":
+      action: "sum"
+    "#value+funding+other+pct":
       action: "eval"
-      formula: "get_fraction_str(HRPCovidFunding, RequiredHRPCovidFunding) if HRPCovidFunding is not None and RequiredHRPCovidFunding is not None else ''"
-    "HRPGBVFunding":
-      action: "sum"
-    "RequiredOtherPlansFunding":
-      action: "sum"
-    "OtherPlansFunding":
-      action: "sum"
-    "OtherPlansPercentFunded":
-      action: "eval"
-      formula: "get_fraction_str(OtherPlansFunding, RequiredOtherPlansFunding) if OtherPlansFunding is not None and RequiredOtherPlansFunding is not None else ''"
-    "% of visas pending or denied":
+      formula: "get_fraction_str(#value+funding+other+total+usd, #value+funding+other+required+usd) if #value+funding+other+total+usd is not None and #value+funding+other+required+usd is not None else ''"
+    "#access+visas+pct":
       action: "mean"
-    "% of travel authorizations or movements denied":
+    "#access+travel+pct":
       action: "mean"
-    "Number of incidents reported since start of year":
+    "#event+year+todate+num":
       action: "sum"
-    "% of CERF projects affected by insecurity and inaccessibility":
+    "#activity+cerf+project+insecurity+pct":
       action: "mean"
-    "% of CBPF projects affected by insecurity and inaccessibility":
+    "#activity+cbpf+project+insecurity+pct":
       action: "mean"
   aggregate_hrp: {}
   global:
-    - "% of visas pending or denied"
-    - "% of travel authorizations or movements denied"
-    - "Number of incidents reported since start of year"
-    - "% of CERF projects affected by insecurity and inaccessibility"
-    - "% of CBPF projects affected by insecurity and inaccessibility"
+    - "#access+visas+pct"
+    - "#access+travel+pct"
+    - "#event+year+todate+num"
+    - "#activity+cerf+project+insecurity+pct"
+    - "#activity+cbpf+project+insecurity+pct"
 
 
 scraper_global:
