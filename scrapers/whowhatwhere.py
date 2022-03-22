@@ -96,7 +96,7 @@ class WhoWhatWhere(BaseScraper):
                 logger.error(f"PCode {pcode} in {countryiso3} does not exist!")
             else:
                 orgcount[pcode] = len(orgdict[countrypcode])
-        self.datasetinfo["date"] = self.today
+        self.datasetinfo["source_date"] = self.today
         self.datasetinfo["source_url"] = threew_url
 
     def add_source_urls(self) -> None:

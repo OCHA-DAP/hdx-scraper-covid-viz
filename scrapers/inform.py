@@ -163,4 +163,4 @@ class Inform(BaseScraper):
             else:
                 trend = "increasing"
             trend_valuedict[countryiso3] = trend
-        self.datasetinfo["date"] = max_date
+        self.datasetinfo["source_date"] = max_date

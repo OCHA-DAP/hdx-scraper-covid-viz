@@ -322,4 +322,4 @@ class FTS(BaseScraper):
             tabname = "regional_reqfund"
             for output in self.outputs.values():
                 output.update_tab(tabname, reg_reqfund_output)
-            self.datasetinfo["date"] = self.today
+            self.datasetinfo["source_date"] = self.today

@@ -7,8 +7,9 @@ logger = logging.getLogger(__name__)
 
 
 class RegionLookups:
-    iso3_to_region = dict()
-    iso3_to_region_and_hrp = dict()
+    gho_iso3_to_region_nohrp = dict()
+    gho_iso3_to_region = dict()
+    hrp_iso3_to_region = dict()
     regions = None
 
     @classmethod
@@ -22,14 +23,18 @@ class RegionLookups:
                 if region == "NO COVERAGE":
                     continue
                 regions.add(region)
-                dict_of_sets_add(cls.iso3_to_region_and_hrp, countryiso, region)
-                cls.iso3_to_region[countryiso] = region
+                dict_of_sets_add(cls.gho_iso3_to_region, countryiso, region)
+                if countryiso in hrp_countries:
+                    dict_of_sets_add(cls.hrp_iso3_to_region, countryiso, region)
+                cls.gho_iso3_to_region_nohrp[countryiso] = region
         cls.regions = sorted(list(regions))
         region = "HRPs"
         cls.regions.insert(0, region)
         for countryiso in hrp_countries:
-            dict_of_sets_add(cls.iso3_to_region_and_hrp, countryiso, region)
+            dict_of_sets_add(cls.gho_iso3_to_region, countryiso, region)
+            dict_of_sets_add(cls.hrp_iso3_to_region, countryiso, region)
         region = "GHO"
         cls.regions.insert(0, region)
         for countryiso in gho_countries:
-            dict_of_sets_add(cls.iso3_to_region_and_hrp, countryiso, region)
+            dict_of_sets_add(cls.gho_iso3_to_region, countryiso, region)
+            dict_of_sets_add(cls.hrp_iso3_to_region, countryiso, region)

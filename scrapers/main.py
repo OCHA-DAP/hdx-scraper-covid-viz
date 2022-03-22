@@ -3,6 +3,7 @@ from os.path import join
 
 from hdx.location.adminone import AdminOne
 from hdx.location.country import Country
+from hdx.scraper.configurable.aggregator import Aggregator
 from hdx.scraper.runner import Runner
 from hdx.scraper.utilities.fallbacks import Fallbacks
 
@@ -16,7 +17,6 @@ from .iom_dtm import IOMDTM
 from .ipc_old import IPC
 from .unhcr import UNHCR
 from .unhcr_myanmar_idps import idps_post_run
-from .utilities.region_aggregation import RegionAggregation
 from .utilities.region_lookups import RegionLookups
 from .utilities.update_tabs import (
     get_global_rows,
@@ -63,8 +63,9 @@ def get_indicators(
     configuration["countries_fuzzy_try"] = hrp_countries
     downloader = retriever.downloader
     adminone = AdminOne(configuration)
+    regional_configuration = configuration["regional"]
     RegionLookups.load(
-        configuration["regional"], today, downloader, gho_countries, hrp_countries
+        regional_configuration, today, downloader, gho_countries, hrp_countries
     )
     if fallbacks_root is not None:
         fallbacks_path = join(fallbacks_root, configuration["json"]["filepath"])
@@ -109,7 +110,7 @@ def get_indicators(
         outputs,
         hrp_countries,
         gho_countries,
-        RegionLookups.iso3_to_region,
+        RegionLookups.gho_iso3_to_region_nohrp,
     )
     ipc = IPC(configuration["ipc"], today, gho_countries, adminone, downloader)
 
@@ -133,14 +134,14 @@ def get_indicators(
         configuration["education_closures"],
         today,
         gho_countries,
-        RegionLookups.iso3_to_region_and_hrp,
+        RegionLookups.gho_iso3_to_region,
         downloader,
     )
     education_enrolment = EducationEnrolment(
         configuration["education_enrolment"],
         education_closures,
         gho_countries,
-        RegionLookups.iso3_to_region_and_hrp,
+        RegionLookups.gho_iso3_to_region,
         downloader,
     )
     national_names = configurable_scrapers["national"] + [
@@ -184,13 +185,29 @@ def get_indicators(
             iomdtm,
         )
     )
-    regional_scrapers = RegionAggregation.get_regional_scrapers(
-        configuration["regional"],
-        hrp_countries,
-        RegionLookups.iso3_to_region_and_hrp,
+    regional_scrapers_gho = Aggregator.get_scrapers(
+        regional_configuration["aggregate_gho"],
+        "national",
+        "regional",
+        RegionLookups.gho_iso3_to_region,
         runner,
+        use_hxl=False,
     )
-    regional_names = runner.add_customs(regional_scrapers, add_to_run=True)
+    regional_names_gho = runner.add_customs(regional_scrapers_gho, add_to_run=True)
+    regional_scrapers_hrp = Aggregator.get_scrapers(
+        regional_configuration["aggregate_hrp"],
+        "national",
+        "regional",
+        RegionLookups.hrp_iso3_to_region,
+        runner,
+        use_hxl=False,
+    )
+    regional_names_hrp = runner.add_customs(regional_scrapers_hrp, add_to_run=True)
+    regional_names = list()
+    for name in regional_names_gho:
+        if "nochildrensam" in name:
+            regional_names.extend(regional_names_hrp)
+        regional_names.append(name)
     runner.run(
         prioritise_scrapers=(
             "population_national",
@@ -207,7 +224,7 @@ def get_indicators(
         update_national(
             runner,
             national_names,
-            RegionLookups.iso3_to_region_and_hrp,
+            RegionLookups.gho_iso3_to_region,
             hrp_countries,
             gho_countries,
             outputs,

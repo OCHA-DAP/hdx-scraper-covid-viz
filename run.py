@@ -108,7 +108,11 @@ def main(
                     excelout = noout
                 if gsheet_auth:
                     gsheets = GoogleSheets(
-                        configuration["googlesheets"], gsheet_auth, updatesheets, tabs, updatetabs
+                        configuration["googlesheets"],
+                        gsheet_auth,
+                        updatesheets,
+                        tabs,
+                        updatetabs,
                     )
                 else:
                     gsheets = noout
