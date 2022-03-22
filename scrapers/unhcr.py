@@ -55,4 +55,4 @@ class UNHCR(BaseScraper):
                     valuedicts[1][countryiso3] = date
                 else:
                     valuedicts[0][countryiso3] += int(individuals)
-        self.datasetinfo["date"] = self.today
+        self.datasetinfo["source_date"] = self.today

@@ -19,7 +19,7 @@ json:
       tabs:
         - tab: "national"
           key: "cumulative"
-          hxltags: # controls which fields are included
+          output: # controls which fields are included
             - "#country+code"
             - "#country+name"
             - "#meta+ishrp"
@@ -46,7 +46,7 @@ json:
           key: "cumulative"
           filters:
             "#country+code": "{{countries_to_save}}"
-          hxltags:
+          output:
             - "#country+code"
             - "#country+name"
             - "#affected+infected"
@@ -55,7 +55,7 @@ json:
           key: "global"
           filters:
             "#region+name": "global"
-          hxltags:
+          output:
             - "#region+name"
             - "#affected+infected"
             - "#affected+killed"
@@ -63,13 +63,13 @@ json:
 additional_sources:
   - indicator: "#food-prices"
     dataset: "wfp-food-prices"
-    date: "2020-08-15"
+    source_date: "2020-08-15"
   - indicator: "#vaccination-campaigns"
     dataset: "immunization-campaigns-impacted"
-    date: "2020-08-24"
+    source_date: "2020-08-24"
   - indicator: "#access-data"
     source: "Multiple sources"
-    date: "2021-05-03"
+    source_date: "2021-05-03"
     source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
 
 monthly_report:
@@ -89,38 +89,37 @@ scraper_national:
     url: "tests/fixtures/API_SP.POP.TOTL_DS2_en_excel_v2_1302508_LIST.xls"
     sheet: "Data"
     headers: 3
-    adm_cols:
+    admin:
       - "Country Code"
-    adm_exact: True
-    date_col: "Year"
+    admin_exact: True
+    date: "Year"
     date_type: "year"
-    input_cols:
+    input:
       - "Value"
-    output_cols:
+    output:
       - "Population"
-    output_hxltags:
+    output_hxl:
       - "#population"
 # only for testing dividing by population
   worldhealthorg:
     format: "csv"
     dataset: "coronavirus-covid-19-cases-and-deaths"
     url: "tests/fixtures/WHO-COVID-19-global-data.csv"
-    headers: 1
-    adm_cols:
+    admin:
       - "Country_code"
-    date_col: "Date_reported"
+    date: "Date_reported"
     date_type: "date"
-    use_date_from_date_col: True
-    input_cols:
+    use_date: True
+    input:
       - "Cumulative_cases"
       - "Cumulative_deaths"
-    process_cols:
+    process:
       - "number_format(Cumulative_cases / #population * 100000, format='%.2f')"
       - "number_format(Cumulative_deaths / #population * 100000, format='%.2f')"
-    output_cols:
+    output:
       - "CasesPer100000"
       - "DeathsPer100000"
-    output_hxltags:
+    output_hxl:
       - "#affected+infected+per100000"
       - "#affected+killed+per100000"
 # A fake one where we sum all values in cumulative column across dates which in practice makes no sense
@@ -128,58 +127,55 @@ scraper_national:
     format: "csv"
     dataset: "coronavirus-covid-19-cases-and-deaths"
     url: "tests/fixtures/WHO-COVID-19-global-data.csv"
-    headers: 1
     prefilter: "Date_reported == '2020-08-06'"
-    adm_cols:
+    admin:
       - "Country_code"
-    date_col: "Date_reported"
+    date: "Date_reported"
     date_type: "date"
-    use_date_from_date_col: True
-    input_cols:
+    use_date: True
+    input:
       - "Cumulative_cases"
       - "Cumulative_deaths"
-    sum_cols:
+    sum:
       - formula: "number_format(Cumulative_cases / #population * 100000, format='%.2f')"
         mustbepopulated: True
       - formula: "number_format(Cumulative_deaths / #population * 100000, format='%.2f')"
         mustbepopulated: True
-    output_cols:
+    output:
       - "Cases2Per100000"
       - "Deaths2Per100000"
-    output_hxltags:
+    output_hxl:
       - "#affected+infected+2+per100000"
       - "#affected+killed+2+per100000"
   inform_hazard:
     format: "xlsx"
     dataset: "inform-covid-19-risk-index-version-0-1-2"
     sheet: "Hazard & Exposure"
-    headers: 1
-    adm_cols:
+    admin:
       - "Iso3"
-    input_cols:
+    input:
       - "Covid-19 Hazard & Exposure"
-    output_cols:
+    output:
       - "Covid19HazardExposure"
-    output_hxltags:
+    output_hxl:
       - "#severity+hazard+inform+num"
   inform:
     format: "xlsx"
     dataset: "inform-covid-19-risk-index-version-0-1-2"
     sheet: "INFORM COVID-19 RISK 2020 (a-z)"
-    headers: 1
-    adm_cols:
+    admin:
       - "ISO3"
-    input_cols:
+    input:
       - "LACK OF COPING CAPACITY"
       - "VULNERABILITY"
       - "INFORM COVID-19 RISK"
       - "COVID-19 RISK CLASS"
-    output_cols:
+    output:
       - "LackOfCopingCapacity"
       - "Vulnerability"
       - "Risk"
       - "RiskClass"
-    output_hxltags:
+    output_hxl:
       - "#severity+coping+inform+num"
       - "#severity+inform+num+vulnerability"
       - "#severity+inform+num"
@@ -188,26 +184,24 @@ scraper_national:
     format: "xlsx"
     dataset: "covid-19-economic-exposure-index"
     sheet: "economic exposure"
-    headers: 1
-    adm_cols:
+    admin:
       - "Country"
-    input_cols:
+    input:
       - "Covid 19 Economic exposure index"
-    output_cols:
+    output:
       - "EconomicExposure"
-    output_hxltags:
+    output_hxl:
       - "#severity+economic+num"
   ifi:
     format: "csv"
     url: "tests/fixtures/Tracker COVID - Country Summary_HDX.csv"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
-    date: "2020-07-29"
-    headers: 1
+    source_date: "2020-07-29"
     stop_row:
       "Country Code": ""
-    adm_cols:
+    admin:
       - "Country Code"
-    input_cols:
+    input:
       - "World Bank"
       - "IFC"
       - "IMF"
@@ -222,7 +216,7 @@ scraper_national:
     input_ignore_vals:
       - "N/A"
       - "-"
-    input_transforms:
+    transform:
       "World Bank": "get_numeric_if_possible(World Bank) if World Bank else 0"
       "IFC": "get_numeric_if_possible(IFC) if IFC else 0"
       "IMF": "get_numeric_if_possible(IMF) if IMF else 0"
@@ -234,7 +228,7 @@ scraper_national:
       "Total (USD mn)": "get_numeric_if_possible(Total (USD mn)) if Total (USD mn) else 0"
       "Total per capita (USD mn)": "get_numeric_if_possible(Total per capita (USD mn)) if Total per capita (USD mn) else 0"
       "Total as percentage of GDP (%)": "get_numeric_if_possible(Total as percentage of GDP (%)) if Total as percentage of GDP (%) else 0"
-    process_cols:
+    process:
       - "number_format(World Bank * 1000000, format='%.0f')"
       - "number_format(IFC * 1000000, format='%.0f')"
       - "number_format(IMF * 1000000, format='%.0f')"
@@ -246,7 +240,7 @@ scraper_national:
       - "number_format(Total (USD mn) * 1000000, format='%.0f')"
       - "number_format(Total per capita (USD mn))"
       - "number_format(Total as percentage of GDP (%))"
-    output_cols:
+    output:
       - "World Bank"
       - "IFC"
       - "IMF"
@@ -258,7 +252,7 @@ scraper_national:
       - "IFI COVID19 total"
       - "IFI COVID19 total percap"
       - "IFI COVID19 total pcgdp"
-    output_hxltags:
+    output_hxl:
       - "#value+wb+total"
       - "#value+ifc+total"
       - "#value+imf+total"
@@ -277,66 +271,62 @@ scraper_national:
     headers:
       - 3
       - 4
-    adm_cols:
+    admin:
       - "ISO"
-    date_col: "Year*"
+    date: "Year*"
     date_type: "year"
-    input_cols:
+    input:
       - "National Point Estimate"
-    output_cols:
+    output:
       - "Malnutrition Estimate"
-    output_hxltags:
+    output_hxl:
       - "#severity+malnutrition+num+national"
   needs:
     format: "xlsx"
     dataset: "global-humanitarian-overview-2020-figures"
     sheet: "Raw Data"
-    headers: 1
     prefilter: "Metric == 'People in need' and PiN Value for Dataviz == 'yes'"
-    adm_cols:
+    admin:
       - "Country Code"
-    date_col: "Year"
+    date: "Year"
     date_type: "year"
     filter_cols:
       - "Metric"
       - "PiN Value for Dataviz"
-    input_cols:
+    input:
       - "Value"
-    output_cols:
+    output:
       - "PeopleInNeed"
-    output_hxltags:
+    output_hxl:
       - "#affected+inneed"
   idmc:
     format: "csv"
     dataset: "idmc-internally-displaced-persons-idps"
-    headers: 1
     use_hxl: True
-    date_col: "#date+year"
+    date: "#date+year"
     date_type: "year"
-    input_cols:
+    input:
       - "#affected+idps+ind+stock+conflict"
       - "#affected+idps+ind+stock+disaster"
-    input_transforms:
+    transform:
       "#affected+idps+ind+stock+conflict": "int(#affected+idps+ind+stock+conflict) if #affected+idps+ind+stock+conflict else 0"
       "#affected+idps+ind+stock+disaster": "int(#affected+idps+ind+stock+disaster) if #affected+idps+ind+stock+disaster else 0"
-    process_cols:
+    process:
       - "#affected+idps+ind+stock+conflict + #affected+idps+ind+stock+disaster"
-    output_cols:
+    output:
       - "TotalIDPs"
-    output_hxltags:
+    output_hxl:
       - "#affected+displaced"
   imperial:
     format: "xlsx"
     dataset: "imperial-college-covid-19-projections"
-    sheet: 1
-    headers: 1
     use_hxl: True
-    output_cols:
+    output:
       - "Imp: Total Cases(min)"
       - "Imp: Total Cases(max)"
       - "Imp: Total Deaths(min)"
       - "Imp: Total Deaths(max)"
-    output_hxltags:
+    output_hxl:
       - "#affected+imperial+infected+min"
       - "#affected+imperial+infected+max"
       - "#affected+imperial+killed+min"
@@ -344,15 +334,13 @@ scraper_national:
   lshtm:
     format: "xlsx"
     dataset: "lshtm-covid-19-projections"
-    sheet: 1
-    headers: 1
     use_hxl: True
-    output_cols:
+    output:
       - "LSHTM: Total Cases(min)"
       - "LSHTM: Total Cases(max)"
       - "LSHTM: Total Deaths(min)"
       - "LSHTM: Total Deaths(max)"
-    output_hxltags:
+    output_hxl:
       - "#affected+infected+lshtm+min"
       - "#affected+infected+lshtm+max"
       - "#affected+killed+lshtm+min"
@@ -360,120 +348,115 @@ scraper_national:
   school:
     format: "csv"
     dataset: "global-school-closures-covid19"
-    headers: 1
-    adm_cols:
+    admin:
       - "ISO"
-    date_col: "Date"
+    date: "Date"
     date_type: "date"
-    input_cols:
+    input:
       - "Status"
-    output_cols:
+    output:
       - "SchoolClosure"
-    output_hxltags:
+    output_hxl:
       - "#impact+type"
   idps:
     format: "csv"
     dataset: "idmc-internally-displaced-persons-idps"
-    headers: 1
     use_hxl: True
-    date_col: "#date+year"
+    date: "#date+year"
     date_type: "year"
-    input_cols:
+    input:
       - "#affected+idps+ind+stock+conflict"
       - "#affected+idps+ind+stock+disaster"
-    input_transforms:
+    transform:
       "#affected+idps+ind+stock+conflict": "int(#affected+idps+ind+stock+conflict) if #affected+idps+ind+stock+conflict else 0"
       "#affected+idps+ind+stock+disaster": "int(#affected+idps+ind+stock+disaster) if #affected+idps+ind+stock+disaster else 0"
-    process_cols:
+    process:
       - "#affected+idps+ind+stock+conflict + #affected+idps+ind+stock+disaster"
-    output_cols:
+    output:
       - "TotalIDPs"
-    output_hxltags:
+    output_hxl:
       - "#affected+displaced"
   travel:
     format: "csv"
     dataset: "covid-19-global-travel-restrictions-and-airline-information"
-    headers: 1
-    adm_cols:
+    admin:
       - "iso3"
-    input_cols:
+    input:
       - "info"
       - "published"
     input_append:
       - "info"
     input_keep:
       - "published"
-    output_cols:
+    output:
       - "TravelRestrictions"
       - "TravelRestrictionsPublished"
-    output_hxltags:
+    output_hxl:
       - "#severity+travel"
       - "#severity+date+travel"
   cerf:
     format: "csv"
     dataset: "cerf-covid-19-allocations"
     force_date_today: True
-    headers: 1
-    adm_cols:
+    admin:
       - "ISO2Country"
     filter_cols:
       - "PFType"
     subsets:
       - filter: "PFType == 'CBPF'"
-        input_cols:
+        input:
           - "TargetAmt"
-        input_transforms:
+        transform:
           TargetAmt: "float(TargetAmt)"
-        sum_cols:
+        sum:
           - formula: "TargetAmt"
-        output_cols:
+        output:
           - "CBPFCovidFunding"
-        output_hxltags:
+        output_hxl:
           - "#value+cbpf+covid+funding+total+usd"
       - filter: "PFType == 'CERF'"
-        input_cols:
+        input:
           - "TargetAmt"
-        input_transforms:
+        transform:
           TargetAmt: "float(TargetAmt)"
-        sum_cols:
+        sum:
           - formula: "TargetAmt"
-        output_cols:
+        output:
           - "CERFCovidFunding"
-        output_hxltags:
+        output_hxl:
           - "#value+cerf+covid+funding+total+usd"
   sadd:
     format: "csv"
     dataset: "covid-19-sex-disaggregated-data-tracker"
-    date: "2020-08-07"
+    source_date: "2020-08-07"
     url: "tests/fixtures/covid-19-sex-disaggregated-data.csv"
-    headers: 1
     external_filter:
       url: "https://github.com/OCHA-DAP/hdx-scraper-covid-viz/raw/main/tests/fixtures/sadd-countries-to-include.csv"
-      hxltags:
+      hxl:
         - "#country+code+v_iso2"
-    adm_cols:
+    admin:
       - "country_code"
-    input_cols:
+    input:
       - "cases_male_pct"
       - "cases_female_pct"
       - "deaths_male_pct"
       - "deaths_female_pct"
-    input_transforms:
+    transform:
       "cases_male_pct": "get_numeric_if_possible(cases_male_pct)"
       "cases_female_pct": "get_numeric_if_possible(cases_female_pct)"
       "deaths_male_pct": "get_numeric_if_possible(deaths_male_pct)"
       "deaths_female_pct": "get_numeric_if_possible(deaths_female_pct)"
-    process_cols:
+    process:
       - "number_format(cases_male_pct)"
       - "number_format(cases_female_pct)"
       - "number_format(deaths_male_pct)"
       - "number_format(deaths_female_pct)"
-    output_cols:
+    output:
       - "Cases (% male)"
       - "Cases (% female)"
       - "Deaths (% male)"
       - "Deaths (% female)"
-    output_hxltags:
+    output_hxl:
       - "#affected+infected+m+pct"
       - "#affected+f+infected+pct"
       - "#affected+killed+m+pct"
@@ -481,26 +464,24 @@ scraper_national:
   covidtests:
     format: "xlsx"
     dataset: "total-covid-19-tests-performed-by-country"
-    date: "2021-05-03"
+    source_date: "2021-05-03"
     url: "tests/fixtures/owid-covid-data.xlsx"
-    headers: 1
-    sheet: 1
     prefilter: "new_tests is not None and new_tests > 0"
-    date_col: "date"
+    date: "date"
     date_type: "date"
-    adm_cols:
+    admin:
       - "iso_code"
-    input_cols:
+    input:
       - "new_tests"
       - "new_tests_per_thousand"
       - "new_tests_smoothed_per_thousand"
       - "positive_rate"
-    output_cols:
+    output:
       - "New Tests"
       - "New Tests Per Thousand"
       - "New Tests Per Thousand (7-day)"
       - "Positive Test Rate"
-    output_hxltags:
+    output_hxl:
       - "#affected+tested"
       - "#affected+tested+per1000"
       - "#affected+tested+avg+per1000"
@@ -508,26 +489,24 @@ scraper_national:
   ctfallbacks:
     format: "xlsx"
     dataset: "total-covid-19-tests-performed-by-country"
-    date: "2021-05-03"
+    source_date: "2021-05-03"
     url: "NOTEXIST.xlsx"
-    headers: 1
-    sheet: 1
     prefilter: "new_tests is not None and new_tests > 0"
-    date_col: "date"
+    date: "date"
     date_type: "date"
-    adm_cols:
+    admin:
       - "iso_code"
-    input_cols:
+    input:
       - "new_tests"
       - "new_tests_per_thousand"
       - "new_tests_smoothed_per_thousand"
       - "positive_rate"
-    output_cols:
+    output:
       - "New Tests"
       - "New Tests Per Thousand"
       - "New Tests Per Thousand (7-day)"
       - "Positive Test Rate"
-    output_hxltags:
+    output_hxl:
       - "#affected+tested"
       - "#affected+tested+per1000"
       - "#affected+tested+avg+per1000"
@@ -536,36 +515,34 @@ scraper_national:
     format: "xlsx"
     dataset: "cadre-harmonise"
     url: "tests/fixtures/cadre_harmonise_caf_ipc.xlsx"
-    date: "2021-05-03"
-    headers: 1
-    sheet: 1
+    source_date: "2021-05-03"
     prefilter: "chtype == 'current'"
     sort:
       reverse: True
       keys:
         - "reference_year"
         - "reference_code"
-    adm_cols:
+    admin:
       - "adm0_pcod3"
-    date_col:
+    date:
       - "reference_year"
       - "reference_code"
     date_type: "int"
     filter_cols:
       - "chtype"
-    input_cols:
+    input:
       - "phase3"
       - "phase4"
       - "phase5"
       - "phase35"
       - "population"
-    input_transforms:
+    transform:
       "phase3": "float(phase3)"
       "phase4": "float(phase4)"
       "phase5": "float(phase5)"
       "phase35": "float(phase35)"
       "population": "float(population)"
-    sum_cols:
+    sum:
       - formula: "get_fraction_str(phase3, population)"
         mustbepopulated: True
       - formula: "get_fraction_str(phase4, population)"
@@ -576,13 +553,13 @@ scraper_national:
         mustbepopulated: True
       - formula: "get_fraction_str(population, #population)"
         mustbepopulated: True
-    output_cols:
+    output:
       - "FoodInsecurityCHP3"
       - "FoodInsecurityCHP4"
       - "FoodInsecurityCHP5"
       - "FoodInsecurityCHP3+"
       - "FoodInsecurityCHAnalysed"
-    output_hxltags:
+    output_hxl:
       - "#affected+ch+food+p3+pct"
       - "#affected+ch+food+p4+pct"
       - "#affected+ch+food+p5+pct"
@@ -606,9 +583,8 @@ scraper_national:
       "default_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
     format: "csv"
     url: "tests/fixtures/Access Indicators  - Data for Dashboard.csv"
-    headers: 1
     use_hxl: True
-    input_transforms:
+    transform:
       "#access+visas+pct": "get_numeric_if_possible(#access+visas+pct)"
       "#access+travel+pct": "get_numeric_if_possible(#access+travel+pct)"
       "#activity+cerf+project+insecurity+pct": "get_numeric_if_possible(#activity+cerf+project+insecurity+pct)"
@@ -625,7 +601,7 @@ food_prices:
   format: "csv"
   dataset: "wfp-food-prices"
   base_url: "https://api.wfp.org"
-  date: "2021-05-15"
+  source_date: "2021-05-15"
 
 vaccination_campaigns:
   format: "csv"
@@ -677,7 +653,9 @@ regional:
   headers: 1
   iso3: "ISO3"
   region: "Regional_office"
-  process_cols:
+
+  # Aggregation
+  aggregate_gho:
     "Population":
       action: "sum"
     "Cumulative_cases":
@@ -723,6 +701,7 @@ regional:
       action: "mean"
     "% of CBPF projects affected by insecurity and inaccessibility":
       action: "mean"
+  aggregate_hrp: {}
   global:
     - "% of visas pending or denied"
     - "% of travel authorizations or movements denied"
@@ -736,55 +715,53 @@ scraper_global:
     format: "csv"
     dataset: "cerf-covid-19-allocations"
     force_date_today: True
-    headers: 1
     filter_cols:
       - "PFType"
     subsets:
       - filter: "PFType == 'CBPF'"
-        input_cols:
+        input:
           - "TargetAmt"
-        sum_cols:
+        sum:
           - formula: "TargetAmt"
-        input_transforms:
+        transform:
           TargetAmt: "float(TargetAmt)"
-        output_cols:
+        output:
           - "CBPFCovidFunding"
-        output_hxltags:
+        output_hxl:
           - "#value+cbpf+covid+funding+total+usd"
       - filter: "PFType == 'CERF'"
-        input_cols:
+        input:
           - "TargetAmt"
-        sum_cols:
+        sum:
           - formula: "TargetAmt"
-        input_transforms:
+        transform:
           TargetAmt: "float(TargetAmt)"
-        output_cols:
+        output:
           - "CERFCovidFunding"
-        output_hxltags:
+        output_hxl:
           - "#value+cerf+covid+funding+total+usd"
   ifi:
     format: "csv"
     url: "tests/fixtures/Tracker COVID - Country Summary_HDX.csv"
     dataset: "compilation-of-international-financial-institution-and-economic-data"
-    date: "2020-07-29"
-    headers: 1
+    source_date: "2020-07-29"
     stop_row:
       "Country Code": ""
-    adm_cols:
+    admin:
       - "Country Code"
-    input_cols:
+    input:
       - "Total (USD mn)"
     input_ignore_vals:
       - "N/A"
       - "-"
-    input_transforms:
+    transform:
       "Total (USD mn)": "get_numeric_if_possible(Total (USD mn)) if Total (USD mn) else 0"
-    sum_cols:
+    sum:
       - formula: "number_format(Total (USD mn) * 1000000, format='%.0f')"
         mustbepopulated: True
-    output_cols:
+    output:
       - "IFI COVID19 global"
-    output_hxltags:
+    output_hxl:
       - "#value+ifi+total"
 
 # subnational
@@ -798,53 +775,50 @@ scraper_subnational:
     format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3_uBOV_uRDSxOggfBus_pkCs6Iw9lm0nAxzwG14YF_frpm13WPKiM1oNnQ9zrUA/pub?gid=1565793974&single=true&output=csv"
     dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
-    headers: 1
-    adm_cols:
+    admin:
       - "alpha_3"
       - "ADM1_PCODE"
-    input_cols:
+    input:
       - "POPULATION"
-    output_cols:
+    output:
       - "Population"
-    output_hxltags:
+    output_hxl:
       - "#population"
   cadre_harmonise:
     format: "xlsx"
     dataset: "cadre-harmonise"
     url: "tests/fixtures/cadre_harmonise_caf_ipc.xlsx"
-    date: "2021-05-03"
-    headers: 1
-    sheet: 1
+    source_date: "2021-05-03"
     prefilter: "chtype == 'current'"
     sort:
       reverse: True
       keys:
         - "reference_year"
         - "reference_code"
-    adm_cols:
+    admin:
       - "adm0_pcod3"
       - - "adm1_pcod2"
         - "adm1_pcod3"
         - "adm1_name"
-    date_col:
+    date:
       - "reference_year"
       - "reference_code"
     date_type: "int"
     filter_cols:
       - "chtype"
-    input_cols:
+    input:
       - "phase3"
       - "phase4"
       - "phase5"
       - "phase35"
       - "population"
-    input_transforms:
+    transform:
       "phase3": "float(phase3)"
       "phase4": "float(phase4)"
       "phase5": "float(phase5)"
       "phase35": "float(phase35)"
       "population": "float(population)"
-    sum_cols:
+    sum:
       - formula: "get_fraction_str(phase3, population)"
         mustbepopulated: True
       - formula: "get_fraction_str(phase4, population)"
@@ -855,13 +829,13 @@ scraper_subnational:
         mustbepopulated: True
       - formula: "get_fraction_str(population, #population)"
         mustbepopulated: True
-    output_cols:
+    output:
       - "FoodInsecurityCHP3"
       - "FoodInsecurityCHP4"
       - "FoodInsecurityCHP5"
       - "FoodInsecurityCHP3+"
       - "FoodInsecurityCHAnalysed"
-    output_hxltags:
+    output_hxl:
       - "#affected+ch+food+p3+pct"
       - "#affected+ch+food+p4+pct"
       - "#affected+ch+food+p5+pct"
@@ -871,195 +845,192 @@ scraper_subnational:
     source: "HOT"
     format: "csv"
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT-266S0iZDEvcQmxC2i7LNHWi4fUXtDkrwp8D6NMyHArxnegAYO9XXVnhuHaWvdxaoZTq7M6yGLaPX/pub?gid=1620744216&single=true&output=csv"
-    headers: 1
-    adm_cols:
+    admin:
       - "alpha_3"
       - "ADM1_PCODE"
-    input_cols:
+    input:
       - "NUMPOINTS"
-    output_cols:
+    output:
       - "NoHealthFacilities"
-    output_hxltags:
+    output_hxl:
       - "#loc+count+health"
 #  idmc:
 #    source: "IDMC"
 #    format: "csv"
 #    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSo25hpVc-ttGF0LEfWP2QTbqFTaf5SdGqp5eAqOfRwoGE6ROitk_Boco_3TMXjDARK8he3HdmzYkIP/pub?gid=893315748&single=true&output=csv"
-#    headers: 1
-#    adm_cols:
+#    admin:
 #      - ~
 #      - "ADM1_PCODE"
-#    input_cols:
+#    input:
 #      - "DISPLACED"
-#    output_cols:
+#    output:
 #      - "NoDisplaced"
-#    output_hxltags:
+#    output_hxl:
 #      - "#affected+displaced"
   worldhealthorg:
     source: "WHO"
     format: "csv"
     url: "tests/fixtures/Vaccine coverage at subnational level - Data.csv"
-    headers: 1
-    adm_cols:
+    admin:
       - "iso"
       - "Admin1"
-    date_col: "Year"
+    date: "Year"
     date_type: "year"
     filter_cols:
       - "Vaccine"
     subsets:
       - filter: "Vaccine == 'HepB1'"
-        input_cols:
+        input:
           - "Numerator"
           - "Denominator"
         input_ignore_vals:
           - "-2222"
           - "-4444"
-        input_transforms:
+        transform:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        sum_cols:
+        sum:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        output_cols:
+        output:
           - "HepB1 Coverage"
-        output_hxltags:
+        output_hxl:
           - "#population+hepb1+pct+vaccinated"
       - filter: "Vaccine == 'HepB2'"
-        input_cols:
+        input:
           - "Numerator"
           - "Denominator"
         input_ignore_vals:
           - "-2222"
           - "-4444"
-        input_transforms:
+        transform:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        sum_cols:
+        sum:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        output_cols:
+        output:
           - "HepB2 Coverage"
-        output_hxltags:
+        output_hxl:
           - "#population+hepb2+pct+vaccinated"
       - filter: "Vaccine == 'HepB3'"
-        input_cols:
+        input:
           - "Numerator"
           - "Denominator"
         input_ignore_vals:
           - "-2222"
           - "-4444"
-        input_transforms:
+        transform:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        sum_cols:
+        sum:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        output_cols:
+        output:
           - "HepB3 Coverage"
-        output_hxltags:
+        output_hxl:
           - "#population+hepb3+pct+vaccinated"
       - filter: "Vaccine == 'IPV1'"
-        input_cols:
+        input:
           - "Numerator"
           - "Denominator"
         input_ignore_vals:
           - "-2222"
           - "-4444"
-        input_transforms:
+        transform:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        sum_cols:
+        sum:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        output_cols:
+        output:
           - "IPV1 Coverage"
-        output_hxltags:
+        output_hxl:
           - "#population+ipv1+pct+vaccinated"
       - filter: "Vaccine == 'MCV1'"
-        input_cols:
+        input:
           - "Numerator"
           - "Denominator"
         input_ignore_vals:
           - "-2222"
           - "-4444"
-        input_transforms:
+        transform:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        sum_cols:
+        sum:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        output_cols:
+        output:
           - "MCV1 Coverage"
-        output_hxltags:
+        output_hxl:
           - "#population+mcv1+pct+vaccinated"
       - filter: "Vaccine == 'MCV2'"
-        input_cols:
+        input:
           - "Numerator"
           - "Denominator"
         input_ignore_vals:
           - "-2222"
           - "-4444"
-        input_transforms:
+        transform:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        sum_cols:
+        sum:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        output_cols:
+        output:
           - "MCV2 Coverage"
-        output_hxltags:
+        output_hxl:
           - "#population+mcv2+pct+vaccinated"
       - filter: "Vaccine == 'Pol1'"
-        input_cols:
+        input:
           - "Numerator"
           - "Denominator"
         input_ignore_vals:
           - "-2222"
           - "-4444"
-        input_transforms:
+        transform:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        sum_cols:
+        sum:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        output_cols:
+        output:
           - "Pol1 Coverage"
-        output_hxltags:
+        output_hxl:
           - "#population+pct+pol1+vaccinated"
       - filter: "Vaccine == 'Pol2'"
-        input_cols:
+        input:
           - "Numerator"
           - "Denominator"
         input_ignore_vals:
           - "-2222"
           - "-4444"
-        input_transforms:
+        transform:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        sum_cols:
+        sum:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        output_cols:
+        output:
           - "Pol2 Coverage"
-        output_hxltags:
+        output_hxl:
           - "#population+pct+pol2+vaccinated"
       - filter: "Vaccine == 'Pol3'"
-        input_cols:
+        input:
           - "Numerator"
           - "Denominator"
         input_ignore_vals:
           - "-2222"
           - "-4444"
-        input_transforms:
+        transform:
           Numerator: "get_numeric_if_possible(Numerator)"
           Denominator: "get_numeric_if_possible(Denominator)"
-        sum_cols:
+        sum:
           - formula: "get_fraction_str(Numerator, Denominator)"
             mustbepopulated: True
-        output_cols:
+        output:
           - "Pol3 Coverage"
-        output_hxltags:
+        output_hxl:
           - "#population+pct+pol3+vaccinated"
   gam:
     format: "xlsx"
@@ -1073,16 +1044,16 @@ scraper_subnational:
         new: "Region Name"
       - original: "Region {{1}} Point Estimate"
         new: "Region Point Estimate"
-    adm_cols:
+    admin:
       - "ISO"
       - "Region Name"
-    date_col: "Year*"
+    date: "Year*"
     date_type: "year"
-    input_cols:
+    input:
       - "Region Point Estimate"
-    output_cols:
+    output:
       - "Malnutrition Estimate"
-    output_hxltags:
+    output_hxl:
       - "#severity+malnutrition+num+subnational"
 
 whowhatwhere:

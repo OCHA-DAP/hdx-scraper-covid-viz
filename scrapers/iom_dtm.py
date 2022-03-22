@@ -83,5 +83,5 @@ class IOMDTM(BaseScraper):
                 logger.error(f"PCode {pcode} in {countryiso3} does not exist!")
             else:
                 idps[pcode] = sum(idpsdict[countrypcode])
-        self.datasetinfo["date"] = self.today
+        self.datasetinfo["source_date"] = self.today
         self.datasetinfo["source_url"] = iom_url
