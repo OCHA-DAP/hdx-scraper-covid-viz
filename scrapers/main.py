@@ -191,7 +191,6 @@ def get_indicators(
         "regional",
         RegionLookups.gho_iso3_to_region,
         runner,
-        use_hxl=False,
     )
     regional_names_gho = runner.add_customs(regional_scrapers_gho, add_to_run=True)
     regional_scrapers_hrp = Aggregator.get_scrapers(
@@ -200,12 +199,11 @@ def get_indicators(
         "regional",
         RegionLookups.hrp_iso3_to_region,
         runner,
-        use_hxl=False,
     )
     regional_names_hrp = runner.add_customs(regional_scrapers_hrp, add_to_run=True)
     regional_names = list()
     for name in regional_names_gho:
-        if "nochildrensam" in name:
+        if name == "affected_children_sam_regional":
             regional_names.extend(regional_names_hrp)
         regional_names.append(name)
     runner.run(
