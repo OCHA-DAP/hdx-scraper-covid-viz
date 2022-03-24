@@ -1095,10 +1095,10 @@ scraper_global:
           - "#value+cerf+funding+gm4+total+usd"
   contributions:
     source:
-      "#value+cbpf+funding+total+usd": "CBPF"
+      "#value+cbpf+contributions+total+usd": "CBPF"
       "default_source": "CERF"
     source_url:
-      "#value+cbpf+funding+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+      "#value+cbpf+contributions+total+usd": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
       "default_url": "https://data.humdata.org/dataset/cerf-allocations"
     dataset: "cerf-allocations"
     url: "https://cbpfgms.github.io/pfbi-data/download/pfmb_contributions.csv"
