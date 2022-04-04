@@ -690,6 +690,8 @@ scraper_national:
       - "GAVI CDS (early access) Disbursed"
       - "GAVI CDS (needs based) Disbursed"
       - "TOTAL (WB+GAVI) ($m)"
+    input_ignore_vals:
+      - "#REF!"
     transform:
       "Amount ($m)": "get_numeric_if_possible(Amount ($m))"
       "GAVI CDS (early access) Approved": "get_numeric_if_possible(GAVI CDS (early access) Approved)"
