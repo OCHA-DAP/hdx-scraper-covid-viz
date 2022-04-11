@@ -201,11 +201,6 @@ def get_indicators(
         runner,
     )
     regional_names_hrp = runner.add_customs(regional_scrapers_hrp, add_to_run=True)
-    regional_names = list()
-    for name in regional_names_gho:
-        if name == "affected_children_sam_regional":
-            regional_names.extend(regional_names_hrp)
-        regional_names.append(name)
     runner.run(
         prioritise_scrapers=(
             "population_national",
@@ -213,11 +208,17 @@ def get_indicators(
             "population_regional",
         )
     )
-    regional_names.extend(["education_closures", "education_enrolment"])
 
+    regional_names = list()
+    for name in regional_names_gho:
+        if name == "affected_children_sam_regional":
+            regional_names.extend(regional_names_hrp)
+        regional_names.append(name)
+    regional_names.extend(["education_closures", "education_enrolment"])
     regional_rows = get_regional_rows(
         runner, regional_names, RegionLookups.regions + ["global"]
     )
+
     if "national" in tabs:
         update_national(
             runner,
