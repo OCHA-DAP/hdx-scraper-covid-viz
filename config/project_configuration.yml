@@ -84,10 +84,10 @@ additional_sources:
     force_date_today: True
     source_url: "https://data.humdata.org/search?q=(name:ipc-country-data%20OR%20name:cadre-harmonise)"
 
-monthly_report:
-  hxltag: "#meta+monthly+report"
+report:
+  hxltag: "#meta+report"
   dataset: "repository-for-pdf-files"
-  resource: "OCHA_data_explorer_monthly_report.pdf"
+  resource: "OCHA_data_explorer_quarterly_report.pdf"
 
 # national
 scraper_national:

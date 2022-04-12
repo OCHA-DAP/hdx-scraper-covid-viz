@@ -2,10 +2,10 @@ from hdx.data.dataset import Dataset
 from hdx.utilities.dateparse import parse_date
 
 
-def get_monthly_report_source(configuration):
-    monthly_report_configuration = configuration["monthly_report"]
-    dataset = monthly_report_configuration["dataset"]
-    resource = monthly_report_configuration["resource"]
+def get_report_source(configuration):
+    report_configuration = configuration["report"]
+    dataset = report_configuration["dataset"]
+    resource = report_configuration["resource"]
     if isinstance(dataset, str):
         dataset = Dataset.read_from_hdx(dataset)
         resource_name = resource
@@ -15,11 +15,11 @@ def get_monthly_report_source(configuration):
                 resource = res
                 break
         if not resource:
-            raise ValueError("No monthly report resource found!")
+            raise ValueError("No report resource found!")
     last_modified = parse_date(resource["last_modified"]).strftime("%Y-%m-%d")
 
     return (
-        monthly_report_configuration["hxltag"],
+        report_configuration["hxltag"],
         last_modified,
         dataset["dataset_source"],
         resource["url"],

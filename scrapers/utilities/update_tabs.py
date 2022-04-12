@@ -2,7 +2,7 @@ import logging
 
 from hdx.location.country import Country
 
-from ..monthly_report import get_monthly_report_source
+from ..report import get_report_source
 
 logger = logging.getLogger(__name__)
 
@@ -114,5 +114,5 @@ def update_sources(runner, names, configuration, outputs):
     sources = runner.get_sources(
         names, additional_sources=configuration["additional_sources"]
     )
-    sources.append(get_monthly_report_source(configuration))
+    sources.append(get_report_source(configuration))
     update_tab(outputs, "sources", list(sources_headers) + sources)

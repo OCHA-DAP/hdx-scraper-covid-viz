@@ -72,13 +72,13 @@ additional_sources:
     source_date: "2021-05-03"
     source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSzJzuyVt9i_mkRQ2HbxrUl2Lx2VIhkTHQM-laE8NyhQTy70zQTCuFS3PXbhZGAt1l2bkoA4_dAoAP/pub?gid=1565063847&single=true&output=csv"
 
-monthly_report:
-  hxltag: "#meta+monthly+report"
+report:
+  hxltag: "#meta+report"
   dataset:
     dataset_source: "OCHA Centre for Humanitarian Data"
   resource:
-    url: "http://monthly_report"
-    last_modified: "2021-06-15T15:08:00.995050"
+    url: "http://report"
+    last_modified: "2022-04-11T20:45:25.956555"
 
 # national
 scraper_national:
