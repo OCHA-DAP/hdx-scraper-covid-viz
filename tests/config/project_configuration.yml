@@ -763,16 +763,19 @@ ipc:
   dataset: "ipc-country-data"
 
 scraper_subnational:
-  ghrp:
-    source: "Multiple sources"
+  population:
+    source: "WorldPop"
+    source_url: "https://data.humdata.org/search?organization=worldpop&q=%22population%20counts%22"
+    dataset: "admin-1-population-statistics-for-data-explorers"
+    url: "tests/fixtures/population_by_adm1.csv"
     format: "csv"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3_uBOV_uRDSxOggfBus_pkCs6Iw9lm0nAxzwG14YF_frpm13WPKiM1oNnQ9zrUA/pub?gid=1565793974&single=true&output=csv"
-    dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
     admin:
       - "alpha_3"
       - "ADM1_PCODE"
     input:
-      - "POPULATION"
+      - "Population"
+    transform:
+      "Population": "get_numeric_if_possible(Population)"
     output:
       - "Population"
     output_hxl:
@@ -836,13 +839,16 @@ scraper_subnational:
       - "#affected+ch+food+analysed+pct"
   healthfac:
     source: "HOT"
+    dataset: "admin-1-health-facilities-for-data-explorers"
+    url: "tests/fixtures/health_facilities_by_adm1.csv"
     format: "csv"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT-266S0iZDEvcQmxC2i7LNHWi4fUXtDkrwp8D6NMyHArxnegAYO9XXVnhuHaWvdxaoZTq7M6yGLaPX/pub?gid=1620744216&single=true&output=csv"
     admin:
       - "alpha_3"
       - "ADM1_PCODE"
     input:
-      - "NUMPOINTS"
+      - "Health_Facilities"
+    transform:
+      "Health_Facilities": "get_numeric_if_possible(Health_Facilities)"
     output:
       - "NoHealthFacilities"
     output_hxl:
@@ -1475,9 +1481,8 @@ admin1_info:
 - {country: Nigeria, iso3: NGA, pcode: NG035, name: Taraba}
 - {country: Nigeria, iso3: NGA, pcode: NG036, name: Yobe}
 - {country: Nigeria, iso3: NGA, pcode: NG037, name: Zamfara}
-- {country: State of Palestine, iso3: PSE, pcode: PS1, name: Gaza Strip}
-- {country: State of Palestine, iso3: PSE, pcode: PS2, name: No Mans Land}
-- {country: State of Palestine, iso3: PSE, pcode: PS3, name: West Bank}
+- {country: State of Palestine, iso3: PSE, pcode: PS01, name: West Bank}
+- {country: State of Palestine, iso3: PSE, pcode: PS02, name: Gaza Strip}
 - {country: Sudan, iso3: SDN, pcode: SD01, name: Khartoum}
 - {country: Sudan, iso3: SDN, pcode: SD02, name: North Darfur}
 - {country: Sudan, iso3: SDN, pcode: SD03, name: South Darfur}
