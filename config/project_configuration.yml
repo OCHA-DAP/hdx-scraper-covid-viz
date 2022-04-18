@@ -1193,16 +1193,15 @@ scraper_subnational:
   population:
     source: "WorldPop"
     source_url: "https://data.humdata.org/search?organization=worldpop&q=%22population%20counts%22"
-    dataset: "global-humanitarian-response-plan-covid-19-administrative-boundaries-and-population-statistics"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3_uBOV_uRDSxOggfBus_pkCs6Iw9lm0nAxzwG14YF_frpm13WPKiM1oNnQ9zrUA/pub?gid=1565793974&single=true&output=csv"
+    dataset: "admin-1-population-statistics-for-data-explorers"
     format: "csv"
     admin:
       - "alpha_3"
       - "ADM1_PCODE"
     input:
-      - "POPULATION"
+      - "Population"
     transform:
-      "POPULATION": "get_numeric_if_possible(POPULATION)"
+      "Population": "get_numeric_if_possible(Population)"
     output:
       - "Population"
     output_hxl:
@@ -1259,13 +1258,15 @@ scraper_subnational:
       - "#affected+ch+food+analysed+num"
   healthfac:
     source: "HOT"
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT-266S0iZDEvcQmxC2i7LNHWi4fUXtDkrwp8D6NMyHArxnegAYO9XXVnhuHaWvdxaoZTq7M6yGLaPX/pub?gid=1620744216&single=true&output=csv"
+    dataset: "admin-1-health-facilities-for-data-explorers"
     format: "csv"
     admin:
       - "alpha_3"
       - "ADM1_PCODE"
     input:
-      - "NUMPOINTS"
+      - "Health_Facilities"
+    transform:
+      "Health_Facilities": "get_numeric_if_possible(Health_Facilities)"
     output:
       - "NoHealthFacilities"
     output_hxl:
@@ -1951,9 +1952,8 @@ admin1_info:
   - {country: South Sudan, iso3: SSD, pcode: SS08, name: Warrap}
   - {country: South Sudan, iso3: SSD, pcode: SS09, name: Western Bahr El Ghazal}
   - {country: South Sudan, iso3: SSD, pcode: SS10, name: Western Equatoria}
-  - {country: State of Palestine, iso3: PSE, pcode: PS1, name: Gaza Strip}
-  - {country: State of Palestine, iso3: PSE, pcode: PS2, name: No Mans Land}
-  - {country: State of Palestine, iso3: PSE, pcode: PS3, name: West Bank}
+  - {country: State of Palestine, iso3: PSE, pcode: PS01, name: West Bank}
+  - {country: State of Palestine, iso3: PSE, pcode: PS02, name: Gaza Strip}
   - {country: Sudan, iso3: SDN, pcode: SD19, name: Abyei Pca}
   - {country: Sudan, iso3: SDN, pcode: SD15, name: Aj Jazirah}
   - {country: Sudan, iso3: SDN, pcode: SD08, name: Blue Nile}
