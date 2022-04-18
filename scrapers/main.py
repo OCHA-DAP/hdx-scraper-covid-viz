@@ -68,7 +68,7 @@ def get_indicators(
         regional_configuration, today, downloader, gho_countries, hrp_countries
     )
     if fallbacks_root is not None:
-        fallbacks_path = join(fallbacks_root, configuration["json"]["filepath"])
+        fallbacks_path = join(fallbacks_root, configuration["json"]["output"])
         levels_mapping = {
             "global": "world_data",
             "regional": "regional_data",

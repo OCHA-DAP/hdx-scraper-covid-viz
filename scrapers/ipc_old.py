@@ -47,7 +47,7 @@ class IPC(BaseScraper):
                     {
                         "url": url % (self.today.year, page, countryiso2),
                         "sheet": "IPC",
-                        "headers": [4, 6],
+                        "headers": [4, 5, 6],
                         "format": "xlsx",
                     },
                     fill_merged_cells=True,
@@ -83,8 +83,8 @@ class IPC(BaseScraper):
         today = self.today.date()
         analysis_period = ""
         for projection in projections:
-            current_period = row[f"{projection} Analysis Period"]
-            if current_period == "":
+            current_period = row[f"{projection}  Analysis Period"]
+            if current_period is None:
                 continue
             start = datetime.strptime(current_period[0:8], "%b %Y").date()
             end = datetime.strptime(current_period[11:19], "%b %Y").date()
@@ -94,7 +94,7 @@ class IPC(BaseScraper):
                 break
         if analysis_period == "":
             for projection in reversed(projections):
-                if row[f"{projection} Analysis Period"] != "":
+                if row[f"{projection}  Analysis Period"] is not None:
                     analysis_period = projection
                     break
         return analysis_period, start.strftime("%Y-%m-%d"), end.strftime("%Y-%m-%d")
