@@ -134,7 +134,6 @@ def main(
                     countries_override,
                     errors_on_exit,
                 )
-                jsonout.add_additional_json(downloader, today=today)
                 jsonout.save(countries_to_save=countries_to_save)
                 excelout.save()
 

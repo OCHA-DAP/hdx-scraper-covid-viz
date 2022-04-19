@@ -57,7 +57,7 @@ class FoodPrices(BaseScraper):
                     if startdate:
                         parameters["startDate"] = startdate
                     try:
-                        json = self.retriever.retrieve_json(
+                        json = self.retriever.download_json(
                             url,
                             f"{filename}_{countryiso3}_{page}.json",
                             f"{filename} for {countryiso3} page {page}",

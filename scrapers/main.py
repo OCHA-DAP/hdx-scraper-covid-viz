@@ -14,7 +14,7 @@ from .food_prices import FoodPrices
 from .fts import FTS
 from .inform import Inform
 from .iom_dtm import IOMDTM
-from .ipc_old import IPC
+from .ipc import IPC
 from .unhcr import UNHCR
 from .unhcr_myanmar_idps import idps_post_run
 from .utilities.region_lookups import RegionLookups
@@ -68,7 +68,7 @@ def get_indicators(
         regional_configuration, today, downloader, gho_countries, hrp_countries
     )
     if fallbacks_root is not None:
-        fallbacks_path = join(fallbacks_root, configuration["json"]["filepath"])
+        fallbacks_path = join(fallbacks_root, configuration["json"]["output"])
         levels_mapping = {
             "global": "world_data",
             "regional": "regional_data",
@@ -112,7 +112,7 @@ def get_indicators(
         gho_countries,
         RegionLookups.gho_iso3_to_region_nohrp,
     )
-    ipc = IPC(configuration["ipc"], today, gho_countries, adminone, downloader)
+    ipc = IPC(configuration["ipc"], today, gho_countries, adminone, other_auths)
 
     fts = FTS(configuration["fts"], today, outputs, gho_countries, basic_auths)
     food_prices = FoodPrices(
