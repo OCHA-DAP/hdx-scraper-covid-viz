@@ -38,17 +38,14 @@ class VaccinationCampaigns(BaseScraper):
             status = None
             for key in row:
                 hxltag = hxlrow[key]
-                if not hxltag:
+                if hxltag == "":
                     continue
                 value = row[key]
                 newrow[hxlrow[key]] = value
                 if hxltag == "#country+code":
                     countryiso = value
                 elif hxltag == "#status+name":
-                    if value:
-                        status = value.lower()
-                    else:
-                        status = None
+                    status = value.lower()
             if not countryiso or countryiso not in self.countryiso3s:
                 continue
             if not status or status == "completed as planned":

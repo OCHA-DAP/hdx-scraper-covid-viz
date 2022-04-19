@@ -16,8 +16,8 @@ googlesheets:
   scratch: "https://docs.google.com/spreadsheets/d/1f9GpnTvgY6sTMYkj8ynctHTXezRKQk49udIoPQ5-3Hc/edit"
 
 json:
-  output: "all.json"
-  additional_outputs:
+  filepath: "all.json"
+  additional:
     - filepath: "out.json" # used by the covid viz and doesn't include unneeded timeseries
       remove:
         - "covid_series_flat"
@@ -98,7 +98,7 @@ scraper_national:
     format: "xls"
     sheet: "Data"
     headers: 3
-    prefilter: "Value is not None"
+    prefilter: "Value != ''"
     admin:
       - "Country Code"
     date: "Year"
@@ -234,7 +234,7 @@ scraper_national:
           - "CBPFFunding"
         output_hxl:
           - "#value+cbpf+funding+total+usd"
-      - filter: "FundType == 'CBPF' and GenderMarker is None"
+      - filter: "FundType == 'CBPF' and GenderMarker == ''"
         input:
           - "Budget"
         transform:
@@ -311,7 +311,7 @@ scraper_national:
           - "CERFFunding"
         output_hxl:
           - "#value+cerf+funding+total+usd"
-      - filter: "FundType == 'CERF' and GenderMarker is None"
+      - filter: "FundType == 'CERF' and GenderMarker == ''"
         input:
           - "Budget"
         transform:
@@ -656,7 +656,7 @@ scraper_national:
     dataset: "cost-of-the-food-basket"
     url: "https://wfp.sharepoint.com/:x:/s/EconomicMarketAnalysis/EVeSfcSQAvtGtAE3aseaNHoB5uENuNW4anaJ84ryqQI8Qw?download=1"
     format: "csv"
-    prefilter: "MMFPSNDataLevel.strip() == 'National' and MMFPSNTotImpactQuarterlyChange is not None"
+    prefilter: "MMFPSNDataLevel.strip() == 'National' and MMFPSNTotImpactQuarterlyChange != ''"
     sort:
       reverse: True
       keys:
@@ -952,7 +952,7 @@ scraper_global:
           - "CBPFFunding"
         output_hxl:
           - "#value+cbpf+funding+total+usd"
-      - filter: "FundType == 'CBPF' and GenderMarker is None"
+      - filter: "FundType == 'CBPF' and GenderMarker == ''"
         input:
           - "Budget"
         transform:
@@ -1029,7 +1029,7 @@ scraper_global:
           - "CERFFunding"
         output_hxl:
           - "#value+cerf+funding+total+usd"
-      - filter: "FundType == 'CERF' and GenderMarker is None"
+      - filter: "FundType == 'CERF' and GenderMarker == ''"
         input:
           - "Budget"
         transform:
@@ -1187,7 +1187,7 @@ scraper_global:
 # subnational
 ipc:
   dataset: "ipc-country-data"
-  url: "https://api.ipcinfo.org"
+  url: "http://map.ipcinfo.org/api/public/population-tracking-tool/data/2017,%d/?page=%d&limit=1&condition=A&export=true&country=%s"
 
 scraper_subnational:
   population:

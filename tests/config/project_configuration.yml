@@ -10,8 +10,8 @@ tabs:
 
 
 json:
-  output: "test_scraper_all.json"
-  additional_outputs:
+  filepath: "test_scraper_all.json"
+  additional:
     - filepath: "test_scraper.json" # used by the covid viz and doesn't include unneeded timeseries
       remove:
         - "covid_series_flat"
