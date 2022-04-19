@@ -1187,7 +1187,7 @@ scraper_global:
 # subnational
 ipc:
   dataset: "ipc-country-data"
-  url: "http://map.ipcinfo.org/api/public/population-tracking-tool/data/2017,%d/?page=%d&limit=1&condition=A&export=true&country=%s"
+  url: "https://api.ipcinfo.org"
 
 scraper_subnational:
   population:
