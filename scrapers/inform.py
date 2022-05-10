@@ -5,13 +5,12 @@ from hdx.scraper.base_scraper import BaseScraper
 from hdx.scraper.utilities.readers import read_hdx_metadata
 from hdx.utilities.dateparse import default_date, parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
-from hdx.utilities.downloader import Download
 
 logger = logging.getLogger(__name__)
 
 
 class Inform(BaseScraper):
-    def __init__(self, datasetinfo, today, countryiso3s, other_auths):
+    def __init__(self, datasetinfo, today, countryiso3s):
         super().__init__(
             "inform",
             datasetinfo,
@@ -32,14 +31,12 @@ class Inform(BaseScraper):
         )
         self.today = today
         self.countryiso3s = countryiso3s
-        self.other_auths = other_auths
 
-    def download_data(self, date, base_url, input_cols, downloader):
+    def download_data(self, date, base_url, input_cols, retriever):
         url = base_url % date.strftime("%b%Y")
         countries_index = dict()
         while url:
-            r = downloader.download(url)
-            json = r.json()
+            json = retriever.download_json(url)
             for result in json["results"]:
                 countryiso3 = result["iso3"]
                 if len(countryiso3) != 1:
@@ -71,9 +68,9 @@ class Inform(BaseScraper):
             url = json["next"]
         return countries_index
 
-    def get_columns_by_date(self, date, base_url, downloader, crisis_types, not_found):
+    def get_columns_by_date(self, date, base_url, retriever, crisis_types, not_found):
         input_col = self.get_headers("national")[0][0]
-        countries_index = self.download_data(date, base_url, [input_col], downloader)
+        countries_index = self.download_data(date, base_url, [input_col], retriever)
         valuedict = dict()
         for countryiso3, type_of_crisis in crisis_types.items():
             country_index = countries_index.get(countryiso3)
@@ -88,9 +85,9 @@ class Inform(BaseScraper):
             valuedict[countryiso3] = val
         return valuedict
 
-    def get_latest_columns(self, date, base_url, downloader):
+    def get_latest_columns(self, date, base_url, retriever):
         input_cols = self.get_headers("national")[0][:2]
-        countries_index = self.download_data(date, base_url, input_cols, downloader)
+        countries_index = self.download_data(date, base_url, input_cols, retriever)
         valuedicts = self.get_values("national")[:2]
         crisis_types = dict()
         max_date = default_date
@@ -112,26 +109,23 @@ class Inform(BaseScraper):
     def run(self) -> None:
         read_hdx_metadata(self.datasetinfo)
         base_url = self.datasetinfo["url"]
-        with Download(
-            rate_limit={"calls": 1, "period": 0.1},
-            headers={"Authorization": self.other_auths[self.name]},
-        ) as downloader:
-            start_date = self.today - relativedelta(months=1)
-            valuedictsfortoday, crisis_types, max_date = self.get_latest_columns(
-                start_date, base_url, downloader
+        retriever = self.get_retriever(self.name)
+        start_date = self.today - relativedelta(months=1)
+        valuedictsfortoday, crisis_types, max_date = self.get_latest_columns(
+            start_date, base_url, retriever
+        )
+        severity_indices = [valuedictsfortoday[0]]
+        not_found = set()
+        for i in range(1, 6, 1):
+            prevdate = start_date - relativedelta(months=i)
+            valuedictfordate = self.get_columns_by_date(
+                prevdate,
+                base_url,
+                retriever,
+                crisis_types,
+                not_found,
             )
-            severity_indices = [valuedictsfortoday[0]]
-            not_found = set()
-            for i in range(1, 6, 1):
-                prevdate = start_date - relativedelta(months=i)
-                valuedictfordate = self.get_columns_by_date(
-                    prevdate,
-                    base_url,
-                    downloader,
-                    crisis_types,
-                    not_found,
-                )
-                severity_indices.append(valuedictfordate)
+            severity_indices.append(valuedictfordate)
 
         trend_valuedict = self.get_values("national")[2]
         for countryiso3 in severity_indices[0]:

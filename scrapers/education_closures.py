@@ -9,9 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 class EducationClosures(BaseScraper):
-    def __init__(
-        self, datasetinfo: Dict, today, countryiso3s, gho_iso3_to_region, downloader
-    ):
+    def __init__(self, datasetinfo: Dict, today, countryiso3s, iso3_to_region):
         super().__init__(
             "education_closures",
             datasetinfo,
@@ -25,8 +23,7 @@ class EducationClosures(BaseScraper):
         )
         self.today = today
         self.countryiso3s = countryiso3s
-        self.gho_iso3_to_region = gho_iso3_to_region
-        self.downloader = downloader
+        self.iso3_to_region = iso3_to_region
         self.fully_closed = None
 
     @staticmethod
@@ -40,7 +37,10 @@ class EducationClosures(BaseScraper):
         return fully_closed
 
     def run(self) -> None:
-        closures_headers, closures_iterator = read(self.downloader, self.datasetinfo)
+        closures_headers, closures_iterator = read(
+            self.get_retriever(),
+            self.datasetinfo,
+        )
         closures = self.get_values("national")[0]
         closed_countries = self.get_values("regional")[0]
         country_dates = dict()
@@ -60,7 +60,7 @@ class EducationClosures(BaseScraper):
             closures[countryiso] = row["Status"]
         self.fully_closed = self.get_fully_closed(closures)
         for countryiso in closures:
-            for region in self.gho_iso3_to_region[countryiso]:
+            for region in self.iso3_to_region[countryiso]:
                 if countryiso in self.fully_closed:
                     closed_countries[region] = closed_countries.get(region, 0) + 1
 

@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 class CovaxDeliveries(BaseScraper):
-    def __init__(self, datasetinfo, today, countryiso3s, downloader):
+    def __init__(self, datasetinfo, today, countryiso3s):
         super().__init__(
             "covax_deliveries",
             datasetinfo,
@@ -26,10 +26,11 @@ class CovaxDeliveries(BaseScraper):
         )
         self.today = today
         self.countryiso3s = countryiso3s
-        self.downloader = downloader
 
     def run(self) -> None:
-        headers, iterator = read(self.downloader, self.datasetinfo, today=self.today)
+        headers, iterator = read(
+            self.get_retriever(), self.datasetinfo, today=self.today
+        )
         hxlrow = next(iterator)
         doses_lookup = dict()
         for row in iterator:

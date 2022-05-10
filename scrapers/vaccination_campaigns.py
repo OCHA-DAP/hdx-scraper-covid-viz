@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class VaccinationCampaigns(BaseScraper):
-    def __init__(self, datasetinfo, today, countryiso3s, downloader, outputs):
+    def __init__(self, datasetinfo, today, countryiso3s, outputs):
         super().__init__(
             "vaccination_campaigns",
             datasetinfo,
@@ -21,12 +21,11 @@ class VaccinationCampaigns(BaseScraper):
         )
         self.today = today
         self.countryiso3s = countryiso3s
-        self.downloader = downloader
         self.outputs = outputs
 
     def run(self):
         headers, iterator = read_hdx(
-            self.downloader, self.datasetinfo, today=self.today
+            self.get_retriever(), self.datasetinfo, today=self.today
         )
         hxlrow = next(iterator)
         campaigns_per_country = dict()

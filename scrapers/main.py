@@ -37,12 +37,9 @@ logger = logging.getLogger(__name__)
 def get_indicators(
     configuration,
     today,
-    retriever,
     outputs,
     tabs,
     scrapers_to_run=None,
-    basic_auths=dict(),
-    other_auths=dict(),
     countries_override=None,
     errors_on_exit=None,
     use_live=True,
@@ -61,12 +58,9 @@ def get_indicators(
         gho_countries = configuration["gho"]
         hrp_countries = configuration["HRPs"]
     configuration["countries_fuzzy_try"] = hrp_countries
-    downloader = retriever.downloader
     adminone = AdminOne(configuration)
     regional_configuration = configuration["regional"]
-    RegionLookups.load(
-        regional_configuration, today, downloader, gho_countries, hrp_countries
-    )
+    RegionLookups.load(regional_configuration, today, gho_countries, hrp_countries)
     if fallbacks_root is not None:
         fallbacks_path = join(fallbacks_root, configuration["json"]["output"])
         levels_mapping = {
@@ -83,8 +77,6 @@ def get_indicators(
     runner = Runner(
         gho_countries,
         adminone,
-        downloader,
-        basic_auths,
         today,
         errors_on_exit=errors_on_exit,
         scrapers_to_run=scrapers_to_run,
@@ -112,37 +104,32 @@ def get_indicators(
         gho_countries,
         RegionLookups.gho_iso3_to_region_nohrp,
     )
-    ipc = IPC(configuration["ipc"], today, gho_countries, adminone, other_auths)
+    ipc = IPC(configuration["ipc"], today, gho_countries, adminone)
 
-    fts = FTS(configuration["fts"], today, outputs, gho_countries, basic_auths)
-    food_prices = FoodPrices(
-        configuration["food_prices"], today, gho_countries, retriever, basic_auths
-    )
+    fts = FTS(configuration["fts"], today, outputs, gho_countries)
+    food_prices = FoodPrices(configuration["food_prices"], today, gho_countries)
     vaccination_campaigns = VaccinationCampaigns(
         configuration["vaccination_campaigns"],
         today,
         gho_countries,
-        downloader,
         outputs,
     )
-    unhcr = UNHCR(configuration["unhcr"], today, gho_countries, downloader)
-    inform = Inform(configuration["inform"], today, gho_countries, other_auths)
+    unhcr = UNHCR(configuration["unhcr"], today, gho_countries)
+    inform = Inform(configuration["inform"], today, gho_countries)
     covax_deliveries = CovaxDeliveries(
-        configuration["covax_deliveries"], today, gho_countries, downloader
+        configuration["covax_deliveries"], today, gho_countries
     )
     education_closures = EducationClosures(
         configuration["education_closures"],
         today,
         gho_countries,
         RegionLookups.gho_iso3_to_region,
-        downloader,
     )
     education_enrolment = EducationEnrolment(
         configuration["education_enrolment"],
         education_closures,
         gho_countries,
         RegionLookups.gho_iso3_to_region,
-        downloader,
     )
     national_names = configurable_scrapers["national"] + [
         "food_prices",
@@ -157,10 +144,8 @@ def get_indicators(
     ]
     national_names.insert(1, "who_covid")
 
-    whowhatwhere = WhoWhatWhere(
-        configuration["whowhatwhere"], today, adminone, downloader
-    )
-    iomdtm = IOMDTM(configuration["iom_dtm"], today, adminone, downloader)
+    whowhatwhere = WhoWhatWhere(configuration["whowhatwhere"], today, adminone)
+    iomdtm = IOMDTM(configuration["iom_dtm"], today, adminone)
     global_names = ["who_covid", "fts"] + configurable_scrapers["global"]
 
     subnational_names = configurable_scrapers["subnational"] + [

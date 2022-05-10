@@ -4,12 +4,13 @@ from os.path import join
 from dateutil.relativedelta import relativedelta
 from hdx.scraper.base_scraper import BaseScraper
 from hdx.utilities.dateparse import parse_date
+from hdx.utilities.retriever import Retrieve
 
 logger = logging.getLogger(__name__)
 
 
 class UNHCR(BaseScraper):
-    def __init__(self, datasetinfo, today, countryiso3s, downloader):
+    def __init__(self, datasetinfo, today, countryiso3s):
         super().__init__(
             "unhcr",
             datasetinfo,
@@ -22,10 +23,10 @@ class UNHCR(BaseScraper):
         )
         self.today = today
         self.countryiso3s = countryiso3s
-        self.downloader = downloader
 
     def run(self):
-        iso3tocode = self.downloader.download_tabular_key_value(
+        retriever = Retrieve.get_retriever()
+        iso3tocode = retriever.downloader.download_tabular_key_value(
             join("config", "UNHCR_geocode.csv")
         )
         base_url = self.datasetinfo["url"]
@@ -41,8 +42,8 @@ class UNHCR(BaseScraper):
             for population_collection in population_collections:
                 url = base_url % (population_collection, code)
                 logger.info(f"Downloading {url}")
-                r = self.downloader.download(url)
-                data = r.json()["data"][0]
+                json = retriever.download_json(url)
+                data = json["data"][0]
                 individuals = data["individuals"]
                 if individuals is None:
                     continue

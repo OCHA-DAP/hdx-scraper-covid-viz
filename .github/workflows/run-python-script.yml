@@ -27,8 +27,9 @@ jobs:
         PREPREFIX: ${{ secrets.PREPREFIX }}
         GSHEET_AUTH: ${{ secrets.GSHEET_AUTH }}
         UPDATESHEETS: ${{ secrets.UPDATESHEETS }}
+        HEADER_AUTHS: ${{ secrets.HEADER_AUTHS }}
         BASIC_AUTHS: ${{ secrets.BASIC_AUTHS }}
-        OTHER_AUTHS: ${{ secrets.OTHER_AUTHS }}
+        PARAM_AUTHS: ${{ secrets.PARAM_AUTHS }}
       run: |
         python run.py
     - name: Commit updated data bundle

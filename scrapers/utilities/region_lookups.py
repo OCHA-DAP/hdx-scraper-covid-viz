@@ -2,6 +2,7 @@ import logging
 
 from hdx.scraper.utilities.readers import read_hdx
 from hdx.utilities.dictandlist import dict_of_sets_add
+from hdx.utilities.retriever import Retrieve
 
 logger = logging.getLogger(__name__)
 
@@ -13,8 +14,13 @@ class RegionLookups:
     regions = None
 
     @classmethod
-    def load(cls, region_config, today, downloader, gho_countries, hrp_countries):
-        _, iterator = read_hdx(downloader, region_config, today=today)
+    def load(cls, region_config, today, gho_countries, hrp_countries):
+        _, iterator = read_hdx(
+            Retrieve.get_retriever(),
+            region_config,
+            today=today,
+            file_prefix="regions",
+        )
         regions = set()
         for row in iterator:
             countryiso = row[region_config["iso3"]]

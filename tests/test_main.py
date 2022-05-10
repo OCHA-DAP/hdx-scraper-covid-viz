@@ -1,21 +1,27 @@
 import filecmp
+import logging
 from os.path import join
 
 import pytest
 from hdx.api.configuration import Configuration
 from hdx.api.locations import Locations
+from hdx.scraper.input import create_retrievers
 from hdx.scraper.outputs.base import BaseOutput
 from hdx.scraper.outputs.json import JsonFile
 from hdx.utilities.dateparse import parse_date
-from hdx.utilities.downloader import Download
+from hdx.utilities.easy_logging import setup_logging
+from hdx.utilities.errors_onexit import ErrorsOnExit
 from hdx.utilities.path import temp_dir
-from hdx.utilities.retriever import Retrieve
+from hdx.utilities.useragent import UserAgent
 from scrapers.main import get_indicators
+
+setup_logging()
 
 
 class TestCovid:
     @pytest.fixture(scope="function")
     def configuration(self):
+        UserAgent.set_global("test")
         Configuration._create(
             hdx_read_only=True,
             hdx_site="prod",
@@ -35,12 +41,16 @@ class TestCovid:
         return join("tests", "fixtures")
 
     def test_get_indicators(self, configuration, folder):
-        with temp_dir(
-            "TestCovidViz", delete_on_success=True, delete_on_failure=False
-        ) as tempdir:
-            with Download(user_agent="test") as downloader:
-                retriever = Retrieve(
-                    downloader, tempdir, folder, tempdir, save=False, use_saved=True
+        with ErrorsOnExit() as errors_on_exit:
+            with temp_dir(
+                "TestCovidViz", delete_on_success=True, delete_on_failure=False
+            ) as temp_folder:
+                create_retrievers(
+                    temp_folder,
+                    join(folder, "input"),
+                    temp_folder,
+                    False,
+                    True,
                 )
                 tabs = configuration["tabs"]
                 noout = BaseOutput(tabs)
@@ -50,7 +60,6 @@ class TestCovid:
                 countries_to_save = get_indicators(
                     configuration,
                     today,
-                    retriever,
                     outputs,
                     tabs,
                     scrapers_to_run=[
@@ -66,10 +75,14 @@ class TestCovid:
                         "access_national",
                         "food_prices",
                     ],
+                    countries_override=None,
+                    errors_on_exit=errors_on_exit,
                     use_live=False,
                     fallbacks_root=None,
                 )
-                filepaths = jsonout.save(tempdir, countries_to_save=countries_to_save)
+                filepaths = jsonout.save(
+                    temp_folder, countries_to_save=countries_to_save
+                )
                 assert filecmp.cmp(filepaths[0], join(folder, "test_scraper_all.json"))
                 assert filecmp.cmp(filepaths[1], join(folder, "test_scraper.json"))
                 assert filecmp.cmp(
@@ -79,48 +92,64 @@ class TestCovid:
                     filepaths[3], join(folder, "test_scraper_covidseries.json")
                 )
 
-    def test_fallbacks(self, configuration, folder):
-        with temp_dir(
-            "TestCovidVizFB", delete_on_success=True, delete_on_failure=False
-        ) as tempdir:
-            with Download(user_agent="test") as downloader:
-                retriever = Retrieve(
-                    downloader, tempdir, folder, tempdir, save=False, use_saved=True
-                )
-                tabs = configuration["tabs"]
-                noout = BaseOutput(tabs)
-                json_configuration = configuration["json"]
-                jsonout = JsonFile(json_configuration, tabs)
-                outputs = {"gsheets": noout, "excel": noout, "json": jsonout}
-                today = parse_date("2021-05-03")
-                countries_to_save = get_indicators(
-                    configuration,
-                    today,
-                    retriever,
-                    outputs,
-                    tabs,
-                    scrapers_to_run=[
-                        "population_national",
-                        "ifi",
-                        "worldhealthorg_national",
-                        "worldhealthorg2_national",
-                        "worldhealthorg_subnational",
-                        "who_covid",
-                        "sadd",
-                        "ctfallbacks",
-                        "cadre_harmonise",
-                        "access_national",
-                        "food_prices",
-                    ],
-                    use_live=False,
-                    fallbacks_root=folder,
-                )
-                filepaths = jsonout.save(tempdir, countries_to_save=countries_to_save)
-                assert filecmp.cmp(filepaths[0], join(folder, "test_scraper_all.json"))
-                assert filecmp.cmp(filepaths[1], join(folder, "test_scraper.json"))
-                assert filecmp.cmp(
-                    filepaths[2], join(folder, "test_scraper_daily.json")
-                )
-                assert filecmp.cmp(
-                    filepaths[3], join(folder, "test_scraper_covidseries.json")
-                )
+    def test_fallbacks(self, caplog, configuration, folder):
+        with pytest.raises(SystemExit):
+            with caplog.at_level(logging.ERROR):
+                with ErrorsOnExit() as errors_on_exit:
+                    with temp_dir(
+                        "TestCovidVizFB",
+                        delete_on_success=True,
+                        delete_on_failure=False,
+                    ) as temp_folder:
+                        create_retrievers(
+                            temp_folder,
+                            join(folder, "input"),
+                            temp_folder,
+                            False,
+                            True,
+                        )
+                        tabs = configuration["tabs"]
+                        noout = BaseOutput(tabs)
+                        json_configuration = configuration["json"]
+                        jsonout = JsonFile(json_configuration, tabs)
+                        outputs = {"gsheets": noout, "excel": noout, "json": jsonout}
+                        today = parse_date("2021-05-03")
+                        countries_to_save = get_indicators(
+                            configuration,
+                            today,
+                            outputs,
+                            tabs,
+                            scrapers_to_run=[
+                                "population_national",
+                                "ifi",
+                                "worldhealthorg_national",
+                                "worldhealthorg2_national",
+                                "worldhealthorg_subnational",
+                                "who_covid",
+                                "sadd",
+                                "ctfallbacks",
+                                "cadre_harmonise",
+                                "access_national",
+                                "food_prices",
+                            ],
+                            countries_override=None,
+                            errors_on_exit=errors_on_exit,
+                            use_live=False,
+                            fallbacks_root=folder,
+                        )
+                        filepaths = jsonout.save(
+                            temp_folder, countries_to_save=countries_to_save
+                        )
+                        assert filecmp.cmp(
+                            filepaths[0], join(folder, "test_scraper_all.json")
+                        )
+                        assert filecmp.cmp(
+                            filepaths[1], join(folder, "test_scraper.json")
+                        )
+                        assert filecmp.cmp(
+                            filepaths[2], join(folder, "test_scraper_daily.json")
+                        )
+                        assert filecmp.cmp(
+                            filepaths[3], join(folder, "test_scraper_covidseries.json")
+                        )
+                        assert "error 1" in caplog.text
