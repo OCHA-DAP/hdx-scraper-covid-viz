@@ -12,11 +12,9 @@ from hdx.scraper.outputs.excelfile import ExcelFile
 from hdx.scraper.outputs.googlesheets import GoogleSheets
 from hdx.scraper.outputs.json import JsonFile
 from hdx.scraper.utilities import string_params_to_dict
-from hdx.utilities.downloader import Download
 from hdx.utilities.easy_logging import setup_logging
 from hdx.utilities.errors_onexit import ErrorsOnExit
 from hdx.utilities.path import temp_dir
-from hdx.utilities.retriever import Retrieve
 from scrapers.main import get_indicators
 
 setup_logging()
