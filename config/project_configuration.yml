@@ -565,6 +565,7 @@ scraper_national:
       url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVzu79PPTfaA2syevOQfyRRjy63dJWitqu0fFbXIQCzoUn9K9TiMWMRvFGg1RBsnLmgYugzSEiAye2/pub?gid=992438980&single=true&output=csv"
       hxl:
        - "#country+code"
+    prefilter: "#total+vaccinations is not None"
     admin:
       - "#country+code"
     date: "#date"
