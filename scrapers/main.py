@@ -4,6 +4,15 @@ from os.path import join
 from hdx.location.adminone import AdminOne
 from hdx.location.country import Country
 from hdx.scraper.configurable.aggregator import Aggregator
+from hdx.scraper.outputs.update_tabs import (
+    get_regional_rows,
+    get_toplevel_rows,
+    update_national,
+    update_regional,
+    update_sources,
+    update_subnational,
+    update_toplevel,
+)
 from hdx.scraper.runner import Runner
 from hdx.scraper.utilities.fallbacks import Fallbacks
 
@@ -15,18 +24,10 @@ from .fts import FTS
 from .inform import Inform
 from .iom_dtm import IOMDTM
 from .ipc import IPC
+from .report import get_report_source
 from .unhcr import UNHCR
 from .unhcr_myanmar_idps import idps_post_run
 from .utilities.region_lookups import RegionLookups
-from .utilities.update_tabs import (
-    get_global_rows,
-    get_regional_rows,
-    update_national,
-    update_regional,
-    update_sources,
-    update_subnational,
-    update_world,
-)
 from .vaccination_campaigns import VaccinationCampaigns
 from .who_covid import WHOCovid
 from .whowhatwhere import WhoWhatWhere
@@ -201,20 +202,30 @@ def get_indicators(
         regional_names.append(name)
     regional_names.extend(["education_closures", "education_enrolment"])
     regional_rows = get_regional_rows(
-        runner, regional_names, RegionLookups.regions + ["global"]
+        runner,
+        RegionLookups.regions + ["global"],
+        names=regional_names,
     )
 
     if "national" in tabs:
+        flag_countries = {
+            "header": "ishrp",
+            "hxltag": "#meta+ishrp",
+            "countries": hrp_countries,
+        }
         update_national(
             runner,
-            national_names,
-            RegionLookups.gho_iso3_to_region,
-            hrp_countries,
             gho_countries,
             outputs,
+            names=national_names,
+            flag_countries=flag_countries,
+            iso3_to_region=RegionLookups.gho_iso3_to_region,
+            ignore_regions=("GHO",),
         )
     if "regional" in tabs:
-        global_rows = get_global_rows(runner, ("who_covid", "fts"))
+        global_rows = get_toplevel_rows(
+            runner, overrides={"who_covid": {"gho": "global"}}, toplevel="global"
+        )
         additional_global_headers = (
             "Cumulative_cases",
             "Cumulative_deaths",
@@ -225,18 +236,27 @@ def get_indicators(
         update_regional(
             outputs,
             regional_rows,
-            global_rows,
-            additional_global_headers,
+            toplevel_rows=global_rows,
+            additional_toplevel_headers=additional_global_headers,
+            toplevel="global",
         )
     if "world" in tabs:
-        global_rows = get_global_rows(
-            runner, global_names, {"who_covid": {"gho": "global"}}
+        global_rows = get_toplevel_rows(
+            runner,
+            names=global_names,
+            overrides={"who_covid": {"gho": "global"}},
+            toplevel="global",
         )
-        update_world(
-            outputs, global_rows, regional_rows, configuration["regional"]["global"]
+        update_toplevel(
+            outputs,
+            global_rows,
+            tab="world",
+            regional_rows=regional_rows,
+            regional_adm="GHO",
+            regional_hxltags=configuration["regional"]["global"],
         )
     if "subnational" in tabs:
-        update_subnational(runner, subnational_names, adminone, outputs)
+        update_subnational(runner, adminone, outputs, names=subnational_names)
 
     adminone.output_matches()
     adminone.output_ignored()
@@ -250,5 +270,11 @@ def get_indicators(
         if name not in names:
             names.append(name)
     if "sources" in tabs:
-        update_sources(runner, names, configuration, outputs)
+        update_sources(
+            runner,
+            configuration,
+            outputs,
+            names=names,
+            additional_sources=(get_report_source(configuration),),
+        )
     return hrp_countries
