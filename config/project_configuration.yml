@@ -755,7 +755,7 @@ vaccination_campaigns:
 unhcr:
   source: "UNHCR"
   source_url: "https://data.humdata.org/organization/unhcr"
-  url: "https://data2.unhcr.org/population/?population_collection=%d&geo_id=%s"
+  url: "https://data.unhcr.org/population/?population_collection=%d&geo_id=%s"
   population_collections:
     - 4
     - 28
