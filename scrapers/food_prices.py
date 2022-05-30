@@ -36,7 +36,7 @@ class FoodPrices(BaseScraper):
             "Authorization": f"Bearer {access_token}",
         }
         downloader = Download(rate_limit={"calls": 1, "period": 0.1}, headers=headers)
-        retriever = Retrieve.clone(token_retriever, downloader)
+        retriever = token_retriever.clone(downloader)
 
         def get_list(endpoint, countryiso3, startdate=None):
             all_data = list()
