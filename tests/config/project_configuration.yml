@@ -1168,41 +1168,55 @@ country_name_mappings:
   "CAR": "CAF"
 
 admin1_info:
-- {country: Afghanistan, iso3: AFG, pcode: AF01, name: Kabul}
-- {country: Afghanistan, iso3: AFG, pcode: AF02, name: Kapisa}
-- {country: Afghanistan, iso3: AFG, pcode: AF03, name: Parwan}
-- {country: Afghanistan, iso3: AFG, pcode: AF04, name: Maidan Wardak}
-- {country: Afghanistan, iso3: AFG, pcode: AF05, name: Logar}
-- {country: Afghanistan, iso3: AFG, pcode: AF06, name: Nangarhar}
-- {country: Afghanistan, iso3: AFG, pcode: AF07, name: Laghman}
-- {country: Afghanistan, iso3: AFG, pcode: AF08, name: Panjsher}
+- {country: Afghanistan, iso3: AFG, pcode: AF17, name: Badakhshan}
+- {country: Afghanistan, iso3: AFG, pcode: AF31, name: Badghis}
 - {country: Afghanistan, iso3: AFG, pcode: AF09, name: Baghlan}
+- {country: Afghanistan, iso3: AFG, pcode: AF21, name: Balkh}
 - {country: Afghanistan, iso3: AFG, pcode: AF10, name: Bamyan}
+- {country: Afghanistan, iso3: AFG, pcode: AF24, name: Daykundi}
+- {country: Afghanistan, iso3: AFG, pcode: AF33, name: Farah}
+- {country: Afghanistan, iso3: AFG, pcode: AF29, name: Faryab}
 - {country: Afghanistan, iso3: AFG, pcode: AF11, name: Ghazni}
-- {country: Afghanistan, iso3: AFG, pcode: AF12, name: Paktika}
-- {country: Afghanistan, iso3: AFG, pcode: AF13, name: Paktya}
+- {country: Afghanistan, iso3: AFG, pcode: AF23, name: Ghor}
+- {country: Afghanistan, iso3: AFG, pcode: AF30, name: Hilmand}
+- {country: Afghanistan, iso3: AFG, pcode: AF32, name: Hirat}
+- {country: Afghanistan, iso3: AFG, pcode: AF28, name: Jawzjan}
+- {country: Afghanistan, iso3: AFG, pcode: AF01, name: Kabul}
+- {country: Afghanistan, iso3: AFG, pcode: AF27, name: Kandahar}
+- {country: Afghanistan, iso3: AFG, pcode: AF02, name: Kapisa}
 - {country: Afghanistan, iso3: AFG, pcode: AF14, name: Khost}
 - {country: Afghanistan, iso3: AFG, pcode: AF15, name: Kunar}
-- {country: Afghanistan, iso3: AFG, pcode: AF16, name: Nuristan}
-- {country: Afghanistan, iso3: AFG, pcode: AF17, name: Badakhshan}
-- {country: Afghanistan, iso3: AFG, pcode: AF18, name: Takhar}
 - {country: Afghanistan, iso3: AFG, pcode: AF19, name: Kunduz}
+- {country: Afghanistan, iso3: AFG, pcode: AF07, name: Laghman}
+- {country: Afghanistan, iso3: AFG, pcode: AF05, name: Logar}
+- {country: Afghanistan, iso3: AFG, pcode: AF04, name: Maidan Wardak}
+- {country: Afghanistan, iso3: AFG, pcode: AF06, name: Nangarhar}
+- {country: Afghanistan, iso3: AFG, pcode: AF34, name: Nimroz}
+- {country: Afghanistan, iso3: AFG, pcode: AF16, name: Nuristan}
+- {country: Afghanistan, iso3: AFG, pcode: AF12, name: Paktika}
+- {country: Afghanistan, iso3: AFG, pcode: AF13, name: Paktya}
+- {country: Afghanistan, iso3: AFG, pcode: AF08, name: Panjsher}
+- {country: Afghanistan, iso3: AFG, pcode: AF03, name: Parwan}
 - {country: Afghanistan, iso3: AFG, pcode: AF20, name: Samangan}
-- {country: Afghanistan, iso3: AFG, pcode: AF21, name: Balkh}
 - {country: Afghanistan, iso3: AFG, pcode: AF22, name: Sar E Pul}
-- {country: Afghanistan, iso3: AFG, pcode: AF23, name: Ghor}
-- {country: Afghanistan, iso3: AFG, pcode: AF24, name: Daykundi}
+- {country: Afghanistan, iso3: AFG, pcode: AF18, name: Takhar}
 - {country: Afghanistan, iso3: AFG, pcode: AF25, name: Uruzgan}
 - {country: Afghanistan, iso3: AFG, pcode: AF26, name: Zabul}
-- {country: Afghanistan, iso3: AFG, pcode: AF27, name: Kandahar}
-- {country: Afghanistan, iso3: AFG, pcode: AF28, name: Jawzjan}
-- {country: Afghanistan, iso3: AFG, pcode: AF29, name: Faryab}
-- {country: Afghanistan, iso3: AFG, pcode: AF30, name: Hilmand}
-- {country: Afghanistan, iso3: AFG, pcode: AF31, name: Badghis}
-- {country: Afghanistan, iso3: AFG, pcode: AF32, name: Hirat}
-- {country: Afghanistan, iso3: AFG, pcode: AF33, name: Farah}
-- {country: Afghanistan, iso3: AFG, pcode: AF34, name: Nimroz}
+- {country: Burkina Faso, iso3: BFA, pcode: BF46, name: Boucle du Mouhoun}
+- {country: Burkina Faso, iso3: BFA, pcode: BF47, name: Cascades}
+- {country: Burkina Faso, iso3: BFA, pcode: BF13, name: Centre}
+- {country: Burkina Faso, iso3: BFA, pcode: BF48, name: Centre Est}
+- {country: Burkina Faso, iso3: BFA, pcode: BF49, name: Centre Nord}
+- {country: Burkina Faso, iso3: BFA, pcode: BF50, name: Centre Ouest}
+- {country: Burkina Faso, iso3: BFA, pcode: BF51, name: Centre Sud}
+- {country: Burkina Faso, iso3: BFA, pcode: BF52, name: Est}
+- {country: Burkina Faso, iso3: BFA, pcode: BF53, name: Hauts Bassins}
+- {country: Burkina Faso, iso3: BFA, pcode: BF54, name: Nord}
+- {country: Burkina Faso, iso3: BFA, pcode: BF55, name: Plateau Central}
+- {country: Burkina Faso, iso3: BFA, pcode: BF56, name: Sahel}
+- {country: Burkina Faso, iso3: BFA, pcode: BF57, name: Sud Ouest}
 - {country: Burundi, iso3: BDI, pcode: BDI001, name: Bubanza}
+- {country: Burundi, iso3: BDI, pcode: BDI017, name: Bujumbura Mairie}
 - {country: Burundi, iso3: BDI, pcode: BDI002, name: Bujumbura Rural}
 - {country: Burundi, iso3: BDI, pcode: BDI003, name: Bururi}
 - {country: Burundi, iso3: BDI, pcode: BDI004, name: Cankuzo}
@@ -1216,40 +1230,9 @@ admin1_info:
 - {country: Burundi, iso3: BDI, pcode: BDI012, name: Muyinga}
 - {country: Burundi, iso3: BDI, pcode: BDI013, name: Mwaro}
 - {country: Burundi, iso3: BDI, pcode: BDI014, name: Ngozi}
+- {country: Burundi, iso3: BDI, pcode: BDI018, name: Rumonge}
 - {country: Burundi, iso3: BDI, pcode: BDI015, name: Rutana}
 - {country: Burundi, iso3: BDI, pcode: BDI016, name: Ruyigi}
-- {country: Burundi, iso3: BDI, pcode: BDI017, name: Bujumbura Mairie}
-- {country: Burundi, iso3: BDI, pcode: BDI018, name: Rumonge}
-- {country: Burkina Faso, iso3: BFA, pcode: BF13, name: Centre}
-- {country: Burkina Faso, iso3: BFA, pcode: BF46, name: Boucle Du Mouhoun}
-- {country: Burkina Faso, iso3: BFA, pcode: BF47, name: Cascades}
-- {country: Burkina Faso, iso3: BFA, pcode: BF48, name: Centre Est}
-- {country: Burkina Faso, iso3: BFA, pcode: BF49, name: Centre Nord}
-- {country: Burkina Faso, iso3: BFA, pcode: BF50, name: Centre Ouest}
-- {country: Burkina Faso, iso3: BFA, pcode: BF51, name: Centre Sud}
-- {country: Burkina Faso, iso3: BFA, pcode: BF52, name: Est}
-- {country: Burkina Faso, iso3: BFA, pcode: BF53, name: Hauts Bassins}
-- {country: Burkina Faso, iso3: BFA, pcode: BF54, name: Nord}
-- {country: Burkina Faso, iso3: BFA, pcode: BF55, name: Plateau Central}
-- {country: Burkina Faso, iso3: BFA, pcode: BF56, name: Sahel}
-- {country: Burkina Faso, iso3: BFA, pcode: BF57, name: Sud Ouest}
-- {country: Central African Republic, iso3: CAF, pcode: CF11, name: Ombella Mpoko}
-- {country: Central African Republic, iso3: CAF, pcode: CF12, name: Lobaye}
-- {country: Central African Republic, iso3: CAF, pcode: CF21, name: Mambere Kadei}
-- {country: Central African Republic, iso3: CAF, pcode: CF22, name: Nana Mambere}
-- {country: Central African Republic, iso3: CAF, pcode: CF23, name: Sangha Mbaere}
-- {country: Central African Republic, iso3: CAF, pcode: CF31, name: Ouham Pende}
-- {country: Central African Republic, iso3: CAF, pcode: CF32, name: Ouham}
-- {country: Central African Republic, iso3: CAF, pcode: CF41, name: Kemo}
-- {country: Central African Republic, iso3: CAF, pcode: CF42, name: Nana Gribizi}
-- {country: Central African Republic, iso3: CAF, pcode: CF43, name: Ouaka}
-- {country: Central African Republic, iso3: CAF, pcode: CF51, name: Bamingui Bangoran}
-- {country: Central African Republic, iso3: CAF, pcode: CF52, name: Haute Kotto}
-- {country: Central African Republic, iso3: CAF, pcode: CF53, name: Vakaga}
-- {country: Central African Republic, iso3: CAF, pcode: CF61, name: Basse Kotto}
-- {country: Central African Republic, iso3: CAF, pcode: CF62, name: Mbomou}
-- {country: Central African Republic, iso3: CAF, pcode: CF63, name: Haut Mbomou}
-- {country: Central African Republic, iso3: CAF, pcode: CF71, name: Bangui}
 - {country: Cameroon, iso3: CMR, pcode: CM001, name: Adamawa}
 - {country: Cameroon, iso3: CMR, pcode: CM002, name: Centre}
 - {country: Cameroon, iso3: CMR, pcode: CM003, name: East}
@@ -1257,129 +1240,185 @@ admin1_info:
 - {country: Cameroon, iso3: CMR, pcode: CM005, name: Littoral}
 - {country: Cameroon, iso3: CMR, pcode: CM006, name: North}
 - {country: Cameroon, iso3: CMR, pcode: CM007, name: North West}
-- {country: Cameroon, iso3: CMR, pcode: CM008, name: West}
 - {country: Cameroon, iso3: CMR, pcode: CM009, name: South}
 - {country: Cameroon, iso3: CMR, pcode: CM010, name: South West}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD10, name: Kinshasa}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD20, name: Kongo Central}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD31, name: Kwango}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD32, name: Kwilu}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD33, name: Mai Ndombe}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD41, name: Equateur}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD42, name: Sud Ubangi}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD43, name: Nord Ubangi}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD44, name: Mongala}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD45, name: Tshuapa}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD51, name: Tshopo}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD52, name: Bas Uele}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD53, name: Haut Uele}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD54, name: Ituri}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD61, name: Nord Kivu}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD62, name: Sud Kivu}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD63, name: Maniema}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD71, name: Haut Katanga}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD72, name: Lualaba}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD73, name: Haut Lomami}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD74, name: Tanganyika}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD81, name: Lomami}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD82, name: Kasai Oriental}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD83, name: Sankuru}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD91, name: Kasai Central}
-- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD92, name: Kasai}
+- {country: Cameroon, iso3: CMR, pcode: CM008, name: West}
+- {country: Central African Republic, iso3: CAF, pcode: CF51, name: Bamingui Bangoran}
+- {country: Central African Republic, iso3: CAF, pcode: CF71, name: Bangui}
+- {country: Central African Republic, iso3: CAF, pcode: CF61, name: Basse Kotto}
+- {country: Central African Republic, iso3: CAF, pcode: CF63, name: Haut Mbomou}
+- {country: Central African Republic, iso3: CAF, pcode: CF52, name: Haute Kotto}
+- {country: Central African Republic, iso3: CAF, pcode: CF41, name: Kemo}
+- {country: Central African Republic, iso3: CAF, pcode: CF12, name: Lobaye}
+- {country: Central African Republic, iso3: CAF, pcode: CF21, name: Mambere Kadei}
+- {country: Central African Republic, iso3: CAF, pcode: CF62, name: Mbomou}
+- {country: Central African Republic, iso3: CAF, pcode: CF42, name: Nana Gribizi}
+- {country: Central African Republic, iso3: CAF, pcode: CF22, name: Nana Mambere}
+- {country: Central African Republic, iso3: CAF, pcode: CF11, name: Ombella MPoko}
+- {country: Central African Republic, iso3: CAF, pcode: CF43, name: Ouaka}
+- {country: Central African Republic, iso3: CAF, pcode: CF32, name: Ouham}
+- {country: Central African Republic, iso3: CAF, pcode: CF31, name: Ouham Pende}
+- {country: Central African Republic, iso3: CAF, pcode: CF23, name: Sangha Mbaere}
+- {country: Central African Republic, iso3: CAF, pcode: CF53, name: Vakaga}
+- {country: Chad, iso3: TCD, pcode: TD19, name: Barh El Gazel}
+- {country: Chad, iso3: TCD, pcode: TD01, name: Batha}
+- {country: Chad, iso3: TCD, pcode: TD02, name: Borkou}
+- {country: Chad, iso3: TCD, pcode: TD03, name: Chari Baguirmi}
+- {country: Chad, iso3: TCD, pcode: TD20, name: Ennedi Est}
+- {country: Chad, iso3: TCD, pcode: TD23, name: Ennedi Ouest}
+- {country: Chad, iso3: TCD, pcode: TD04, name: Guera}
+- {country: Chad, iso3: TCD, pcode: TD05, name: Hadjer Lamis}
+- {country: Chad, iso3: TCD, pcode: TD06, name: Kanem}
+- {country: Chad, iso3: TCD, pcode: TD07, name: Lac}
+- {country: Chad, iso3: TCD, pcode: TD08, name: Logone Occidental}
+- {country: Chad, iso3: TCD, pcode: TD09, name: Logone Oriental}
+- {country: Chad, iso3: TCD, pcode: TD10, name: Mandoul}
+- {country: Chad, iso3: TCD, pcode: TD11, name: Mayo Kebbi Est}
+- {country: Chad, iso3: TCD, pcode: TD12, name: Mayo Kebbi Ouest}
+- {country: Chad, iso3: TCD, pcode: TD13, name: Moyen Chari}
+- {country: Chad, iso3: TCD, pcode: TD18, name: NDjamena}
+- {country: Chad, iso3: TCD, pcode: TD14, name: Ouaddai}
+- {country: Chad, iso3: TCD, pcode: TD15, name: Salamat}
+- {country: Chad, iso3: TCD, pcode: TD21, name: Sila}
+- {country: Chad, iso3: TCD, pcode: TD16, name: Tandjile}
+- {country: Chad, iso3: TCD, pcode: TD22, name: Tibesti}
+- {country: Chad, iso3: TCD, pcode: TD17, name: Wadi Fira}
+- {country: Colombia, iso3: COL, pcode: CO91, name: Amazonas}
 - {country: Colombia, iso3: COL, pcode: CO05, name: Antioquia}
+- {country: Colombia, iso3: COL, pcode: CO81, name: Arauca}
+- {country: Colombia, iso3: COL, pcode: CO88, name: "Archipielago de San Andres, Providencia y Santa Catalina"}
 - {country: Colombia, iso3: COL, pcode: CO08, name: Atlantico}
 - {country: Colombia, iso3: COL, pcode: CO11, name: "Bogota, D.C."}
 - {country: Colombia, iso3: COL, pcode: CO13, name: Bolivar}
 - {country: Colombia, iso3: COL, pcode: CO15, name: Boyaca}
 - {country: Colombia, iso3: COL, pcode: CO17, name: Caldas}
 - {country: Colombia, iso3: COL, pcode: CO18, name: Caqueta}
+- {country: Colombia, iso3: COL, pcode: CO85, name: Casanare}
 - {country: Colombia, iso3: COL, pcode: CO19, name: Cauca}
 - {country: Colombia, iso3: COL, pcode: CO20, name: Cesar}
+- {country: Colombia, iso3: COL, pcode: CO27, name: Choco}
 - {country: Colombia, iso3: COL, pcode: CO23, name: Cordoba}
 - {country: Colombia, iso3: COL, pcode: CO25, name: Cundinamarca}
-- {country: Colombia, iso3: COL, pcode: CO27, name: Choco}
+- {country: Colombia, iso3: COL, pcode: CO94, name: Guainia}
+- {country: Colombia, iso3: COL, pcode: CO95, name: Guaviare}
 - {country: Colombia, iso3: COL, pcode: CO41, name: Huila}
 - {country: Colombia, iso3: COL, pcode: CO44, name: La Guajira}
 - {country: Colombia, iso3: COL, pcode: CO47, name: Magdalena}
 - {country: Colombia, iso3: COL, pcode: CO50, name: Meta}
 - {country: Colombia, iso3: COL, pcode: CO52, name: Narino}
 - {country: Colombia, iso3: COL, pcode: CO54, name: Norte de Santander}
+- {country: Colombia, iso3: COL, pcode: CO86, name: Putumayo}
 - {country: Colombia, iso3: COL, pcode: CO63, name: Quindio}
 - {country: Colombia, iso3: COL, pcode: CO66, name: Risaralda}
 - {country: Colombia, iso3: COL, pcode: CO68, name: Santander}
 - {country: Colombia, iso3: COL, pcode: CO70, name: Sucre}
 - {country: Colombia, iso3: COL, pcode: CO73, name: Tolima}
 - {country: Colombia, iso3: COL, pcode: CO76, name: Valle del Cauca}
-- {country: Colombia, iso3: COL, pcode: CO81, name: Arauca}
-- {country: Colombia, iso3: COL, pcode: CO85, name: Casanare}
-- {country: Colombia, iso3: COL, pcode: CO86, name: Putumayo}
-- {country: Colombia, iso3: COL, pcode: CO88, name: "Archipielago de San Andres, Providencia y Santa Catalina"}
-- {country: Colombia, iso3: COL, pcode: CO91, name: Amazonas}
-- {country: Colombia, iso3: COL, pcode: CO94, name: Guainia}
-- {country: Colombia, iso3: COL, pcode: CO95, name: Guaviare}
 - {country: Colombia, iso3: COL, pcode: CO97, name: Vaupes}
 - {country: Colombia, iso3: COL, pcode: CO99, name: Vichada}
-- {country: Ethiopia, iso3: ETH, pcode: ET01, name: Tigray}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD52, name: Bas Uele}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD41, name: Equateur}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD71, name: Haut Katanga}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD73, name: Haut Lomami}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD53, name: Haut Uele}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD54, name: Ituri}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD92, name: Kasai}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD91, name: Kasai Central}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD82, name: Kasai Oriental}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD10, name: Kinshasa}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD20, name: Kongo Central}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD31, name: Kwango}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD32, name: Kwilu}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD81, name: Lomami}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD72, name: Lualaba}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD33, name: Mai Ndombe}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD63, name: Maniema}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD44, name: Mongala}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD61, name: Nord Kivu}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD43, name: Nord Ubangi}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD83, name: Sankuru}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD62, name: Sud Kivu}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD42, name: Sud Ubangi}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD74, name: Tanganyika}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD51, name: Tshopo}
+- {country: Democratic Republic of the Congo, iso3: COD, pcode: CD45, name: Tshuapa}
+- {country: El Salvador, iso3: SLV, pcode: SV01, name: Ahuachapan}
+- {country: El Salvador, iso3: SLV, pcode: SV02, name: Cabanas}
+- {country: El Salvador, iso3: SLV, pcode: SV03, name: Chalatenango}
+- {country: El Salvador, iso3: SLV, pcode: SV04, name: Cuscatlan}
+- {country: El Salvador, iso3: SLV, pcode: SV05, name: La Libertad}
+- {country: El Salvador, iso3: SLV, pcode: SV06, name: La Paz}
+- {country: El Salvador, iso3: SLV, pcode: SV07, name: La Union}
+- {country: El Salvador, iso3: SLV, pcode: SV08, name: Morazan}
+- {country: El Salvador, iso3: SLV, pcode: SV09, name: San Miguel}
+- {country: El Salvador, iso3: SLV, pcode: SV10, name: San Salvador}
+- {country: El Salvador, iso3: SLV, pcode: SV11, name: San Vicente}
+- {country: El Salvador, iso3: SLV, pcode: SV12, name: Santa Ana}
+- {country: El Salvador, iso3: SLV, pcode: SV13, name: Sonsonate}
+- {country: El Salvador, iso3: SLV, pcode: SV14, name: Usulutan}
+- {country: Ethiopia, iso3: ETH, pcode: ET14, name: Addis Ababa}
 - {country: Ethiopia, iso3: ETH, pcode: ET02, name: Afar}
 - {country: Ethiopia, iso3: ETH, pcode: ET03, name: Amhara}
-- {country: Ethiopia, iso3: ETH, pcode: ET04, name: Oromia}
-- {country: Ethiopia, iso3: ETH, pcode: ET05, name: Somali}
 - {country: Ethiopia, iso3: ETH, pcode: ET06, name: Benishangul Gumz}
-- {country: Ethiopia, iso3: ETH, pcode: ET07, name: Snnp}
+- {country: Ethiopia, iso3: ETH, pcode: ET15, name: Dire Dawa}
 - {country: Ethiopia, iso3: ETH, pcode: ET12, name: Gambela}
 - {country: Ethiopia, iso3: ETH, pcode: ET13, name: Harari}
-- {country: Ethiopia, iso3: ETH, pcode: ET14, name: Addis Ababa}
-- {country: Ethiopia, iso3: ETH, pcode: ET15, name: Dire Dawa}
-- {country: Guatemala, iso3: GTM, pcode: GT01, name: Guatemala}
-- {country: Guatemala, iso3: GTM, pcode: GT02, name: El Progreso}
-- {country: Guatemala, iso3: GTM, pcode: GT03, name: Sacatepequez}
-- {country: Guatemala, iso3: GTM, pcode: GT04, name: Chimaltenango}
-- {country: Guatemala, iso3: GTM, pcode: GT05, name: Escuintla}
-- {country: Guatemala, iso3: GTM, pcode: GT06, name: Santa Rosa}
-- {country: Guatemala, iso3: GTM, pcode: GT07, name: Solola}
-- {country: Guatemala, iso3: GTM, pcode: GT08, name: Totonicapan}
-- {country: Guatemala, iso3: GTM, pcode: GT09, name: Quetzaltenango}
-- {country: Guatemala, iso3: GTM, pcode: GT10, name: Suchitepequez}
-- {country: Guatemala, iso3: GTM, pcode: GT11, name: Retalhuleu}
-- {country: Guatemala, iso3: GTM, pcode: GT12, name: San Marcos}
-- {country: Guatemala, iso3: GTM, pcode: GT13, name: Huehuetenango}
-- {country: Guatemala, iso3: GTM, pcode: GT14, name: Quiche}
-- {country: Guatemala, iso3: GTM, pcode: GT15, name: Baja Verapaz}
+- {country: Ethiopia, iso3: ETH, pcode: ET04, name: Oromia}
+- {country: Ethiopia, iso3: ETH, pcode: ET07, name: SNNP}
+- {country: Ethiopia, iso3: ETH, pcode: ET16, name: Sidama}
+- {country: Ethiopia, iso3: ETH, pcode: ET05, name: Somali}
+- {country: Ethiopia, iso3: ETH, pcode: ET11, name: South West Ethiopia}
+- {country: Ethiopia, iso3: ETH, pcode: ET01, name: Tigray}
 - {country: Guatemala, iso3: GTM, pcode: GT16, name: Alta Verapaz}
-- {country: Guatemala, iso3: GTM, pcode: GT17, name: Peten}
-- {country: Guatemala, iso3: GTM, pcode: GT18, name: Izabal}
-- {country: Guatemala, iso3: GTM, pcode: GT19, name: Zacapa}
+- {country: Guatemala, iso3: GTM, pcode: GT15, name: Baja Verapaz}
+- {country: Guatemala, iso3: GTM, pcode: GT04, name: Chimaltenango}
 - {country: Guatemala, iso3: GTM, pcode: GT20, name: Chiquimula}
+- {country: Guatemala, iso3: GTM, pcode: GT02, name: El Progreso}
+- {country: Guatemala, iso3: GTM, pcode: GT05, name: Escuintla}
+- {country: Guatemala, iso3: GTM, pcode: GT01, name: Guatemala}
+- {country: Guatemala, iso3: GTM, pcode: GT13, name: Huehuetenango}
+- {country: Guatemala, iso3: GTM, pcode: GT18, name: Izabal}
 - {country: Guatemala, iso3: GTM, pcode: GT21, name: Jalapa}
 - {country: Guatemala, iso3: GTM, pcode: GT22, name: Jutiapa}
-- {country: Haiti, iso3: HTI, pcode: HT01, name: West}
-- {country: Haiti, iso3: HTI, pcode: HT02, name: South East}
-- {country: Haiti, iso3: HTI, pcode: HT03, name: North}
-- {country: Haiti, iso3: HTI, pcode: HT04, name: North East}
+- {country: Guatemala, iso3: GTM, pcode: GT17, name: Peten}
+- {country: Guatemala, iso3: GTM, pcode: GT09, name: Quetzaltenango}
+- {country: Guatemala, iso3: GTM, pcode: GT14, name: Quiche}
+- {country: Guatemala, iso3: GTM, pcode: GT11, name: Retalhuleu}
+- {country: Guatemala, iso3: GTM, pcode: GT03, name: Sacatepequez}
+- {country: Guatemala, iso3: GTM, pcode: GT12, name: San Marcos}
+- {country: Guatemala, iso3: GTM, pcode: GT06, name: Santa Rosa}
+- {country: Guatemala, iso3: GTM, pcode: GT07, name: Solola}
+- {country: Guatemala, iso3: GTM, pcode: GT10, name: Suchitepequez}
+- {country: Guatemala, iso3: GTM, pcode: GT08, name: Totonicapan}
+- {country: Guatemala, iso3: GTM, pcode: GT19, name: Zacapa}
 - {country: Haiti, iso3: HTI, pcode: HT05, name: Artibonite}
 - {country: Haiti, iso3: HTI, pcode: HT06, name: Centre}
-- {country: Haiti, iso3: HTI, pcode: HT07, name: South}
-- {country: Haiti, iso3: HTI, pcode: HT08, name: "Grande'Anse"}
-- {country: Haiti, iso3: HTI, pcode: HT09, name: North West}
+- {country: Haiti, iso3: HTI, pcode: HT08, name: GrandeAnse}
 - {country: Haiti, iso3: HTI, pcode: HT10, name: Nippes}
-- { country: Honduras, iso3: HND, pcode: HN01, name: Atlantida }
-- { country: Honduras, iso3: HND, pcode: HN02, name: Colon }
-- { country: Honduras, iso3: HND, pcode: HN03, name: Comayagua }
-- { country: Honduras, iso3: HND, pcode: HN04, name: Copan }
-- { country: Honduras, iso3: HND, pcode: HN05, name: Cortes }
-- { country: Honduras, iso3: HND, pcode: HN06, name: Choluteca }
-- { country: Honduras, iso3: HND, pcode: HN07, name: El Paraiso }
-- { country: Honduras, iso3: HND, pcode: HN08, name: Francisco Morazan }
-- { country: Honduras, iso3: HND, pcode: HN09, name: Gracias a Dios }
-- { country: Honduras, iso3: HND, pcode: HN10, name: Intibuca }
-- { country: Honduras, iso3: HND, pcode: HN11, name: Islas de La Bahia }
-- { country: Honduras, iso3: HND, pcode: HN12, name: La Paz }
-- { country: Honduras, iso3: HND, pcode: HN13, name: Lempira }
-- { country: Honduras, iso3: HND, pcode: HN14, name: Ocotepeque }
-- { country: Honduras, iso3: HND, pcode: HN15, name: Olancho }
-- { country: Honduras, iso3: HND, pcode: HN16, name: Santa Barbara }
-- { country: Honduras, iso3: HND, pcode: HN17, name: Valle }
-- { country: Honduras, iso3: HND, pcode: HN18, name: Yoro }
+- {country: Haiti, iso3: HTI, pcode: HT03, name: North}
+- {country: Haiti, iso3: HTI, pcode: HT04, name: North East}
+- {country: Haiti, iso3: HTI, pcode: HT09, name: North West}
+- {country: Haiti, iso3: HTI, pcode: HT07, name: South}
+- {country: Haiti, iso3: HTI, pcode: HT02, name: South East}
+- {country: Haiti, iso3: HTI, pcode: HT01, name: West}
+- {country: Honduras, iso3: HND, pcode: HN01, name: Atlantida}
+- {country: Honduras, iso3: HND, pcode: HN06, name: Choluteca}
+- {country: Honduras, iso3: HND, pcode: HN02, name: Colon}
+- {country: Honduras, iso3: HND, pcode: HN03, name: Comayagua}
+- {country: Honduras, iso3: HND, pcode: HN04, name: Copan}
+- {country: Honduras, iso3: HND, pcode: HN05, name: Cortes}
+- {country: Honduras, iso3: HND, pcode: HN07, name: El Paraiso}
+- {country: Honduras, iso3: HND, pcode: HN08, name: Francisco Morazan}
+- {country: Honduras, iso3: HND, pcode: HN09, name: Gracias a Dios}
+- {country: Honduras, iso3: HND, pcode: HN10, name: Intibuca}
+- {country: Honduras, iso3: HND, pcode: HN11, name: Islas de La Bahia}
+- {country: Honduras, iso3: HND, pcode: HN12, name: La Paz}
+- {country: Honduras, iso3: HND, pcode: HN13, name: Lempira}
+- {country: Honduras, iso3: HND, pcode: HN14, name: Ocotepeque}
+- {country: Honduras, iso3: HND, pcode: HN15, name: Olancho}
+- {country: Honduras, iso3: HND, pcode: HN16, name: Santa Barbara}
+- {country: Honduras, iso3: HND, pcode: HN17, name: Valle}
+- {country: Honduras, iso3: HND, pcode: HN18, name: Yoro}
 - {country: Iraq, iso3: IRQ, pcode: IQG01, name: Al Anbar}
 - {country: Iraq, iso3: IRQ, pcode: IQG02, name: Al Basrah}
 - {country: Iraq, iso3: IRQ, pcode: IQG03, name: Al Muthanna}
@@ -1388,8 +1427,8 @@ admin1_info:
 - {country: Iraq, iso3: IRQ, pcode: IQG06, name: Al Sulaymaniyah}
 - {country: Iraq, iso3: IRQ, pcode: IQG07, name: Babil}
 - {country: Iraq, iso3: IRQ, pcode: IQG08, name: Baghdad}
-- {country: Iraq, iso3: IRQ, pcode: IQG09, name: Duhok}
 - {country: Iraq, iso3: IRQ, pcode: IQG10, name: Diyala}
+- {country: Iraq, iso3: IRQ, pcode: IQG09, name: Duhok}
 - {country: Iraq, iso3: IRQ, pcode: IQG11, name: Erbil}
 - {country: Iraq, iso3: IRQ, pcode: IQG12, name: Kerbala}
 - {country: Iraq, iso3: IRQ, pcode: IQG13, name: Kirkuk}
@@ -1399,32 +1438,18 @@ admin1_info:
 - {country: Iraq, iso3: IRQ, pcode: IQG17, name: Thi Qar}
 - {country: Iraq, iso3: IRQ, pcode: IQG18, name: Wassit}
 - {country: Libya, iso3: LBY, pcode: LY01, name: East}
-- {country: Libya, iso3: LBY, pcode: LY02, name: West}
 - {country: Libya, iso3: LBY, pcode: LY03, name: South}
-- {country: Mali, iso3: MLI, pcode: ML01, name: Kayes}
-- {country: Mali, iso3: MLI, pcode: ML02, name: Koulikoro}
-- {country: Mali, iso3: MLI, pcode: ML03, name: Sikasso}
-- {country: Mali, iso3: MLI, pcode: ML04, name: Segou}
-- {country: Mali, iso3: MLI, pcode: ML05, name: Mopti}
-- {country: Mali, iso3: MLI, pcode: ML06, name: Tombouctou}
-- {country: Mali, iso3: MLI, pcode: ML07, name: Gao}
-- {country: Mali, iso3: MLI, pcode: ML08, name: Kidal}
+- {country: Libya, iso3: LBY, pcode: LY02, name: West}
 - {country: Mali, iso3: MLI, pcode: ML09, name: Bamako}
-- {country: Myanmar, iso3: MMR, pcode: MMR001, name: Kachin}
-- {country: Myanmar, iso3: MMR, pcode: MMR002, name: Kayah}
-- {country: Myanmar, iso3: MMR, pcode: MMR003, name: Kayin}
-- {country: Myanmar, iso3: MMR, pcode: MMR004, name: Chin}
-- {country: Myanmar, iso3: MMR, pcode: MMR005, name: Sagaing}
-- {country: Myanmar, iso3: MMR, pcode: MMR006, name: Tanintharyi}
-- {country: Myanmar, iso3: MMR, pcode: MMR009, name: Magway}
-- {country: Myanmar, iso3: MMR, pcode: MMR010, name: Mandalay}
-- {country: Myanmar, iso3: MMR, pcode: MMR011, name: Mon}
-- {country: Myanmar, iso3: MMR, pcode: MMR012, name: Rakhine}
-- {country: Myanmar, iso3: MMR, pcode: MMR013, name: Yangon}
-- {country: Myanmar, iso3: MMR, pcode: MMR017, name: Ayeyarwady}
-- {country: Myanmar, iso3: MMR, pcode: MMR018, name: Nay Pyi Taw}
-- {country: Myanmar, iso3: MMR, pcode: MMR111, name: Bago}
-- {country: Myanmar, iso3: MMR, pcode: MMR222, name: Shan}
+- {country: Mali, iso3: MLI, pcode: ML07, name: Gao}
+- {country: Mali, iso3: MLI, pcode: ML01, name: Kayes}
+- {country: Mali, iso3: MLI, pcode: ML08, name: Kidal}
+- {country: Mali, iso3: MLI, pcode: ML02, name: Koulikoro}
+- {country: Mali, iso3: MLI, pcode: ML10, name: Menaka}
+- {country: Mali, iso3: MLI, pcode: ML05, name: Mopti}
+- {country: Mali, iso3: MLI, pcode: ML04, name: Segou}
+- {country: Mali, iso3: MLI, pcode: ML03, name: Sikasso}
+- {country: Mali, iso3: MLI, pcode: ML06, name: Tombouctou}
 - {country: Mozambique, iso3: MOZ, pcode: MZ01, name: Cabo Delgado}
 - {country: Mozambique, iso3: MOZ, pcode: MZ02, name: Gaza}
 - {country: Mozambique, iso3: MOZ, pcode: MZ03, name: Inhambane}
@@ -1436,14 +1461,29 @@ admin1_info:
 - {country: Mozambique, iso3: MOZ, pcode: MZ09, name: Sofala}
 - {country: Mozambique, iso3: MOZ, pcode: MZ10, name: Tete}
 - {country: Mozambique, iso3: MOZ, pcode: MZ11, name: Zambezia}
-- {country: Niger, iso3: NER, pcode: NER001, name: Agadez}
-- {country: Niger, iso3: NER, pcode: NER002, name: Diffa}
-- {country: Niger, iso3: NER, pcode: NER003, name: Dosso}
-- {country: Niger, iso3: NER, pcode: NER004, name: Maradi}
-- {country: Niger, iso3: NER, pcode: NER005, name: Tahoua}
-- {country: Niger, iso3: NER, pcode: NER006, name: Tillaberi}
-- {country: Niger, iso3: NER, pcode: NER007, name: Zinder}
-- {country: Niger, iso3: NER, pcode: NER008, name: Niamey}
+- {country: Myanmar, iso3: MMR, pcode: MMR017, name: Ayeyarwady}
+- {country: Myanmar, iso3: MMR, pcode: MMR111, name: Bago}
+- {country: Myanmar, iso3: MMR, pcode: MMR004, name: Chin}
+- {country: Myanmar, iso3: MMR, pcode: MMR001, name: Kachin}
+- {country: Myanmar, iso3: MMR, pcode: MMR002, name: Kayah}
+- {country: Myanmar, iso3: MMR, pcode: MMR003, name: Kayin}
+- {country: Myanmar, iso3: MMR, pcode: MMR009, name: Magway}
+- {country: Myanmar, iso3: MMR, pcode: MMR010, name: Mandalay}
+- {country: Myanmar, iso3: MMR, pcode: MMR011, name: Mon}
+- {country: Myanmar, iso3: MMR, pcode: MMR018, name: Nay Pyi Taw}
+- {country: Myanmar, iso3: MMR, pcode: MMR012, name: Rakhine}
+- {country: Myanmar, iso3: MMR, pcode: MMR005, name: Sagaing}
+- {country: Myanmar, iso3: MMR, pcode: MMR222, name: Shan}
+- {country: Myanmar, iso3: MMR, pcode: MMR006, name: Tanintharyi}
+- {country: Myanmar, iso3: MMR, pcode: MMR013, name: Yangon}
+- {country: Niger, iso3: NER, pcode: NE001, name: Agadez}
+- {country: Niger, iso3: NER, pcode: NE002, name: Diffa}
+- {country: Niger, iso3: NER, pcode: NE003, name: Dosso}
+- {country: Niger, iso3: NER, pcode: NE004, name: Maradi}
+- {country: Niger, iso3: NER, pcode: NE008, name: Niamey}
+- {country: Niger, iso3: NER, pcode: NE005, name: Tahoua}
+- {country: Niger, iso3: NER, pcode: NE006, name: Tillabery}
+- {country: Niger, iso3: NER, pcode: NE007, name: Zinder}
 - {country: Nigeria, iso3: NGA, pcode: NG001, name: Abia}
 - {country: Nigeria, iso3: NGA, pcode: NG002, name: Adamawa}
 - {country: Nigeria, iso3: NGA, pcode: NG003, name: Akwa Ibom}
@@ -1481,134 +1521,96 @@ admin1_info:
 - {country: Nigeria, iso3: NGA, pcode: NG035, name: Taraba}
 - {country: Nigeria, iso3: NGA, pcode: NG036, name: Yobe}
 - {country: Nigeria, iso3: NGA, pcode: NG037, name: Zamfara}
-- {country: State of Palestine, iso3: PSE, pcode: PS01, name: West Bank}
-- {country: State of Palestine, iso3: PSE, pcode: PS02, name: Gaza Strip}
-- {country: Sudan, iso3: SDN, pcode: SD01, name: Khartoum}
-- {country: Sudan, iso3: SDN, pcode: SD02, name: North Darfur}
-- {country: Sudan, iso3: SDN, pcode: SD03, name: South Darfur}
-- {country: Sudan, iso3: SDN, pcode: SD04, name: West Darfur}
-- {country: Sudan, iso3: SDN, pcode: SD05, name: East Darfur}
-- {country: Sudan, iso3: SDN, pcode: SD06, name: Central Darfur}
-- {country: Sudan, iso3: SDN, pcode: SD07, name: South Kordofan}
-- {country: Sudan, iso3: SDN, pcode: SD08, name: Blue Nile}
-- {country: Sudan, iso3: SDN, pcode: SD09, name: White Nile}
-- {country: Sudan, iso3: SDN, pcode: SD10, name: Red Sea}
-- {country: Sudan, iso3: SDN, pcode: SD11, name: Kassala}
-- {country: Sudan, iso3: SDN, pcode: SD12, name: Gedaref}
-- {country: Sudan, iso3: SDN, pcode: SD13, name: North Kordofan}
-- {country: Sudan, iso3: SDN, pcode: SD14, name: Sennar}
-- {country: Sudan, iso3: SDN, pcode: SD15, name: Aj Jazirah}
-- {country: Sudan, iso3: SDN, pcode: SD16, name: River Nile}
-- {country: Sudan, iso3: SDN, pcode: SD17, name: Northern}
-- {country: Sudan, iso3: SDN, pcode: SD18, name: West Kordofan}
-- {country: Sudan, iso3: SDN, pcode: SD19, name: Abyei Pca}
 - {country: Somalia, iso3: SOM, pcode: SO11, name: Awdal}
-- {country: Somalia, iso3: SOM, pcode: SO12, name: Woqooyi Galbeed}
-- {country: Somalia, iso3: SOM, pcode: SO13, name: Togdheer}
-- {country: Somalia, iso3: SOM, pcode: SO14, name: Sool}
-- {country: Somalia, iso3: SOM, pcode: SO15, name: Sanaag}
-- {country: Somalia, iso3: SOM, pcode: SO16, name: Bari}
-- {country: Somalia, iso3: SOM, pcode: SO17, name: Nugaal}
-- {country: Somalia, iso3: SOM, pcode: SO18, name: Mudug}
-- {country: Somalia, iso3: SOM, pcode: SO19, name: Galgaduud}
-- {country: Somalia, iso3: SOM, pcode: SO20, name: Hiraan}
-- {country: Somalia, iso3: SOM, pcode: SO21, name: Middle Shabelle}
-- {country: Somalia, iso3: SOM, pcode: SO22, name: Banadir}
-- {country: Somalia, iso3: SOM, pcode: SO23, name: Lower Shabelle}
-- {country: Somalia, iso3: SOM, pcode: SO24, name: Bay}
 - {country: Somalia, iso3: SOM, pcode: SO25, name: Bakool}
+- {country: Somalia, iso3: SOM, pcode: SO22, name: Banadir}
+- {country: Somalia, iso3: SOM, pcode: SO16, name: Bari}
+- {country: Somalia, iso3: SOM, pcode: SO24, name: Bay}
+- {country: Somalia, iso3: SOM, pcode: SO19, name: Galgaduud}
 - {country: Somalia, iso3: SOM, pcode: SO26, name: Gedo}
-- {country: Somalia, iso3: SOM, pcode: SO27, name: Middle Juba}
+- {country: Somalia, iso3: SOM, pcode: SO20, name: Hiraan}
 - {country: Somalia, iso3: SOM, pcode: SO28, name: Lower Juba}
+- {country: Somalia, iso3: SOM, pcode: SO23, name: Lower Shabelle}
+- {country: Somalia, iso3: SOM, pcode: SO27, name: Middle Juba}
+- {country: Somalia, iso3: SOM, pcode: SO21, name: Middle Shabelle}
+- {country: Somalia, iso3: SOM, pcode: SO18, name: Mudug}
+- {country: Somalia, iso3: SOM, pcode: SO17, name: Nugaal}
+- {country: Somalia, iso3: SOM, pcode: SO15, name: Sanaag}
+- {country: Somalia, iso3: SOM, pcode: SO14, name: Sool}
+- {country: Somalia, iso3: SOM, pcode: SO13, name: Togdheer}
+- {country: Somalia, iso3: SOM, pcode: SO12, name: Woqooyi Galbeed}
 - {country: South Sudan, iso3: SSD, pcode: SS01, name: Central Equatoria}
 - {country: South Sudan, iso3: SSD, pcode: SS02, name: Eastern Equatoria}
 - {country: South Sudan, iso3: SSD, pcode: SS03, name: Jonglei}
 - {country: South Sudan, iso3: SSD, pcode: SS04, name: Lakes}
-- {country: South Sudan, iso3: SSD, pcode: SS05, name: Northern Bahr El Ghazal}
+- {country: South Sudan, iso3: SSD, pcode: SS05, name: Northern Bahr el Ghazal}
 - {country: South Sudan, iso3: SSD, pcode: SS06, name: Unity}
 - {country: South Sudan, iso3: SSD, pcode: SS07, name: Upper Nile}
 - {country: South Sudan, iso3: SSD, pcode: SS08, name: Warrap}
-- {country: South Sudan, iso3: SSD, pcode: SS09, name: Western Bahr El Ghazal}
+- {country: South Sudan, iso3: SSD, pcode: SS09, name: Western Bahr el Ghazal}
 - {country: South Sudan, iso3: SSD, pcode: SS10, name: Western Equatoria}
-- {country: El Salvador, iso3: SLV, pcode: SV01, name: Ahuachapan}
-- {country: El Salvador, iso3: SLV, pcode: SV02, name: Cabanas}
-- {country: El Salvador, iso3: SLV, pcode: SV03, name: Chalatenango}
-- {country: El Salvador, iso3: SLV, pcode: SV04, name: Cuscatlan}
-- {country: El Salvador, iso3: SLV, pcode: SV05, name: La Libertad}
-- {country: El Salvador, iso3: SLV, pcode: SV06, name: La Paz}
-- {country: El Salvador, iso3: SLV, pcode: SV07, name: La Union}
-- {country: El Salvador, iso3: SLV, pcode: SV08, name: Morazan}
-- {country: El Salvador, iso3: SLV, pcode: SV09, name: San Miguel}
-- {country: El Salvador, iso3: SLV, pcode: SV10, name: San Salvador}
-- {country: El Salvador, iso3: SLV, pcode: SV11, name: San Vicente}
-- {country: El Salvador, iso3: SLV, pcode: SV12, name: Santa Ana}
-- {country: El Salvador, iso3: SLV, pcode: SV13, name: Sonsonate}
-- {country: El Salvador, iso3: SLV, pcode: SV14, name: Usulutan}
-- {country: Syrian Arab Republic, iso3: SYR, pcode: SY01, name: Damascus}
-- {country: Syrian Arab Republic, iso3: SYR, pcode: SY02, name: Aleppo}
-- {country: Syrian Arab Republic, iso3: SYR, pcode: SY03, name: Rural Damascus}
-- {country: Syrian Arab Republic, iso3: SYR, pcode: SY04, name: Homs}
-- {country: Syrian Arab Republic, iso3: SYR, pcode: SY05, name: Hama}
-- {country: Syrian Arab Republic, iso3: SYR, pcode: SY06, name: Lattakia}
-- {country: Syrian Arab Republic, iso3: SYR, pcode: SY07, name: Idleb}
+- {country: State of Palestine, iso3: PSE, pcode: PS02, name: Gaza Strip}
+- {country: State of Palestine, iso3: PSE, pcode: PS01, name: West Bank}
+- {country: Sudan, iso3: SDN, pcode: SD19, name: Abyei PCA}
+- {country: Sudan, iso3: SDN, pcode: SD15, name: Aj Jazirah}
+- {country: Sudan, iso3: SDN, pcode: SD08, name: Blue Nile}
+- {country: Sudan, iso3: SDN, pcode: SD06, name: Central Darfur}
+- {country: Sudan, iso3: SDN, pcode: SD05, name: East Darfur}
+- {country: Sudan, iso3: SDN, pcode: SD12, name: Gedaref}
+- {country: Sudan, iso3: SDN, pcode: SD11, name: Kassala}
+- {country: Sudan, iso3: SDN, pcode: SD01, name: Khartoum}
+- {country: Sudan, iso3: SDN, pcode: SD02, name: North Darfur}
+- {country: Sudan, iso3: SDN, pcode: SD13, name: North Kordofan}
+- {country: Sudan, iso3: SDN, pcode: SD17, name: Northern}
+- {country: Sudan, iso3: SDN, pcode: SD10, name: Red Sea}
+- {country: Sudan, iso3: SDN, pcode: SD16, name: River Nile}
+- {country: Sudan, iso3: SDN, pcode: SD14, name: Sennar}
+- {country: Sudan, iso3: SDN, pcode: SD03, name: South Darfur}
+- {country: Sudan, iso3: SDN, pcode: SD07, name: South Kordofan}
+- {country: Sudan, iso3: SDN, pcode: SD04, name: West Darfur}
+- {country: Sudan, iso3: SDN, pcode: SD18, name: West Kordofan}
+- {country: Sudan, iso3: SDN, pcode: SD09, name: White Nile}
 - {country: Syrian Arab Republic, iso3: SYR, pcode: SY08, name: Al Hasakeh}
-- {country: Syrian Arab Republic, iso3: SYR, pcode: SY09, name: Deir Ez Zor}
-- {country: Syrian Arab Republic, iso3: SYR, pcode: SY10, name: Tartous}
+- {country: Syrian Arab Republic, iso3: SYR, pcode: SY02, name: Aleppo}
 - {country: Syrian Arab Republic, iso3: SYR, pcode: SY11, name: Ar Raqqa}
-- {country: Syrian Arab Republic, iso3: SYR, pcode: SY12, name: Dara}
 - {country: Syrian Arab Republic, iso3: SYR, pcode: SY13, name: As Sweida}
+- {country: Syrian Arab Republic, iso3: SYR, pcode: SY01, name: Damascus}
+- {country: Syrian Arab Republic, iso3: SYR, pcode: SY12, name: Dara}
+- {country: Syrian Arab Republic, iso3: SYR, pcode: SY09, name: Deir ez Zor}
+- {country: Syrian Arab Republic, iso3: SYR, pcode: SY05, name: Hama}
+- {country: Syrian Arab Republic, iso3: SYR, pcode: SY04, name: Homs}
+- {country: Syrian Arab Republic, iso3: SYR, pcode: SY07, name: Idleb}
+- {country: Syrian Arab Republic, iso3: SYR, pcode: SY06, name: Lattakia}
 - {country: Syrian Arab Republic, iso3: SYR, pcode: SY14, name: Quneitra}
-- {country: Chad, iso3: TCD, pcode: TD01, name: Batha}
-- {country: Chad, iso3: TCD, pcode: TD02, name: Borkou}
-- {country: Chad, iso3: TCD, pcode: TD03, name: Chari Baguirmi}
-- {country: Chad, iso3: TCD, pcode: TD04, name: Guera}
-- {country: Chad, iso3: TCD, pcode: TD05, name: Hadjer Lamis}
-- {country: Chad, iso3: TCD, pcode: TD06, name: Kanem}
-- {country: Chad, iso3: TCD, pcode: TD07, name: Lac}
-- {country: Chad, iso3: TCD, pcode: TD08, name: Logone Occidental}
-- {country: Chad, iso3: TCD, pcode: TD09, name: Logone Oriental}
-- {country: Chad, iso3: TCD, pcode: TD10, name: Mandoul}
-- {country: Chad, iso3: TCD, pcode: TD11, name: Mayo Kebbi Est}
-- {country: Chad, iso3: TCD, pcode: TD12, name: Mayo Kebbi Ouest}
-- {country: Chad, iso3: TCD, pcode: TD13, name: Moyen Chari}
-- {country: Chad, iso3: TCD, pcode: TD14, name: Ouaddai}
-- {country: Chad, iso3: TCD, pcode: TD15, name: Salamat}
-- {country: Chad, iso3: TCD, pcode: TD16, name: Tandjile}
-- {country: Chad, iso3: TCD, pcode: TD17, name: Wadi Fira}
-- {country: Chad, iso3: TCD, pcode: TD18, name: Ndjamena}
-- {country: Chad, iso3: TCD, pcode: TD19, name: Barh El Gazel}
-- {country: Chad, iso3: TCD, pcode: TD20, name: Ennedi Est}
-- {country: Chad, iso3: TCD, pcode: TD21, name: Sila}
-- {country: Chad, iso3: TCD, pcode: TD22, name: Tibesti}
-- {country: Chad, iso3: TCD, pcode: TD23, name: Ennedi Ouest}
+- {country: Syrian Arab Republic, iso3: SYR, pcode: SY03, name: Rural Damascus}
+- {country: Syrian Arab Republic, iso3: SYR, pcode: SY10, name: Tartous}
 - {country: Ukraine, iso3: UKR, pcode: UA01, name: Avtonomna Respublika Krym}
-- {country: Ukraine, iso3: UKR, pcode: UA05, name: Vinnytska}
-- {country: Ukraine, iso3: UKR, pcode: UA07, name: Volynska}
+- {country: Ukraine, iso3: UKR, pcode: UA71, name: Cherkaska}
+- {country: Ukraine, iso3: UKR, pcode: UA74, name: Chernihivska}
+- {country: Ukraine, iso3: UKR, pcode: UA73, name: Chernivetska}
 - {country: Ukraine, iso3: UKR, pcode: UA12, name: Dnipropetrovska}
 - {country: Ukraine, iso3: UKR, pcode: UA14, name: Donetska}
-- {country: Ukraine, iso3: UKR, pcode: UA18, name: Zhytomyrska}
-- {country: Ukraine, iso3: UKR, pcode: UA21, name: Zakarpatska}
-- {country: Ukraine, iso3: UKR, pcode: UA23, name: Zaporizka}
 - {country: Ukraine, iso3: UKR, pcode: UA26, name: Ivano Frankivska}
-- {country: Ukraine, iso3: UKR, pcode: UA32, name: Kyivska}
+- {country: Ukraine, iso3: UKR, pcode: UA63, name: Kharkivska}
+- {country: Ukraine, iso3: UKR, pcode: UA65, name: Khersonska}
+- {country: Ukraine, iso3: UKR, pcode: UA68, name: Khmelnytska}
 - {country: Ukraine, iso3: UKR, pcode: UA35, name: Kirovohradska}
+- {country: Ukraine, iso3: UKR, pcode: UA80, name: Kyivska}
+- {country: Ukraine, iso3: UKR, pcode: UA32, name: Kyivska}
 - {country: Ukraine, iso3: UKR, pcode: UA44, name: Luhanska}
 - {country: Ukraine, iso3: UKR, pcode: UA46, name: Lvivska}
 - {country: Ukraine, iso3: UKR, pcode: UA48, name: Mykolaivska}
 - {country: Ukraine, iso3: UKR, pcode: UA51, name: Odeska}
 - {country: Ukraine, iso3: UKR, pcode: UA53, name: Poltavska}
 - {country: Ukraine, iso3: UKR, pcode: UA56, name: Rivnenska}
+- {country: Ukraine, iso3: UKR, pcode: UA85, name: Sevastopol}
 - {country: Ukraine, iso3: UKR, pcode: UA59, name: Sumska}
 - {country: Ukraine, iso3: UKR, pcode: UA61, name: Ternopilska}
-- {country: Ukraine, iso3: UKR, pcode: UA63, name: Kharkivska}
-- {country: Ukraine, iso3: UKR, pcode: UA65, name: Khersonska}
-- {country: Ukraine, iso3: UKR, pcode: UA68, name: Khmelnytska}
-- {country: Ukraine, iso3: UKR, pcode: UA71, name: Cherkaska}
-- {country: Ukraine, iso3: UKR, pcode: UA73, name: Chernivetska}
-- {country: Ukraine, iso3: UKR, pcode: UA74, name: Chernihivska}
-- {country: Ukraine, iso3: UKR, pcode: UA80, name: Kyivska}
-- {country: Ukraine, iso3: UKR, pcode: UA85, name: Sevastopol}
-- {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE01, name: Distrito Federal}
+- {country: Ukraine, iso3: UKR, pcode: UA05, name: Vinnytska}
+- {country: Ukraine, iso3: UKR, pcode: UA07, name: Volynska}
+- {country: Ukraine, iso3: UKR, pcode: UA21, name: Zakarpatska}
+- {country: Ukraine, iso3: UKR, pcode: UA23, name: Zaporizka}
+- {country: Ukraine, iso3: UKR, pcode: UA18, name: Zhytomyrska}
 - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE02, name: Amazonas}
 - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE03, name: Anzoategui}
 - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE04, name: Apure}
@@ -1618,8 +1620,10 @@ admin1_info:
 - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE08, name: Carabobo}
 - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE09, name: Cojedes}
 - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE10, name: Delta Amacuro}
+- {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE01, name: Distrito Capital}
 - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE11, name: Falcon}
 - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE12, name: Guarico}
+- {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE24, name: La Guaira}
 - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE13, name: Lara}
 - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE14, name: Merida}
 - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE15, name: Miranda}
@@ -1631,29 +1635,28 @@ admin1_info:
 - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE21, name: Trujillo}
 - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE22, name: Yaracuy}
 - {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE23, name: Zulia}
-- {country: Venezuela (Bolivarian Republic of), iso3: VEN, pcode: VE24, name: Vargas}
-- {country: Yemen, iso3: YEM, pcode: YE11, name: Ibb}
 - {country: Yemen, iso3: YEM, pcode: YE12, name: Abyan}
-- {country: Yemen, iso3: YEM, pcode: YE13, name: Sanaa City}
-- {country: Yemen, iso3: YEM, pcode: YE14, name: Al Bayda}
-- {country: Yemen, iso3: YEM, pcode: YE15, name: Taiz}
-- {country: Yemen, iso3: YEM, pcode: YE16, name: Al Jawf}
-- {country: Yemen, iso3: YEM, pcode: YE17, name: Hajjah}
-- {country: Yemen, iso3: YEM, pcode: YE18, name: Al Hodeidah}
-- {country: Yemen, iso3: YEM, pcode: YE19, name: Hadramawt}
-- {country: Yemen, iso3: YEM, pcode: YE20, name: Dhamar}
-- {country: Yemen, iso3: YEM, pcode: YE21, name: Shabwah}
-- {country: Yemen, iso3: YEM, pcode: YE22, name: Sadah}
-- {country: Yemen, iso3: YEM, pcode: YE23, name: Sanaa}
+- {country: Yemen, iso3: YEM, pcode: YE30, name: Ad Dali}
 - {country: Yemen, iso3: YEM, pcode: YE24, name: Aden}
+- {country: Yemen, iso3: YEM, pcode: YE14, name: Al Bayda}
+- {country: Yemen, iso3: YEM, pcode: YE18, name: Al Hodeidah}
+- {country: Yemen, iso3: YEM, pcode: YE16, name: Al Jawf}
+- {country: Yemen, iso3: YEM, pcode: YE28, name: Al Maharah}
+- {country: Yemen, iso3: YEM, pcode: YE27, name: Al Mahwit}
+- {country: Yemen, iso3: YEM, pcode: YE29, name: Amran}
+- {country: Yemen, iso3: YEM, pcode: YE20, name: Dhamar}
+- {country: Yemen, iso3: YEM, pcode: YE19, name: Hadramawt}
+- {country: Yemen, iso3: YEM, pcode: YE17, name: Hajjah}
+- {country: Yemen, iso3: YEM, pcode: YE11, name: Ibb}
 - {country: Yemen, iso3: YEM, pcode: YE25, name: Lahj}
 - {country: Yemen, iso3: YEM, pcode: YE26, name: Marib}
-- {country: Yemen, iso3: YEM, pcode: YE27, name: Al Mahwit}
-- {country: Yemen, iso3: YEM, pcode: YE28, name: Al Maharah}
-- {country: Yemen, iso3: YEM, pcode: YE29, name: Amran}
-- {country: Yemen, iso3: YEM, pcode: YE30, name: Ad Dali}
 - {country: Yemen, iso3: YEM, pcode: YE31, name: Raymah}
+- {country: Yemen, iso3: YEM, pcode: YE22, name: Sadah}
+- {country: Yemen, iso3: YEM, pcode: YE23, name: Sanaa}
+- {country: Yemen, iso3: YEM, pcode: YE13, name: Sanaa City}
+- {country: Yemen, iso3: YEM, pcode: YE21, name: Shabwah}
 - {country: Yemen, iso3: YEM, pcode: YE32, name: Socotra}
+- {country: Yemen, iso3: YEM, pcode: YE15, name: Taiz}
 
 admin1_name_mappings:
   "Nord-Ouest": "HT09"
