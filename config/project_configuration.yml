@@ -1571,7 +1571,6 @@ HRPs:
   - YEM
 
 country_name_overrides:
-  PSE: "oPt"
   BOL: "Bolivia"
   VEN: "Venezuela"
 
