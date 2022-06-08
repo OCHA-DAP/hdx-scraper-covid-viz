@@ -4,7 +4,6 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from hdx.location.country import Country
 from hdx.scraper.base_scraper import BaseScraper
-from hdx.scraper.utilities.readers import read_hdx_metadata
 
 logger = logging.getLogger(__name__)
 
@@ -61,9 +60,9 @@ class IPC(BaseScraper):
 
     def run(self):
         base_url = self.datasetinfo["url"]
-        retriever = self.get_retriever(self.name)
+        reader = self.get_reader(self.name)
         countryisos = set()
-        json = retriever.download_json(f"{base_url}/analyses?type=A")
+        json = reader.download_json(f"{base_url}/analyses?type=A")
         for analysis in json:
             countryiso2 = analysis["country"]
             countryiso3 = Country.get_iso3_from_iso2(countryiso2)
@@ -86,7 +85,7 @@ class IPC(BaseScraper):
         analysis_dates = set()
         for countryiso3, countryiso2 in sorted(countryisos):
             url = f"{base_url}/population?country={countryiso2}"
-            country_data = retriever.download_json(url)
+            country_data = reader.download_json(url)
             if country_data:
                 country_data = country_data[0]
             else:
@@ -128,4 +127,4 @@ class IPC(BaseScraper):
                         subnational_populations[pcode] = cur_sum + sum
                     else:
                         subnational_populations[pcode] = sum
-        read_hdx_metadata(self.datasetinfo)
+        reader.read_hdx_metadata(self.datasetinfo)

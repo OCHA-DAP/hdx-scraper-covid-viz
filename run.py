@@ -6,12 +6,12 @@ from os.path import join
 
 from hdx.api.configuration import Configuration
 from hdx.facades.keyword_arguments import facade
-from hdx.scraper.input import create_retrievers
 from hdx.scraper.outputs.base import BaseOutput
 from hdx.scraper.outputs.excelfile import ExcelFile
 from hdx.scraper.outputs.googlesheets import GoogleSheets
 from hdx.scraper.outputs.json import JsonFile
 from hdx.scraper.utilities import string_params_to_dict
+from hdx.scraper.utilities.reader import Read
 from hdx.utilities.easy_logging import setup_logging
 from hdx.utilities.errors_onexit import ErrorsOnExit
 from hdx.utilities.path import temp_dir
@@ -66,7 +66,10 @@ def parse_args():
         help="Extra parameters for accessing scraper APIs",
     )
     parser.add_argument(
-        "-co", "--countries_override", default=None, help="Countries to run"
+        "-gho", "--gho_countries_override", default=None, help="GHO Countries to run"
+    )
+    parser.add_argument(
+        "-hrp", "--hrp_countries_override", default=None, help="HRP Countries to run"
     )
     parser.add_argument(
         "-sv", "--save", default=False, action="store_true", help="Save downloaded data"
@@ -88,7 +91,8 @@ def main(
     basic_auths,
     param_auths,
     nojson,
-    countries_override,
+    gho_countries_override,
+    hrp_countries_override,
     save,
     use_saved,
     **ignore,
@@ -97,7 +101,8 @@ def main(
     configuration = Configuration.read()
     with ErrorsOnExit() as errors_on_exit:
         with temp_dir() as temp_folder:
-            create_retrievers(
+            today = datetime.now()
+            Read.create_readers(
                 temp_folder,
                 "saved_data",
                 temp_folder,
@@ -106,6 +111,7 @@ def main(
                 header_auths=header_auths,
                 basic_auths=basic_auths,
                 param_auths=param_auths,
+                today=today,
             )
             if scrapers_to_run:
                 logger.info(f"Updating only scrapers: {scrapers_to_run}")
@@ -135,14 +141,14 @@ def main(
             else:
                 jsonout = JsonFile(configuration["json"], updatetabs)
             outputs = {"gsheets": gsheets, "excel": excelout, "json": jsonout}
-            today = datetime.now()
             countries_to_save = get_indicators(
                 configuration,
                 today,
                 outputs,
                 updatetabs,
                 scrapers_to_run,
-                countries_override,
+                gho_countries_override,
+                hrp_countries_override,
                 errors_on_exit,
             )
             jsonout.save(countries_to_save=countries_to_save)
@@ -204,10 +210,14 @@ if __name__ == "__main__":
         param_auths = string_params_to_dict(pa)
     else:
         param_auths = None
-    if args.countries_override:
-        countries_override = args.countries_override.split(",")
+    if args.gho_countries_override:
+        gho_countries_override = args.gho_countries_override.split(",")
     else:
-        countries_override = None
+        gho_countries_override = None
+    if args.hrp_countries_override:
+        hrp_countries_override = args.hrp_countries_override.split(",")
+    else:
+        hrp_countries_override = None
     facade(
         main,
         hdx_key=hdx_key,
@@ -225,7 +235,8 @@ if __name__ == "__main__":
         basic_auths=basic_auths,
         param_auths=param_auths,
         nojson=args.nojson,
-        countries_override=countries_override,
+        gho_countries_override=gho_countries_override,
+        hrp_countries_override=hrp_countries_override,
         save=args.save,
         use_saved=args.use_saved,
     )

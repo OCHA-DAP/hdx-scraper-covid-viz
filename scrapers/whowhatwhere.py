@@ -1,7 +1,6 @@
 import logging
 
 import hxl
-from hdx.data.dataset import Dataset
 from hdx.data.hdxobject import HDXError
 from hdx.scraper.base_scraper import BaseScraper
 from hdx.utilities.dictandlist import dict_of_sets_add
@@ -22,8 +21,8 @@ class WhoWhatWhere(BaseScraper):
 
     def run(self) -> None:
         threew_url = self.datasetinfo["url"]
-        retriever = self.get_retriever()
-        headers, iterator = retriever.get_tabular_rows(
+        reader = self.get_reader()
+        headers, iterator = reader.get_tabular_rows(
             threew_url, headers=1, dict_form=True, format="csv"
         )
         rows = list(iterator)
@@ -35,7 +34,7 @@ class WhoWhatWhere(BaseScraper):
                 logger.warning(f"No 3w data for {countryiso3}.")
                 continue
             try:
-                dataset = Dataset.read_from_hdx(dataset_name)
+                dataset = reader.read_dataset(dataset_name)
                 if "iati" in dataset_name:
                     resource = dataset.get_resource(1)
                 else:
@@ -45,23 +44,9 @@ class WhoWhatWhere(BaseScraper):
                     f"Could not download resource data for {countryiso3}. Check dataset name."
                 )
                 continue
-            try:
-                filename = f"{countryiso3}_{resource['name']}"
-                file_type = f".{resource.get_file_type()}"
-                if not filename.endswith(file_type):
-                    filename = f"{filename}{file_type}"
-                url = _munge_url(resource["url"])
-                path = retriever.download_file(url, filename=filename)
-                data = hxl.data(path, allow_local=True).cache()
-                data.display_tags
-            except hxl.HXLException:
-                logger.warning(
-                    f"Could not process 3w data for {countryiso3}. Maybe there are no HXL tags."
-                )
+            data = reader.read_hxl_resource(countryiso3, resource, "3w data")
+            if data is None:
                 continue
-            except Exception:
-                logger.exception(f"Error reading 3w data for {countryiso3}!")
-                raise
             self.source_urls.add(dataset.get_hdx_url())
             pcodes_found = False
             for row in data:

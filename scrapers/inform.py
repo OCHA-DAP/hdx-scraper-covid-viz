@@ -2,7 +2,6 @@ import logging
 
 from dateutil.relativedelta import relativedelta
 from hdx.scraper.base_scraper import BaseScraper
-from hdx.scraper.utilities.readers import read_hdx_metadata
 from hdx.utilities.dateparse import default_date, parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 
@@ -32,11 +31,11 @@ class Inform(BaseScraper):
         self.today = today
         self.countryiso3s = countryiso3s
 
-    def download_data(self, date, base_url, input_cols, retriever):
+    def download_data(self, date, base_url, input_cols, reader):
         url = base_url % date.strftime("%b%Y")
         countries_index = dict()
         while url:
-            json = retriever.download_json(url)
+            json = reader.download_json(url)
             for result in json["results"]:
                 countryiso3 = result["iso3"]
                 if len(countryiso3) != 1:
@@ -68,9 +67,9 @@ class Inform(BaseScraper):
             url = json["next"]
         return countries_index
 
-    def get_columns_by_date(self, date, base_url, retriever, crisis_types, not_found):
+    def get_columns_by_date(self, date, base_url, reader, crisis_types, not_found):
         input_col = self.get_headers("national")[0][0]
-        countries_index = self.download_data(date, base_url, [input_col], retriever)
+        countries_index = self.download_data(date, base_url, [input_col], reader)
         valuedict = dict()
         for countryiso3, type_of_crisis in crisis_types.items():
             country_index = countries_index.get(countryiso3)
@@ -85,9 +84,9 @@ class Inform(BaseScraper):
             valuedict[countryiso3] = val
         return valuedict
 
-    def get_latest_columns(self, date, base_url, retriever):
+    def get_latest_columns(self, date, base_url, reader):
         input_cols = self.get_headers("national")[0][:2]
-        countries_index = self.download_data(date, base_url, input_cols, retriever)
+        countries_index = self.download_data(date, base_url, input_cols, reader)
         valuedicts = self.get_values("national")[:2]
         crisis_types = dict()
         max_date = default_date
@@ -107,12 +106,12 @@ class Inform(BaseScraper):
         return valuedicts, crisis_types, max_date
 
     def run(self) -> None:
-        read_hdx_metadata(self.datasetinfo)
+        reader = self.get_reader(self.name)
+        reader.read_hdx_metadata(self.datasetinfo)
         base_url = self.datasetinfo["url"]
-        retriever = self.get_retriever(self.name)
         start_date = self.today - relativedelta(months=1)
         valuedictsfortoday, crisis_types, max_date = self.get_latest_columns(
-            start_date, base_url, retriever
+            start_date, base_url, reader
         )
         severity_indices = [valuedictsfortoday[0]]
         not_found = set()
@@ -121,7 +120,7 @@ class Inform(BaseScraper):
             valuedictfordate = self.get_columns_by_date(
                 prevdate,
                 base_url,
-                retriever,
+                reader,
                 crisis_types,
                 not_found,
             )

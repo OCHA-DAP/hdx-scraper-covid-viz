@@ -4,7 +4,6 @@ import hxl
 from hdx.data.dataset import Dataset
 from hdx.scraper.base_scraper import BaseScraper
 from hdx.utilities.dictandlist import dict_of_lists_add
-from hdx.utilities.retriever import Retrieve
 
 logger = logging.getLogger(__name__)
 
@@ -21,25 +20,25 @@ class IOMDTM(BaseScraper):
 
     def run(self) -> None:
         iom_url = self.datasetinfo["url"]
-        headers, iterator = Retrieve.get_retriever().get_tabular_rows(
+        reader = self.get_reader()
+        headers, iterator = reader.get_tabular_rows(
             iom_url, headers=1, dict_form=True, format="csv"
         )
         rows = list(iterator)
         idpsdict = dict()
         for ds_row in rows:
             countryiso3 = ds_row["Country ISO"]
-            dataset = Dataset.read_from_hdx(ds_row["Dataset Name"])
+            dataset_name = ds_row["Dataset Name"]
+            if not dataset_name:
+                logger.warning(f"No IOM DTM data for {countryiso3}.")
+                continue
+            dataset = reader.read_dataset(dataset_name)
             if not dataset:
                 logger.warning(f"No IOM DTM data for {countryiso3}.")
                 continue
-            url = dataset.get_resource()["url"]
-            try:
-                data = hxl.data(url).cache()
-                data.display_tags
-            except hxl.HXLException:
-                logger.warning(
-                    f"Could not process IOM DTM data for {countryiso3}. Maybe there are no HXL tags."
-                )
+            resource = dataset.get_resource()
+            data = reader.read_hxl_resource(countryiso3, resource, "IOM DTM data")
+            if data is None:
                 continue
             pcodes_found = False
             for row in data:
