@@ -1,8 +1,7 @@
 import logging
 
-from hdx.scraper.utilities.readers import read_hdx
+from hdx.scraper.utilities.reader import Read
 from hdx.utilities.dictandlist import dict_of_sets_add
-from hdx.utilities.retriever import Retrieve
 
 logger = logging.getLogger(__name__)
 
@@ -14,11 +13,9 @@ class RegionLookups:
     regions = None
 
     @classmethod
-    def load(cls, region_config, today, gho_countries, hrp_countries):
-        _, iterator = read_hdx(
-            Retrieve.get_retriever(),
+    def load(cls, region_config, gho_countries, hrp_countries):
+        _, iterator = Read.get_reader().read_hdx(
             region_config,
-            today=today,
             file_prefix="regions",
         )
         regions = set()

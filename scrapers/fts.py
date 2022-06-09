@@ -61,15 +61,15 @@ class FTS(BaseScraper):
         self.outputs = outputs
         self.countryiso3s = countryiso3s
 
-    def download(self, url, retriever):
-        json = retriever.download_json(url)
+    def download(self, url, reader):
+        json = reader.download_json(url)
         status = json["status"]
         if status != "ok":
             raise FTSException(f"{url} gives status {status}")
         return json
 
-    def download_data(self, url, retriever):
-        return self.download(url, retriever)["data"]
+    def download_data(self, url, reader):
+        return self.download(url, reader)["data"]
 
     def get_covid_funding(self, plan_id, plan_name, fundingobjects):
         if len(fundingobjects) != 0:
@@ -84,12 +84,12 @@ class FTS(BaseScraper):
         return None
 
     def get_requirements_and_funding_location(
-        self, base_url, plan, countryid_iso3mapping, retriever
+        self, base_url, plan, countryid_iso3mapping, reader
     ):
         allreqs, allfunds = dict(), dict()
         plan_id = plan["id"]
         url = f"{base_url}1/fts/flow/custom-search?planid={plan_id}&groupby=location"
-        data = self.download_data(url, retriever)
+        data = self.download_data(url, reader)
         requirements = data["requirements"]
         totalreq = requirements["totalRevisedReqs"]
         countryreq_is_totalreq = True
@@ -201,14 +201,14 @@ class FTS(BaseScraper):
                 dict_of_lists_add(other_funding, iso3, None)
 
         base_url = self.datasetinfo["url"]
-        retriever = self.get_retriever(self.name)
+        reader = self.get_reader(self.name)
         curdate = self.today - relativedelta(months=1)
         url = f"{base_url}2/fts/flow/plan/overview/progress/{curdate.year}"
-        data = self.download_data(url, retriever)
+        data = self.download_data(url, reader)
         plans = data["plans"]
         plan_ids = ",".join([str(plan["id"]) for plan in plans])
         url = f"{base_url}1/fts/flow/custom-search?emergencyid=911&planid={plan_ids}&groupby=plan"
-        funding_data = self.download_data(url, retriever)
+        funding_data = self.download_data(url, reader)
         fundingtotals = funding_data["report3"]["fundingTotals"]
         fundingobjects = fundingtotals["objects"]
         reg_reqfund_output = [
@@ -265,7 +265,7 @@ class FTS(BaseScraper):
                         reg_reqfund_output.append([plan_name, allreq, allfund, allpct])
             else:
                 allreqs, allfunds = self.get_requirements_and_funding_location(
-                    base_url, plan, countryid_iso3mapping, retriever
+                    base_url, plan, countryid_iso3mapping, reader
                 )
                 plan_name = self.map_planname(plan_name)
                 reg_reqfund_output.append([plan_name, allreq, allfund, allpct])

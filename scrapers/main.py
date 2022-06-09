@@ -41,7 +41,8 @@ def get_indicators(
     outputs,
     tabs,
     scrapers_to_run=None,
-    countries_override=None,
+    gho_countries_override=None,
+    hrp_countries_override=None,
     errors_on_exit=None,
     use_live=True,
     fallbacks_root="",
@@ -52,16 +53,18 @@ def get_indicators(
         country_name_mappings=configuration["country_name_mappings"],
     )
 
-    if countries_override:
-        gho_countries = countries_override
-        hrp_countries = countries_override
+    if gho_countries_override:
+        gho_countries = gho_countries_override
     else:
         gho_countries = configuration["gho"]
+    if hrp_countries_override:
+        hrp_countries = hrp_countries_override
+    else:
         hrp_countries = configuration["HRPs"]
     configuration["countries_fuzzy_try"] = hrp_countries
     adminone = AdminOne(configuration)
     regional_configuration = configuration["regional"]
-    RegionLookups.load(regional_configuration, today, gho_countries, hrp_countries)
+    RegionLookups.load(regional_configuration, gho_countries, hrp_countries)
     if fallbacks_root is not None:
         fallbacks_path = join(fallbacks_root, configuration["json"]["output"])
         levels_mapping = {
@@ -99,7 +102,6 @@ def get_indicators(
 
     who_covid = WHOCovid(
         configuration["who_covid"],
-        today,
         outputs,
         hrp_countries,
         gho_countries,
@@ -111,15 +113,12 @@ def get_indicators(
     food_prices = FoodPrices(configuration["food_prices"], today, gho_countries)
     vaccination_campaigns = VaccinationCampaigns(
         configuration["vaccination_campaigns"],
-        today,
         gho_countries,
         outputs,
     )
     unhcr = UNHCR(configuration["unhcr"], today, gho_countries)
     inform = Inform(configuration["inform"], today, gho_countries)
-    covax_deliveries = CovaxDeliveries(
-        configuration["covax_deliveries"], today, gho_countries
-    )
+    covax_deliveries = CovaxDeliveries(configuration["covax_deliveries"], gho_countries)
     education_closures = EducationClosures(
         configuration["education_closures"],
         today,

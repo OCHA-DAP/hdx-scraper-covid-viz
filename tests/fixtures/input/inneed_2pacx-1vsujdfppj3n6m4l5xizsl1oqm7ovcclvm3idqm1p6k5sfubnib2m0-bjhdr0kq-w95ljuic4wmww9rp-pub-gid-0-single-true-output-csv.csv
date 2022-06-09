@@ -1,0 +1,44 @@
+#,Interagency Response Plans,ISO alpha-3 codes,Plan type,In Need,Data Explorer PIN?
+,#country+name,#country+code,#plan+type,#inneed,#meta+included
+1,Afghanistan,AFG,Humanitarian response plan,24380455,TRUE
+2,Burkina Faso,BFA,Humanitarian response plan,3535864,TRUE
+3,Burundi,BDI,Humanitarian response plan,1795961,TRUE
+4,Cameroon,CMR,Humanitarian response plan,3934444,TRUE
+5,Central African Republic,CAF,Humanitarian response plan,3053039,TRUE
+6,Chad,TCD,Humanitarian response plan,6149509,TRUE
+7,Colombia,COL,Humanitarian response plan,7693945,TRUE
+8,Democratic Republic of Congo,COD,Humanitarian response plan,27026244,TRUE
+9,El Salvador,SLV,Humanitarian response plan,1700000,TRUE
+10,Ethiopia,ETH,Humanitarian response plan,25900000,TRUE
+11,Guatemala,GTM,Humanitarian response plan,3800000,TRUE
+12,Haiti,HTI,Humanitarian response plan,4896979,TRUE
+13,Honduras,HND,Humanitarian response plan,2800000,TRUE
+14,Iraq,IRQ,Humanitarian response plan,2454198,TRUE
+15,Libya,LBY,Humanitarian response plan,803587,TRUE
+16,Mali,MLI,Humanitarian response plan,7522833,TRUE
+17,Mozambique,MOZ,Humanitarian response plan,1533924,TRUE
+18,Myanmar,MMR,Humanitarian response plan,14369336,TRUE
+19,Niger,NER,Humanitarian response plan,3654445,TRUE
+20,Nigeria,NGA,Humanitarian response plan,6989485,TRUE
+21,occupied Palestinian territory,PSE,Humanitarian response plan,2075542,TRUE
+22,Somalia,SOM,Humanitarian response plan,7714943,TRUE
+23,South Sudan,SSD,Humanitarian response plan,8872746,TRUE
+24,Sudan,SDN,Humanitarian response plan,14257653,TRUE
+25,Syria,SYR,Humanitarian response plan,14560823,TRUE
+26,Ukraine,UKR,Humanitarian response plan,2875576,TRUE
+27,Venezuela,VEN,Humanitarian response plan,7000000,TRUE
+28,Yemen,YEM,Humanitarian response plan,23458603,TRUE
+29,Madagascar Flash Appeal,,Flash appeal,1590000,TRUE
+30,Malawi Flash Appeal,,Flash appeal,679919,TRUE
+31,Mozambique Gombe Flash Appeal,,Flash appeal,697425,TRUE
+32,Ukraine Flash Appeal,,Flash appeal,15700000,TRUE
+33,Afghanistan (RRP),,Regional response plan,5700000,TRUE
+34,Democratic Republic of Congo (RRP),,Regional response plan,2411000,TRUE
+35,Rohingyas (JRP),,Regional response plan,1443087,TRUE
+36,South Sudan (RRP),,Regional response plan,2560600,TRUE
+37,Syria (3RP),,Regional response plan,20100000,TRUE
+38,The Horn of Africa and Yemen (MRP),,Regional response plan,303804,TRUE
+39,Ukraine (RRP),,Regional response plan,4000000,TRUE
+40,Venezuela (RMRP),,Regional response plan,8400000,TRUE
+41,Lebanon ERP,,Non Humanitarian response plan,1863924,TRUE
+42,Philippines,,Non Humanitarian Response Plan,2400000,FALSE

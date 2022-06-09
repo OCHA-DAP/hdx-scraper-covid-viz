@@ -1,21 +1,16 @@
 import filecmp
-import logging
 from os.path import join
 
 import pytest
 from hdx.api.configuration import Configuration
-from hdx.api.locations import Locations
-from hdx.scraper.input import create_retrievers
 from hdx.scraper.outputs.base import BaseOutput
 from hdx.scraper.outputs.json import JsonFile
+from hdx.scraper.utilities.reader import Read
 from hdx.utilities.dateparse import parse_date
-from hdx.utilities.easy_logging import setup_logging
 from hdx.utilities.errors_onexit import ErrorsOnExit
 from hdx.utilities.path import temp_dir
 from hdx.utilities.useragent import UserAgent
 from scrapers.main import get_indicators
-
-setup_logging()
 
 
 class TestCovid:
@@ -25,14 +20,7 @@ class TestCovid:
         Configuration._create(
             hdx_read_only=True,
             hdx_site="prod",
-            user_agent="test",
-            project_config_yaml=join("tests", "config", "project_configuration.yml"),
-        )
-        Locations.set_validlocations(
-            [
-                {"name": "afg", "title": "Afghanistan"},
-                {"name": "pse", "title": "State of Palestine"},
-            ]
+            project_config_yaml=join("config", "project_configuration.yml"),
         )
         return Configuration.read()
 
@@ -45,111 +33,42 @@ class TestCovid:
             with temp_dir(
                 "TestCovidViz", delete_on_success=True, delete_on_failure=False
             ) as temp_folder:
-                create_retrievers(
+                today = parse_date("2022-06-03")
+                Read.create_readers(
                     temp_folder,
                     join(folder, "input"),
                     temp_folder,
-                    False,
-                    True,
+                    save=False,
+                    use_saved=True,
+                    today=today,
                 )
                 tabs = configuration["tabs"]
                 noout = BaseOutput(tabs)
-                jsonout = JsonFile(configuration["json"], tabs)
+                json_configuration = configuration["json"]
+                jsonout = JsonFile(json_configuration, tabs)
                 outputs = {"gsheets": noout, "excel": noout, "json": jsonout}
-                today = parse_date("2021-05-03")
+                hrp_countries = ["AFG", "CAF", "MMR", "PSE", "TCD", "UKR", "VEN", "YEM"]
+                gho_countries = hrp_countries + ["BRA", "EGY", "KEN", "PAK"]
                 countries_to_save = get_indicators(
                     configuration,
                     today,
                     outputs,
                     tabs,
-                    scrapers_to_run=[
-                        "population_national",
-                        "ifi",
-                        "worldhealthorg_national",
-                        "worldhealthorg2_national",
-                        "worldhealthorg_subnational",
-                        "who_covid",
-                        "sadd",
-                        "covidtests",
-                        "cadre_harmonise",
-                        "access_national",
-                        "food_prices",
-                    ],
-                    countries_override=None,
+                    scrapers_to_run=None,
+                    gho_countries_override=gho_countries,
+                    hrp_countries_override=hrp_countries,
                     errors_on_exit=errors_on_exit,
                     use_live=False,
-                    fallbacks_root=None,
                 )
                 filepaths = jsonout.save(
-                    temp_folder, countries_to_save=countries_to_save
+                    folder=temp_folder, countries_to_save=countries_to_save
                 )
-                assert filecmp.cmp(filepaths[0], join(folder, "test_scraper_all.json"))
-                assert filecmp.cmp(filepaths[1], join(folder, "test_scraper.json"))
+                additional_outputs = json_configuration["additional_outputs"]
+                for i, filepath in enumerate(filepaths[1:]):
+                    assert filecmp.cmp(
+                        filepath,
+                        join(folder, additional_outputs[i]["filepath"]),
+                    )
                 assert filecmp.cmp(
-                    filepaths[2], join(folder, "test_scraper_daily.json")
+                    filepaths[0], join(folder, json_configuration["output"])
                 )
-                assert filecmp.cmp(
-                    filepaths[3], join(folder, "test_scraper_covidseries.json")
-                )
-
-    def test_fallbacks(self, caplog, configuration, folder):
-        with pytest.raises(SystemExit):
-            with caplog.at_level(logging.ERROR):
-                with ErrorsOnExit() as errors_on_exit:
-                    with temp_dir(
-                        "TestCovidVizFB",
-                        delete_on_success=True,
-                        delete_on_failure=False,
-                    ) as temp_folder:
-                        create_retrievers(
-                            temp_folder,
-                            join(folder, "input"),
-                            temp_folder,
-                            False,
-                            True,
-                        )
-                        tabs = configuration["tabs"]
-                        noout = BaseOutput(tabs)
-                        json_configuration = configuration["json"]
-                        jsonout = JsonFile(json_configuration, tabs)
-                        outputs = {"gsheets": noout, "excel": noout, "json": jsonout}
-                        today = parse_date("2021-05-03")
-                        countries_to_save = get_indicators(
-                            configuration,
-                            today,
-                            outputs,
-                            tabs,
-                            scrapers_to_run=[
-                                "population_national",
-                                "ifi",
-                                "worldhealthorg_national",
-                                "worldhealthorg2_national",
-                                "worldhealthorg_subnational",
-                                "who_covid",
-                                "sadd",
-                                "ctfallbacks",
-                                "cadre_harmonise",
-                                "access_national",
-                                "food_prices",
-                            ],
-                            countries_override=None,
-                            errors_on_exit=errors_on_exit,
-                            use_live=False,
-                            fallbacks_root=folder,
-                        )
-                        filepaths = jsonout.save(
-                            temp_folder, countries_to_save=countries_to_save
-                        )
-                        assert filecmp.cmp(
-                            filepaths[0], join(folder, "test_scraper_all.json")
-                        )
-                        assert filecmp.cmp(
-                            filepaths[1], join(folder, "test_scraper.json")
-                        )
-                        assert filecmp.cmp(
-                            filepaths[2], join(folder, "test_scraper_daily.json")
-                        )
-                        assert filecmp.cmp(
-                            filepaths[3], join(folder, "test_scraper_covidseries.json")
-                        )
-                        assert "error 1" in caplog.text

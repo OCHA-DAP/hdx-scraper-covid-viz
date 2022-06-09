@@ -1,0 +1,187 @@
+iso3,Country,Campaign Vaccine,Planned Start Date,Planned End Date,Status,Target Age Group,Est. Target Pop,Campaign Type,Geographic Scale
+#country+code,#country+name,#service+name,#date+start,#date+end,#status+name,,,,
+AFG,Afghanistan,Tetanus and Diphtheria,TBD,TBD,Postponed Other,15y- 49y,"19,111,461",Preventive,Subnational
+AFG,Afghanistan,Measles,2022-03,2022-03,Unknown,6-59m,"1,229,926",Outbreak Response,Subnational
+AGO,Angola,Measles and Rubella,2022,.,Unknown,9m-59m,,Follow Up,National
+AGO,Angola,Inactivated Polio,2020-05,2020-05,Reinstated COVID,Under 5,"2,058,028",Catch Up,National
+ARG,Argentina,"Measles, Mumps, Rubella",2022-Q2,,On track,1-4yo,"4,409,412",Follow Up,National
+BGD,Bangladesh,Measles and Rubella,2020-03,2020-04,Reinstated COVID,9m- 9y,"35,337,521",Follow Up,National
+BEN,Benin,Meningitis A,2020-11,2020-11,Postponed COVID,1y-9y,"1,573,504",Catch Up,Subnational
+BEN,Benin,bivalent Oral Poliovirus,2020-03,,Postponed COVID,0-5y,"2,098,442",Preventive,National
+BEN,Benin,Type 2 Poliovirus,2020-09-18,2020-09-20,Reinstated Other,0-5y,"398,489",Outbreak Response,Subnational
+BOL,Bolivia,Yellow Fever,2020-04,2020-05,Postponed COVID,5y- 59y,"368,129",Preventive,Subnational
+BOL,Bolivia,"Measles, Mumps, Rubella",2020-04,2020-05,Reinstated COVID,1y- 5y,"1,183,283",Follow Up,National
+BIH,Bosnia and Herzegovina,Measles and Rubella,2022-Q3/4,,On track,<5yo,,Preventive,
+BWA,Botswana,Measles and Rubella,2020-06,2020-06,Reinstated Other,9m-59m,"242,233",Follow Up,National
+BRA,Brazil,Measles and Rubella,2022-Q2,,On track,1-10yo,"27,513,229",Follow Up,National
+BFA,Burkina Faso,Type 2 Poliovirus,2020-11-27,2020-11-30,Postponed Other,0-5y,"590,057",Outbreak Response,Subnational
+BFA,Burkina Faso,Inactivated Polio,2020-Q2,2020-Q2,Reinstated COVID,05/2016-07/2018,"1,661,448",Catch Up,National
+BDI,Burundi,Measles and Rubella,2021-05,,Reinstated Other,9m- 59m,"1,683,300",Follow Up,National
+BDI,Burundi,Inactivated Polio,2020-04,2020-04,Reinstated Other,09/2016-06/2018,"835,659",Catch Up,National
+CMR,Cameroon,Measles,2021-10,2021-10,Reinstated Other,6m- 9yo,"843,194",Outbreak Response,Subnational
+CMR,Cameroon,Oral Cholera,TBD,TBD,On track,>1y,"553,700",Outbreak Response,National
+CAF,CAR,Tetanus and Diphtheria,2020-12,2020-12,Reinstated Other,15y-49y,"1,687,950",Preventive,Subnational
+CAF,CAR,bivalent Oral Poliovirus,2021-10-01,2021-10-01,On track,0-5y,"426,943",Preventive,Subnational
+CAF,CAR,Type 2 Poliovirus,,,Reinstated Other,0-5y,"80,256",Outbreak Response,Subnational
+CAF,CAR,Measles,2020-04,2020-04,Reinstated COVID,6m-10y,"1,209,256",Follow Up,National
+TCD,Chad,Yellow Fever,2022-01,2022-01,On track,9m-60y,"1,101,230",Outbreak Response,Subnational
+TCD,Chad,Meningitis A,2020-04,2020-04,Reinstated COVID,1y-8y,"681,121",Catch Up,Subnational
+TCD,Chad,bivalent Oral Poliovirus,2021-10-01,2021-10-01,On track,0-5y,"2,313,669",Preventive,Subnational
+TCD,Chad,Measles,2020-10,,Reinstated COVID,9-59m,"1,792,830",Follow Up,National
+COL,Colombia,Yellow Fever,2020-04,2020-05,Postponed COVID,1y- 11y,"629,000",Preventive,Subnational
+COL,Colombia,Measles and Rubella,2020-04,2020-05,Reinstated COVID,1y- 10y,"7,575,807",Follow Up,National
+COM,Comoros (the),Measles and Rubella,2020-09,,Reinstated COVID,9m- 14y,"373,243",Catch Up,National
+COG,Congo (the),Yellow Fever,2021-09,2021-10,Postponed COVID,9m-60y,"4,053,267",Preventive,Subnational
+COG,Congo (the),Type 2 Poliovirus,2020-12-17,2020-12-20,Postponed Other,0-5y,"1,142,040",Outbreak Response,
+COG,Congo (the),Measles,2022-05,,On track,6m-9yo,"2,494,803",Outbreak Response,Subnational
+CIV,Cote d'Ivoire,Measles and Rubella,2021-02,,Reinstated COVID,9m-59m,"6,248,567",Preventive,National
+CIV,Cote d'Ivoire,bivalent Oral Poliovirus,2021-03-01,2021-03-01,Postponed Other,0-5y,"6,438,655",Preventive,National
+CIV,Cote d'Ivoire,Inactivated Polio,2020-07,2020-07,Reinstated COVID,05/2016-01/2018,"1,325,912",Catch Up,National
+DJI,Djibouti,Inactivated Polio,2020-07,2020-07,Postponed Other,05/2017-07/2018,"34,328",Catch Up,National
+DOM,Dominican Rep,Measles and Rubella,2020-07,2020-08,Postponed COVID,1y- 5y,"956,182",Follow Up,National
+PRK,DPR Korea,Inactivated Polio,2020-10-01,TBD,Postponed COVID,04/2016-05/2018,"732,328",Catch Up,National
+COD,DR Congo,Yellow Fever,2022,2022,On track,9m-60y,"13,544,904",Preventive,Subnational
+COD,DR Congo,bivalent Oral Poliovirus,2021-11-11,2021-11-13,On track,0-5y,"11,223,905",Preventive,Subnational
+COD,DR Congo,Type 2 Poliovirus,2020-12-01,,Reinstated COVID,0-5y,"534,829",Outbreak Response,Subnational
+COD,DR Congo,Measles,2022-04,,Unknown,6-59m,"2,678,973",Outbreak Response,Subnational
+COD,DR Congo,Oral Cholera,2020-06-02,2020-06-08,On track,>1y,"480,828",Outbreak Response,Subnational
+EGY,Egypt,bivalent Oral Poliovirus,2022-03-01,2022-03-01,On track,0-5y,"15,962,409",Preventive,National
+SLV,El Salvador,"Measles, Mumps, Rubella",2022-05,2022-06,On track,1-6yo,"525,000",Follow Up,National
+GNQ,Equatorial Guinea,bivalent Oral Poliovirus,2020-10-01,,Unknown,0-5y,"154,569",Preventive,National
+GNQ,Equatorial Guinea,Measles,2020-09,,Reinstated COVID,6m- 59m,"173,494",Follow Up,National
+ERI,Eritrea,Measles and Rubella,2022-Q4,,On track,9m-59m,,Follow Up,National
+ERI,Eritrea,Inactivated Polio,2021-02-15,,Reinstated Other,05/2016-08/2018,"361,306",Catch Up,National
+ETH,Ethiopia,Yellow Fever,2020-05,2020-05,Reinstated COVID,9m-60y,"704,005",Outbreak Response,Subnational
+ETH,Ethiopia,Measles,2022-Q4,,On track,9m- 59m,,Follow Up,National
+ETH,Ethiopia,Oral Cholera,2022-02,,On track,>1y,"1,100,000",Outbreak Response,National
+GAB,Gabon,bivalent Oral Poliovirus,2020-10-01,,Unknown,0-5y,"329,691",Preventive,National
+GMB,Gambia (the),Measles and Rubella,2021-11,,Postponed Other,9m- 59m,,Follow Up,National
+GMB,Gambia (the),Inactivated Polio,TBC,TBC,Postponed COVID,08/2017-05/2018,"61,023",Catch Up,National
+GEO,Georgia,"Measles, Mumps, Rubella",2021,,Postponed COVID,9m-59m,,Follow Up,
+GHA,Ghana,Yellow Fever,2022-01,2022-01,Postponed COVID,9m-60y,"510,541",Outbreak Response,Subnational
+GHA,Ghana,Type 2 Poliovirus,,,Reinstated COVID,0-5y,"4,568,864",Outbreak Response,Subnational
+GIN,Guinea,Tetanus and Diphtheria,2020-09,2020-09,Reinstated COVID,15y-49y,"1,209,873",Preventive,Subnational
+GIN,Guinea,Yellow Fever,2021-01,2021-01,Reinstated Other,9m-60y,"147,536",Outbreak Response,Subnational
+GIN,Guinea,Meningitis A,2020-11,2020-11,Postponed Other,1y-9y,"1,026,749",Preventive,National
+GIN,Guinea,bivalent Oral Poliovirus,2021-03-01,2021-03-01,Reinstated Other,0-5y,"2,929,779",Preventive,National
+GIN,Guinea,Type 2 Poliovirus,2020-09-27,2020-09-30,Reinstated Other,0-5y,"1,193,579",Outbreak Response,Subnational
+GIN,Guinea,Measles,2020-11,,Postponed COVID,9m- 59m,"2,304,362",Follow Up,National
+GNB,Guinea-Bissau,Meningitis A,2021-Q4,2021-Q4,Postponed Other,1y-6y,,Catch Up,National
+GNB,Guinea-Bissau,Inactivated Polio,TBC,TBC,Postponed COVID,03/2017-01/2019,"117,782",Catch Up,National
+HND,Honduras,"Measles, Mumps, Rubella",2020-08,2020-09,Postponed COVID,1y- 5y,"1,666,999",Follow Up,National
+IND,India,Measles and Rubella,2020,,Unknown,9m-5yo?,,Preventive,Subnational
+IND,India,bivalent Oral Poliovirus,2020-09-20,,Reinstated Other,0-5y,"94,731,369",Preventive,Subnational
+IDN,Indonesia,Measles and Rubella,2020-Q4,,Postponed Other,9m- 12y and 9m-15 years based on epidemiology,"24,845,193",Follow Up,Subnational
+IDN,Indonesia,bivalent Oral Poliovirus,2021-03-01,2021-03-01,On track,0-5y,"24,736,877",Preventive,National
+IDN,Indonesia,Inactivated Polio,2020-10-01,,Reinstated COVID,4m-<15y,"183,660",Catch Up,Subnational
+IRQ,Iraq,Measles and Rubella,2020,,Postponed COVID,9m- 59m,"4,981,148",Preventive,National
+KAZ,Kazakhstan,Measles and Rubella,2020-Q2,2021-Q1,Postponed COVID,TBD (2y- 7y or 1y- 6y),,Follow Up,National
+KEN,Kenya,Measles and Rubella,2019-09,,Reinstated COVID,9m - 59m,"3,374,464",Follow Up,Subnational
+KEN,Kenya,Type 2 Poliovirus,2021-07-17,2021-07- 22,Reinstated Other,0-5y,"3,437,378",Outbreak Response,Subnational
+SWZ,Eswatini,Measles and Rubella,2020-09,,Reinstated Other,9m- 59m,"129,784",Follow Up,National
+KGZ,Kyrgyzstan,Measles and Rubella,2020-Q3,,Postponed COVID,TBD (2y- 7y or 1y- 6y),,Follow Up,National
+KGZ,Kyrgyzstan,Inactivated Polio,2021-02-28,,Reinstated Other,05/2016-08/2018,"296,830",Catch Up,National
+LAO,Lao PDR,Measles and Rubella,2020-03,,Reinstated COVID,9-59m,"237,830",,Subnational
+LAO,Lao PDR,bivalent Oral Poliovirus,2021-03-01,2021-03-01,On track,0-5y,"435,738",Preventive,Subnational
+LBN,Lebanon,"Measles, Mumps, Rubella",2020-02,2020-03,Reinstated COVID,6m- 10y,"608,240",Preventive,National
+LSO,Lesotho,Measles and Rubella,2021-02,,Postponed Other,9m-59m,,Follow Up,National
+LSO,Lesotho,Inactivated Polio,TBC,TBC,Postponed COVID,01/2017-06/2018,"83,076",Catch Up,National
+LBR,Liberia,Typhoid Conjugate,2020-04,2020-04,Reinstated COVID,9m-15y,"1,900,000",Catch Up,National
+LBR,Liberia,Type 2 Poliovirus,2020-11-06,2020-11-09,Postponed Other,0-5y,"172,274",Outbreak Response,
+LBR,Liberia,Measles,2022-05,,On track,6-59m,"343,180",Outbreak Response,
+LBY,Libya,Measles and Rubella,2022 (TBC),,Unknown,9m- 15yo,"362,222",Preventive,Subnational
+LBY,Libya,bivalent Oral Poliovirus,2020-09-01,,Unknown,0-5y,"43,987",Preventive,Subnational
+MDG,Madagascar,bivalent Oral Poliovirus,2022-06-01,2022-06-01,On track,0-5y,"4,648,699",Outbreak Response,Subnational
+MDG,Madagascar,Measles,2021-10,,Postponed Other,9m-59m,"4,205,720",Follow Up,National
+MWI,Malawi,Typhoid Conjugate,2022-Q4,2022-Q4,Postponed Other,9 m -15 yrs,"9,066,990",Catch Up,National
+MWI,Malawi,Measles and Rubella,2021-10,,Postponed Other,9m-59m,"3,153,736",Preventive,National
+MWI,Malawi,bivalent Oral Poliovirus,2022-04-25,2022-04-28,On track,0-5y,"2,922,175",Preventive,Subnational
+MWI,Malawi,Inactivated Polio,2020-09-30,TBD,Reinstated COVID,05/2016-01/2019,"1,817,456",Catch Up,National
+MWI,Malawi,Oral Cholera,TBD,TBD,Reinstated COVID,>1y,"664,000",Preventive,National
+MYS,Malaysia,Type 2 Poliovirus,2020-04-13,2020-04-23,Reinstated COVID,0-13y,"1,001,416",Outbreak Response,Subnational
+MLI,Mali,Tetanus and Diphtheria,2020-03,2020-04,Reinstated COVID,15y-49y,"80,203",Preventive,Subnational
+MLI,Mali,bivalent Oral Poliovirus,2021-03-01,2021-03-01,Postponed Other,0-5y,"3,825,944",Preventive,Subnational
+MLI,Mali,Type 2 Poliovirus,2020-10-23,2020-10-26,Reinstated Other,0-5y,"228,483",Outbreak Response,Subnational
+MRT,Mauritania,bivalent Oral Poliovirus,2020-10-01,,Unknown,0-5y,"389,016",Preventive,Subnational
+MEX,Mexico,Measles and Rubella,2020-10,2020-12,Reinstated COVID,1y- 9y,"12,522,394",Follow Up,National
+FSM,Micronesia,Measles and Rubella,,N/A,,0,0,,
+FSM,Micronesia,"Measles, Mumps, Rubella",2020-01,,Reinstated COVID,1-17 yo,"11,216",Preventive,National
+MNG,Mongolia,Inactivated Polio,2020-04-01,TBD,Reinstated COVID,05/2016-03/2019,"205,308",Catch Up,National
+MOZ,Mozambique,Measles and Rubella,2022-Q4,,On track,9m-59m,,Follow Up,National
+MOZ,Mozambique,bivalent Oral Poliovirus,2022-04-28,2022-05-01,On track,0-5y,"2,766,684",Preventive,Subnational
+MOZ,Mozambique,Oral Cholera,TBD,TBD,Postponed COVID,>1y,"366,000",Outbreak Response,Subnational
+MMR,Myanmar,Measles and Rubella,2021,,Unknown,20y-40y,"30,570,517",Follow Up,Subnational
+MMR,Myanmar,bivalent Oral Poliovirus,2021-08-01,2021-08-01,On track,0-5y,"829,040",Preventive,Subnational
+NAM,Namibia,Measles and Rubella,2022 (TBC),,Unknown,9m- 59m,,Follow Up,National
+NPL,Nepal,Typhoid Conjugate,2022-Q1,2022-Q1,On track,15 m - 15yrs,"7,414,260",Catch Up,National
+NPL,Nepal,Measles and Rubella,2020-03,2020-04,Reinstated COVID,9m- 59m,"2,982,204",Follow Up,National
+NPL,Nepal,Inactivated Polio,TBC,TBC,Postponed COVID,09/2016-08/2018,"1,095,480",Catch Up,National
+NPL,Nepal,Oral Cholera,2022-01,,Might postpone,>1y,"351,500",Outbreak Response,National
+NZL,New Zealand,"Measles, Mumps, Rubella",2020-07,,Reinstated COVID,15y- 30y,,Catch Up,
+NIC,Nicaragua,"Measles, Mumps, Rubella",2022-06,2022-06,On track,1- 6y,"788,190",Follow Up,National
+NER,Niger (the),Measles and Rubella,2022-Q4,,On track,,,Preventive,
+NER,Niger (the),bivalent Oral Poliovirus,2021-10-01,2021-10-01,On track,0-5y,"2,625,648",Preventive,Subnational
+NER,Niger (the),Type 2 Poliovirus,2020-08-28,2020-08-30,Reinstated Other,0-5y,"3,417,371",Outbreak Response,Subnational
+NER,Niger (the),Oral Cholera,2021-10,,On track,>1y,"1,986,171",Outbreak Response,Subnational
+NGA,Nigeria,Tetanus and Diphtheria,2020-10,2020-10,Reinstated COVID,15y-49y,"6,415,775",Preventive,Subnational
+NGA,Nigeria,Yellow Fever,2022,2022,On track,9m-44y,"24,080,892",Preventive,Subnational
+NGA,Nigeria,Meningitis A,2020-11,2020-11,Postponed Other,7y-10y,,Catch Up,Subnational
+NGA,Nigeria,bivalent Oral Poliovirus,2021-10-01,2021-10-01,On track,0-5y,"8,457,867",Preventive,Subnational
+NGA,Nigeria,Type 2 Poliovirus,2020-04-20,2020-04-12,Reinstated COVID,0-5y,"79,796",Outbreak Response,Subnational
+NGA,Nigeria,Measles,2021-09,2021-12,Reinstated COVID,9m- 59m,"15,834,936",Follow Up,Subnational
+PAK,Pakistan,Tetanus and Diphtheria,2020-06,2020-06,Reinstated COVID,15y-49y,"6,861,469",Preventive,Subnational
+PAK,Pakistan,Typhoid Conjugate,2020-09,2020-10,Reinstated COVID,9m-15y,"19,000,000",Catch Up,Subnational
+PAK,Pakistan,bivalent Oral Poliovirus,2022-11-14,2022-11-16,On track,0-5y,"41,006,589",Preventive,National
+PAK,Pakistan,Type 2 Poliovirus,2020-09-14,2020-09-17,Unknown,0-5y,"34,391,997",Outbreak Response,Subnational
+PNG,Papua New Guinea,Tetanus and Diphtheria,2020-08,2020-08,Postponed COVID,15y-49y,"2,144,079",Preventive,Subnational
+PNG,Papua New Guinea,Measles and Rubella,2022-10,,Postponed Other,6m- 59m,"1,200,000",,National
+PNG,Papua New Guinea,bivalent Oral Poliovirus,2021-03-01,2021-03-01,On track,0-5y,"669,433",Preventive,Subnational
+PRY,Paraguay,Measles and Rubella,2020-08,2020-09,Reinstated COVID,1y- 8y,"1,126,927",Follow Up,National
+PHL,Philippines (the),Measles and Rubella,2020-07,2020-07,Reinstated COVID,9m- 59m,"4,362,647",Preventive,National
+PHL,Philippines (the),bivalent Oral Poliovirus,2020-03,2020-04,Reinstated COVID,0-9y,"3,476,544",Outbreak Response,Subnational
+PHL,Philippines (the),Type 2 Poliovirus,2020-04,2020-04,Reinstated COVID,0-5y,"2,532,010",Outbreak Response,Subnational
+RWA,Rwanda,Inactivated Polio,2020-12-31,TBD,Postponed COVID,05/2016-03/2018,"681,361",Catch Up,National
+WSM,Samoa,Typhoid Conjugate,,,Reinstated COVID,1 - 45 yrs,,Preventive,National
+SEN,Senegal,Yellow Fever,2021-01,2021-01,Reinstated COVID,9m-60y,"769,799",Outbreak Response,Subnational
+SEN,Senegal,Inactivated Polio,2020-11-01,TBD,Reinstated COVID,12/2015-02/2018,"966,686",Catch Up,National
+SLE,Sierra Leone,Inactivated Polio,2020-11-01,TBD,Reinstated COVID,05/2016-02/2018,"455,488",Catch Up,National
+SOM,Somalia,Type 2 Poliovirus,2022-07-25,2022-07-28,On track,0-10Y,,Outbreak Response,Subnational
+SOM,Somalia,Measles,2022 (TBC),,Unknown,9m- 59m,"2,832,151",Preventive,National
+ZAF,South Africa,Measles and Rubella,2022 (TBC),,Unknown,9m- 14yo,,Catch Up,National
+SSD,South Sudan,Tetanus and Diphtheria,2020-04,2020-04,Reinstated COVID,15y-49y,"1,158,295",Preventive,Subnational
+SSD,South Sudan,Yellow Fever,TBD,TBD,Reinstated COVID,9m-60y,"34,600",Outbreak Response,Subnational
+SSD,South Sudan,bivalent Oral Poliovirus,2021-11-01,2021-11-01,On track,0-5y,"644,972",Preventive,Subnational
+SSD,South Sudan,Type 2 Poliovirus,2021-05-18,2021-05-21,On track,0-5y,"912,872",Outbreak Response,Subnational
+SSD,South Sudan,Measles,2020-04,2020-04,Reinstated COVID,6m- 59m,"716,663",Follow Up,National
+SSD,South Sudan,Oral Cholera,TBD,TBD,Reinstated COVID,>1y,"261,000",Outbreak Response,Subnational
+SDN,Sudan (the),Tetanus and Diphtheria,2020-04,2020-04,Postponed COVID,15y-49y,"1,241,694",Preventive,Subnational
+SDN,Sudan (the),Yellow Fever,2021-01,,Postponed COVID,9-59m (varies by state based on PMVC year),"5,500,000",Catch Up,Subnational
+SDN,Sudan (the),Type 2 Poliovirus,2020-12-01,2020-12-01,Reinstated Other,0-5y,"8,617,568",Outbreak Response,Subnational
+SDN,Sudan (the),Inactivated Polio,2019-Q4,2019-Q4,Reinstated Other,07/2016-01/2018,"2,253,531",Catch Up,Subnational
+SYR,Syria,bivalent Oral Poliovirus,2022-10-01,2022-10-01,On track,0-5y,"2,455,978",Preventive,National
+TJK,Tajikistan,Measles and Rubella,2020-Q3,,Postponed COVID,TBD (2y- 7y or 1y- 6y),,Follow Up,National
+TJK,Tajikistan,Inactivated Polio,2020-09-14,TBD,Reinstated Other,05/2016-06/2018,"524,747",Catch Up,National
+TLS,Timor-Leste,bivalent Oral Poliovirus,2021-08-01,2021-08-01,On track,0-5y,"141,119",Preventive,National
+TGO,Togo,Meningitis A,2020-06,2020-06,Reinstated Other,1y-7y,,Catch Up,Subnational
+TGO,Togo,Type 2 Poliovirus,2020-04-24,2020-04-26,Reinstated COVID,0-5y,"715,319",Outbreak Response,Subnational
+TGO,Togo,Inactivated Polio,2020-11-16,TBD,Postponed COVID,05/2016-10/2017,"632,902",Catch Up,National
+TUN,Tunisia,Measles and Rubella,2020-03,,Unknown,25y- 35y,"700,000",Preventive,National
+TKM,Turkmenistan,Measles and Rubella,2022-Q4,,On track,,,Preventive,National
+UGA,Uganda,Yellow Fever,2022,2022,On track,9m-60y,,,
+UGA,Uganda,Measles and Rubella,2022-Q4,,On track,,,Preventive,
+UKR,Ukraine,Measles and Rubella,2019-07,2020-06,Postponed COVID,6y- 17y,"300,000",Follow Up,Subnational
+TZA,Tanzania,bivalent Oral Poliovirus,2022-04-28,2022-05-01,On track,0-5Y,"19,219,274",Preventive,Subnational
+UZB,Uzbekistan,Measles and Rubella,2020-Q3,,Postponed COVID,TBD (2y- 7y or 1y- 6y),"3,334,726",Follow Up,National
+UZB,Uzbekistan,Inactivated Polio,TBC,TBC,Postponed Other,05/2016-04/2018,"1,308,418",Catch Up,National
+VEN,Venezuela,Yellow Fever,2022,,On track,2-59 y,"1,576,577",Preventive,Subnational
+VEN,Venezuela,"Measles, Mumps, Rubella",2021- 04,2021- 05,Postponed Other,1y- 5y,"2,692,674",Follow Up,National
+VNM,Viet Nam,Measles and Rubella,2021-Q4,2022-Q2,Unknown,12m-59m,"1,000,000",Preventive,Subnational
+VNM,Viet Nam,Inactivated Polio,2020-06,2020-06,Reinstated COVID,05/2016-06/2018,"3,273,019",Catch Up,National
+YEM,Yemen,Tetanus and Diphtheria,2021-05,2021-05,Reinstated Other,15y-49y,"360,804",Preventive,Subnational
+YEM,Yemen,bivalent Oral Poliovirus,2022-10-01,2022-10-01,On track,0-5y,"5,999,351",Preventive,National
+ZMB,Zambia,Measles and Rubella,2020-09,,Reinstated Other,9m- 59m,"3,398,230",Follow Up,National
+ZMB,Zambia,bivalent Oral Poliovirus,2022-04-25,2022-04-28,On track,0-5y,"3,785,349",Preventive,Subnational
+ZMB,Zambia,Inactivated Polio,TBC,TBC,Reinstated COVID,05/2016-06/2018,"1,401,957",Catch Up,National
+ZWE,Zimbabwe,Typhoid Conjugate,2020-05,2020-05,Reinstated COVID,9m-15y,"6,200,000",Catch Up,National
+ZWE,Zimbabwe,Measles and Rubella,2022-09,,On track,9m-59m,,Follow Up,National
+ZWE,Zimbabwe,Inactivated Polio,2020-06-30,,Reinstated COVID,05/2016-04/2019,"1,555,575",Catch Up,National

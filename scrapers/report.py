@@ -1,4 +1,5 @@
 from hdx.data.dataset import Dataset
+from hdx.scraper.utilities.reader import Read
 from hdx.utilities.dateparse import parse_date
 
 
@@ -7,7 +8,7 @@ def get_report_source(configuration):
     dataset = report_configuration["dataset"]
     resource = report_configuration["resource"]
     if isinstance(dataset, str):
-        dataset = Dataset.read_from_hdx(dataset)
+        dataset = Read.get_reader("report").read_dataset(dataset)
         resource_name = resource
         resource = None
         for res in dataset.get_resources():

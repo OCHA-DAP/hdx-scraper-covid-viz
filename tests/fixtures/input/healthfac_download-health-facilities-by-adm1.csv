@@ -1,0 +1,704 @@
+ADM1_PCODE,ADM1_REF,ADM0_PCODE,alpha_3,ADM0_REF,Health_Facilities
+AE1,Abu Dhabi,AE,ARE,United Arab Emirates,54
+AE2,Ajman,AE,ARE,United Arab Emirates,100
+AE3,Al Fujarah/shariqah,AE,ARE,United Arab Emirates,0
+AE4,Al Fujayrah,AE,ARE,United Arab Emirates,1
+AE5,Dubai,AE,ARE,United Arab Emirates,590
+AE6,Ras Al Khaymah,AE,ARE,United Arab Emirates,16
+AE7,Shariqah,AE,ARE,United Arab Emirates,1
+AE8,Umm Al Qaywayn,AE,ARE,United Arab Emirates,9
+AF01,Kabul,AF,AFG,Afghanistan,139
+AF02,Kapisa,AF,AFG,Afghanistan,0
+AF03,Parwan,AF,AFG,Afghanistan,3
+AF04,Maidan Wardak,AF,AFG,Afghanistan,0
+AF05,Logar,AF,AFG,Afghanistan,0
+AF06,Nangarhar,AF,AFG,Afghanistan,14
+AF07,Laghman,AF,AFG,Afghanistan,1
+AF08,Panjsher,AF,AFG,Afghanistan,0
+AF09,Baghlan,AF,AFG,Afghanistan,0
+AF10,Bamyan,AF,AFG,Afghanistan,1
+AF11,Ghazni,AF,AFG,Afghanistan,2
+AF12,Paktika,AF,AFG,Afghanistan,0
+AF13,Paktya,AF,AFG,Afghanistan,35
+AF14,Khost,AF,AFG,Afghanistan,0
+AF15,Kunar,AF,AFG,Afghanistan,1
+AF16,Nuristan,AF,AFG,Afghanistan,0
+AF17,Badakhshan,AF,AFG,Afghanistan,23
+AF18,Takhar,AF,AFG,Afghanistan,0
+AF19,Kunduz,AF,AFG,Afghanistan,3
+AF20,Samangan,AF,AFG,Afghanistan,30
+AF21,Balkh,AF,AFG,Afghanistan,10
+AF22,Sar E Pul,AF,AFG,Afghanistan,0
+AF23,Ghor,AF,AFG,Afghanistan,5
+AF24,Daykundi,AF,AFG,Afghanistan,22
+AF25,Uruzgan,AF,AFG,Afghanistan,0
+AF26,Zabul,AF,AFG,Afghanistan,1
+AF27,Kandahar,AF,AFG,Afghanistan,1
+AF28,Jawzjan,AF,AFG,Afghanistan,2
+AF29,Faryab,AF,AFG,Afghanistan,0
+AF30,Hilmand,AF,AFG,Afghanistan,1
+AF31,Badghis,AF,AFG,Afghanistan,0
+AF32,Hirat,AF,AFG,Afghanistan,10
+AF33,Farah,AF,AFG,Afghanistan,0
+AF34,Nimroz,AF,AFG,Afghanistan,3
+BDI001,Bubanza,BI,BDI,Burundi,10
+BDI002,Bujumbura Rural,BI,BDI,Burundi,7
+BDI003,Bururi,BI,BDI,Burundi,6
+BDI004,Cankuzo,BI,BDI,Burundi,1
+BDI005,Cibitoke,BI,BDI,Burundi,1
+BDI006,Gitega,BI,BDI,Burundi,16
+BDI007,Karuzi,BI,BDI,Burundi,0
+BDI008,Kayanza,BI,BDI,Burundi,4
+BDI009,Kirundo,BI,BDI,Burundi,5
+BDI010,Makamba,BI,BDI,Burundi,9
+BDI011,Muramvya,BI,BDI,Burundi,1
+BDI012,Muyinga,BI,BDI,Burundi,9
+BDI013,Mwaro,BI,BDI,Burundi,1
+BDI014,Ngozi,BI,BDI,Burundi,7
+BDI015,Rutana,BI,BDI,Burundi,3
+BDI016,Ruyigi,BI,BDI,Burundi,7
+BDI017,Bujumbura Mairie,BI,BDI,Burundi,80
+BDI018,Rumonge,BI,BDI,Burundi,11
+BF13,Centre,BF,BFA,Burkina Faso,180
+BF46,Boucle du Mouhoun,BF,BFA,Burkina Faso,3
+BF47,Cascades,BF,BFA,Burkina Faso,40
+BF48,Centre-Est,BF,BFA,Burkina Faso,11
+BF49,Centre-Nord,BF,BFA,Burkina Faso,19
+BF50,Centre-Ouest,BF,BFA,Burkina Faso,64
+BF51,Centre-Sud,BF,BFA,Burkina Faso,24
+BF52,Est,BF,BFA,Burkina Faso,27
+BF53,Hauts-Bassins,BF,BFA,Burkina Faso,63
+BF54,Nord,BF,BFA,Burkina Faso,1
+BF55,Plateau-Central,BF,BFA,Burkina Faso,3
+BF56,Sahel,BF,BFA,Burkina Faso,11
+BF57,Sud-Ouest,BF,BFA,Burkina Faso,9
+BH13,Capital,BH,BHR,Bahrain,37
+BH14,Southern,BH,BHR,Bahrain,25
+BH15,Muharraq,BH,BHR,Bahrain,16
+BH17,Northern,BH,BHR,Bahrain,13
+CD10,Kinshasa,CD,COD,Democratic Republic of the Congo,1292
+CD20,Kongo-Central,CD,COD,Democratic Republic of the Congo,16
+CD31,Kwango,CD,COD,Democratic Republic of the Congo,2
+CD32,Kwilu,CD,COD,Democratic Republic of the Congo,26
+CD33,Maï-Ndombe,CD,COD,Democratic Republic of the Congo,41
+CD41,Equateur,CD,COD,Democratic Republic of the Congo,52
+CD42,Sud-Ubangi,CD,COD,Democratic Republic of the Congo,1
+CD43,Nord-Ubangi,CD,COD,Democratic Republic of the Congo,0
+CD44,Mongala,CD,COD,Democratic Republic of the Congo,1
+CD45,Tshuapa,CD,COD,Democratic Republic of the Congo,3
+CD51,Tshopo,CD,COD,Democratic Republic of the Congo,16
+CD52,Bas-Uele,CD,COD,Democratic Republic of the Congo,1
+CD53,Haut-Uele,CD,COD,Democratic Republic of the Congo,2
+CD54,Ituri,CD,COD,Democratic Republic of the Congo,185
+CD61,Nord-Kivu,CD,COD,Democratic Republic of the Congo,1528
+CD62,Sud-Kivu,CD,COD,Democratic Republic of the Congo,290
+CD63,Maniema,CD,COD,Democratic Republic of the Congo,18
+CD71,Haut-Katanga,CD,COD,Democratic Republic of the Congo,95
+CD72,Lualaba,CD,COD,Democratic Republic of the Congo,3
+CD73,Haut-Lomami,CD,COD,Democratic Republic of the Congo,26
+CD74,Tanganyika,CD,COD,Democratic Republic of the Congo,18
+CD81,Lomami,CD,COD,Democratic Republic of the Congo,3
+CD82,Kasaï-Oriental,CD,COD,Democratic Republic of the Congo,3
+CD83,Sankuru,CD,COD,Democratic Republic of the Congo,0
+CD91,Kasaï-Central,CD,COD,Democratic Republic of the Congo,2
+CD92,Kasaï,CD,COD,Democratic Republic of the Congo,5
+CF11,Ombella M'Poko,CF,CAF,Central African Republic,9
+CF12,Lobaye,CF,CAF,Central African Republic,0
+CF21,Mambéré-Kadéï,CF,CAF,Central African Republic,3
+CF22,Nana-Mambéré,CF,CAF,Central African Republic,16
+CF23,Sangha-Mbaéré,CF,CAF,Central African Republic,0
+CF31,Ouham Pendé,CF,CAF,Central African Republic,9
+CF32,Ouham,CF,CAF,Central African Republic,5
+CF41,Kémo,CF,CAF,Central African Republic,3
+CF42,Nana-Gribizi,CF,CAF,Central African Republic,7
+CF43,Ouaka,CF,CAF,Central African Republic,30
+CF51,Bamingui-Bangoran,CF,CAF,Central African Republic,5
+CF52,Haute-Kotto,CF,CAF,Central African Republic,1
+CF53,Vakaga,CF,CAF,Central African Republic,1
+CF61,Basse-Kotto,CF,CAF,Central African Republic,0
+CF62,Mbomou,CF,CAF,Central African Republic,1
+CF63,Haut-Mbomou,CF,CAF,Central African Republic,1
+CF71,Bangui,CF,CAF,Central African Republic,1
+CM001,Adamawa,CM,CMR,Cameroon,37
+CM002,Centre,CM,CMR,Cameroon,434
+CM003,East,CM,CMR,Cameroon,14
+CM004,Far-North,CM,CMR,Cameroon,2
+CM005,Littoral,CM,CMR,Cameroon,137
+CM006,North,CM,CMR,Cameroon,7
+CM007,North-West,CM,CMR,Cameroon,13
+CM008,West,CM,CMR,Cameroon,35
+CM009,South,CM,CMR,Cameroon,39
+CM010,South-West,CM,CMR,Cameroon,73
+CO05,Antioquia,CO,COL,Colombia,618
+CO08,Atlántico,CO,COL,Colombia,75
+CO11,"Bogotá, D.C.",CO,COL,Colombia,1712
+CO13,Bolívar,CO,COL,Colombia,76
+CO15,Boyacá,CO,COL,Colombia,171
+CO17,Caldas,CO,COL,Colombia,66
+CO18,Caquetá,CO,COL,Colombia,22
+CO19,Cauca,CO,COL,Colombia,204
+CO20,Cesar,CO,COL,Colombia,27
+CO23,Córdoba,CO,COL,Colombia,35
+CO25,Cundinamarca,CO,COL,Colombia,194
+CO27,Chocó,CO,COL,Colombia,6
+CO41,Huila,CO,COL,Colombia,51
+CO44,La Guajira,CO,COL,Colombia,135
+CO47,Magdalena,CO,COL,Colombia,44
+CO50,Meta,CO,COL,Colombia,80
+CO52,Nariño,CO,COL,Colombia,93
+CO54,Norte de Santander,CO,COL,Colombia,10
+CO63,Quindio,CO,COL,Colombia,131
+CO66,Risaralda,CO,COL,Colombia,58
+CO68,Santander,CO,COL,Colombia,211
+CO70,Sucre,CO,COL,Colombia,35
+CO73,Tolima,CO,COL,Colombia,88
+CO76,Valle del Cauca,CO,COL,Colombia,1136
+CO81,Arauca,CO,COL,Colombia,2
+CO85,Casanare,CO,COL,Colombia,45
+CO86,Putumayo,CO,COL,Colombia,12
+CO88,"Archipiélago de San Andrés, Providencia y Santa Catalina",CO,COL,Colombia,7
+CO91,Amazonas,CO,COL,Colombia,11
+CO94,Guainía,CO,COL,Colombia,0
+CO95,Guaviare,CO,COL,Colombia,6
+CO97,Vaupés,CO,COL,Colombia,3
+CO99,Vichada,CO,COL,Colombia,1
+DJ01,Obock,DJ,DJI,Djibouti,0
+DJ02,Tadjourah,DJ,DJI,Djibouti,0
+DJ03,Dilkhil,DJ,DJI,Djibouti,0
+DJ04,Djibouti,DJ,DJI,Djibouti,27
+DJ05,Ali Sabeh,DJ,DJI,Djibouti,0
+DZ001,Adrar,DZ,DZA,Algeria,32
+DZ002,Ain-Defla,DZ,DZA,Algeria,96
+DZ003,Ain-Temouchent,DZ,DZA,Algeria,104
+DZ004,Alger,DZ,DZA,Algeria,1585
+DZ005,Annaba,DZ,DZA,Algeria,111
+DZ006,Batna,DZ,DZA,Algeria,170
+DZ007,Bechar,DZ,DZA,Algeria,39
+DZ008,Bejaia,DZ,DZA,Algeria,227
+DZ009,Biskra,DZ,DZA,Algeria,191
+DZ010,Blida,DZ,DZA,Algeria,202
+DZ011,Bordj Bou Arrer,DZ,DZA,Algeria,174
+DZ012,Bouira,DZ,DZA,Algeria,102
+DZ013,Boumerdes,DZ,DZA,Algeria,105
+DZ014,Chlef,DZ,DZA,Algeria,154
+DZ015,Constantine,DZ,DZA,Algeria,127
+DZ016,Djelfa,DZ,DZA,Algeria,239
+DZ017,El Bayadh,DZ,DZA,Algeria,14
+DZ018,El Oued,DZ,DZA,Algeria,83
+DZ019,El-Tarf,DZ,DZA,Algeria,2
+DZ020,Ghardaia,DZ,DZA,Algeria,76
+DZ021,Guelma,DZ,DZA,Algeria,74
+DZ022,Illizi,DZ,DZA,Algeria,16
+DZ023,Jijel,DZ,DZA,Algeria,50
+DZ024,Khenchela,DZ,DZA,Algeria,63
+DZ025,Laghouat,DZ,DZA,Algeria,94
+DZ026,Mascara,DZ,DZA,Algeria,62
+DZ027,Medea,DZ,DZA,Algeria,125
+DZ028,Mila,DZ,DZA,Algeria,183
+DZ029,Mostaganem,DZ,DZA,Algeria,77
+DZ030,M'Sila,DZ,DZA,Algeria,99
+DZ031,Naama,DZ,DZA,Algeria,10
+DZ032,Oran,DZ,DZA,Algeria,247
+DZ033,Ouargla,DZ,DZA,Algeria,103
+DZ034,Oum El Bouaghi,DZ,DZA,Algeria,96
+DZ035,Relizane,DZ,DZA,Algeria,164
+DZ036,Saida,DZ,DZA,Algeria,13
+DZ037,Setif,DZ,DZA,Algeria,245
+DZ038,Sidi Bel Abbes,DZ,DZA,Algeria,114
+DZ039,Skikda,DZ,DZA,Algeria,132
+DZ040,Souk-Ahras,DZ,DZA,Algeria,35
+DZ041,Tamanrasset,DZ,DZA,Algeria,1
+DZ042,Tebessa,DZ,DZA,Algeria,50
+DZ043,Tiaret,DZ,DZA,Algeria,162
+DZ044,Tindouf,DZ,DZA,Algeria,21
+DZ045,Tipaza,DZ,DZA,Algeria,263
+DZ046,Tissemsilt,DZ,DZA,Algeria,50
+DZ047,Tizi Ouzou,DZ,DZA,Algeria,201
+DZ048,Tlemcen,DZ,DZA,Algeria,138
+EG01,Cairo,EG,EGY,Egypt,278
+EG02,Alexandria,EG,EGY,Egypt,204
+EG03,Port Said,EG,EGY,Egypt,4
+EG04,Suez,EG,EGY,Egypt,3
+EG11,Damietta,EG,EGY,Egypt,8
+EG12,Dakahlia,EG,EGY,Egypt,38
+EG13,Sharkia,EG,EGY,Egypt,34
+EG14,Kalyoubia,EG,EGY,Egypt,9
+EG15,Kafr El-Shikh,EG,EGY,Egypt,7
+EG16,Gharbia,EG,EGY,Egypt,16
+EG17,Menoufia,EG,EGY,Egypt,12
+EG18,Behera,EG,EGY,Egypt,9
+EG19,Ismailia,EG,EGY,Egypt,4
+EG21,Giza,EG,EGY,Egypt,121
+EG22,Beni Suef,EG,EGY,Egypt,8
+EG23,Fayoum,EG,EGY,Egypt,6
+EG24,Menia,EG,EGY,Egypt,14
+EG25,Assiut,EG,EGY,Egypt,29
+EG26,Suhag,EG,EGY,Egypt,104
+EG27,Qena,EG,EGY,Egypt,14
+EG28,Aswan,EG,EGY,Egypt,77
+EG29,Luxor,EG,EGY,Egypt,9
+EG31,Red Sea,EG,EGY,Egypt,59
+EG32,New Valley,EG,EGY,Egypt,1
+EG33,Matrouh,EG,EGY,Egypt,3
+EG34,North Sinai,EG,EGY,Egypt,2
+EG35,South Sinai,EG,EGY,Egypt,65
+ET01,Tigray,ET,ETH,Ethiopia,29
+ET02,Afar,ET,ETH,Ethiopia,3
+ET03,Amhara,ET,ETH,Ethiopia,64
+ET04,Oromia,ET,ETH,Ethiopia,65
+ET05,Somali,ET,ETH,Ethiopia,1
+ET06,Benishangul Gumz,ET,ETH,Ethiopia,1
+ET07,SNNP,ET,ETH,Ethiopia,25
+ET11,South West Ethiopia,ET,ETH,Ethiopia,8
+ET12,Gambela,ET,ETH,Ethiopia,0
+ET13,Harari,ET,ETH,Ethiopia,6
+ET14,Addis Ababa,ET,ETH,Ethiopia,338
+ET15,Dire Dawa,ET,ETH,Ethiopia,9
+ET16,Sidama,ET,ETH,Ethiopia,23
+GT01,Guatemala,GT,GTM,Guatemala,401
+GT02,El Progreso,GT,GTM,Guatemala,4
+GT03,Sacatepéquez,GT,GTM,Guatemala,48
+GT04,Chimaltenango,GT,GTM,Guatemala,28
+GT05,Escuintla,GT,GTM,Guatemala,28
+GT06,Santa Rosa,GT,GTM,Guatemala,3
+GT07,Sololá,GT,GTM,Guatemala,70
+GT08,Totonicapán,GT,GTM,Guatemala,2
+GT09,Quetzaltenango,GT,GTM,Guatemala,47
+GT10,Suchitepéquez,GT,GTM,Guatemala,20
+GT11,Retalhuleu,GT,GTM,Guatemala,19
+GT12,San Marcos,GT,GTM,Guatemala,23
+GT13,Huehuetenango,GT,GTM,Guatemala,24
+GT14,Quiché,GT,GTM,Guatemala,27
+GT15,Baja Verapaz,GT,GTM,Guatemala,1
+GT16,Alta Verapaz,GT,GTM,Guatemala,16
+GT17,Petén,GT,GTM,Guatemala,32
+GT18,Izabal,GT,GTM,Guatemala,11
+GT19,Zacapa,GT,GTM,Guatemala,5
+GT20,Chiquimula,GT,GTM,Guatemala,28
+GT21,Jalapa,GT,GTM,Guatemala,10
+GT22,Jutiapa,GT,GTM,Guatemala,0
+HN01,Atlantida,HN,HND,Honduras,23
+HN02,Colon,HN,HND,Honduras,1
+HN03,Comayagua,HN,HND,Honduras,37
+HN04,Copan,HN,HND,Honduras,11
+HN05,Cortes,HN,HND,Honduras,91
+HN06,Choluteca,HN,HND,Honduras,11
+HN07,El Paraiso,HN,HND,Honduras,1
+HN08,Francisco Morazan,HN,HND,Honduras,139
+HN09,Gracias a Dios,HN,HND,Honduras,1
+HN10,Intibuca,HN,HND,Honduras,11
+HN11,Islas de La Bahia,HN,HND,Honduras,6
+HN12,La Paz,HN,HND,Honduras,4
+HN13,Lempira,HN,HND,Honduras,11
+HN14,Ocotepeque,HN,HND,Honduras,0
+HN15,Olancho,HN,HND,Honduras,3
+HN16,Santa Barbara,HN,HND,Honduras,2
+HN17,Valle,HN,HND,Honduras,1
+HN18,Yoro,HN,HND,Honduras,23
+HT01,West,HT,HTI,Haiti,825
+HT02,South-East,HT,HTI,Haiti,98
+HT03,North,HT,HTI,Haiti,194
+HT04,North-East,HT,HTI,Haiti,136
+HT05,Artibonite,HT,HTI,Haiti,278
+HT06,Centre,HT,HTI,Haiti,93
+HT07,South,HT,HTI,Haiti,184
+HT08,Grande'Anse,HT,HTI,Haiti,72
+HT09,North-West,HT,HTI,Haiti,93
+HT10,Nippes,HT,HTI,Haiti,44
+IQG01,Al-Anbar,IQ,IRQ,Iraq,155
+IQG02,Al-Basrah,IQ,IRQ,Iraq,439
+IQG03,Al-Muthanna,IQ,IRQ,Iraq,72
+IQG04,Al-Najaf,IQ,IRQ,Iraq,278
+IQG05,Al-Qadissiya,IQ,IRQ,Iraq,98
+IQG06,Al-Sulaymaniyah,IQ,IRQ,Iraq,566
+IQG07,Babil,IQ,IRQ,Iraq,229
+IQG08,Baghdad,IQ,IRQ,Iraq,1781
+IQG09,Duhok,IQ,IRQ,Iraq,245
+IQG10,Diyala,IQ,IRQ,Iraq,120
+IQG11,Erbil,IQ,IRQ,Iraq,1056
+IQG12,Kerbala,IQ,IRQ,Iraq,202
+IQG13,Kirkuk,IQ,IRQ,Iraq,213
+IQG14,Maysan,IQ,IRQ,Iraq,84
+IQG15,Ninewa,IQ,IRQ,Iraq,5
+IQG16,Salah Al-Din,IQ,IRQ,Iraq,138
+IQG17,Thi Qar,IQ,IRQ,Iraq,209
+IQG18,Wassit,IQ,IRQ,Iraq,104
+JO01,Ajlun,JO,JOR,Jordan,4
+JO02,Amman,JO,JOR,Jordan,249
+JO03,Aqaba,JO,JOR,Jordan,10
+JO04,Balqa,JO,JOR,Jordan,1
+JO05,Irbid,JO,JOR,Jordan,1
+JO06,Jarash,JO,JOR,Jordan,1
+JO07,Karak,JO,JOR,Jordan,4
+JO08,Madaba,JO,JOR,Jordan,0
+JO09,Mafraq,JO,JOR,Jordan,1
+JO10,Ma'an,JO,JOR,Jordan,13
+JO11,Tafilah,JO,JOR,Jordan,0
+JO12,Zarqa,JO,JOR,Jordan,37
+KM1,Anjouan (Ndzouani),KM,COM,Comoros,2
+KM2,Grande Comore (Ngazidja),KM,COM,Comoros,35
+KM3,Mohéli (Mwali),KM,COM,Comoros,6
+KW01,Al Ahmadi,KW,KWT,Kuwait,44
+KW02,Al Farwaniyah,KW,KWT,Kuwait,30
+KW03,Al Jahrah,KW,KWT,Kuwait,10
+KW04,Al Kuwayt,KW,KWT,Kuwait,24
+KW05,Hawalli,KW,KWT,Kuwait,87
+KW06,Mubarak Al-Kabeer,KW,KWT,Kuwait,8
+LB1,Beirut,LB,LBN,Lebanon,231
+LB2,Bekaa,LB,LBN,Lebanon,74
+LB3,Mount Lebanon,LB,LBN,Lebanon,687
+LB4,El Nabatieh,LB,LBN,Lebanon,31
+LB5,North,LB,LBN,Lebanon,24
+LB6,South,LB,LBN,Lebanon,32
+LB7,Akkar,LB,LBN,Lebanon,7
+LB8,Baalbek-El Hermel,LB,LBN,Lebanon,20
+LY01,East,LY,LBY,Libya,386
+LY02,West,LY,LBY,Libya,1555
+LY03,South,LY,LBY,Libya,90
+MA001,Beni Mellal Khenifra,MA,MAR,Morocco,442
+MA002,Casablanca Settat,MA,MAR,Morocco,1070
+MA003,Draa Tafilalet,MA,MAR,Morocco,181
+MA004,Fez Meknes,MA,MAR,Morocco,956
+MA005,Guelmim Oued Noun,MA,MAR,Morocco,73
+MA006,Marrakech Safi,MA,MAR,Morocco,715
+MA007,Oriental,MA,MAR,Morocco,431
+MA008,Rabat Sale Kenitra,MA,MAR,Morocco,596
+MA009,Souss Massa,MA,MAR,Morocco,619
+MA010,Tangier Tetouan Al Hoceima,MA,MAR,Morocco,209
+ML01,Kayes,ML,MLI,Mali,1
+ML02,Koulikoro,ML,MLI,Mali,268
+ML03,Sikasso,ML,MLI,Mali,135
+ML04,Ségou,ML,MLI,Mali,129
+ML05,Mopti,ML,MLI,Mali,45
+ML06,Tombouctou,ML,MLI,Mali,39
+ML07,Gao,ML,MLI,Mali,43
+ML08,Kidal,ML,MLI,Mali,6
+ML09,Bamako,ML,MLI,Mali,442
+ML10,Menaka,ML,MLI,Mali,1
+MMR001,Kachin,MM,MMR,Myanmar,19
+MMR002,Kayah,MM,MMR,Myanmar,4
+MMR003,Kayin,MM,MMR,Myanmar,23
+MMR004,Chin,MM,MMR,Myanmar,19
+MMR005,Sagaing,MM,MMR,Myanmar,44
+MMR006,Tanintharyi,MM,MMR,Myanmar,91
+MMR009,Magway,MM,MMR,Myanmar,39
+MMR010,Mandalay,MM,MMR,Myanmar,287
+MMR011,Mon,MM,MMR,Myanmar,272
+MMR012,Rakhine,MM,MMR,Myanmar,11
+MMR013,Yangon,MM,MMR,Myanmar,903
+MMR017,Ayeyarwady,MM,MMR,Myanmar,48
+MMR018,Nay Pyi Taw,MM,MMR,Myanmar,50
+MMR111,Bago,MM,MMR,Myanmar,135
+MMR222,Shan,MM,MMR,Myanmar,149
+MR01,Adrar,MR,MRT,Mauritania,2
+MR02,Assaba,MR,MRT,Mauritania,1
+MR03,Brakna,MR,MRT,Mauritania,1
+MR04,Dakhlet-Nouadhibou,MR,MRT,Mauritania,5
+MR05,Gorgol,MR,MRT,Mauritania,2
+MR06,Guidimakha,MR,MRT,Mauritania,9
+MR07,Hodh El Chargi,MR,MRT,Mauritania,0
+MR08,Hodh El Gharbi,MR,MRT,Mauritania,2
+MR09,Inchiri,MR,MRT,Mauritania,1
+MR10,Nouakchott,MR,MRT,Mauritania,277
+MR11,Tagant,MR,MRT,Mauritania,0
+MR12,Trarza,MR,MRT,Mauritania,7
+MR13,Tris-Zemmour,MR,MRT,Mauritania,0
+MZ01,Cabo Delgado,MZ,MOZ,Mozambique,95
+MZ02,Gaza,MZ,MOZ,Mozambique,16
+MZ03,Inhambane,MZ,MOZ,Mozambique,51
+MZ04,Manica,MZ,MOZ,Mozambique,73
+MZ05,Maputo,MZ,MOZ,Mozambique,77
+MZ06,Maputo City,MZ,MOZ,Mozambique,60
+MZ07,Nampula,MZ,MOZ,Mozambique,132
+MZ08,Niassa,MZ,MOZ,Mozambique,104
+MZ09,Sofala,MZ,MOZ,Mozambique,75
+MZ10,Tete,MZ,MOZ,Mozambique,15
+MZ11,Zambezia,MZ,MOZ,Mozambique,167
+NE001,Agadez,NE,NER,Niger,14
+NE002,Diffa,NE,NER,Niger,1
+NE003,Dosso,NE,NER,Niger,3
+NE004,Maradi,NE,NER,Niger,1
+NE005,Tahoua,NE,NER,Niger,10
+NE006,Tillabery,NE,NER,Niger,15
+NE007,Zinder,NE,NER,Niger,1
+NE008,Niamey,NE,NER,Niger,176
+NG001,Abia,NG,NGA,Nigeria,0
+NG002,Adamawa,NG,NGA,Nigeria,153
+NG003,Akwa Ibom,NG,NGA,Nigeria,3
+NG004,Anambra,NG,NGA,Nigeria,0
+NG005,Bauchi,NG,NGA,Nigeria,26
+NG006,Bayelsa,NG,NGA,Nigeria,13
+NG007,Benue,NG,NGA,Nigeria,1
+NG008,Borno,NG,NGA,Nigeria,20
+NG009,Cross River,NG,NGA,Nigeria,2
+NG010,Delta,NG,NGA,Nigeria,34
+NG011,Ebonyi,NG,NGA,Nigeria,0
+NG012,Edo,NG,NGA,Nigeria,49
+NG013,Ekiti,NG,NGA,Nigeria,0
+NG014,Enugu,NG,NGA,Nigeria,26
+NG015,Federal Capital Territory,NG,NGA,Nigeria,10
+NG016,Gombe,NG,NGA,Nigeria,24
+NG017,Imo,NG,NGA,Nigeria,0
+NG018,Jigawa,NG,NGA,Nigeria,0
+NG019,Kaduna,NG,NGA,Nigeria,36
+NG020,Kano,NG,NGA,Nigeria,165
+NG021,Katsina,NG,NGA,Nigeria,5
+NG022,Kebbi,NG,NGA,Nigeria,151
+NG023,Kogi,NG,NGA,Nigeria,2
+NG024,Kwara,NG,NGA,Nigeria,0
+NG025,Lagos,NG,NGA,Nigeria,36
+NG026,Nasarawa,NG,NGA,Nigeria,9
+NG027,Niger,NG,NGA,Nigeria,279
+NG028,Ogun,NG,NGA,Nigeria,7
+NG029,Ondo,NG,NGA,Nigeria,1
+NG030,Osun,NG,NGA,Nigeria,6
+NG031,Oyo,NG,NGA,Nigeria,25
+NG032,Plateau,NG,NGA,Nigeria,2
+NG033,Rivers,NG,NGA,Nigeria,26
+NG034,Sokoto,NG,NGA,Nigeria,170
+NG035,Taraba,NG,NGA,Nigeria,1
+NG036,Yobe,NG,NGA,Nigeria,11
+NG037,Zamfara,NG,NGA,Nigeria,117
+OM01,Ad Dakhliyah,OM,OMN,Oman,21
+OM02,Al Batinah North,OM,OMN,Oman,26
+OM03,Al Batinah South,OM,OMN,Oman,7
+OM04,Al Buraymi,OM,OMN,Oman,2
+OM05,Al Dhahira,OM,OMN,Oman,13
+OM06,Al Wusta,OM,OMN,Oman,4
+OM07,Ash Sharqiyah North,OM,OMN,Oman,8
+OM08,Ash Sharqiyah South,OM,OMN,Oman,5
+OM09,Dhofar,OM,OMN,Oman,53
+OM10,Musandam,OM,OMN,Oman,3
+OM11,Muscat,OM,OMN,Oman,260
+PK2,Khyber Pakhtunkhwa,PK,PAK,Pakistan,200
+PK5,Federal Capital Territory,PK,PAK,Pakistan,121
+PK6,Punjab,PK,PAK,Pakistan,1024
+PK7,Balochistan,PK,PAK,Pakistan,40
+PK8,Sindh,PK,PAK,Pakistan,1283
+PS01,West Bank,PS,PSE,State of Palestine,1341
+PS02,Gaza Strip,PS,PSE,State of Palestine,688
+QA1,Ad Dawhah,QA,QAT,Qatar,97
+QA2,Al Daayen,QA,QAT,Qatar,6
+QA3,Al Khor,QA,QAT,Qatar,7
+QA4,Al Wakrah,QA,QAT,Qatar,14
+QA5,Ar Rayyan,QA,QAT,Qatar,67
+QA6,Madinat ash Shamal,QA,QAT,Qatar,0
+QA7,Umm Salal,QA,QAT,Qatar,5
+SA01,Ar Riyad,SA,SAU,Saudi Arabia,260
+SA02,Makkah,SA,SAU,Saudi Arabia,333
+SA03,Al Madinah,SA,SAU,Saudi Arabia,86
+SA04,Ash Sharqiyah,SA,SAU,Saudi Arabia,168
+SA05,Al Quassim,SA,SAU,Saudi Arabia,75
+SA06,Ha'il,SA,SAU,Saudi Arabia,62
+SA07,Tabuk,SA,SAU,Saudi Arabia,12
+SA08,Al Hudud ash Shamaliyah,SA,SAU,Saudi Arabia,21
+SA09,Jizan,SA,SAU,Saudi Arabia,14
+SA10,Najran,SA,SAU,Saudi Arabia,8
+SA11,Al Bahah,SA,SAU,Saudi Arabia,3
+SA12,Al Jawf,SA,SAU,Saudi Arabia,14
+SA14,`Asir,SA,SAU,Saudi Arabia,21
+SD01,Khartoum,SD,SDN,Sudan,1000
+SD02,North Darfur,SD,SDN,Sudan,0
+SD03,South Darfur,SD,SDN,Sudan,0
+SD04,West Darfur,SD,SDN,Sudan,0
+SD05,East Darfur,SD,SDN,Sudan,13
+SD06,Central Darfur,SD,SDN,Sudan,0
+SD07,South Kordofan,SD,SDN,Sudan,0
+SD08,Blue Nile,SD,SDN,Sudan,0
+SD09,White Nile,SD,SDN,Sudan,2
+SD10,Red Sea,SD,SDN,Sudan,2
+SD11,Kassala,SD,SDN,Sudan,8
+SD12,Gedaref,SD,SDN,Sudan,1
+SD13,North Kordofan,SD,SDN,Sudan,3
+SD14,Sennar,SD,SDN,Sudan,0
+SD15,Aj Jazirah,SD,SDN,Sudan,31
+SD16,River Nile,SD,SDN,Sudan,0
+SD17,Northern,SD,SDN,Sudan,3
+SD18,West Kordofan,SD,SDN,Sudan,0
+SD19,Abyei PCA,SD,SDN,Sudan,0
+SO11,Awdal,SO,SOM,Somalia,1
+SO12,Woqooyi Galbeed,SO,SOM,Somalia,14
+SO13,Togdheer,SO,SOM,Somalia,4
+SO14,Sool,SO,SOM,Somalia,1
+SO15,Sanaag,SO,SOM,Somalia,0
+SO16,Bari,SO,SOM,Somalia,3
+SO17,Nugaal,SO,SOM,Somalia,0
+SO18,Mudug,SO,SOM,Somalia,0
+SO19,Galgaduud,SO,SOM,Somalia,2
+SO20,Hiraan,SO,SOM,Somalia,0
+SO21,Middle Shabelle,SO,SOM,Somalia,0
+SO22,Banadir,SO,SOM,Somalia,6
+SO23,Lower Shabelle,SO,SOM,Somalia,5
+SO24,Bay,SO,SOM,Somalia,0
+SO25,Bakool,SO,SOM,Somalia,0
+SO26,Gedo,SO,SOM,Somalia,3
+SO27,Middle Juba,SO,SOM,Somalia,0
+SO28,Lower Juba,SO,SOM,Somalia,1
+SS01,Central Equatoria,SS,SSD,South Sudan,247
+SS02,Eastern Equatoria,SS,SSD,South Sudan,2
+SS03,Jonglei,SS,SSD,South Sudan,4
+SS04,Lakes,SS,SSD,South Sudan,1
+SS05,Northern Bahr el Ghazal,SS,SSD,South Sudan,16
+SS06,Unity,SS,SSD,South Sudan,8
+SS07,Upper Nile,SS,SSD,South Sudan,13
+SS08,Warrap,SS,SSD,South Sudan,0
+SS09,Western Bahr el Ghazal,SS,SSD,South Sudan,0
+SS10,Western Equatoria,SS,SSD,South Sudan,1
+SV01,Ahuachapán,SV,SLV,El Salvador,24
+SV02,Cabañas,SV,SLV,El Salvador,0
+SV03,Chalatenango,SV,SLV,El Salvador,13
+SV04,Cuscatlán,SV,SLV,El Salvador,11
+SV05,La Libertad,SV,SLV,El Salvador,81
+SV06,La Paz,SV,SLV,El Salvador,12
+SV07,La Unión,SV,SLV,El Salvador,14
+SV08,Morazán,SV,SLV,El Salvador,37
+SV09,San Miguel,SV,SLV,El Salvador,40
+SV10,San Salvador,SV,SLV,El Salvador,220
+SV11,San Vicente,SV,SLV,El Salvador,9
+SV12,Santa Ana,SV,SLV,El Salvador,35
+SV13,Sonsonate,SV,SLV,El Salvador,8
+SV14,Usulután,SV,SLV,El Salvador,25
+SY01,Damascus,SY,SYR,Syrian Arab Republic,213
+SY02,Aleppo,SY,SYR,Syrian Arab Republic,699
+SY03,Rural Damascus,SY,SYR,Syrian Arab Republic,252
+SY04,Homs,SY,SYR,Syrian Arab Republic,50
+SY05,Hama,SY,SYR,Syrian Arab Republic,110
+SY06,Lattakia,SY,SYR,Syrian Arab Republic,25
+SY07,Idleb,SY,SYR,Syrian Arab Republic,49
+SY08,Al-Hasakeh,SY,SYR,Syrian Arab Republic,69
+SY09,Deir-ez-Zor,SY,SYR,Syrian Arab Republic,8
+SY10,Tartous,SY,SYR,Syrian Arab Republic,32
+SY11,Ar-Raqqa,SY,SYR,Syrian Arab Republic,13
+SY12,Dar'a,SY,SYR,Syrian Arab Republic,7
+SY13,As-Sweida,SY,SYR,Syrian Arab Republic,23
+SY14,Quneitra,SY,SYR,Syrian Arab Republic,3
+TD01,Batha,TD,TCD,Chad,1
+TD02,Borkou,TD,TCD,Chad,4
+TD03,Chari-Baguirmi,TD,TCD,Chad,2
+TD04,Guéra,TD,TCD,Chad,0
+TD05,Hadjer-Lamis,TD,TCD,Chad,20
+TD06,Kanem,TD,TCD,Chad,4
+TD07,Lac,TD,TCD,Chad,30
+TD08,Logone Occidental,TD,TCD,Chad,3
+TD09,Logone Oriental,TD,TCD,Chad,18
+TD10,Mandoul,TD,TCD,Chad,2
+TD11,Mayo-Kebbi Est,TD,TCD,Chad,4
+TD12,Mayo-Kebbi Ouest,TD,TCD,Chad,0
+TD13,Moyen-Chari,TD,TCD,Chad,12
+TD14,Ouaddaï,TD,TCD,Chad,6
+TD15,Salamat,TD,TCD,Chad,7
+TD16,Tandjilé,TD,TCD,Chad,1
+TD17,Wadi Fira,TD,TCD,Chad,1
+TD18,N'Djamena,TD,TCD,Chad,82
+TD19,Barh-El-Gazel,TD,TCD,Chad,7
+TD20,Ennedi Est,TD,TCD,Chad,0
+TD21,Sila,TD,TCD,Chad,11
+TD22,Tibesti,TD,TCD,Chad,1
+TD23,Ennedi Ouest,TD,TCD,Chad,0
+TN01,Ariana,TN,TUN,Tunisia,24
+TN02,Ben Arous (Tunis Sud),TN,TUN,Tunisia,59
+TN03,Bizerte,TN,TUN,Tunisia,12
+TN04,Béja,TN,TUN,Tunisia,8
+TN05,Gabès,TN,TUN,Tunisia,15
+TN06,Gafsa,TN,TUN,Tunisia,26
+TN07,Jendouba,TN,TUN,Tunisia,10
+TN08,Kairouan,TN,TUN,Tunisia,6
+TN09,Kassérine,TN,TUN,Tunisia,7
+TN10,Kebili,TN,TUN,Tunisia,8
+TN11,Le Kef,TN,TUN,Tunisia,1
+TN12,Mahdia,TN,TUN,Tunisia,8
+TN13,Manubah,TN,TUN,Tunisia,4
+TN14,Monastir,TN,TUN,Tunisia,64
+TN15,Médenine,TN,TUN,Tunisia,13
+TN16,Nabeul,TN,TUN,Tunisia,117
+TN17,Sfax,TN,TUN,Tunisia,171
+TN18,Sidi Bou Zid,TN,TUN,Tunisia,4
+TN19,Siliana,TN,TUN,Tunisia,3
+TN20,Sousse,TN,TUN,Tunisia,124
+TN21,Tataouine,TN,TUN,Tunisia,9
+TN22,Tozeur,TN,TUN,Tunisia,8
+TN23,Tunis,TN,TUN,Tunisia,168
+TN24,Zaghouan,TN,TUN,Tunisia,3
+UA01,Avtonomna Respublika Krym,UA,UKR,Ukraine,758
+UA05,Vinnytska,UA,UKR,Ukraine,644
+UA07,Volynska,UA,UKR,Ukraine,326
+UA12,Dnipropetrovska,UA,UKR,Ukraine,1041
+UA14,Donetska,UA,UKR,Ukraine,1191
+UA18,Zhytomyrska,UA,UKR,Ukraine,386
+UA21,Zakarpatska,UA,UKR,Ukraine,324
+UA23,Zaporizka,UA,UKR,Ukraine,348
+UA26,Ivano Frankivska,UA,UKR,Ukraine,693
+UA32,Kyivska,UA,UKR,Ukraine,839
+UA35,Kirovohradska,UA,UKR,Ukraine,249
+UA44,Luhanska,UA,UKR,Ukraine,538
+UA46,Lvivska,UA,UKR,Ukraine,1342
+UA48,Mykolaivska,UA,UKR,Ukraine,257
+UA51,Odeska,UA,UKR,Ukraine,791
+UA53,Poltavska,UA,UKR,Ukraine,477
+UA56,Rivnenska,UA,UKR,Ukraine,299
+UA59,Sumska,UA,UKR,Ukraine,320
+UA61,Ternopilska,UA,UKR,Ukraine,472
+UA63,Kharkivska,UA,UKR,Ukraine,968
+UA65,Khersonska,UA,UKR,Ukraine,255
+UA68,Khmelnytska,UA,UKR,Ukraine,397
+UA71,Cherkaska,UA,UKR,Ukraine,345
+UA73,Chernivetska,UA,UKR,Ukraine,315
+UA74,Chernihivska,UA,UKR,Ukraine,185
+UA80,Kyivska,UA,UKR,Ukraine,2000
+UA85,Sevastopilska,UA,UKR,Ukraine,347
+VE01,Distrito Capital,VE,VEN,Venezuela (Bolivarian Republic of),455
+VE02,Amazonas,VE,VEN,Venezuela (Bolivarian Republic of),5
+VE03,Anzoátegui,VE,VEN,Venezuela (Bolivarian Republic of),208
+VE04,Apure,VE,VEN,Venezuela (Bolivarian Republic of),21
+VE05,Aragua,VE,VEN,Venezuela (Bolivarian Republic of),118
+VE06,Barinas,VE,VEN,Venezuela (Bolivarian Republic of),53
+VE07,Bolívar,VE,VEN,Venezuela (Bolivarian Republic of),146
+VE08,Carabobo,VE,VEN,Venezuela (Bolivarian Republic of),138
+VE09,Cojedes,VE,VEN,Venezuela (Bolivarian Republic of),9
+VE10,Delta Amacuro,VE,VEN,Venezuela (Bolivarian Republic of),5
+VE11,Falcón,VE,VEN,Venezuela (Bolivarian Republic of),35
+VE12,Guárico,VE,VEN,Venezuela (Bolivarian Republic of),54
+VE13,Lara,VE,VEN,Venezuela (Bolivarian Republic of),54
+VE14,Mérida,VE,VEN,Venezuela (Bolivarian Republic of),150
+VE15,Miranda,VE,VEN,Venezuela (Bolivarian Republic of),384
+VE16,Monagas,VE,VEN,Venezuela (Bolivarian Republic of),64
+VE17,Nueva Esparta,VE,VEN,Venezuela (Bolivarian Republic of),27
+VE18,Portuguesa,VE,VEN,Venezuela (Bolivarian Republic of),45
+VE19,Sucre,VE,VEN,Venezuela (Bolivarian Republic of),31
+VE20,Táchira,VE,VEN,Venezuela (Bolivarian Republic of),69
+VE21,Trujillo,VE,VEN,Venezuela (Bolivarian Republic of),157
+VE22,Yaracuy,VE,VEN,Venezuela (Bolivarian Republic of),16
+VE23,Zulia,VE,VEN,Venezuela (Bolivarian Republic of),115
+VE24,La Guaira,VE,VEN,Venezuela (Bolivarian Republic of),186
+YE11,Ibb,YE,YEM,Yemen,236
+YE12,Abyan,YE,YEM,Yemen,103
+YE13,Sana'a City,YE,YEM,Yemen,472
+YE14,Al Bayda,YE,YEM,Yemen,82
+YE15,Ta'iz,YE,YEM,Yemen,259
+YE16,Al Jawf,YE,YEM,Yemen,83
+YE17,Hajjah,YE,YEM,Yemen,151
+YE18,Al Hodeidah,YE,YEM,Yemen,236
+YE19,Hadramawt,YE,YEM,Yemen,264
+YE20,Dhamar,YE,YEM,Yemen,217
+YE21,Shabwah,YE,YEM,Yemen,147
+YE22,Sa'dah,YE,YEM,Yemen,117
+YE23,Sana'a,YE,YEM,Yemen,144
+YE24,Aden,YE,YEM,Yemen,86
+YE25,Lahj,YE,YEM,Yemen,163
+YE26,Ma'rib,YE,YEM,Yemen,118
+YE27,Al Mahwit,YE,YEM,Yemen,83
+YE28,Al Maharah,YE,YEM,Yemen,46
+YE29,Amran,YE,YEM,Yemen,213
+YE30,Ad Dali',YE,YEM,Yemen,94
+YE31,Raymah,YE,YEM,Yemen,84
+YE32,Socotra,YE,YEM,Yemen,4
+ZW10,Bulawayo,ZW,ZWE,Zimbabwe,20
+ZW11,Manicaland,ZW,ZWE,Zimbabwe,221
+ZW12,Mashonaland Central,ZW,ZWE,Zimbabwe,122
+ZW13,Mashonaland East,ZW,ZWE,Zimbabwe,169
+ZW14,Mashonaland West,ZW,ZWE,Zimbabwe,139
+ZW15,Matabeleland North,ZW,ZWE,Zimbabwe,88
+ZW16,Matabeleland South,ZW,ZWE,Zimbabwe,103
+ZW17,Midlands,ZW,ZWE,Zimbabwe,163
+ZW18,Masvingo,ZW,ZWE,Zimbabwe,151
+ZW19,Harare,ZW,ZWE,Zimbabwe,27

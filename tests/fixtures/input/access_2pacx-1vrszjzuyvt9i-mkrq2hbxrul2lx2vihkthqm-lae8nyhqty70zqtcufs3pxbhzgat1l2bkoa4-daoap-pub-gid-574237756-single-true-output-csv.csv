@@ -1,0 +1,64 @@
+ISO Code,Country,% of visas pending or denied,% of travel authorizations or movements denied,Number of incidents reported in previous year,Number of incidents reported since start of year,Number of incidents reported since start of previous year,% of CERF projects affected by insecurity and inaccessibility,% of CBPF projects affected by insecurity and inaccessibility,Campaign Vaccine,Campaign Vaccine Status,Number of learners enrolled from pre-primary to tertiary education
+#country+code,#country+name,#access+visas+pct,#access+travel+pct,#event+year+previous+num,#event+year+todate+num,#event+year+previous+todate+num,#activity+cerf+project+insecurity+pct,#activity+cbpf+project+insecurity+pct,#service+name,#status+name,#population+education
+AFG,Afghanistan,25.00%,0,20,2,22,33.33%,7.9%,bivalent Oral Poliovirus,On track,"9,979,405"
+AGO,Angola,N/A,N/A,,,,88.89%,,bivalent Oral Poliovirus,On track,
+BEN,Benin,N/A,N/A,,,,,,bivalent Oral Poliovirus,Postponed,
+BFA,Burkina Faso,N/A,N/A,3,2,5,34.78%,,bivalent Oral Poliovirus,Postponed,"4,686,723"
+BDI,Burundi,15.60%,0.8%,1,,1,20.00%,,,N/A,
+CMR,Cameroon,N/A,N/A,8,4,12,70.83%,,bivalent Oral Poliovirus,On track,"7,215,039"
+CAF,Central African Republic,0%,N/A,15,10,25,,8.4%,bivalent Oral Poliovirus,On track,
+TCD,Chad,1,N/A,1,,1,33.33%,,bivalent Oral Poliovirus,On track,
+COG,Congo (the),N/A,N/A,27,,27,69.23%,,bivalent Oral Poliovirus,Cancelled,
+DJI,Djibouti,N/A,N/A,,,,46.67%,,bivalent Oral Poliovirus,Completed,
+PRK,DPR Korea,100%,100%,,,,40.00%,,,N/A,"4,755,570"
+COD,Democratic Republic of the Congo,N/A,N/A,27,16,43,44.83%,13.0%,bivalent Oral Poliovirus,On track,
+ETH,Ethiopia,N/A,N/A,9,2,11,27.27%,23.2%,bivalent Oral Poliovirus,On track,"24,686,497"
+IRQ,Iraq,N/A,N/A,1,2,3,,4.2%,bivalent Oral Poliovirus,Postponed,"7,010,788"
+LBR,Liberia,N/A,N/A,,,,,,,N/A,
+MLI,Mali,N/A,N/A,12,10,22,38.46%,,bivalent Oral Poliovirus,On track,"3,727,291"
+MMR,Myanmar,N/A,20.00%,3,1,4,33.33%,30.8%,bivalent Oral Poliovirus,On track,
+NER,Niger (the),10%,56%,2,2,4,37.50%,,bivalent Oral Poliovirus,On track,
+NGA,Nigeria,N/A,N/A,6,4,10,0.00%,3.6%,bivalent Oral Poliovirus,On track,
+PAK,Pakistan,26%,0%,4,2,6,54.55%,18.2%,bivalent Oral Poliovirus,On track,"46,803,407"
+PHL,Philippines (the),N/A,N/A,2,,2,50.00%,,bivalent Oral Poliovirus,Reinstated,
+RWA,Rwanda,N/A,N/A,,,,25.00%,,,N/A,"3,464,409"
+SLE,Sierra Leone,N/A,N/A,,,,,,,N/A,
+SOM,Somalia,5%,0,8,11,19,8.89%,1.4%,bivalent Oral Poliovirus,On track,"544,061"
+SSD,South Sudan,0%,3%,38,47,85,17.24%,0.0%,bivalent Oral Poliovirus,On track,
+SDN,Sudan (the),9%,5%,5,2,7,40.74%,14.6%,bivalent Oral Poliovirus,Postponed,
+SYR,Syria,12.00%,48.00%,47,33,80,54.55%,22.8%,bivalent Oral Poliovirus,On track,
+TGO,Togo,N/A,N/A,,,,,,,N/A,
+YEM,Yemen,27%,15%,12,4,16,25.00%,0.0%,bivalent Oral Poliovirus,On track,
+ZMB,Zambia,N/A,N/A,,1,1,100.00%,,,N/A,
+ZWE,Zimbabwe,N/A,N/A,,,,41.38%,,,N/A,
+ABW,Aruba,N/A,N/A,,,,,,,N/A,
+ARG,Argentina,N/A,N/A,,,,,,,N/A,
+BGD,Bangladesh,N/A,N/A,6,1,7,19.05%,,,N/A,
+BOL,Bolivia,N/A,N/A,1,,1,,,,N/A,
+BRA,Brazil,N/A,N/A,,,,,,,N/A,
+CHL,Chile,N/A,N/A,,,,,,,N/A,
+COL,Colombia,80%,0%,,,,18.75%,,,N/A,
+CRI,Costa Rica,N/A,N/A,,,,,,,N/A,
+CUW,CuraÃ§ao,N/A,N/A,,,,,,,N/A,
+DOM,Dominican Republic,N/A,N/A,,,,,,,N/A,
+ECU,Ecuador,N/A,N/A,1,,1,,,,N/A,
+EGY,Egypt,N/A,N/A,,,,,,,N/A,
+GUY,Guyana,N/A,N/A,,,,,,,N/A,
+HTI,Haiti,N/A,N/A,3,,3,33.33%,,,N/A,
+IRN,Iran (Islamic Republic of),N/A,N/A,,,,40.00%,,,N/A,
+JOR,Jordan,5%,N/A,3,,3,50.00%,0.0%,,N/A,
+KEN,Kenya,0%,N/A,2,,2,19.05%,,,N/A,
+LBN,Lebanon,10%,N/A,,,,62.50%,8.7%,,N/A,
+LBY,Libya,34%,N/A,2,,2,14.29%,,,N/A,
+MEX,Mexico,N/A,N/A,2,,2,,,,N/A,
+MOZ,Mozambique,N/A,N/A,1,,1,25.53%,,,N/A,
+PAN,Panama,N/A,N/A,,,,,,,N/A,
+PER,Peru,N/A,N/A,,,,,,,N/A,
+PRY,Paraguay,N/A,N/A,,,,,,,N/A,
+PSE,oPt,N/A,3%,7,,7,25.00%,19.5%,,N/A,
+TTO,Trinidad and Tobago,N/A,N/A,,,,,,,N/A,
+TZA,United Republic of Tanzania,N/A,N/A,3,,3,40.00%,,,N/A,
+UGA,Uganda,N/A,N/A,9,2,11,38.46%,,,N/A,
+UKR,Ukraine,0%,10%,1,,1,28.57%,61.1%,,N/A,
+URY,Uruguay,N/A,N/A,,,,,,,N/A,
+VEN,Venezuela,N/A,N/A,,,,75.00%,,,N/A,
