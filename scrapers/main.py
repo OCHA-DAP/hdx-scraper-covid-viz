@@ -105,7 +105,7 @@ def get_indicators(
         outputs,
         hrp_countries,
         gho_countries,
-        RegionLookups.gho_iso3_to_region_nohrp,
+        RegionLookups.gho_iso3_to_region,
     )
     ipc = IPC(configuration["ipc"], today, gho_countries, adminone)
 

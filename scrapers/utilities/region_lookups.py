@@ -7,7 +7,6 @@ logger = logging.getLogger(__name__)
 
 
 class RegionLookups:
-    gho_iso3_to_region_nohrp = dict()
     gho_iso3_to_region = dict()
     hrp_iso3_to_region = dict()
     regions = None
@@ -29,7 +28,6 @@ class RegionLookups:
                 dict_of_sets_add(cls.gho_iso3_to_region, countryiso, region)
                 if countryiso in hrp_countries:
                     dict_of_sets_add(cls.hrp_iso3_to_region, countryiso, region)
-                cls.gho_iso3_to_region_nohrp[countryiso] = region
         cls.regions = sorted(list(regions))
         region = "HRPs"
         cls.regions.insert(0, region)

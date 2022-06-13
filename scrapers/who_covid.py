@@ -17,7 +17,7 @@ class WHOCovid(BaseScraper):
         outputs,
         hrp_countries,
         gho_countries,
-        gho_iso3_to_region_nohrp,
+        gho_iso3_to_region,
     ):
         base_headers = ["Cumulative_cases", "Cumulative_deaths"]
         base_hxltags = ["#affected+infected", "#affected+killed"]
@@ -53,7 +53,7 @@ class WHOCovid(BaseScraper):
         self.outputs = outputs
         self.hrp_countries = hrp_countries
         self.gho_countries = gho_countries
-        self.gho_iso3_to_region_nohrp = gho_iso3_to_region_nohrp
+        self.gho_iso3_to_region = gho_iso3_to_region
 
     def get_who_data(self, reader, url):
         path = reader.download_file(url)
@@ -107,12 +107,12 @@ class WHOCovid(BaseScraper):
         df_hrp_countries_all = df_hrp_countries_all.reset_index()
 
         # adding regional by date
-        dict_regions = pd.DataFrame(
-            self.gho_iso3_to_region_nohrp.items(), columns=["ISO3", "Regional_office"]
-        )
+        sr_regions = pd.Series(self.gho_iso3_to_region).explode()
+        df_regions = sr_regions.rename_axis("ISO3").reset_index(name="Regional_office")
+        df_regions = df_regions[~df_regions.Regional_office.isin(("HRPs", "GHO"))]
         df = pd.merge(
             left=df,
-            right=dict_regions,
+            right=df_regions,
             left_on="ISO_3_CODE",
             right_on="ISO3",
             how="left",
