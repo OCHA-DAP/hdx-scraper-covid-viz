@@ -792,8 +792,11 @@ education_enrolment:
 regional:
   dataset: "unocha-office-locations"
   format: "xlsx"
-  iso3: "ISO3"
-  region: "Regional_office"
+  iso3_header: "ISO3"
+  region_header: "Regional_office"
+  toplevel_region: "GHO"
+  ignore:
+    - "NO COVERAGE"
 
   # Aggregation
   aggregate_gho:

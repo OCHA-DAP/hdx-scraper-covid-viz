@@ -15,6 +15,7 @@ from hdx.scraper.outputs.update_tabs import (
 )
 from hdx.scraper.runner import Runner
 from hdx.scraper.utilities.fallbacks import Fallbacks
+from hdx.scraper.utilities.region_lookup import RegionLookup
 
 from .covax_deliveries import CovaxDeliveries
 from .education_closures import EducationClosures
@@ -27,7 +28,6 @@ from .ipc import IPC
 from .report import get_report_source
 from .unhcr import UNHCR
 from .unhcr_myanmar_idps import idps_post_run
-from .utilities.region_lookups import RegionLookups
 from .vaccination_campaigns import VaccinationCampaigns
 from .who_covid import WHOCovid
 from .whowhatwhere import WhoWhatWhere
@@ -64,7 +64,7 @@ def get_indicators(
     configuration["countries_fuzzy_try"] = hrp_countries
     adminone = AdminOne(configuration)
     regional_configuration = configuration["regional"]
-    RegionLookups.load(regional_configuration, gho_countries, hrp_countries)
+    RegionLookup.load(regional_configuration, gho_countries, {"HRPs": hrp_countries})
     if fallbacks_root is not None:
         fallbacks_path = join(fallbacks_root, configuration["json"]["output"])
         levels_mapping = {
@@ -105,7 +105,7 @@ def get_indicators(
         outputs,
         hrp_countries,
         gho_countries,
-        RegionLookups.gho_iso3_to_region_nohrp,
+        RegionLookup.iso3_to_region,
     )
     ipc = IPC(configuration["ipc"], today, gho_countries, adminone)
 
@@ -123,13 +123,13 @@ def get_indicators(
         configuration["education_closures"],
         today,
         gho_countries,
-        RegionLookups.gho_iso3_to_region,
+        RegionLookup.iso3_to_regions["GHO"],
     )
     education_enrolment = EducationEnrolment(
         configuration["education_enrolment"],
         education_closures,
         gho_countries,
-        RegionLookups.gho_iso3_to_region,
+        RegionLookup.iso3_to_regions["GHO"],
     )
     national_names = configurable_scrapers["national"] + [
         "food_prices",
@@ -174,7 +174,7 @@ def get_indicators(
         regional_configuration["aggregate_gho"],
         "national",
         "regional",
-        RegionLookups.gho_iso3_to_region,
+        RegionLookup.iso3_to_regions["GHO"],
         runner,
     )
     regional_names_gho = runner.add_customs(regional_scrapers_gho, add_to_run=True)
@@ -182,7 +182,7 @@ def get_indicators(
         regional_configuration["aggregate_hrp"],
         "national",
         "regional",
-        RegionLookups.hrp_iso3_to_region,
+        RegionLookup.iso3_to_regions["HRPs"],
         runner,
     )
     regional_names_hrp = runner.add_customs(regional_scrapers_hrp, add_to_run=True)
@@ -202,7 +202,7 @@ def get_indicators(
     regional_names.extend(["education_closures", "education_enrolment"])
     regional_rows = get_regional_rows(
         runner,
-        RegionLookups.regions + ["global"],
+        RegionLookup.regions + ["global"],
         names=regional_names,
     )
 
@@ -218,7 +218,7 @@ def get_indicators(
             outputs,
             names=national_names,
             flag_countries=flag_countries,
-            iso3_to_region=RegionLookups.gho_iso3_to_region,
+            iso3_to_region=RegionLookup.iso3_to_regions["GHO"],
             ignore_regions=("GHO",),
         )
     if "regional" in tabs:

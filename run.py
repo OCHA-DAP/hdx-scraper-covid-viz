@@ -108,6 +108,7 @@ def main(
                 temp_folder,
                 save,
                 use_saved,
+                hdx_auth=configuration.get_api_key(),
                 header_auths=header_auths,
                 basic_auths=basic_auths,
                 param_auths=param_auths,
