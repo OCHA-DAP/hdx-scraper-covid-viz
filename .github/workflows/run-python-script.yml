@@ -36,7 +36,7 @@ jobs:
       if: always()
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        file_pattern: out*.json
+        file_pattern: all.json out*.json
         commit_message: automatic - Data bundle updated
         push_options: '--force'
         skip_dirty_check: false
