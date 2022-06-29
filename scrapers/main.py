@@ -225,18 +225,11 @@ def get_indicators(
         global_rows = get_toplevel_rows(
             runner, overrides={"who_covid": {"gho": "global"}}, toplevel="global"
         )
-        additional_global_headers = (
-            "Cumulative_cases",
-            "Cumulative_deaths",
-            "RequiredFunding",
-            "Funding",
-            "PercentFunded",
-        )
         update_regional(
             outputs,
             regional_rows,
             toplevel_rows=global_rows,
-            additional_toplevel_headers=additional_global_headers,
+            toplevel_hxltags=configuration["regional"]["regional_from_global"],
             toplevel="global",
         )
     if "world" in tabs:
@@ -252,7 +245,7 @@ def get_indicators(
             tab="world",
             regional_rows=regional_rows,
             regional_adm="GHO",
-            regional_hxltags=configuration["regional"]["global"],
+            regional_hxltags=configuration["regional"]["global_from_regional"],
         )
     if "subnational" in tabs:
         update_subnational(runner, adminone, outputs, names=subnational_names)
@@ -271,9 +264,9 @@ def get_indicators(
     if "sources" in tabs:
         update_sources(
             runner,
-            configuration,
             outputs,
+            additional_sources=configuration["additional_sources"],
             names=names,
-            additional_sources=(get_report_source(configuration),),
+            custom_sources=(get_report_source(configuration),),
         )
     return hrp_countries

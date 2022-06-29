@@ -890,7 +890,14 @@ regional:
     "#capacity+doses+administered+total":
       action: "sum"
 
-  global:
+  regional_from_global:
+    - "#affected+infected"
+    - "#affected+killed"
+    - "#value+funding+hrp+required+usd"
+    - "#value+funding+hrp+total+usd"
+    - "#value+funding+hrp+pct"
+
+  global_from_regional:
     - "#access+visas+pct"
     - "#access+travel+pct"
     - "#event+year+todate+num"

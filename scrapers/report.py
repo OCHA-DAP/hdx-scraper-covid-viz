@@ -1,4 +1,3 @@
-from hdx.data.dataset import Dataset
 from hdx.scraper.utilities.reader import Read
 from hdx.utilities.dateparse import parse_date
 
