@@ -1,2 +1,2 @@
-hdx-python-scraper[pandas]==1.8.6
+hdx-python-scraper[pandas]==1.8.7
 -r docker-requirements.txt

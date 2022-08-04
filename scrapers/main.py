@@ -3,7 +3,6 @@ from os.path import join
 
 from hdx.location.adminone import AdminOne
 from hdx.location.country import Country
-from hdx.scraper.configurable.aggregator import Aggregator
 from hdx.scraper.outputs.update_tabs import (
     get_regional_rows,
     get_toplevel_rows,
@@ -170,22 +169,22 @@ def get_indicators(
             iomdtm,
         )
     )
-    regional_scrapers_gho = Aggregator.get_scrapers(
+    regional_names_gho = runner.add_aggregators(
+        True,
         regional_configuration["aggregate_gho"],
         "national",
         "regional",
         RegionLookup.iso3_to_regions["GHO"],
-        runner,
+        force_add_to_run=True,
     )
-    regional_names_gho = runner.add_customs(regional_scrapers_gho, add_to_run=True)
-    regional_scrapers_hrp = Aggregator.get_scrapers(
+    regional_names_hrp = runner.add_aggregators(
+        True,
         regional_configuration["aggregate_hrp"],
         "national",
         "regional",
         RegionLookup.iso3_to_regions["HRPs"],
-        runner,
+        force_add_to_run=True,
     )
-    regional_names_hrp = runner.add_customs(regional_scrapers_hrp, add_to_run=True)
     runner.run(
         prioritise_scrapers=(
             "population_national",
