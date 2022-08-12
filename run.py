@@ -1,6 +1,5 @@
 import argparse
 import logging
-from datetime import datetime
 from os import getenv
 from os.path import join
 
@@ -12,6 +11,7 @@ from hdx.scraper.outputs.googlesheets import GoogleSheets
 from hdx.scraper.outputs.json import JsonFile
 from hdx.scraper.utilities import string_params_to_dict
 from hdx.scraper.utilities.reader import Read
+from hdx.utilities.dateparse import now_utc
 from hdx.utilities.easy_logging import setup_logging
 from hdx.utilities.errors_onexit import ErrorsOnExit
 from hdx.utilities.path import temp_dir
@@ -101,7 +101,7 @@ def main(
     configuration = Configuration.read()
     with ErrorsOnExit() as errors_on_exit:
         with temp_dir() as temp_folder:
-            today = datetime.now()
+            today = now_utc()
             Read.create_readers(
                 temp_folder,
                 "saved_data",
