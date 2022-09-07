@@ -1182,11 +1182,12 @@ scraper_subnational:
   population:
     source: "WorldPop"
     source_url: "https://data.humdata.org/search?organization=worldpop&q=%22population%20counts%22"
-    dataset: "admin-1-population-statistics-for-data-explorers"
+    dataset: "population-statistics-for-data-explorers"
     format: "csv"
     admin:
       - "alpha_3"
-      - "ADM1_PCODE"
+      - "ADM_PCODE"
+    admin_exact: True
     input:
       - "Population"
     transform:
@@ -1249,11 +1250,12 @@ scraper_subnational:
       - "#affected+ch+food+analysed+num"
   healthfac:
     source: "HOT"
-    dataset: "admin-1-health-facilities-for-data-explorers"
+    dataset: "health-facility-counts-for-data-explorers"
     format: "csv"
     admin:
       - "alpha_3"
-      - "ADM1_PCODE"
+      - "ADM_PCODE"
+    admin_exact: True
     input:
       - "Health_Facilities"
     transform:

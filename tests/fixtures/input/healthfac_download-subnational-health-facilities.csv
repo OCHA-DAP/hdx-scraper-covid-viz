@@ -1,0 +1,704 @@
+ADM0_PCODE,alpha_3,ADM0_REF,ADM_LEVEL,ADM_PCODE,ADM_REF,ADM1_PCODE,ADM1_REF,ADM2_PCODE,ADM2_REF,Health_Facilities
+AE,ARE,United Arab Emirates,1,AE1,Abu Dhabi,AE1,Abu Dhabi,,,54
+AE,ARE,United Arab Emirates,1,AE2,Ajman,AE2,Ajman,,,100
+AE,ARE,United Arab Emirates,1,AE3,Al Fujarah/shariqah,AE3,Al Fujarah/shariqah,,,0
+AE,ARE,United Arab Emirates,1,AE4,Al Fujayrah,AE4,Al Fujayrah,,,1
+AE,ARE,United Arab Emirates,1,AE5,Dubai,AE5,Dubai,,,590
+AE,ARE,United Arab Emirates,1,AE6,Ras Al Khaymah,AE6,Ras Al Khaymah,,,16
+AE,ARE,United Arab Emirates,1,AE7,Shariqah,AE7,Shariqah,,,1
+AE,ARE,United Arab Emirates,1,AE8,Umm Al Qaywayn,AE8,Umm Al Qaywayn,,,9
+AF,AFG,Afghanistan,1,AF01,Kabul,AF01,Kabul,,,139
+AF,AFG,Afghanistan,1,AF02,Kapisa,AF02,Kapisa,,,0
+AF,AFG,Afghanistan,1,AF03,Parwan,AF03,Parwan,,,3
+AF,AFG,Afghanistan,1,AF04,Maidan Wardak,AF04,Maidan Wardak,,,0
+AF,AFG,Afghanistan,1,AF05,Logar,AF05,Logar,,,0
+AF,AFG,Afghanistan,1,AF06,Nangarhar,AF06,Nangarhar,,,14
+AF,AFG,Afghanistan,1,AF07,Laghman,AF07,Laghman,,,1
+AF,AFG,Afghanistan,1,AF08,Panjsher,AF08,Panjsher,,,0
+AF,AFG,Afghanistan,1,AF09,Baghlan,AF09,Baghlan,,,0
+AF,AFG,Afghanistan,1,AF10,Bamyan,AF10,Bamyan,,,1
+AF,AFG,Afghanistan,1,AF11,Ghazni,AF11,Ghazni,,,2
+AF,AFG,Afghanistan,1,AF12,Paktika,AF12,Paktika,,,0
+AF,AFG,Afghanistan,1,AF13,Paktya,AF13,Paktya,,,35
+AF,AFG,Afghanistan,1,AF14,Khost,AF14,Khost,,,0
+AF,AFG,Afghanistan,1,AF15,Kunar,AF15,Kunar,,,1
+AF,AFG,Afghanistan,1,AF16,Nuristan,AF16,Nuristan,,,0
+AF,AFG,Afghanistan,1,AF17,Badakhshan,AF17,Badakhshan,,,23
+AF,AFG,Afghanistan,1,AF18,Takhar,AF18,Takhar,,,0
+AF,AFG,Afghanistan,1,AF19,Kunduz,AF19,Kunduz,,,3
+AF,AFG,Afghanistan,1,AF20,Samangan,AF20,Samangan,,,30
+AF,AFG,Afghanistan,1,AF21,Balkh,AF21,Balkh,,,10
+AF,AFG,Afghanistan,1,AF22,Sar E Pul,AF22,Sar E Pul,,,0
+AF,AFG,Afghanistan,1,AF23,Ghor,AF23,Ghor,,,5
+AF,AFG,Afghanistan,1,AF24,Daykundi,AF24,Daykundi,,,22
+AF,AFG,Afghanistan,1,AF25,Uruzgan,AF25,Uruzgan,,,0
+AF,AFG,Afghanistan,1,AF26,Zabul,AF26,Zabul,,,1
+AF,AFG,Afghanistan,1,AF27,Kandahar,AF27,Kandahar,,,1
+AF,AFG,Afghanistan,1,AF28,Jawzjan,AF28,Jawzjan,,,2
+AF,AFG,Afghanistan,1,AF29,Faryab,AF29,Faryab,,,0
+AF,AFG,Afghanistan,1,AF30,Hilmand,AF30,Hilmand,,,1
+AF,AFG,Afghanistan,1,AF31,Badghis,AF31,Badghis,,,0
+AF,AFG,Afghanistan,1,AF32,Hirat,AF32,Hirat,,,10
+AF,AFG,Afghanistan,1,AF33,Farah,AF33,Farah,,,0
+AF,AFG,Afghanistan,1,AF34,Nimroz,AF34,Nimroz,,,3
+BI,BDI,Burundi,1,BDI001,Bubanza,BDI001,Bubanza,,,10
+BI,BDI,Burundi,1,BDI002,Bujumbura Rural,BDI002,Bujumbura Rural,,,7
+BI,BDI,Burundi,1,BDI003,Bururi,BDI003,Bururi,,,6
+BI,BDI,Burundi,1,BDI004,Cankuzo,BDI004,Cankuzo,,,1
+BI,BDI,Burundi,1,BDI005,Cibitoke,BDI005,Cibitoke,,,1
+BI,BDI,Burundi,1,BDI006,Gitega,BDI006,Gitega,,,16
+BI,BDI,Burundi,1,BDI007,Karuzi,BDI007,Karuzi,,,0
+BI,BDI,Burundi,1,BDI008,Kayanza,BDI008,Kayanza,,,4
+BI,BDI,Burundi,1,BDI009,Kirundo,BDI009,Kirundo,,,5
+BI,BDI,Burundi,1,BDI010,Makamba,BDI010,Makamba,,,9
+BI,BDI,Burundi,1,BDI011,Muramvya,BDI011,Muramvya,,,1
+BI,BDI,Burundi,1,BDI012,Muyinga,BDI012,Muyinga,,,9
+BI,BDI,Burundi,1,BDI013,Mwaro,BDI013,Mwaro,,,1
+BI,BDI,Burundi,1,BDI014,Ngozi,BDI014,Ngozi,,,7
+BI,BDI,Burundi,1,BDI015,Rutana,BDI015,Rutana,,,3
+BI,BDI,Burundi,1,BDI016,Ruyigi,BDI016,Ruyigi,,,7
+BI,BDI,Burundi,1,BDI017,Bujumbura Mairie,BDI017,Bujumbura Mairie,,,80
+BI,BDI,Burundi,1,BDI018,Rumonge,BDI018,Rumonge,,,11
+BF,BFA,Burkina Faso,1,BF13,Centre,BF13,Centre,,,180
+BF,BFA,Burkina Faso,1,BF46,Boucle du Mouhoun,BF46,Boucle du Mouhoun,,,3
+BF,BFA,Burkina Faso,1,BF47,Cascades,BF47,Cascades,,,40
+BF,BFA,Burkina Faso,1,BF48,Centre-Est,BF48,Centre-Est,,,11
+BF,BFA,Burkina Faso,1,BF49,Centre-Nord,BF49,Centre-Nord,,,19
+BF,BFA,Burkina Faso,1,BF50,Centre-Ouest,BF50,Centre-Ouest,,,64
+BF,BFA,Burkina Faso,1,BF51,Centre-Sud,BF51,Centre-Sud,,,24
+BF,BFA,Burkina Faso,1,BF52,Est,BF52,Est,,,27
+BF,BFA,Burkina Faso,1,BF53,Hauts-Bassins,BF53,Hauts-Bassins,,,63
+BF,BFA,Burkina Faso,1,BF54,Nord,BF54,Nord,,,1
+BF,BFA,Burkina Faso,1,BF55,Plateau-Central,BF55,Plateau-Central,,,3
+BF,BFA,Burkina Faso,1,BF56,Sahel,BF56,Sahel,,,11
+BF,BFA,Burkina Faso,1,BF57,Sud-Ouest,BF57,Sud-Ouest,,,9
+BH,BHR,Bahrain,1,BH13,Capital,BH13,Capital,,,37
+BH,BHR,Bahrain,1,BH14,Southern,BH14,Southern,,,25
+BH,BHR,Bahrain,1,BH15,Muharraq,BH15,Muharraq,,,16
+BH,BHR,Bahrain,1,BH17,Northern,BH17,Northern,,,13
+CD,COD,Democratic Republic of the Congo,1,CD10,Kinshasa,CD10,Kinshasa,,,1292
+CD,COD,Democratic Republic of the Congo,1,CD20,Kongo-Central,CD20,Kongo-Central,,,16
+CD,COD,Democratic Republic of the Congo,1,CD31,Kwango,CD31,Kwango,,,2
+CD,COD,Democratic Republic of the Congo,1,CD32,Kwilu,CD32,Kwilu,,,26
+CD,COD,Democratic Republic of the Congo,1,CD33,Maï-Ndombe,CD33,Maï-Ndombe,,,41
+CD,COD,Democratic Republic of the Congo,1,CD41,Equateur,CD41,Equateur,,,52
+CD,COD,Democratic Republic of the Congo,1,CD42,Sud-Ubangi,CD42,Sud-Ubangi,,,1
+CD,COD,Democratic Republic of the Congo,1,CD43,Nord-Ubangi,CD43,Nord-Ubangi,,,0
+CD,COD,Democratic Republic of the Congo,1,CD44,Mongala,CD44,Mongala,,,1
+CD,COD,Democratic Republic of the Congo,1,CD45,Tshuapa,CD45,Tshuapa,,,3
+CD,COD,Democratic Republic of the Congo,1,CD51,Tshopo,CD51,Tshopo,,,16
+CD,COD,Democratic Republic of the Congo,1,CD52,Bas-Uele,CD52,Bas-Uele,,,1
+CD,COD,Democratic Republic of the Congo,1,CD53,Haut-Uele,CD53,Haut-Uele,,,2
+CD,COD,Democratic Republic of the Congo,1,CD54,Ituri,CD54,Ituri,,,185
+CD,COD,Democratic Republic of the Congo,1,CD61,Nord-Kivu,CD61,Nord-Kivu,,,1528
+CD,COD,Democratic Republic of the Congo,1,CD62,Sud-Kivu,CD62,Sud-Kivu,,,290
+CD,COD,Democratic Republic of the Congo,1,CD63,Maniema,CD63,Maniema,,,18
+CD,COD,Democratic Republic of the Congo,1,CD71,Haut-Katanga,CD71,Haut-Katanga,,,95
+CD,COD,Democratic Republic of the Congo,1,CD72,Lualaba,CD72,Lualaba,,,3
+CD,COD,Democratic Republic of the Congo,1,CD73,Haut-Lomami,CD73,Haut-Lomami,,,26
+CD,COD,Democratic Republic of the Congo,1,CD74,Tanganyika,CD74,Tanganyika,,,18
+CD,COD,Democratic Republic of the Congo,1,CD81,Lomami,CD81,Lomami,,,3
+CD,COD,Democratic Republic of the Congo,1,CD82,Kasaï-Oriental,CD82,Kasaï-Oriental,,,3
+CD,COD,Democratic Republic of the Congo,1,CD83,Sankuru,CD83,Sankuru,,,0
+CD,COD,Democratic Republic of the Congo,1,CD91,Kasaï-Central,CD91,Kasaï-Central,,,2
+CD,COD,Democratic Republic of the Congo,1,CD92,Kasaï,CD92,Kasaï,,,5
+CF,CAF,Central African Republic,1,CF11,Ombella M'Poko,CF11,Ombella M'Poko,,,9
+CF,CAF,Central African Republic,1,CF12,Lobaye,CF12,Lobaye,,,0
+CF,CAF,Central African Republic,1,CF21,Mambéré-Kadéï,CF21,Mambéré-Kadéï,,,3
+CF,CAF,Central African Republic,1,CF22,Nana-Mambéré,CF22,Nana-Mambéré,,,16
+CF,CAF,Central African Republic,1,CF23,Sangha-Mbaéré,CF23,Sangha-Mbaéré,,,0
+CF,CAF,Central African Republic,1,CF31,Ouham Pendé,CF31,Ouham Pendé,,,9
+CF,CAF,Central African Republic,1,CF32,Ouham,CF32,Ouham,,,5
+CF,CAF,Central African Republic,1,CF41,Kémo,CF41,Kémo,,,3
+CF,CAF,Central African Republic,1,CF42,Nana-Gribizi,CF42,Nana-Gribizi,,,7
+CF,CAF,Central African Republic,1,CF43,Ouaka,CF43,Ouaka,,,30
+CF,CAF,Central African Republic,1,CF51,Bamingui-Bangoran,CF51,Bamingui-Bangoran,,,5
+CF,CAF,Central African Republic,1,CF52,Haute-Kotto,CF52,Haute-Kotto,,,1
+CF,CAF,Central African Republic,1,CF53,Vakaga,CF53,Vakaga,,,1
+CF,CAF,Central African Republic,1,CF61,Basse-Kotto,CF61,Basse-Kotto,,,0
+CF,CAF,Central African Republic,1,CF62,Mbomou,CF62,Mbomou,,,1
+CF,CAF,Central African Republic,1,CF63,Haut-Mbomou,CF63,Haut-Mbomou,,,1
+CF,CAF,Central African Republic,1,CF71,Bangui,CF71,Bangui,,,1
+CM,CMR,Cameroon,1,CM001,Adamawa,CM001,Adamawa,,,37
+CM,CMR,Cameroon,1,CM002,Centre,CM002,Centre,,,434
+CM,CMR,Cameroon,1,CM003,East,CM003,East,,,14
+CM,CMR,Cameroon,1,CM004,Far-North,CM004,Far-North,,,2
+CM,CMR,Cameroon,1,CM005,Littoral,CM005,Littoral,,,137
+CM,CMR,Cameroon,1,CM006,North,CM006,North,,,7
+CM,CMR,Cameroon,1,CM007,North-West,CM007,North-West,,,13
+CM,CMR,Cameroon,1,CM008,West,CM008,West,,,35
+CM,CMR,Cameroon,1,CM009,South,CM009,South,,,39
+CM,CMR,Cameroon,1,CM010,South-West,CM010,South-West,,,73
+CO,COL,Colombia,1,CO05,Antioquia,CO05,Antioquia,,,618
+CO,COL,Colombia,1,CO08,Atlántico,CO08,Atlántico,,,75
+CO,COL,Colombia,1,CO11,"Bogotá, D.C.",CO11,"Bogotá, D.C.",,,1712
+CO,COL,Colombia,1,CO13,Bolívar,CO13,Bolívar,,,76
+CO,COL,Colombia,1,CO15,Boyacá,CO15,Boyacá,,,171
+CO,COL,Colombia,1,CO17,Caldas,CO17,Caldas,,,66
+CO,COL,Colombia,1,CO18,Caquetá,CO18,Caquetá,,,22
+CO,COL,Colombia,1,CO19,Cauca,CO19,Cauca,,,204
+CO,COL,Colombia,1,CO20,Cesar,CO20,Cesar,,,27
+CO,COL,Colombia,1,CO23,Córdoba,CO23,Córdoba,,,35
+CO,COL,Colombia,1,CO25,Cundinamarca,CO25,Cundinamarca,,,194
+CO,COL,Colombia,1,CO27,Chocó,CO27,Chocó,,,6
+CO,COL,Colombia,1,CO41,Huila,CO41,Huila,,,51
+CO,COL,Colombia,1,CO44,La Guajira,CO44,La Guajira,,,135
+CO,COL,Colombia,1,CO47,Magdalena,CO47,Magdalena,,,44
+CO,COL,Colombia,1,CO50,Meta,CO50,Meta,,,80
+CO,COL,Colombia,1,CO52,Nariño,CO52,Nariño,,,93
+CO,COL,Colombia,1,CO54,Norte de Santander,CO54,Norte de Santander,,,10
+CO,COL,Colombia,1,CO63,Quindio,CO63,Quindio,,,131
+CO,COL,Colombia,1,CO66,Risaralda,CO66,Risaralda,,,58
+CO,COL,Colombia,1,CO68,Santander,CO68,Santander,,,211
+CO,COL,Colombia,1,CO70,Sucre,CO70,Sucre,,,35
+CO,COL,Colombia,1,CO73,Tolima,CO73,Tolima,,,88
+CO,COL,Colombia,1,CO76,Valle del Cauca,CO76,Valle del Cauca,,,1136
+CO,COL,Colombia,1,CO81,Arauca,CO81,Arauca,,,2
+CO,COL,Colombia,1,CO85,Casanare,CO85,Casanare,,,45
+CO,COL,Colombia,1,CO86,Putumayo,CO86,Putumayo,,,12
+CO,COL,Colombia,1,CO88,"Archipiélago de San Andrés, Providencia y Santa Catalina",CO88,"Archipiélago de San Andrés, Providencia y Santa Catalina",,,7
+CO,COL,Colombia,1,CO91,Amazonas,CO91,Amazonas,,,11
+CO,COL,Colombia,1,CO94,Guainía,CO94,Guainía,,,0
+CO,COL,Colombia,1,CO95,Guaviare,CO95,Guaviare,,,6
+CO,COL,Colombia,1,CO97,Vaupés,CO97,Vaupés,,,3
+CO,COL,Colombia,1,CO99,Vichada,CO99,Vichada,,,1
+DJ,DJI,Djibouti,1,DJ01,Obock,DJ01,Obock,,,0
+DJ,DJI,Djibouti,1,DJ02,Tadjourah,DJ02,Tadjourah,,,0
+DJ,DJI,Djibouti,1,DJ03,Dilkhil,DJ03,Dilkhil,,,0
+DJ,DJI,Djibouti,1,DJ04,Djibouti,DJ04,Djibouti,,,27
+DJ,DJI,Djibouti,1,DJ05,Ali Sabeh,DJ05,Ali Sabeh,,,0
+DZ,DZA,Algeria,1,DZ001,Adrar,DZ001,Adrar,,,32
+DZ,DZA,Algeria,1,DZ002,Ain-Defla,DZ002,Ain-Defla,,,96
+DZ,DZA,Algeria,1,DZ003,Ain-Temouchent,DZ003,Ain-Temouchent,,,104
+DZ,DZA,Algeria,1,DZ004,Alger,DZ004,Alger,,,1585
+DZ,DZA,Algeria,1,DZ005,Annaba,DZ005,Annaba,,,111
+DZ,DZA,Algeria,1,DZ006,Batna,DZ006,Batna,,,170
+DZ,DZA,Algeria,1,DZ007,Bechar,DZ007,Bechar,,,39
+DZ,DZA,Algeria,1,DZ008,Bejaia,DZ008,Bejaia,,,227
+DZ,DZA,Algeria,1,DZ009,Biskra,DZ009,Biskra,,,191
+DZ,DZA,Algeria,1,DZ010,Blida,DZ010,Blida,,,202
+DZ,DZA,Algeria,1,DZ011,Bordj Bou Arrer,DZ011,Bordj Bou Arrer,,,174
+DZ,DZA,Algeria,1,DZ012,Bouira,DZ012,Bouira,,,102
+DZ,DZA,Algeria,1,DZ013,Boumerdes,DZ013,Boumerdes,,,105
+DZ,DZA,Algeria,1,DZ014,Chlef,DZ014,Chlef,,,154
+DZ,DZA,Algeria,1,DZ015,Constantine,DZ015,Constantine,,,127
+DZ,DZA,Algeria,1,DZ016,Djelfa,DZ016,Djelfa,,,239
+DZ,DZA,Algeria,1,DZ017,El Bayadh,DZ017,El Bayadh,,,14
+DZ,DZA,Algeria,1,DZ018,El Oued,DZ018,El Oued,,,83
+DZ,DZA,Algeria,1,DZ019,El-Tarf,DZ019,El-Tarf,,,2
+DZ,DZA,Algeria,1,DZ020,Ghardaia,DZ020,Ghardaia,,,76
+DZ,DZA,Algeria,1,DZ021,Guelma,DZ021,Guelma,,,74
+DZ,DZA,Algeria,1,DZ022,Illizi,DZ022,Illizi,,,16
+DZ,DZA,Algeria,1,DZ023,Jijel,DZ023,Jijel,,,50
+DZ,DZA,Algeria,1,DZ024,Khenchela,DZ024,Khenchela,,,63
+DZ,DZA,Algeria,1,DZ025,Laghouat,DZ025,Laghouat,,,94
+DZ,DZA,Algeria,1,DZ026,Mascara,DZ026,Mascara,,,62
+DZ,DZA,Algeria,1,DZ027,Medea,DZ027,Medea,,,125
+DZ,DZA,Algeria,1,DZ028,Mila,DZ028,Mila,,,183
+DZ,DZA,Algeria,1,DZ029,Mostaganem,DZ029,Mostaganem,,,77
+DZ,DZA,Algeria,1,DZ030,M'Sila,DZ030,M'Sila,,,99
+DZ,DZA,Algeria,1,DZ031,Naama,DZ031,Naama,,,10
+DZ,DZA,Algeria,1,DZ032,Oran,DZ032,Oran,,,247
+DZ,DZA,Algeria,1,DZ033,Ouargla,DZ033,Ouargla,,,103
+DZ,DZA,Algeria,1,DZ034,Oum El Bouaghi,DZ034,Oum El Bouaghi,,,96
+DZ,DZA,Algeria,1,DZ035,Relizane,DZ035,Relizane,,,164
+DZ,DZA,Algeria,1,DZ036,Saida,DZ036,Saida,,,13
+DZ,DZA,Algeria,1,DZ037,Setif,DZ037,Setif,,,245
+DZ,DZA,Algeria,1,DZ038,Sidi Bel Abbes,DZ038,Sidi Bel Abbes,,,114
+DZ,DZA,Algeria,1,DZ039,Skikda,DZ039,Skikda,,,132
+DZ,DZA,Algeria,1,DZ040,Souk-Ahras,DZ040,Souk-Ahras,,,35
+DZ,DZA,Algeria,1,DZ041,Tamanrasset,DZ041,Tamanrasset,,,1
+DZ,DZA,Algeria,1,DZ042,Tebessa,DZ042,Tebessa,,,50
+DZ,DZA,Algeria,1,DZ043,Tiaret,DZ043,Tiaret,,,162
+DZ,DZA,Algeria,1,DZ044,Tindouf,DZ044,Tindouf,,,21
+DZ,DZA,Algeria,1,DZ045,Tipaza,DZ045,Tipaza,,,263
+DZ,DZA,Algeria,1,DZ046,Tissemsilt,DZ046,Tissemsilt,,,50
+DZ,DZA,Algeria,1,DZ047,Tizi Ouzou,DZ047,Tizi Ouzou,,,201
+DZ,DZA,Algeria,1,DZ048,Tlemcen,DZ048,Tlemcen,,,138
+EG,EGY,Egypt,1,EG01,Cairo,EG01,Cairo,,,278
+EG,EGY,Egypt,1,EG02,Alexandria,EG02,Alexandria,,,204
+EG,EGY,Egypt,1,EG03,Port Said,EG03,Port Said,,,4
+EG,EGY,Egypt,1,EG04,Suez,EG04,Suez,,,3
+EG,EGY,Egypt,1,EG11,Damietta,EG11,Damietta,,,8
+EG,EGY,Egypt,1,EG12,Dakahlia,EG12,Dakahlia,,,38
+EG,EGY,Egypt,1,EG13,Sharkia,EG13,Sharkia,,,34
+EG,EGY,Egypt,1,EG14,Kalyoubia,EG14,Kalyoubia,,,9
+EG,EGY,Egypt,1,EG15,Kafr El-Shikh,EG15,Kafr El-Shikh,,,7
+EG,EGY,Egypt,1,EG16,Gharbia,EG16,Gharbia,,,16
+EG,EGY,Egypt,1,EG17,Menoufia,EG17,Menoufia,,,12
+EG,EGY,Egypt,1,EG18,Behera,EG18,Behera,,,9
+EG,EGY,Egypt,1,EG19,Ismailia,EG19,Ismailia,,,4
+EG,EGY,Egypt,1,EG21,Giza,EG21,Giza,,,121
+EG,EGY,Egypt,1,EG22,Beni Suef,EG22,Beni Suef,,,8
+EG,EGY,Egypt,1,EG23,Fayoum,EG23,Fayoum,,,6
+EG,EGY,Egypt,1,EG24,Menia,EG24,Menia,,,14
+EG,EGY,Egypt,1,EG25,Assiut,EG25,Assiut,,,29
+EG,EGY,Egypt,1,EG26,Suhag,EG26,Suhag,,,104
+EG,EGY,Egypt,1,EG27,Qena,EG27,Qena,,,14
+EG,EGY,Egypt,1,EG28,Aswan,EG28,Aswan,,,77
+EG,EGY,Egypt,1,EG29,Luxor,EG29,Luxor,,,9
+EG,EGY,Egypt,1,EG31,Red Sea,EG31,Red Sea,,,59
+EG,EGY,Egypt,1,EG32,New Valley,EG32,New Valley,,,1
+EG,EGY,Egypt,1,EG33,Matrouh,EG33,Matrouh,,,3
+EG,EGY,Egypt,1,EG34,North Sinai,EG34,North Sinai,,,2
+EG,EGY,Egypt,1,EG35,South Sinai,EG35,South Sinai,,,65
+ET,ETH,Ethiopia,1,ET01,Tigray,ET01,Tigray,,,29
+ET,ETH,Ethiopia,1,ET02,Afar,ET02,Afar,,,3
+ET,ETH,Ethiopia,1,ET03,Amhara,ET03,Amhara,,,64
+ET,ETH,Ethiopia,1,ET04,Oromia,ET04,Oromia,,,65
+ET,ETH,Ethiopia,1,ET05,Somali,ET05,Somali,,,1
+ET,ETH,Ethiopia,1,ET06,Benishangul Gumz,ET06,Benishangul Gumz,,,1
+ET,ETH,Ethiopia,1,ET07,SNNP,ET07,SNNP,,,25
+ET,ETH,Ethiopia,1,ET11,South West Ethiopia,ET11,South West Ethiopia,,,8
+ET,ETH,Ethiopia,1,ET12,Gambela,ET12,Gambela,,,0
+ET,ETH,Ethiopia,1,ET13,Harari,ET13,Harari,,,6
+ET,ETH,Ethiopia,1,ET14,Addis Ababa,ET14,Addis Ababa,,,338
+ET,ETH,Ethiopia,1,ET15,Dire Dawa,ET15,Dire Dawa,,,9
+ET,ETH,Ethiopia,1,ET16,Sidama,ET16,Sidama,,,23
+GT,GTM,Guatemala,1,GT01,Guatemala,GT01,Guatemala,,,401
+GT,GTM,Guatemala,1,GT02,El Progreso,GT02,El Progreso,,,4
+GT,GTM,Guatemala,1,GT03,Sacatepéquez,GT03,Sacatepéquez,,,48
+GT,GTM,Guatemala,1,GT04,Chimaltenango,GT04,Chimaltenango,,,28
+GT,GTM,Guatemala,1,GT05,Escuintla,GT05,Escuintla,,,28
+GT,GTM,Guatemala,1,GT06,Santa Rosa,GT06,Santa Rosa,,,3
+GT,GTM,Guatemala,1,GT07,Sololá,GT07,Sololá,,,70
+GT,GTM,Guatemala,1,GT08,Totonicapán,GT08,Totonicapán,,,2
+GT,GTM,Guatemala,1,GT09,Quetzaltenango,GT09,Quetzaltenango,,,47
+GT,GTM,Guatemala,1,GT10,Suchitepéquez,GT10,Suchitepéquez,,,20
+GT,GTM,Guatemala,1,GT11,Retalhuleu,GT11,Retalhuleu,,,19
+GT,GTM,Guatemala,1,GT12,San Marcos,GT12,San Marcos,,,23
+GT,GTM,Guatemala,1,GT13,Huehuetenango,GT13,Huehuetenango,,,24
+GT,GTM,Guatemala,1,GT14,Quiché,GT14,Quiché,,,27
+GT,GTM,Guatemala,1,GT15,Baja Verapaz,GT15,Baja Verapaz,,,1
+GT,GTM,Guatemala,1,GT16,Alta Verapaz,GT16,Alta Verapaz,,,16
+GT,GTM,Guatemala,1,GT17,Petén,GT17,Petén,,,32
+GT,GTM,Guatemala,1,GT18,Izabal,GT18,Izabal,,,11
+GT,GTM,Guatemala,1,GT19,Zacapa,GT19,Zacapa,,,5
+GT,GTM,Guatemala,1,GT20,Chiquimula,GT20,Chiquimula,,,28
+GT,GTM,Guatemala,1,GT21,Jalapa,GT21,Jalapa,,,10
+GT,GTM,Guatemala,1,GT22,Jutiapa,GT22,Jutiapa,,,0
+HN,HND,Honduras,1,HN01,Atlantida,HN01,Atlantida,,,23
+HN,HND,Honduras,1,HN02,Colon,HN02,Colon,,,1
+HN,HND,Honduras,1,HN03,Comayagua,HN03,Comayagua,,,37
+HN,HND,Honduras,1,HN04,Copan,HN04,Copan,,,11
+HN,HND,Honduras,1,HN05,Cortes,HN05,Cortes,,,91
+HN,HND,Honduras,1,HN06,Choluteca,HN06,Choluteca,,,11
+HN,HND,Honduras,1,HN07,El Paraiso,HN07,El Paraiso,,,1
+HN,HND,Honduras,1,HN08,Francisco Morazan,HN08,Francisco Morazan,,,139
+HN,HND,Honduras,1,HN09,Gracias a Dios,HN09,Gracias a Dios,,,1
+HN,HND,Honduras,1,HN10,Intibuca,HN10,Intibuca,,,11
+HN,HND,Honduras,1,HN11,Islas de La Bahia,HN11,Islas de La Bahia,,,6
+HN,HND,Honduras,1,HN12,La Paz,HN12,La Paz,,,4
+HN,HND,Honduras,1,HN13,Lempira,HN13,Lempira,,,11
+HN,HND,Honduras,1,HN14,Ocotepeque,HN14,Ocotepeque,,,0
+HN,HND,Honduras,1,HN15,Olancho,HN15,Olancho,,,3
+HN,HND,Honduras,1,HN16,Santa Barbara,HN16,Santa Barbara,,,2
+HN,HND,Honduras,1,HN17,Valle,HN17,Valle,,,1
+HN,HND,Honduras,1,HN18,Yoro,HN18,Yoro,,,23
+HT,HTI,Haiti,1,HT01,West,HT01,West,,,825
+HT,HTI,Haiti,1,HT02,South-East,HT02,South-East,,,98
+HT,HTI,Haiti,1,HT03,North,HT03,North,,,194
+HT,HTI,Haiti,1,HT04,North-East,HT04,North-East,,,136
+HT,HTI,Haiti,1,HT05,Artibonite,HT05,Artibonite,,,278
+HT,HTI,Haiti,1,HT06,Centre,HT06,Centre,,,93
+HT,HTI,Haiti,1,HT07,South,HT07,South,,,184
+HT,HTI,Haiti,1,HT08,Grande'Anse,HT08,Grande'Anse,,,72
+HT,HTI,Haiti,1,HT09,North-West,HT09,North-West,,,93
+HT,HTI,Haiti,1,HT10,Nippes,HT10,Nippes,,,44
+IQ,IRQ,Iraq,1,IQG01,Al-Anbar,IQG01,Al-Anbar,,,155
+IQ,IRQ,Iraq,1,IQG02,Al-Basrah,IQG02,Al-Basrah,,,439
+IQ,IRQ,Iraq,1,IQG03,Al-Muthanna,IQG03,Al-Muthanna,,,72
+IQ,IRQ,Iraq,1,IQG04,Al-Najaf,IQG04,Al-Najaf,,,278
+IQ,IRQ,Iraq,1,IQG05,Al-Qadissiya,IQG05,Al-Qadissiya,,,98
+IQ,IRQ,Iraq,1,IQG06,Al-Sulaymaniyah,IQG06,Al-Sulaymaniyah,,,566
+IQ,IRQ,Iraq,1,IQG07,Babil,IQG07,Babil,,,229
+IQ,IRQ,Iraq,1,IQG08,Baghdad,IQG08,Baghdad,,,1781
+IQ,IRQ,Iraq,1,IQG09,Duhok,IQG09,Duhok,,,245
+IQ,IRQ,Iraq,1,IQG10,Diyala,IQG10,Diyala,,,120
+IQ,IRQ,Iraq,1,IQG11,Erbil,IQG11,Erbil,,,1056
+IQ,IRQ,Iraq,1,IQG12,Kerbala,IQG12,Kerbala,,,202
+IQ,IRQ,Iraq,1,IQG13,Kirkuk,IQG13,Kirkuk,,,213
+IQ,IRQ,Iraq,1,IQG14,Maysan,IQG14,Maysan,,,84
+IQ,IRQ,Iraq,1,IQG15,Ninewa,IQG15,Ninewa,,,5
+IQ,IRQ,Iraq,1,IQG16,Salah Al-Din,IQG16,Salah Al-Din,,,138
+IQ,IRQ,Iraq,1,IQG17,Thi Qar,IQG17,Thi Qar,,,209
+IQ,IRQ,Iraq,1,IQG18,Wassit,IQG18,Wassit,,,104
+JO,JOR,Jordan,1,JO01,Ajlun,JO01,Ajlun,,,4
+JO,JOR,Jordan,1,JO02,Amman,JO02,Amman,,,249
+JO,JOR,Jordan,1,JO03,Aqaba,JO03,Aqaba,,,10
+JO,JOR,Jordan,1,JO04,Balqa,JO04,Balqa,,,1
+JO,JOR,Jordan,1,JO05,Irbid,JO05,Irbid,,,1
+JO,JOR,Jordan,1,JO06,Jarash,JO06,Jarash,,,1
+JO,JOR,Jordan,1,JO07,Karak,JO07,Karak,,,4
+JO,JOR,Jordan,1,JO08,Madaba,JO08,Madaba,,,0
+JO,JOR,Jordan,1,JO09,Mafraq,JO09,Mafraq,,,1
+JO,JOR,Jordan,1,JO10,Ma'an,JO10,Ma'an,,,13
+JO,JOR,Jordan,1,JO11,Tafilah,JO11,Tafilah,,,0
+JO,JOR,Jordan,1,JO12,Zarqa,JO12,Zarqa,,,37
+KM,COM,Comoros,1,KM1,Anjouan (Ndzouani),KM1,Anjouan (Ndzouani),,,2
+KM,COM,Comoros,1,KM2,Grande Comore (Ngazidja),KM2,Grande Comore (Ngazidja),,,35
+KM,COM,Comoros,1,KM3,Mohéli (Mwali),KM3,Mohéli (Mwali),,,6
+KW,KWT,Kuwait,1,KW01,Al Ahmadi,KW01,Al Ahmadi,,,44
+KW,KWT,Kuwait,1,KW02,Al Farwaniyah,KW02,Al Farwaniyah,,,30
+KW,KWT,Kuwait,1,KW03,Al Jahrah,KW03,Al Jahrah,,,10
+KW,KWT,Kuwait,1,KW04,Al Kuwayt,KW04,Al Kuwayt,,,24
+KW,KWT,Kuwait,1,KW05,Hawalli,KW05,Hawalli,,,87
+KW,KWT,Kuwait,1,KW06,Mubarak Al-Kabeer,KW06,Mubarak Al-Kabeer,,,8
+LB,LBN,Lebanon,1,LB1,Beirut,LB1,Beirut,,,231
+LB,LBN,Lebanon,1,LB2,Bekaa,LB2,Bekaa,,,74
+LB,LBN,Lebanon,1,LB3,Mount Lebanon,LB3,Mount Lebanon,,,687
+LB,LBN,Lebanon,1,LB4,El Nabatieh,LB4,El Nabatieh,,,31
+LB,LBN,Lebanon,1,LB5,North,LB5,North,,,24
+LB,LBN,Lebanon,1,LB6,South,LB6,South,,,32
+LB,LBN,Lebanon,1,LB7,Akkar,LB7,Akkar,,,7
+LB,LBN,Lebanon,1,LB8,Baalbek-El Hermel,LB8,Baalbek-El Hermel,,,20
+LY,LBY,Libya,1,LY01,East,LY01,East,,,386
+LY,LBY,Libya,1,LY02,West,LY02,West,,,1555
+LY,LBY,Libya,1,LY03,South,LY03,South,,,90
+MA,MAR,Morocco,1,MA001,Beni Mellal Khenifra,MA001,Beni Mellal Khenifra,,,442
+MA,MAR,Morocco,1,MA002,Casablanca Settat,MA002,Casablanca Settat,,,1070
+MA,MAR,Morocco,1,MA003,Draa Tafilalet,MA003,Draa Tafilalet,,,181
+MA,MAR,Morocco,1,MA004,Fez Meknes,MA004,Fez Meknes,,,956
+MA,MAR,Morocco,1,MA005,Guelmim Oued Noun,MA005,Guelmim Oued Noun,,,73
+MA,MAR,Morocco,1,MA006,Marrakech Safi,MA006,Marrakech Safi,,,715
+MA,MAR,Morocco,1,MA007,Oriental,MA007,Oriental,,,431
+MA,MAR,Morocco,1,MA008,Rabat Sale Kenitra,MA008,Rabat Sale Kenitra,,,596
+MA,MAR,Morocco,1,MA009,Souss Massa,MA009,Souss Massa,,,619
+MA,MAR,Morocco,1,MA010,Tangier Tetouan Al Hoceima,MA010,Tangier Tetouan Al Hoceima,,,209
+ML,MLI,Mali,1,ML01,Kayes,ML01,Kayes,,,1
+ML,MLI,Mali,1,ML02,Koulikoro,ML02,Koulikoro,,,268
+ML,MLI,Mali,1,ML03,Sikasso,ML03,Sikasso,,,135
+ML,MLI,Mali,1,ML04,Ségou,ML04,Ségou,,,129
+ML,MLI,Mali,1,ML05,Mopti,ML05,Mopti,,,45
+ML,MLI,Mali,1,ML06,Tombouctou,ML06,Tombouctou,,,39
+ML,MLI,Mali,1,ML07,Gao,ML07,Gao,,,43
+ML,MLI,Mali,1,ML08,Kidal,ML08,Kidal,,,6
+ML,MLI,Mali,1,ML09,Bamako,ML09,Bamako,,,442
+ML,MLI,Mali,1,ML10,Menaka,ML10,Menaka,,,1
+MM,MMR,Myanmar,1,MMR001,Kachin,MMR001,Kachin,,,19
+MM,MMR,Myanmar,1,MMR002,Kayah,MMR002,Kayah,,,4
+MM,MMR,Myanmar,1,MMR003,Kayin,MMR003,Kayin,,,23
+MM,MMR,Myanmar,1,MMR004,Chin,MMR004,Chin,,,19
+MM,MMR,Myanmar,1,MMR005,Sagaing,MMR005,Sagaing,,,44
+MM,MMR,Myanmar,1,MMR006,Tanintharyi,MMR006,Tanintharyi,,,91
+MM,MMR,Myanmar,1,MMR009,Magway,MMR009,Magway,,,39
+MM,MMR,Myanmar,1,MMR010,Mandalay,MMR010,Mandalay,,,287
+MM,MMR,Myanmar,1,MMR011,Mon,MMR011,Mon,,,272
+MM,MMR,Myanmar,1,MMR012,Rakhine,MMR012,Rakhine,,,11
+MM,MMR,Myanmar,1,MMR013,Yangon,MMR013,Yangon,,,903
+MM,MMR,Myanmar,1,MMR017,Ayeyarwady,MMR017,Ayeyarwady,,,48
+MM,MMR,Myanmar,1,MMR018,Nay Pyi Taw,MMR018,Nay Pyi Taw,,,50
+MM,MMR,Myanmar,1,MMR111,Bago,MMR111,Bago,,,135
+MM,MMR,Myanmar,1,MMR222,Shan,MMR222,Shan,,,149
+MR,MRT,Mauritania,1,MR01,Adrar,MR01,Adrar,,,2
+MR,MRT,Mauritania,1,MR02,Assaba,MR02,Assaba,,,1
+MR,MRT,Mauritania,1,MR03,Brakna,MR03,Brakna,,,1
+MR,MRT,Mauritania,1,MR04,Dakhlet-Nouadhibou,MR04,Dakhlet-Nouadhibou,,,5
+MR,MRT,Mauritania,1,MR05,Gorgol,MR05,Gorgol,,,2
+MR,MRT,Mauritania,1,MR06,Guidimakha,MR06,Guidimakha,,,9
+MR,MRT,Mauritania,1,MR07,Hodh El Chargi,MR07,Hodh El Chargi,,,0
+MR,MRT,Mauritania,1,MR08,Hodh El Gharbi,MR08,Hodh El Gharbi,,,2
+MR,MRT,Mauritania,1,MR09,Inchiri,MR09,Inchiri,,,1
+MR,MRT,Mauritania,1,MR10,Nouakchott,MR10,Nouakchott,,,277
+MR,MRT,Mauritania,1,MR11,Tagant,MR11,Tagant,,,0
+MR,MRT,Mauritania,1,MR12,Trarza,MR12,Trarza,,,7
+MR,MRT,Mauritania,1,MR13,Tris-Zemmour,MR13,Tris-Zemmour,,,0
+MZ,MOZ,Mozambique,1,MZ01,Cabo Delgado,MZ01,Cabo Delgado,,,95
+MZ,MOZ,Mozambique,1,MZ02,Gaza,MZ02,Gaza,,,16
+MZ,MOZ,Mozambique,1,MZ03,Inhambane,MZ03,Inhambane,,,51
+MZ,MOZ,Mozambique,1,MZ04,Manica,MZ04,Manica,,,73
+MZ,MOZ,Mozambique,1,MZ05,Maputo,MZ05,Maputo,,,77
+MZ,MOZ,Mozambique,1,MZ06,Maputo City,MZ06,Maputo City,,,60
+MZ,MOZ,Mozambique,1,MZ07,Nampula,MZ07,Nampula,,,132
+MZ,MOZ,Mozambique,1,MZ08,Niassa,MZ08,Niassa,,,104
+MZ,MOZ,Mozambique,1,MZ09,Sofala,MZ09,Sofala,,,75
+MZ,MOZ,Mozambique,1,MZ10,Tete,MZ10,Tete,,,15
+MZ,MOZ,Mozambique,1,MZ11,Zambezia,MZ11,Zambezia,,,167
+NE,NER,Niger,1,NE001,Agadez,NE001,Agadez,,,14
+NE,NER,Niger,1,NE002,Diffa,NE002,Diffa,,,1
+NE,NER,Niger,1,NE003,Dosso,NE003,Dosso,,,3
+NE,NER,Niger,1,NE004,Maradi,NE004,Maradi,,,1
+NE,NER,Niger,1,NE005,Tahoua,NE005,Tahoua,,,10
+NE,NER,Niger,1,NE006,Tillabery,NE006,Tillabery,,,15
+NE,NER,Niger,1,NE007,Zinder,NE007,Zinder,,,1
+NE,NER,Niger,1,NE008,Niamey,NE008,Niamey,,,176
+NG,NGA,Nigeria,1,NG001,Abia,NG001,Abia,,,0
+NG,NGA,Nigeria,1,NG002,Adamawa,NG002,Adamawa,,,153
+NG,NGA,Nigeria,1,NG003,Akwa Ibom,NG003,Akwa Ibom,,,3
+NG,NGA,Nigeria,1,NG004,Anambra,NG004,Anambra,,,0
+NG,NGA,Nigeria,1,NG005,Bauchi,NG005,Bauchi,,,26
+NG,NGA,Nigeria,1,NG006,Bayelsa,NG006,Bayelsa,,,13
+NG,NGA,Nigeria,1,NG007,Benue,NG007,Benue,,,1
+NG,NGA,Nigeria,1,NG008,Borno,NG008,Borno,,,20
+NG,NGA,Nigeria,1,NG009,Cross River,NG009,Cross River,,,2
+NG,NGA,Nigeria,1,NG010,Delta,NG010,Delta,,,34
+NG,NGA,Nigeria,1,NG011,Ebonyi,NG011,Ebonyi,,,0
+NG,NGA,Nigeria,1,NG012,Edo,NG012,Edo,,,49
+NG,NGA,Nigeria,1,NG013,Ekiti,NG013,Ekiti,,,0
+NG,NGA,Nigeria,1,NG014,Enugu,NG014,Enugu,,,26
+NG,NGA,Nigeria,1,NG015,Federal Capital Territory,NG015,Federal Capital Territory,,,10
+NG,NGA,Nigeria,1,NG016,Gombe,NG016,Gombe,,,24
+NG,NGA,Nigeria,1,NG017,Imo,NG017,Imo,,,0
+NG,NGA,Nigeria,1,NG018,Jigawa,NG018,Jigawa,,,0
+NG,NGA,Nigeria,1,NG019,Kaduna,NG019,Kaduna,,,36
+NG,NGA,Nigeria,1,NG020,Kano,NG020,Kano,,,165
+NG,NGA,Nigeria,1,NG021,Katsina,NG021,Katsina,,,5
+NG,NGA,Nigeria,1,NG022,Kebbi,NG022,Kebbi,,,151
+NG,NGA,Nigeria,1,NG023,Kogi,NG023,Kogi,,,2
+NG,NGA,Nigeria,1,NG024,Kwara,NG024,Kwara,,,0
+NG,NGA,Nigeria,1,NG025,Lagos,NG025,Lagos,,,36
+NG,NGA,Nigeria,1,NG026,Nasarawa,NG026,Nasarawa,,,9
+NG,NGA,Nigeria,1,NG027,Niger,NG027,Niger,,,279
+NG,NGA,Nigeria,1,NG028,Ogun,NG028,Ogun,,,7
+NG,NGA,Nigeria,1,NG029,Ondo,NG029,Ondo,,,1
+NG,NGA,Nigeria,1,NG030,Osun,NG030,Osun,,,6
+NG,NGA,Nigeria,1,NG031,Oyo,NG031,Oyo,,,25
+NG,NGA,Nigeria,1,NG032,Plateau,NG032,Plateau,,,2
+NG,NGA,Nigeria,1,NG033,Rivers,NG033,Rivers,,,26
+NG,NGA,Nigeria,1,NG034,Sokoto,NG034,Sokoto,,,170
+NG,NGA,Nigeria,1,NG035,Taraba,NG035,Taraba,,,1
+NG,NGA,Nigeria,1,NG036,Yobe,NG036,Yobe,,,11
+NG,NGA,Nigeria,1,NG037,Zamfara,NG037,Zamfara,,,117
+OM,OMN,Oman,1,OM01,Ad Dakhliyah,OM01,Ad Dakhliyah,,,21
+OM,OMN,Oman,1,OM02,Al Batinah North,OM02,Al Batinah North,,,26
+OM,OMN,Oman,1,OM03,Al Batinah South,OM03,Al Batinah South,,,7
+OM,OMN,Oman,1,OM04,Al Buraymi,OM04,Al Buraymi,,,2
+OM,OMN,Oman,1,OM05,Al Dhahira,OM05,Al Dhahira,,,13
+OM,OMN,Oman,1,OM06,Al Wusta,OM06,Al Wusta,,,4
+OM,OMN,Oman,1,OM07,Ash Sharqiyah North,OM07,Ash Sharqiyah North,,,8
+OM,OMN,Oman,1,OM08,Ash Sharqiyah South,OM08,Ash Sharqiyah South,,,5
+OM,OMN,Oman,1,OM09,Dhofar,OM09,Dhofar,,,53
+OM,OMN,Oman,1,OM10,Musandam,OM10,Musandam,,,3
+OM,OMN,Oman,1,OM11,Muscat,OM11,Muscat,,,260
+PK,PAK,Pakistan,1,PK2,Khyber Pakhtunkhwa,PK2,Khyber Pakhtunkhwa,,,200
+PK,PAK,Pakistan,1,PK5,Federal Capital Territory,PK5,Federal Capital Territory,,,121
+PK,PAK,Pakistan,1,PK6,Punjab,PK6,Punjab,,,1024
+PK,PAK,Pakistan,1,PK7,Balochistan,PK7,Balochistan,,,40
+PK,PAK,Pakistan,1,PK8,Sindh,PK8,Sindh,,,1283
+PS,PSE,State of Palestine,1,PS01,West Bank,PS01,West Bank,,,1341
+PS,PSE,State of Palestine,1,PS02,Gaza Strip,PS02,Gaza Strip,,,688
+QA,QAT,Qatar,1,QA1,Ad Dawhah,QA1,Ad Dawhah,,,97
+QA,QAT,Qatar,1,QA2,Al Daayen,QA2,Al Daayen,,,6
+QA,QAT,Qatar,1,QA3,Al Khor,QA3,Al Khor,,,7
+QA,QAT,Qatar,1,QA4,Al Wakrah,QA4,Al Wakrah,,,14
+QA,QAT,Qatar,1,QA5,Ar Rayyan,QA5,Ar Rayyan,,,67
+QA,QAT,Qatar,1,QA6,Madinat ash Shamal,QA6,Madinat ash Shamal,,,0
+QA,QAT,Qatar,1,QA7,Umm Salal,QA7,Umm Salal,,,5
+SA,SAU,Saudi Arabia,1,SA01,Ar Riyad,SA01,Ar Riyad,,,260
+SA,SAU,Saudi Arabia,1,SA02,Makkah,SA02,Makkah,,,333
+SA,SAU,Saudi Arabia,1,SA03,Al Madinah,SA03,Al Madinah,,,86
+SA,SAU,Saudi Arabia,1,SA04,Ash Sharqiyah,SA04,Ash Sharqiyah,,,168
+SA,SAU,Saudi Arabia,1,SA05,Al Quassim,SA05,Al Quassim,,,75
+SA,SAU,Saudi Arabia,1,SA06,Ha'il,SA06,Ha'il,,,62
+SA,SAU,Saudi Arabia,1,SA07,Tabuk,SA07,Tabuk,,,12
+SA,SAU,Saudi Arabia,1,SA08,Al Hudud ash Shamaliyah,SA08,Al Hudud ash Shamaliyah,,,21
+SA,SAU,Saudi Arabia,1,SA09,Jizan,SA09,Jizan,,,14
+SA,SAU,Saudi Arabia,1,SA10,Najran,SA10,Najran,,,8
+SA,SAU,Saudi Arabia,1,SA11,Al Bahah,SA11,Al Bahah,,,3
+SA,SAU,Saudi Arabia,1,SA12,Al Jawf,SA12,Al Jawf,,,14
+SA,SAU,Saudi Arabia,1,SA14,`Asir,SA14,`Asir,,,21
+SD,SDN,Sudan,1,SD01,Khartoum,SD01,Khartoum,,,1000
+SD,SDN,Sudan,1,SD02,North Darfur,SD02,North Darfur,,,0
+SD,SDN,Sudan,1,SD03,South Darfur,SD03,South Darfur,,,0
+SD,SDN,Sudan,1,SD04,West Darfur,SD04,West Darfur,,,0
+SD,SDN,Sudan,1,SD05,East Darfur,SD05,East Darfur,,,13
+SD,SDN,Sudan,1,SD06,Central Darfur,SD06,Central Darfur,,,0
+SD,SDN,Sudan,1,SD07,South Kordofan,SD07,South Kordofan,,,0
+SD,SDN,Sudan,1,SD08,Blue Nile,SD08,Blue Nile,,,0
+SD,SDN,Sudan,1,SD09,White Nile,SD09,White Nile,,,2
+SD,SDN,Sudan,1,SD10,Red Sea,SD10,Red Sea,,,2
+SD,SDN,Sudan,1,SD11,Kassala,SD11,Kassala,,,8
+SD,SDN,Sudan,1,SD12,Gedaref,SD12,Gedaref,,,1
+SD,SDN,Sudan,1,SD13,North Kordofan,SD13,North Kordofan,,,3
+SD,SDN,Sudan,1,SD14,Sennar,SD14,Sennar,,,0
+SD,SDN,Sudan,1,SD15,Aj Jazirah,SD15,Aj Jazirah,,,31
+SD,SDN,Sudan,1,SD16,River Nile,SD16,River Nile,,,0
+SD,SDN,Sudan,1,SD17,Northern,SD17,Northern,,,3
+SD,SDN,Sudan,1,SD18,West Kordofan,SD18,West Kordofan,,,0
+SD,SDN,Sudan,1,SD19,Abyei PCA,SD19,Abyei PCA,,,0
+SO,SOM,Somalia,1,SO11,Awdal,SO11,Awdal,,,1
+SO,SOM,Somalia,1,SO12,Woqooyi Galbeed,SO12,Woqooyi Galbeed,,,14
+SO,SOM,Somalia,1,SO13,Togdheer,SO13,Togdheer,,,4
+SO,SOM,Somalia,1,SO14,Sool,SO14,Sool,,,1
+SO,SOM,Somalia,1,SO15,Sanaag,SO15,Sanaag,,,0
+SO,SOM,Somalia,1,SO16,Bari,SO16,Bari,,,3
+SO,SOM,Somalia,1,SO17,Nugaal,SO17,Nugaal,,,0
+SO,SOM,Somalia,1,SO18,Mudug,SO18,Mudug,,,0
+SO,SOM,Somalia,1,SO19,Galgaduud,SO19,Galgaduud,,,2
+SO,SOM,Somalia,1,SO20,Hiraan,SO20,Hiraan,,,0
+SO,SOM,Somalia,1,SO21,Middle Shabelle,SO21,Middle Shabelle,,,0
+SO,SOM,Somalia,1,SO22,Banadir,SO22,Banadir,,,6
+SO,SOM,Somalia,1,SO23,Lower Shabelle,SO23,Lower Shabelle,,,5
+SO,SOM,Somalia,1,SO24,Bay,SO24,Bay,,,0
+SO,SOM,Somalia,1,SO25,Bakool,SO25,Bakool,,,0
+SO,SOM,Somalia,1,SO26,Gedo,SO26,Gedo,,,3
+SO,SOM,Somalia,1,SO27,Middle Juba,SO27,Middle Juba,,,0
+SO,SOM,Somalia,1,SO28,Lower Juba,SO28,Lower Juba,,,1
+SS,SSD,South Sudan,1,SS01,Central Equatoria,SS01,Central Equatoria,,,247
+SS,SSD,South Sudan,1,SS02,Eastern Equatoria,SS02,Eastern Equatoria,,,2
+SS,SSD,South Sudan,1,SS03,Jonglei,SS03,Jonglei,,,4
+SS,SSD,South Sudan,1,SS04,Lakes,SS04,Lakes,,,1
+SS,SSD,South Sudan,1,SS05,Northern Bahr el Ghazal,SS05,Northern Bahr el Ghazal,,,16
+SS,SSD,South Sudan,1,SS06,Unity,SS06,Unity,,,8
+SS,SSD,South Sudan,1,SS07,Upper Nile,SS07,Upper Nile,,,13
+SS,SSD,South Sudan,1,SS08,Warrap,SS08,Warrap,,,0
+SS,SSD,South Sudan,1,SS09,Western Bahr el Ghazal,SS09,Western Bahr el Ghazal,,,0
+SS,SSD,South Sudan,1,SS10,Western Equatoria,SS10,Western Equatoria,,,1
+SV,SLV,El Salvador,1,SV01,Ahuachapán,SV01,Ahuachapán,,,24
+SV,SLV,El Salvador,1,SV02,Cabañas,SV02,Cabañas,,,0
+SV,SLV,El Salvador,1,SV03,Chalatenango,SV03,Chalatenango,,,13
+SV,SLV,El Salvador,1,SV04,Cuscatlán,SV04,Cuscatlán,,,11
+SV,SLV,El Salvador,1,SV05,La Libertad,SV05,La Libertad,,,81
+SV,SLV,El Salvador,1,SV06,La Paz,SV06,La Paz,,,12
+SV,SLV,El Salvador,1,SV07,La Unión,SV07,La Unión,,,14
+SV,SLV,El Salvador,1,SV08,Morazán,SV08,Morazán,,,37
+SV,SLV,El Salvador,1,SV09,San Miguel,SV09,San Miguel,,,40
+SV,SLV,El Salvador,1,SV10,San Salvador,SV10,San Salvador,,,220
+SV,SLV,El Salvador,1,SV11,San Vicente,SV11,San Vicente,,,9
+SV,SLV,El Salvador,1,SV12,Santa Ana,SV12,Santa Ana,,,35
+SV,SLV,El Salvador,1,SV13,Sonsonate,SV13,Sonsonate,,,8
+SV,SLV,El Salvador,1,SV14,Usulután,SV14,Usulután,,,25
+SY,SYR,Syrian Arab Republic,1,SY01,Damascus,SY01,Damascus,,,213
+SY,SYR,Syrian Arab Republic,1,SY02,Aleppo,SY02,Aleppo,,,699
+SY,SYR,Syrian Arab Republic,1,SY03,Rural Damascus,SY03,Rural Damascus,,,252
+SY,SYR,Syrian Arab Republic,1,SY04,Homs,SY04,Homs,,,50
+SY,SYR,Syrian Arab Republic,1,SY05,Hama,SY05,Hama,,,110
+SY,SYR,Syrian Arab Republic,1,SY06,Lattakia,SY06,Lattakia,,,25
+SY,SYR,Syrian Arab Republic,1,SY07,Idleb,SY07,Idleb,,,49
+SY,SYR,Syrian Arab Republic,1,SY08,Al-Hasakeh,SY08,Al-Hasakeh,,,69
+SY,SYR,Syrian Arab Republic,1,SY09,Deir-ez-Zor,SY09,Deir-ez-Zor,,,8
+SY,SYR,Syrian Arab Republic,1,SY10,Tartous,SY10,Tartous,,,32
+SY,SYR,Syrian Arab Republic,1,SY11,Ar-Raqqa,SY11,Ar-Raqqa,,,13
+SY,SYR,Syrian Arab Republic,1,SY12,Dar'a,SY12,Dar'a,,,7
+SY,SYR,Syrian Arab Republic,1,SY13,As-Sweida,SY13,As-Sweida,,,23
+SY,SYR,Syrian Arab Republic,1,SY14,Quneitra,SY14,Quneitra,,,3
+TD,TCD,Chad,1,TD01,Batha,TD01,Batha,,,1
+TD,TCD,Chad,1,TD02,Borkou,TD02,Borkou,,,4
+TD,TCD,Chad,1,TD03,Chari-Baguirmi,TD03,Chari-Baguirmi,,,2
+TD,TCD,Chad,1,TD04,Guéra,TD04,Guéra,,,0
+TD,TCD,Chad,1,TD05,Hadjer-Lamis,TD05,Hadjer-Lamis,,,20
+TD,TCD,Chad,1,TD06,Kanem,TD06,Kanem,,,4
+TD,TCD,Chad,1,TD07,Lac,TD07,Lac,,,30
+TD,TCD,Chad,1,TD08,Logone Occidental,TD08,Logone Occidental,,,3
+TD,TCD,Chad,1,TD09,Logone Oriental,TD09,Logone Oriental,,,18
+TD,TCD,Chad,1,TD10,Mandoul,TD10,Mandoul,,,2
+TD,TCD,Chad,1,TD11,Mayo-Kebbi Est,TD11,Mayo-Kebbi Est,,,4
+TD,TCD,Chad,1,TD12,Mayo-Kebbi Ouest,TD12,Mayo-Kebbi Ouest,,,0
+TD,TCD,Chad,1,TD13,Moyen-Chari,TD13,Moyen-Chari,,,12
+TD,TCD,Chad,1,TD14,Ouaddaï,TD14,Ouaddaï,,,6
+TD,TCD,Chad,1,TD15,Salamat,TD15,Salamat,,,7
+TD,TCD,Chad,1,TD16,Tandjilé,TD16,Tandjilé,,,1
+TD,TCD,Chad,1,TD17,Wadi Fira,TD17,Wadi Fira,,,1
+TD,TCD,Chad,1,TD18,N'Djamena,TD18,N'Djamena,,,82
+TD,TCD,Chad,1,TD19,Barh-El-Gazel,TD19,Barh-El-Gazel,,,7
+TD,TCD,Chad,1,TD20,Ennedi Est,TD20,Ennedi Est,,,0
+TD,TCD,Chad,1,TD21,Sila,TD21,Sila,,,11
+TD,TCD,Chad,1,TD22,Tibesti,TD22,Tibesti,,,1
+TD,TCD,Chad,1,TD23,Ennedi Ouest,TD23,Ennedi Ouest,,,0
+TN,TUN,Tunisia,1,TN01,Ariana,TN01,Ariana,,,24
+TN,TUN,Tunisia,1,TN02,Ben Arous (Tunis Sud),TN02,Ben Arous (Tunis Sud),,,59
+TN,TUN,Tunisia,1,TN03,Bizerte,TN03,Bizerte,,,12
+TN,TUN,Tunisia,1,TN04,Béja,TN04,Béja,,,8
+TN,TUN,Tunisia,1,TN05,Gabès,TN05,Gabès,,,15
+TN,TUN,Tunisia,1,TN06,Gafsa,TN06,Gafsa,,,26
+TN,TUN,Tunisia,1,TN07,Jendouba,TN07,Jendouba,,,10
+TN,TUN,Tunisia,1,TN08,Kairouan,TN08,Kairouan,,,6
+TN,TUN,Tunisia,1,TN09,Kassérine,TN09,Kassérine,,,7
+TN,TUN,Tunisia,1,TN10,Kebili,TN10,Kebili,,,8
+TN,TUN,Tunisia,1,TN11,Le Kef,TN11,Le Kef,,,1
+TN,TUN,Tunisia,1,TN12,Mahdia,TN12,Mahdia,,,8
+TN,TUN,Tunisia,1,TN13,Manubah,TN13,Manubah,,,4
+TN,TUN,Tunisia,1,TN14,Monastir,TN14,Monastir,,,64
+TN,TUN,Tunisia,1,TN15,Médenine,TN15,Médenine,,,13
+TN,TUN,Tunisia,1,TN16,Nabeul,TN16,Nabeul,,,117
+TN,TUN,Tunisia,1,TN17,Sfax,TN17,Sfax,,,171
+TN,TUN,Tunisia,1,TN18,Sidi Bou Zid,TN18,Sidi Bou Zid,,,4
+TN,TUN,Tunisia,1,TN19,Siliana,TN19,Siliana,,,3
+TN,TUN,Tunisia,1,TN20,Sousse,TN20,Sousse,,,124
+TN,TUN,Tunisia,1,TN21,Tataouine,TN21,Tataouine,,,9
+TN,TUN,Tunisia,1,TN22,Tozeur,TN22,Tozeur,,,8
+TN,TUN,Tunisia,1,TN23,Tunis,TN23,Tunis,,,168
+TN,TUN,Tunisia,1,TN24,Zaghouan,TN24,Zaghouan,,,3
+UA,UKR,Ukraine,1,UA01,Avtonomna Respublika Krym,UA01,Avtonomna Respublika Krym,,,758
+UA,UKR,Ukraine,1,UA05,Vinnytska,UA05,Vinnytska,,,644
+UA,UKR,Ukraine,1,UA07,Volynska,UA07,Volynska,,,326
+UA,UKR,Ukraine,1,UA12,Dnipropetrovska,UA12,Dnipropetrovska,,,1041
+UA,UKR,Ukraine,1,UA14,Donetska,UA14,Donetska,,,1191
+UA,UKR,Ukraine,1,UA18,Zhytomyrska,UA18,Zhytomyrska,,,386
+UA,UKR,Ukraine,1,UA21,Zakarpatska,UA21,Zakarpatska,,,324
+UA,UKR,Ukraine,1,UA23,Zaporizka,UA23,Zaporizka,,,348
+UA,UKR,Ukraine,1,UA26,Ivano Frankivska,UA26,Ivano Frankivska,,,693
+UA,UKR,Ukraine,1,UA32,Kyivska,UA32,Kyivska,,,839
+UA,UKR,Ukraine,1,UA35,Kirovohradska,UA35,Kirovohradska,,,249
+UA,UKR,Ukraine,1,UA44,Luhanska,UA44,Luhanska,,,538
+UA,UKR,Ukraine,1,UA46,Lvivska,UA46,Lvivska,,,1342
+UA,UKR,Ukraine,1,UA48,Mykolaivska,UA48,Mykolaivska,,,257
+UA,UKR,Ukraine,1,UA51,Odeska,UA51,Odeska,,,791
+UA,UKR,Ukraine,1,UA53,Poltavska,UA53,Poltavska,,,477
+UA,UKR,Ukraine,1,UA56,Rivnenska,UA56,Rivnenska,,,299
+UA,UKR,Ukraine,1,UA59,Sumska,UA59,Sumska,,,320
+UA,UKR,Ukraine,1,UA61,Ternopilska,UA61,Ternopilska,,,472
+UA,UKR,Ukraine,1,UA63,Kharkivska,UA63,Kharkivska,,,968
+UA,UKR,Ukraine,1,UA65,Khersonska,UA65,Khersonska,,,255
+UA,UKR,Ukraine,1,UA68,Khmelnytska,UA68,Khmelnytska,,,397
+UA,UKR,Ukraine,1,UA71,Cherkaska,UA71,Cherkaska,,,345
+UA,UKR,Ukraine,1,UA73,Chernivetska,UA73,Chernivetska,,,315
+UA,UKR,Ukraine,1,UA74,Chernihivska,UA74,Chernihivska,,,185
+UA,UKR,Ukraine,1,UA80,Kyivska,UA80,Kyivska,,,2000
+UA,UKR,Ukraine,1,UA85,Sevastopilska,UA85,Sevastopilska,,,347
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE01,Distrito Capital,VE01,Distrito Capital,,,455
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE02,Amazonas,VE02,Amazonas,,,5
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE03,Anzoátegui,VE03,Anzoátegui,,,208
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE04,Apure,VE04,Apure,,,21
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE05,Aragua,VE05,Aragua,,,118
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE06,Barinas,VE06,Barinas,,,53
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE07,Bolívar,VE07,Bolívar,,,146
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE08,Carabobo,VE08,Carabobo,,,138
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE09,Cojedes,VE09,Cojedes,,,9
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE10,Delta Amacuro,VE10,Delta Amacuro,,,5
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE11,Falcón,VE11,Falcón,,,35
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE12,Guárico,VE12,Guárico,,,54
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE13,Lara,VE13,Lara,,,54
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE14,Mérida,VE14,Mérida,,,150
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE15,Miranda,VE15,Miranda,,,384
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE16,Monagas,VE16,Monagas,,,64
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE17,Nueva Esparta,VE17,Nueva Esparta,,,27
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE18,Portuguesa,VE18,Portuguesa,,,45
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE19,Sucre,VE19,Sucre,,,31
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE20,Táchira,VE20,Táchira,,,69
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE21,Trujillo,VE21,Trujillo,,,157
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE22,Yaracuy,VE22,Yaracuy,,,16
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE23,Zulia,VE23,Zulia,,,115
+VE,VEN,Venezuela (Bolivarian Republic of),1,VE24,La Guaira,VE24,La Guaira,,,186
+YE,YEM,Yemen,1,YE11,Ibb,YE11,Ibb,,,236
+YE,YEM,Yemen,1,YE12,Abyan,YE12,Abyan,,,103
+YE,YEM,Yemen,1,YE13,Sana'a City,YE13,Sana'a City,,,472
+YE,YEM,Yemen,1,YE14,Al Bayda,YE14,Al Bayda,,,82
+YE,YEM,Yemen,1,YE15,Ta'iz,YE15,Ta'iz,,,259
+YE,YEM,Yemen,1,YE16,Al Jawf,YE16,Al Jawf,,,83
+YE,YEM,Yemen,1,YE17,Hajjah,YE17,Hajjah,,,151
+YE,YEM,Yemen,1,YE18,Al Hodeidah,YE18,Al Hodeidah,,,236
+YE,YEM,Yemen,1,YE19,Hadramawt,YE19,Hadramawt,,,264
+YE,YEM,Yemen,1,YE20,Dhamar,YE20,Dhamar,,,217
+YE,YEM,Yemen,1,YE21,Shabwah,YE21,Shabwah,,,147
+YE,YEM,Yemen,1,YE22,Sa'dah,YE22,Sa'dah,,,117
+YE,YEM,Yemen,1,YE23,Sana'a,YE23,Sana'a,,,144
+YE,YEM,Yemen,1,YE24,Aden,YE24,Aden,,,86
+YE,YEM,Yemen,1,YE25,Lahj,YE25,Lahj,,,163
+YE,YEM,Yemen,1,YE26,Ma'rib,YE26,Ma'rib,,,118
+YE,YEM,Yemen,1,YE27,Al Mahwit,YE27,Al Mahwit,,,83
+YE,YEM,Yemen,1,YE28,Al Maharah,YE28,Al Maharah,,,46
+YE,YEM,Yemen,1,YE29,Amran,YE29,Amran,,,213
+YE,YEM,Yemen,1,YE30,Ad Dali',YE30,Ad Dali',,,94
+YE,YEM,Yemen,1,YE31,Raymah,YE31,Raymah,,,84
+YE,YEM,Yemen,1,YE32,Socotra,YE32,Socotra,,,4
+ZW,ZWE,Zimbabwe,1,ZW10,Bulawayo,ZW10,Bulawayo,,,20
+ZW,ZWE,Zimbabwe,1,ZW11,Manicaland,ZW11,Manicaland,,,221
+ZW,ZWE,Zimbabwe,1,ZW12,Mashonaland Central,ZW12,Mashonaland Central,,,122
+ZW,ZWE,Zimbabwe,1,ZW13,Mashonaland East,ZW13,Mashonaland East,,,169
+ZW,ZWE,Zimbabwe,1,ZW14,Mashonaland West,ZW14,Mashonaland West,,,139
+ZW,ZWE,Zimbabwe,1,ZW15,Matabeleland North,ZW15,Matabeleland North,,,88
+ZW,ZWE,Zimbabwe,1,ZW16,Matabeleland South,ZW16,Matabeleland South,,,103
+ZW,ZWE,Zimbabwe,1,ZW17,Midlands,ZW17,Midlands,,,163
+ZW,ZWE,Zimbabwe,1,ZW18,Masvingo,ZW18,Masvingo,,,151
+ZW,ZWE,Zimbabwe,1,ZW19,Harare,ZW19,Harare,,,27
