@@ -72,6 +72,7 @@ class IOMDTM(BaseScraper):
                     idps = row.get("#affected+idps+ind")
                     if idps:
                         dict_of_lists_add(idpsdict, f"{countryiso3}:{pcode}", idps)
+                    pcodes_found = True
             if not pcodes_found:
                 logger.warning(f"No pcodes found for {countryiso3}.")
 
