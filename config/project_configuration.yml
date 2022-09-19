@@ -1565,7 +1565,7 @@ country_name_overrides:
 country_name_mappings:
   "Congo DR": "COD"
 
-admin1_info:
+admin_info:
   - {country: Afghanistan, iso3: AFG, pcode: AF17, name: Badakhshan}
   - {country: Afghanistan, iso3: AFG, pcode: AF31, name: Badghis}
   - {country: Afghanistan, iso3: AFG, pcode: AF09, name: Baghlan}
@@ -2056,7 +2056,7 @@ admin1_info:
   - {country: Yemen, iso3: YEM, pcode: YE32, name: Socotra}
   - {country: Yemen, iso3: YEM, pcode: YE15, name: Taiz}
 
-admin1_name_mappings:
+admin_name_mappings:
   "Nord-Ouest": "HT09"
   "nord-ouest": "HT09"
   "nord-quest": "HT09"
@@ -2139,7 +2139,7 @@ admin1_name_mappings:
   "TAOUDENI": "ML06"
   "Abyei PCA Box": "SD19"
 
-admin1_name_replacements:
+admin_name_replacements:
   " urban": ""
   "sud": "south"
   "ouest": "west"
@@ -2151,7 +2151,7 @@ admin1_name_replacements:
   " region": ""
   " oblast": ""
 
-admin1_fuzzy_dont:
+admin_fuzzy_dont:
   - "nord"
   - "north"
   - "sud"

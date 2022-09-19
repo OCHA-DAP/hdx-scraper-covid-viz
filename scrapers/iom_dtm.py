@@ -44,9 +44,11 @@ class IOMDTM(BaseScraper):
             for row in data:
                 pcode = row.get("#adm1+code")
                 if pcode:
-                    pcode = self.adminone.convert_pcode_length(
-                        countryiso3, pcode, "iom_dtm"
+                    pcode, exact = self.adminone.get_pcode(
+                        countryiso3, pcode, fuzzy_match=False
                     )
+                    if not exact:
+                        pcode = None
                 else:
                     adm2code = row.get("#adm2+code")
                     if adm2code:
@@ -79,7 +81,7 @@ class IOMDTM(BaseScraper):
         idps = self.get_values("subnational")[0]
         for countrypcode in idpsdict:
             countryiso3, pcode = countrypcode.split(":")
-            if pcode not in self.adminone.pcodes:
+            if pcode not in self.adminone.get_pcode_list():
                 logger.error(f"PCode {pcode} in {countryiso3} does not exist!")
             else:
                 idps[pcode] = sum(idpsdict[countrypcode])

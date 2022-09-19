@@ -1,7 +1,7 @@
 import logging
 from os.path import join
 
-from hdx.location.adminone import AdminOne
+from hdx.location.adminlevel import AdminLevel
 from hdx.location.country import Country
 from hdx.scraper.outputs.update_tabs import (
     get_regional_rows,
@@ -61,7 +61,7 @@ def get_indicators(
     else:
         hrp_countries = configuration["HRPs"]
     configuration["countries_fuzzy_try"] = hrp_countries
-    adminone = AdminOne(configuration)
+    adminlevel = AdminLevel(configuration)
     regional_configuration = configuration["regional"]
     RegionLookup.load(regional_configuration, gho_countries, {"HRPs": hrp_countries})
     if fallbacks_root is not None:
@@ -79,7 +79,6 @@ def get_indicators(
         )
     runner = Runner(
         gho_countries,
-        adminone,
         today,
         errors_on_exit=errors_on_exit,
         scrapers_to_run=scrapers_to_run,
@@ -92,7 +91,11 @@ def get_indicators(
             level = level_name
         suffix = f"_{level_name}"
         configurable_scrapers[level_name] = runner.add_configurables(
-            configuration[f"scraper{suffix}"], level, level_name, suffix=suffix
+            configuration[f"scraper{suffix}"],
+            level,
+            adminlevel,
+            level_name,
+            suffix=suffix,
         )
     runner.add_instance_variables(
         "idps_national", overrideinfo=configuration["unhcr_myanmar_idps"]
@@ -106,7 +109,7 @@ def get_indicators(
         gho_countries,
         RegionLookup.iso3_to_region,
     )
-    ipc = IPC(configuration["ipc"], today, gho_countries, adminone)
+    ipc = IPC(configuration["ipc"], today, gho_countries, adminlevel)
 
     fts = FTS(configuration["fts"], today, outputs, gho_countries)
     food_prices = FoodPrices(configuration["food_prices"], today, gho_countries)
@@ -143,8 +146,8 @@ def get_indicators(
     ]
     national_names.insert(1, "who_covid")
 
-    whowhatwhere = WhoWhatWhere(configuration["whowhatwhere"], today, adminone)
-    iomdtm = IOMDTM(configuration["iom_dtm"], today, adminone)
+    whowhatwhere = WhoWhatWhere(configuration["whowhatwhere"], today, adminlevel)
+    iomdtm = IOMDTM(configuration["iom_dtm"], today, adminlevel)
     global_names = ["who_covid", "fts"] + configurable_scrapers["global"]
 
     subnational_names = configurable_scrapers["subnational"] + [
@@ -247,11 +250,11 @@ def get_indicators(
             regional_hxltags=configuration["regional"]["global_from_regional"],
         )
     if "subnational" in tabs:
-        update_subnational(runner, adminone, outputs, names=subnational_names)
+        update_subnational(runner, adminlevel, outputs, names=subnational_names)
 
-    adminone.output_matches()
-    adminone.output_ignored()
-    adminone.output_errors()
+    adminlevel.output_matches()
+    adminlevel.output_ignored()
+    adminlevel.output_errors()
 
     names = national_names
     for name in global_names:
