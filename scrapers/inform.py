@@ -50,33 +50,31 @@ class Inform(BaseScraper):
                     continue
                 country_index = countries_index.get(countryiso3, dict())
                 individual_or_aggregated = result["individual_aggregated"]
-                type_of_crisis = result["type_of_crisis"]
+                drivers = ",".join(result["drivers"])
                 ind_agg_type = country_index.get("ind_agg_type", dict())
-                dict_of_lists_add(
-                    ind_agg_type, individual_or_aggregated, type_of_crisis
-                )
+                dict_of_lists_add(ind_agg_type, individual_or_aggregated, drivers)
                 country_index["ind_agg_type"] = ind_agg_type
                 crises_index = country_index.get("crises", dict())
-                crisis_index = crises_index.get(type_of_crisis, dict())
+                crisis_index = crises_index.get(drivers, dict())
                 last_updated = result["Last updated"]
                 for input_col in input_cols:
                     crisis_index[input_col] = (result[input_col], last_updated)
-                crises_index[type_of_crisis] = crisis_index
+                crises_index[drivers] = crisis_index
                 country_index["crises"] = crises_index
                 countries_index[countryiso3] = country_index
             url = json["next"]
         return countries_index
 
-    def get_columns_by_date(self, date, base_url, reader, crisis_types, not_found):
+    def get_columns_by_date(self, date, base_url, reader, crisis_drivers, not_found):
         input_col = self.get_headers("national")[0][0]
         countries_index = self.download_data(date, base_url, [input_col], reader)
         valuedict = dict()
-        for countryiso3, type_of_crisis in crisis_types.items():
+        for countryiso3, driver in crisis_drivers.items():
             country_index = countries_index.get(countryiso3)
             if not country_index:
                 not_found.add(countryiso3)
                 continue
-            crisis = country_index["crises"].get(type_of_crisis)
+            crisis = country_index["crises"].get(driver)
             if not crisis:
                 not_found.add(countryiso3)
                 continue
@@ -88,29 +86,29 @@ class Inform(BaseScraper):
         input_cols = self.get_headers("national")[0][:2]
         countries_index = self.download_data(date, base_url, input_cols, reader)
         valuedicts = self.get_values("national")[:2]
-        crisis_types = dict()
+        crisis_drivers = dict()
         max_date = default_date
         for countryiso3, country_data in countries_index.items():
-            crises_types = country_data["ind_agg_type"].get("Aggregated")
-            if not crises_types:
-                crises_types = country_data["ind_agg_type"].get("Individual")
-            type_of_crisis = crises_types[0]
-            crisis_types[countryiso3] = type_of_crisis
-            crisis = country_data["crises"][type_of_crisis]
+            crises_drivers = country_data["ind_agg_type"].get("Aggregated")
+            if not crises_drivers:
+                crises_drivers = country_data["ind_agg_type"].get("Individual")
+            drivers = crises_drivers[0]
+            crisis_drivers[countryiso3] = drivers
+            crisis = country_data["crises"][drivers]
             for i, input_col in enumerate(input_cols):
                 val, last_updated = crisis[input_col]
                 valuedicts[i][countryiso3] = val
                 date = parse_date(last_updated)
                 if date > max_date:
                     max_date = date
-        return valuedicts, crisis_types, max_date
+        return valuedicts, crisis_drivers, max_date
 
     def run(self) -> None:
         reader = self.get_reader(self.name)
         reader.read_hdx_metadata(self.datasetinfo)
         base_url = self.datasetinfo["url"]
         start_date = self.today - relativedelta(months=1)
-        valuedictsfortoday, crisis_types, max_date = self.get_latest_columns(
+        valuedictsfortoday, crisis_drivers, max_date = self.get_latest_columns(
             start_date, base_url, reader
         )
         severity_indices = [valuedictsfortoday[0]]
@@ -121,7 +119,7 @@ class Inform(BaseScraper):
                 prevdate,
                 base_url,
                 reader,
-                crisis_types,
+                crisis_drivers,
                 not_found,
             )
             severity_indices.append(valuedictfordate)
