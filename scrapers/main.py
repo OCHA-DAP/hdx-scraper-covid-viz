@@ -3,19 +3,11 @@ from os.path import join
 
 from hdx.location.adminlevel import AdminLevel
 from hdx.location.country import Country
-from hdx.scraper.outputs.update_tabs import (
-    get_regional_rows,
-    get_toplevel_rows,
-    update_national,
-    update_regional,
-    update_sources,
-    update_subnational,
-    update_toplevel,
-)
 from hdx.scraper.runner import Runner
 from hdx.scraper.utilities.fallbacks import Fallbacks
 from hdx.scraper.utilities.region_lookup import RegionLookup
 from hdx.scraper.utilities.sources import Sources
+from hdx.scraper.utilities.writer import Writer
 
 from .covax_deliveries import CovaxDeliveries
 from .education_closures import EducationClosures
@@ -204,8 +196,9 @@ def get_indicators(
             regional_names.extend(regional_names_hrp)
         regional_names.append(name)
     regional_names.extend(["education_closures", "education_enrolment"])
-    regional_rows = get_regional_rows(
-        runner,
+
+    writer = Writer(runner, outputs)
+    regional_rows = writer.get_regional_rows(
         RegionLookup.regions + ["global"],
         names=regional_names,
     )
@@ -216,35 +209,30 @@ def get_indicators(
             "hxltag": "#meta+ishrp",
             "countries": hrp_countries,
         }
-        update_national(
-            runner,
+        writer.update_national(
             gho_countries,
-            outputs,
             names=national_names,
             flag_countries=flag_countries,
             iso3_to_region=RegionLookup.iso3_to_regions["GHO"],
             ignore_regions=("GHO",),
         )
     if "regional" in tabs:
-        global_rows = get_toplevel_rows(
-            runner, overrides={"who_covid": {"gho": "global"}}, toplevel="global"
+        global_rows = writer.get_toplevel_rows(
+            overrides={"who_covid": {"gho": "global"}}, toplevel="global"
         )
-        update_regional(
-            outputs,
+        writer.update_regional(
             regional_rows,
             toplevel_rows=global_rows,
             toplevel_hxltags=configuration["regional"]["regional_from_global"],
             toplevel="global",
         )
     if "world" in tabs:
-        global_rows = get_toplevel_rows(
-            runner,
+        global_rows = writer.get_toplevel_rows(
             names=global_names,
             overrides={"who_covid": {"gho": "global"}},
             toplevel="global",
         )
-        update_toplevel(
-            outputs,
+        writer.update_toplevel(
             global_rows,
             tab="world",
             regional_rows=regional_rows,
@@ -252,7 +240,7 @@ def get_indicators(
             regional_hxltags=configuration["regional"]["global_from_regional"],
         )
     if "subnational" in tabs:
-        update_subnational(runner, adminlevel, outputs, names=subnational_names)
+        writer.update_subnational(adminlevel, names=subnational_names)
 
     adminlevel.output_matches()
     adminlevel.output_ignored()
@@ -266,9 +254,7 @@ def get_indicators(
         if name not in names:
             names.append(name)
     if "sources" in tabs:
-        update_sources(
-            runner,
-            outputs,
+        writer.update_sources(
             additional_sources=configuration["additional_sources"],
             names=names,
             custom_sources=(get_report_source(configuration),),
