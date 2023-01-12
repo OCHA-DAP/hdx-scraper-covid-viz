@@ -1,7 +1,7 @@
 import argparse
 import logging
 from os import getenv
-from os.path import join
+from os.path import join, expanduser
 
 from hdx.api.configuration import Configuration
 from hdx.facades.keyword_arguments import facade
@@ -21,15 +21,13 @@ setup_logging()
 logger = logging.getLogger(__name__)
 
 
+lookup = "hdx-scraper-covid-viz"
+
 VERSION = 4.0
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-hk", "--hdx_key", default=None, help="HDX api key")
-    parser.add_argument("-ua", "--user_agent", default=None, help="user agent")
-    parser.add_argument("-pp", "--preprefix", default=None, help="preprefix")
-    parser.add_argument("-hs", "--hdx_site", default=None, help="HDX site to use")
     parser.add_argument(
         "-xl", "--excel_path", default=None, help="Path for Excel output"
     )
@@ -97,7 +95,7 @@ def main(
     use_saved,
     **ignore,
 ):
-    logger.info(f"##### hdx-scraper-covid-viz version {VERSION:.1f} ####")
+    logger.info(f"##### {lookup} version {VERSION:.1f} ####")
     configuration = Configuration.read()
     with ErrorsOnExit() as errors_on_exit:
         with temp_dir() as temp_folder:
@@ -158,20 +156,6 @@ def main(
 
 if __name__ == "__main__":
     args = parse_args()
-    hdx_key = args.hdx_key
-    if hdx_key is None:
-        hdx_key = getenv("HDX_KEY")
-    user_agent = args.user_agent
-    if user_agent is None:
-        user_agent = getenv("USER_AGENT")
-        if user_agent is None:
-            user_agent = "hdx-scraper-covid-viz"
-    preprefix = args.preprefix
-    if preprefix is None:
-        preprefix = getenv("PREPREFIX")
-    hdx_site = args.hdx_site
-    if hdx_site is None:
-        hdx_site = getenv("HDX_SITE", "prod")
     gsheet_auth = args.gsheet_auth
     if gsheet_auth is None:
         gsheet_auth = getenv("GSHEET_AUTH")
@@ -221,11 +205,9 @@ if __name__ == "__main__":
         hrp_countries_override = None
     facade(
         main,
-        hdx_key=hdx_key,
         hdx_read_only=True,
-        user_agent=user_agent,
-        preprefix=preprefix,
-        hdx_site=hdx_site,
+        user_agent_config_yaml=join(expanduser("~"), ".useragents.yml"),
+        user_agent_lookup=lookup,
         project_config_yaml=join("config", "project_configuration.yml"),
         excel_path=args.excel_path,
         gsheet_auth=gsheet_auth,
