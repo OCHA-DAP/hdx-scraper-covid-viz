@@ -23,8 +23,10 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Run script
       env:
+        HDX_SITE: ${{ secrets.HDX_SITE }}
         HDX_KEY: ${{ secrets.HDX_KEY }}
         PREPREFIX: ${{ secrets.PREPREFIX }}
+        USER_AGENT: ${{ secrets.USER_AGENT }}
         GSHEET_AUTH: ${{ secrets.GSHEET_AUTH }}
         UPDATESHEETS: ${{ secrets.UPDATESHEETS }}
         HEADER_AUTHS: ${{ secrets.HEADER_AUTHS }}
