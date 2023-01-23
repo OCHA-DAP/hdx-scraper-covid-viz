@@ -97,7 +97,7 @@ scraper_national:
     url: "https://api.worldbank.org/v2/en/indicator/SP.POP.TOTL?downloadformat=excel&dataformat=list"
     format: "xls"
     sheet: "Data"
-    headers: 3
+    headers: 4
     prefilter: "Value is not None"
     admin:
       - "Country Code"
@@ -113,6 +113,7 @@ scraper_national:
     dataset: "covid-19-economic-exposure-index"
     format: "xlsx"
     sheet: "economic exposure"
+    headers: 2
     admin:
       - "Country"
     input:
@@ -128,8 +129,8 @@ scraper_national:
     format: "xlsx"
     sheet: "Trend"
     headers:
-      - 3
-      - 4
+      - 7
+      - 8
     admin:
       - "ISO"
     date: "Year*"
@@ -1434,8 +1435,8 @@ scraper_subnational:
     format: "xlsx"
     sheet: "Trend"
     headers:
-      - 3
-      - 4
+      - 7
+      - 8
     flatten:
       - original: "Region {{1}} Region Name"
         new: "Region Name"
