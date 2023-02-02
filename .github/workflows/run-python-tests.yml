@@ -1,18 +1,26 @@
 # This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: build
+name: Run tests
 
-on: [push, pull_request]
+on:
+  workflow_dispatch: # add run button in github
+  push:
+    branches-ignore:
+      - gh-pages
+  pull_request:
+    branches-ignore:
+      - gh-pages
+
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.x'
     - name: Install dependencies
@@ -29,14 +37,15 @@ jobs:
     - name: Test with pytest
       run: |
         pytest --junitxml=junit/test-results.xml --cov-config .coveragerc --cov-report= --cov=.
-    - name: Publish in Coveralls
-      uses: AndreMiras/coveralls-python-action@develop
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        flag-name: tests
     - name: Publish Unit Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v1
+      uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        files: junit/*.xml
+        junit_files: .tox/*.xml
+    - name: Publish in Coveralls
+      uses: AndreMiras/coveralls-python-action@develop
+      if: success()
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        flag-name: tests
