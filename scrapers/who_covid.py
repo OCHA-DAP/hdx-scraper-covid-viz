@@ -79,7 +79,7 @@ class WHOCovid(BaseScraper):
         df_cumulative = df_cumulative.drop(
             columns=["Date_reported", "New_cases", "New_deaths"]
         )
-        df_world = df_cumulative.sum()
+        df_world = df_cumulative.sum(numeric_only=True)
         df_cumulative = df_cumulative.loc[df["ISO_3_CODE"].isin(self.gho_countries), :]
         df_gho = df_cumulative.sum()
 
@@ -96,13 +96,13 @@ class WHOCovid(BaseScraper):
         source_date = df["Date_reported"].max()
 
         # adding global GHO by date
-        df_gho_all = df.groupby("Date_reported").sum()
+        df_gho_all = df.groupby("Date_reported").sum(numeric_only=True)
         df_gho_all["ISO_3_CODE"] = "GHO"
         df_gho_all = df_gho_all.reset_index()
 
         # adding global HRPs by date
         df_hrp_countries_all = df.loc[df["ISO_3_CODE"].isin(self.hrp_countries), :]
-        df_hrp_countries_all = df_hrp_countries_all.groupby("Date_reported").sum()
+        df_hrp_countries_all = df_hrp_countries_all.groupby("Date_reported").sum(numeric_only=True)
         df_hrp_countries_all["ISO_3_CODE"] = "HRPs"
         df_hrp_countries_all = df_hrp_countries_all.reset_index()
 
@@ -119,13 +119,11 @@ class WHOCovid(BaseScraper):
         )
         df = df.drop(labels="ISO3", axis="columns")
         df_regional = (
-            df.groupby(["Date_reported", "Regional_office"]).sum().reset_index()
+            df.groupby(["Date_reported", "Regional_office"]).sum(numeric_only=True).reset_index()
         )
         df_regional = df_regional.rename(columns={"Regional_office": "ISO_3_CODE"})
 
-        df = df.append(df_gho_all)
-        df = df.append(df_hrp_countries_all)
-        df = df.append(df_regional)
+        df = pd.concat([df, df_gho_all, df_hrp_countries_all, df_regional])
 
         return source_date, df_world, df_gho, df_series, df
 
@@ -163,7 +161,7 @@ class WHOCovid(BaseScraper):
         self.outputs["json"].update_tab(
             "covid_series_flat", df_series, series_headers_hxltags
         )
-        json_df = df_series.groupby("CountryName").apply(lambda x: x.to_dict("r"))
+        json_df = df_series.groupby("CountryName").apply(lambda x: x.to_dict("records"))
         del series_headers_hxltags[
             "CountryName"
         ]  # prevents it from being output as it is already the key
@@ -203,7 +201,7 @@ class WHOCovid(BaseScraper):
             .groupby(["ISO_3_CODE"])
             .resample("W", on="Date_reported")
         )
-        new_w = resampled.sum()[["New_cases", "New_deaths"]]
+        new_w = resampled.sum(numeric_only=True)[["New_cases", "New_deaths"]]
         ndays_w = resampled.count()["New_cases"]
         ndays_w = ndays_w.rename("ndays")
 
@@ -258,7 +256,7 @@ class WHOCovid(BaseScraper):
         json_df = (
             output_df.replace([numpy.inf, -numpy.inf, numpy.nan], "")
             .groupby("ISO_3_CODE")
-            .apply(lambda x: x.to_dict("r"))
+            .apply(lambda x: x.to_dict("records"))
         )
         grouped_trend_hxltags = deepcopy(self.trend_hxltags)
         del grouped_trend_hxltags["ISO_3_CODE"]
