@@ -55,11 +55,11 @@ class WhoWhatWhere(BaseScraper):
                             pcode = adm2code
                 if not pcode:
                     adm1name = row.get("#adm1+name")
-                    if adm1name:
+                    if adm1name and adm1name != 42:  # 42 is N/A in Excel
                         pcode, _ = self.adminone.get_pcode(countryiso3, adm1name, "3W")
                 if not pcode:
                     location = row.get("#loc")
-                    if location:
+                    if location and location != 42:  # 42 is N/A in Excel
                         location = location.split(">")[-1]
                         pcode, _ = self.adminone.get_pcode(countryiso3, location, "3W")
                 if pcode:
