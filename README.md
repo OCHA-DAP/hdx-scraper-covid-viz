@@ -3,6 +3,8 @@
 
 Please note:
 
+Script no longer runs regularly.
+
 The data for the Covid-19 explorer was last updated 22/08/2023. 
 
 Script that pulls data from several sources and outputs JSON files and a Google 
