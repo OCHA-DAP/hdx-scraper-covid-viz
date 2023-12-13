@@ -21,7 +21,7 @@ class WhoWhatWhere(BaseScraper):
         threew_url = self.datasetinfo["url"]
         reader = self.get_reader()
         headers, iterator = reader.get_tabular_rows(
-            threew_url, headers=1, dict_form=True, format="csv"
+            threew_url, headers=1, dict_form=True, format="csv", file_prefix=self.name
         )
         rows = list(iterator)
         orgdict = dict()
@@ -39,7 +39,7 @@ class WhoWhatWhere(BaseScraper):
                     f"Could not download resource data for {countryiso3}. Check dataset name."
                 )
                 continue
-            data = reader.read_hxl_resource(countryiso3, resource, "3w data")
+            data = reader.read_hxl_resource(resource, file_prefix=self.name)
             if data is None:
                 continue
             self.source_urls.add(dataset.get_hdx_url())

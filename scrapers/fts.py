@@ -62,7 +62,7 @@ class FTS(BaseScraper):
         self.countryiso3s = countryiso3s
 
     def download(self, url, reader):
-        json = reader.download_json(url)
+        json = reader.download_json(url, file_prefix=self.name)
         status = json["status"]
         if status != "ok":
             raise FTSException(f"{url} gives status {status}")

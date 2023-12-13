@@ -26,7 +26,7 @@ class CovaxDeliveries(BaseScraper):
         self.countryiso3s = countryiso3s
 
     def run(self) -> None:
-        headers, iterator = self.get_reader().read(self.datasetinfo)
+        headers, iterator = self.get_reader().read(self.datasetinfo, file_prefix=self.name)
         hxlrow = next(iterator)
         doses_lookup = dict()
         for row in iterator:

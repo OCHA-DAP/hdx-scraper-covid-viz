@@ -6,8 +6,8 @@ logger = logging.getLogger(__name__)
 def idps_post_run(self) -> None:
     try:
         url = self.overrideinfo["url"]
-        reader = self.get_reader(prefix="idps_override")
-        json = reader.download_json(url)
+        reader = self.get_reader()
+        json = reader.download_json(url, file_prefix="idps_override")
         number_idps = int(json["data"][0]["individuals"])
         index = self.get_headers("national")[1].index("#affected+displaced")
         values = self.get_values("national")[index]

@@ -41,7 +41,7 @@ class EducationEnrolment(BaseScraper):
         self.iso3_to_region = iso3_to_region
 
     def run(self) -> None:
-        learners_headers, learners_iterator = self.get_reader().read(self.datasetinfo)
+        learners_headers, learners_iterator = self.get_reader().read(self.datasetinfo, file_prefix="education")
         learners_012, learners_3, affected_learners = self.get_values("national")
         all_learners = dict()
 

@@ -22,7 +22,7 @@ class IOMDTM(BaseScraper):
         iom_url = self.datasetinfo["url"]
         reader = self.get_reader()
         headers, iterator = reader.get_tabular_rows(
-            iom_url, headers=1, dict_form=True, format="csv"
+            iom_url, headers=1, dict_form=True, format="csv", file_prefix=self.name
         )
         rows = list(iterator)
         idpsdict = dict()
@@ -37,7 +37,7 @@ class IOMDTM(BaseScraper):
                 logger.warning(f"No IOM DTM data for {countryiso3}.")
                 continue
             resource = dataset.get_resource()
-            data = reader.read_hxl_resource(countryiso3, resource, "IOM DTM data")
+            data = reader.read_hxl_resource(resource, file_prefix=self.name)
             if data is None:
                 continue
             pcodes_found = False

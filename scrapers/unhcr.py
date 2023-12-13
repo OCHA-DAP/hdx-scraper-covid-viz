@@ -41,7 +41,7 @@ class UNHCR(BaseScraper):
             for population_collection in population_collections:
                 url = base_url % (population_collection, code)
                 logger.info(f"Downloading {url}")
-                json = reader.download_json(url)
+                json = reader.download_json(url, file_prefix=self.name)
                 data = json["data"][0]
                 individuals = data["individuals"]
                 if individuals is None:

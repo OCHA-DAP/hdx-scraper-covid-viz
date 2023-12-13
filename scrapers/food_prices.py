@@ -27,6 +27,7 @@ class FoodPrices(BaseScraper):
             f"{base_url}/token",
             post=True,
             parameters={"grant_type": "client_credentials"},
+            file_prefix=self.name
         )
         access_token = json["access_token"]
         headers = {
@@ -59,6 +60,7 @@ class FoodPrices(BaseScraper):
                             False,
                             parameters=parameters,
                             headers=headers,
+                            file_prefix=self.name
                         )
                     except FileNotFoundError:
                         json = {"items": list()}

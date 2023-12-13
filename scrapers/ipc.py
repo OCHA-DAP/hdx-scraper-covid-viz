@@ -62,7 +62,7 @@ class IPC(BaseScraper):
         base_url = self.datasetinfo["url"]
         reader = self.get_reader(self.name)
         countryisos = set()
-        json = reader.download_json(f"{base_url}/analyses?type=A")
+        json = reader.download_json(f"{base_url}/analyses?type=A", file_prefix=self.name)
         for analysis in json:
             countryiso2 = analysis["country"]
             countryiso3 = Country.get_iso3_from_iso2(countryiso2)
@@ -85,7 +85,7 @@ class IPC(BaseScraper):
         analysis_dates = set()
         for countryiso3, countryiso2 in sorted(countryisos):
             url = f"{base_url}/population?country={countryiso2}"
-            country_data = reader.download_json(url)
+            country_data = reader.download_json(url, file_prefix=self.name)
             if country_data:
                 country_data = country_data[0]
             else:

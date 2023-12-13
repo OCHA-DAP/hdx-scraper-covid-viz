@@ -35,7 +35,7 @@ class Inform(BaseScraper):
         url = base_url % date.strftime("%b%Y")
         countries_index = dict()
         while url:
-            json = reader.download_json(url)
+            json = reader.download_json(url, file_prefix=self.name)
             for result in json["results"]:
                 countryiso3 = result["iso3"]
                 if len(countryiso3) != 1:
