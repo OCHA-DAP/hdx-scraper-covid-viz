@@ -24,7 +24,7 @@ jobs:
     - name: Run script
       env:
         HDX_SITE: ${{ secrets.HDX_SITE }}
-        HDX_KEY: ${{ secrets.HDX_KEY }}
+        HDX_KEY: ${{ secrets.HDX_BOT_SCRAPERS_API_TOKEN }}
         PREPREFIX: ${{ secrets.PREPREFIX }}
         USER_AGENT: ${{ secrets.USER_AGENT }}
         GSHEET_AUTH: ${{ secrets.GSHEET_AUTH }}
