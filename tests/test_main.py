@@ -3,9 +3,9 @@ from os.path import join
 
 import pytest
 from hdx.api.configuration import Configuration
-from hdx.scraper.outputs.base import BaseOutput
-from hdx.scraper.outputs.json import JsonFile
-from hdx.scraper.utilities.reader import Read
+from hdx.scraper.framework.outputs.base import BaseOutput
+from hdx.scraper.framework.outputs.json import JsonFile
+from hdx.scraper.framework.utilities.reader import Read
 from hdx.utilities.dateparse import parse_date
 from hdx.utilities.errors_onexit import ErrorsOnExit
 from hdx.utilities.path import temp_dir

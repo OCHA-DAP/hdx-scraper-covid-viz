@@ -1,6 +1,6 @@
 import logging
 
-from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.framework.base_scraper import BaseScraper
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.text import get_numeric_if_possible
 

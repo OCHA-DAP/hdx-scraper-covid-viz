@@ -4,7 +4,7 @@ from copy import deepcopy
 import numpy
 import pandas as pd
 from hdx.location.country import Country
-from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.framework.base_scraper import BaseScraper
 from hdx.utilities.text import number_format
 
 logger = logging.getLogger(__name__)

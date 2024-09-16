@@ -1,7 +1,7 @@
 import logging
 
 from hdx.data.hdxobject import HDXError
-from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.framework.base_scraper import BaseScraper
 from hdx.utilities.dictandlist import dict_of_sets_add
 
 logger = logging.getLogger(__name__)
@@ -56,12 +56,12 @@ class WhoWhatWhere(BaseScraper):
                 if not pcode:
                     adm1name = row.get("#adm1+name")
                     if adm1name and adm1name != 42:  # 42 is N/A in Excel
-                        pcode, _ = self.adminone.get_pcode(countryiso3, adm1name, "3W")
+                        pcode, _ = self.adminone.get_pcode(countryiso3, adm1name, logname="3W")
                 if not pcode:
                     location = row.get("#loc")
                     if location and location != 42:  # 42 is N/A in Excel
                         location = location.split(">")[-1]
-                        pcode, _ = self.adminone.get_pcode(countryiso3, location, "3W")
+                        pcode, _ = self.adminone.get_pcode(countryiso3, location, logname="3W")
                 if pcode:
                     pcode = pcode.strip().upper()
                     if pcode not in self.adminone.get_pcode_list() and len(

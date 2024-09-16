@@ -3,7 +3,7 @@ from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
 from hdx.location.country import Country
-from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.framework.base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 
@@ -114,7 +114,7 @@ class IPC(BaseScraper):
             areas = country_data.get("areas", country_data.get("groups"))
             if areas:
                 for area in areas:
-                    pcode, _ = self.adminone.get_pcode(countryiso3, area["name"], "IPC")
+                    pcode, _ = self.adminone.get_pcode(countryiso3, area["name"], logname="IPC")
                     if not pcode:
                         continue
                     sum = 0

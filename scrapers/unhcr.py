@@ -2,7 +2,7 @@ import logging
 from os.path import join
 
 from dateutil.relativedelta import relativedelta
-from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.framework.base_scraper import BaseScraper
 from hdx.utilities.dateparse import parse_date
 
 logger = logging.getLogger(__name__)

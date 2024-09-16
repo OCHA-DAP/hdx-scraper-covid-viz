@@ -3,11 +3,11 @@ from os.path import join
 
 from hdx.location.adminlevel import AdminLevel
 from hdx.location.country import Country
-from hdx.scraper.runner import Runner
-from hdx.scraper.utilities.fallbacks import Fallbacks
-from hdx.scraper.utilities.region_lookup import RegionLookup
-from hdx.scraper.utilities.sources import Sources
-from hdx.scraper.utilities.writer import Writer
+from hdx.scraper.framework.runner import Runner
+from hdx.scraper.framework.utilities.fallbacks import Fallbacks
+from hdx.scraper.framework.utilities.region_lookup import RegionLookup
+from hdx.scraper.framework.utilities.sources import Sources
+from hdx.scraper.framework.utilities.writer import Writer
 
 from .covax_deliveries import CovaxDeliveries
 from .education_closures import EducationClosures

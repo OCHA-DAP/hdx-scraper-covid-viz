@@ -1,7 +1,7 @@
 import logging
 
 from dateutil.relativedelta import relativedelta
-from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.framework.base_scraper import BaseScraper
 from hdx.utilities.dateparse import default_date, parse_date
 from hdx.utilities.dictandlist import dict_of_lists_add
 
