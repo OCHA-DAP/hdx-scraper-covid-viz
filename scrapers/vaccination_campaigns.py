@@ -1,6 +1,6 @@
 import logging
 
-from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.framework.base_scraper import BaseScraper
 from scrapers.utilities import calculate_ratios
 
 logger = logging.getLogger(__name__)

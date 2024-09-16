@@ -1,7 +1,7 @@
 import logging
 from typing import Dict
 
-from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.framework.base_scraper import BaseScraper
 from hdx.utilities.dateparse import default_date, parse_date
 
 logger = logging.getLogger(__name__)

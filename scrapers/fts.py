@@ -2,7 +2,7 @@ import logging
 import re
 
 from dateutil.relativedelta import relativedelta
-from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.framework.base_scraper import BaseScraper
 from hdx.utilities.dictandlist import dict_of_lists_add
 from hdx.utilities.text import earliest_index, get_fraction_str, multiple_replace
 

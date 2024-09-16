@@ -5,12 +5,12 @@ from os.path import join, expanduser
 
 from hdx.api.configuration import Configuration
 from hdx.facades.keyword_arguments import facade
-from hdx.scraper.outputs.base import BaseOutput
-from hdx.scraper.outputs.excelfile import ExcelFile
-from hdx.scraper.outputs.googlesheets import GoogleSheets
-from hdx.scraper.outputs.json import JsonFile
-from hdx.scraper.utilities import string_params_to_dict
-from hdx.scraper.utilities.reader import Read
+from hdx.scraper.framework.outputs.base import BaseOutput
+from hdx.scraper.framework.outputs.excelfile import ExcelFile
+from hdx.scraper.framework.outputs.googlesheets import GoogleSheets
+from hdx.scraper.framework.outputs.json import JsonFile
+from hdx.scraper.framework.utilities import string_params_to_dict
+from hdx.scraper.framework.utilities.reader import Read
 from hdx.utilities.dateparse import now_utc
 from hdx.utilities.easy_logging import setup_logging
 from hdx.utilities.errors_onexit import ErrorsOnExit
@@ -206,7 +206,7 @@ if __name__ == "__main__":
     facade(
         main,
         hdx_read_only=True,
-        user_agent_config_yaml=join(expanduser("~"), ".useragents.yml"),
+        user_agent_config_yaml=join(expanduser("~"), ".useragents.yaml"),
         user_agent_lookup=lookup,
         project_config_yaml=join("config", "project_configuration.yml"),
         excel_path=args.excel_path,

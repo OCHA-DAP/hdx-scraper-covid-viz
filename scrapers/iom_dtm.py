@@ -2,7 +2,7 @@ import logging
 
 import hxl
 from hdx.data.dataset import Dataset
-from hdx.scraper.base_scraper import BaseScraper
+from hdx.scraper.framework.base_scraper import BaseScraper
 from hdx.utilities.dictandlist import dict_of_lists_add
 
 logger = logging.getLogger(__name__)
@@ -60,14 +60,14 @@ class IOMDTM(BaseScraper):
                     adm1name = row.get("#adm1+name")
                     if adm1name:
                         pcode, _ = self.adminone.get_pcode(
-                            countryiso3, adm1name, "iom_dtm"
+                            countryiso3, adm1name, logname="iom_dtm"
                         )
                 if not pcode:
                     location = row.get("#loc")
                     if location:
                         location = location.split(">")[-1]
                         pcode, _ = self.adminone.get_pcode(
-                            countryiso3, location, "iom_dtm"
+                            countryiso3, location, logname="iom_dtm"
                         )
                 if pcode:
                     pcode = pcode.strip().upper()
