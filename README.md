@@ -1,4 +1,5 @@
-# hdx-scraper-covid-viz
+# DEPRECATED - Visualisation discontinued
+## hdx-scraper-covid-viz
 [![Build Status](https://github.com/OCHA-DAP/hdx-scraper-covid-viz/actions/workflows/run-python-tests.yml/badge.svg)](https://github.com/OCHA-DAP/hdx-scraper-covid-viz/actions/workflows/run-python-tests.yml) [![Coverage Status](https://coveralls.io/repos/github/OCHA-DAP/hdx-scraper-covid-viz/badge.svg?branch=main&ts=1)](https://coveralls.io/github/OCHA-DAP/hdx-scraper-covid-viz?branch=main)
 
 Please note:
